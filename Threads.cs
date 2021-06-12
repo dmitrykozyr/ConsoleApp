@@ -38,10 +38,7 @@ namespace SharpEdus
         {
             static void F20_1()
             {
-                lock (lockCompleted)
-                {
-                    Console.WriteLine("F20_1");
-                }
+                lock (lockCompleted) { Console.WriteLine("F20_1"); }
             }
 
             Thread thr = new Thread(F20_1);
@@ -65,14 +62,8 @@ namespace SharpEdus
         //                 5 start
         public static void F1()
         {
-            static void F1_2()
-            {
-                Console.WriteLine("Thread " + Thread.CurrentThread.ManagedThreadId + " start");
-            }
-
+            static void F1_2() { Console.WriteLine("Thread " + Thread.CurrentThread.ManagedThreadId + " start"); }
             Console.WriteLine("Thread " + Thread.CurrentThread.ManagedThreadId + " start");
-
-
             var thr = new Thread(F1_2);
             thr.Start();
             thr.Join();
@@ -85,7 +76,7 @@ namespace SharpEdus
         {
             static void F3_1()
             {
-                for (; ; )
+                for (;;)
                     Console.WriteLine("for");
             }
 
@@ -104,11 +95,11 @@ namespace SharpEdus
             static void F4_1()
             {
                 Console.WriteLine("Start " + Thread.CurrentThread.ManagedThreadId + " " +
-                Thread.CurrentThread.Priority);
+                                   Thread.CurrentThread.Priority);
                 for (int i = 0; i < 10; i++)
                 {
                     Console.WriteLine("Loop " + Thread.CurrentThread.ManagedThreadId + " " +
-                    Thread.CurrentThread.Priority);
+                                       Thread.CurrentThread.Priority);
                 }
                 Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId + " " +
                     Thread.CurrentThread.Priority);
@@ -132,9 +123,8 @@ namespace SharpEdus
 
         #region==== Пул потоков =====================================================
         public static void F5()
-        {
-            // Метод выводит, сколько доступно потоков в пуле
-            static void F5_1()
+        {            
+            static void F5_1() // Метод выводит, сколько доступно потоков в пуле
             {
                 Thread.Sleep(1000);
                 int availableThreads;
@@ -255,10 +245,7 @@ namespace SharpEdus
             static void F25_1()
             {
                 Thread.Sleep(1000);
-                lock (locker)
-                {
-                    value = "Updating value";
-                }
+                lock (locker) { value = "Updating value"; }
             }
 
             Task.Factory.StartNew(F25_1);
@@ -291,10 +278,10 @@ namespace SharpEdus
 
             static void F6_2()
             {
-                mutex.WaitOne(); // Приостанавливаем выполнение потока, пока не будет получен mutex
+                mutex.WaitOne();        // Приостанавливаем выполнение потока, пока не будет получен mutex
                 Console.WriteLine("2");
-                mutex.ReleaseMutex(); // После выполнения всех действий, когда мьютекс не нужен,
-                                      // поток освобождает
+                mutex.ReleaseMutex();   // После выполнения всех действий, когда мьютекс не нужен,
+                                        // поток освобождает
             }
 
             Thread[] thr = new Thread[5];
@@ -332,9 +319,8 @@ namespace SharpEdus
         }
         #endregion
 
-        #region==== SemaphoreSlim ===================================================
-        // Меньше нагружает процессор и работает в рамках одного процесса
-        static SemaphoreSlim semaphoreSlim;
+        #region==== SemaphoreSlim ===================================================        
+        static SemaphoreSlim semaphoreSlim; // Меньше нагружает процессор и работает в рамках одного процесса
         public static void F8()
         {
             static void F8_1(object number)
@@ -458,14 +444,12 @@ namespace SharpEdus
         static CountdownEvent countdown = new CountdownEvent(5);
         public static void F26()
         {
-            static void F26_1()
-            {
-                Console.WriteLine("F26_1");
-            }
+            static void F26_1() { Console.WriteLine("F26_1"); }
 
             Task.Factory.StartNew(F26_1);
             Task.Factory.StartNew(F26_1);
             Task.Factory.StartNew(F26_1);
+
             countdown.Wait();
         }
         #endregion
@@ -473,10 +457,7 @@ namespace SharpEdus
         #region==== RegisteredWaitHandle ============================================
         public static void F11()
         {
-            static void F11_1(object state, bool istTmeOut)
-            {
-                Console.WriteLine("Signal");
-            }
+            static void F11_1(object state, bool istTmeOut) { Console.WriteLine("Signal"); }
 
             AutoResetEvent auto = new AutoResetEvent(false);
             WaitOrTimerCallback callback = new WaitOrTimerCallback(F11_1);
@@ -512,10 +493,7 @@ namespace SharpEdus
                 "GlobalEvent::GUID");       // имя объекта синхронизации в ОС. Если объект с таким
                                             // именем существует, будет получена ссылка на него
 
-            Thread thr = new Thread(F12_1)
-            {
-                IsBackground = true
-            };
+            Thread thr = new Thread(F12_1) { IsBackground = true };
             thr.Start();
         }
         #endregion
@@ -615,7 +593,6 @@ namespace SharpEdus
         public static void F18()
         {
             Counter_2 counter = new Counter_2(5, 4);
-
             Thread thr = new Thread(new ThreadStart(counter.Count));
             thr.Start();
         }

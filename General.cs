@@ -2,38 +2,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-//using SCG = System.Collections.Generic; псевдоним
 
 namespace SharpEdu
 {
+    #region==== Общее ===========================================================
+    // const инициализируется при обьявлении, константы неявно статические, слово static к ним применять нельзя
+    // readonly инициализируется в конструкторе или при объявлении, могут быть static, в отличие от констант - они уже неявно static
+    // partial класс позволяет разбить класс на несколько частей, чтобы над каждой можно было работать отдельно
+    // Если в базовом классе есть вирт метод, то в дочернем его можно переопределить через override,
+    // либо через new сказать, что переопределять не надо, а использовать метод дочернего класса
+    // ref — передача аргумента по ссылке, инициализировать до вызова метода
+    // out — передача аргумента по ссылке, можно не инициализировать до вызова метода
+    // Структуры нужны для хранения переменных, в них можно только объявлять поля, но нельзя инициализировать
+    // Структура может наследоваться только от интерфейса, а ее саму нельзя наследовать
+    // Ключевое слово base/this в конструкторе дочернего класса
+    // Если sealed применить к классу - запрещаем наследоваться от класса
+    // Если sealed применить к override-методу - запрещаем дальнейшее переопределение
+    // override можно применять к виртуальным и абстрактным методам
+    // Константные поля неявно статические, обращаемся к ним так [имя класса].[имя поля]
+    // Стек ограничен по размеру, но он быстрее, а куча медленнее, но это почти вся оперативная память
+    // Дебаг F5 - до следующей дочки останова, F10 - на следующий шаг
+    // int? x переменная может принмать null
+    // IEnumerable - возвращает коллекцию, а фильтрация по заданным критериям критериям происходит на стороне клиента
+    // IQueriable - возвращает отфильтрованную по заданным критериям коллекцию 
+    // using SCG = System.Collections.Generic; псевдоним
+
+    // TCP - отправляет сообщение, пока не получит подтверждение об успешной доставке или не будет превышено число попыток
+    // UDP - не гарантирует доставку, но более быстрый и больше подходит для широковещательной передачи
+
+    // public доступен из любого места в коде, а также из других программ и сборок
+    // private доступен только из кода в том же классе или контексте
+    // protected доступен из любого места в текущем или производных классах, производные классы могут быть в других сборках
+    // internal доступен из любого места кода в той же сборке, но недоступен для других программ и сборок
+    // protected internal доступен из текущей сборки и из производных классов
+    // private protected доступен из любого места в текущем или производных классах в той же сборке
+
+    // Статические св-ва хранят состояние всего класса, а не отдельного объекта, к ним можно обращаться по имени класса
+    // Это относится и к методам, но статические методы могут обращаться только к статическим членам класса
+    // Статические конструкторы:
+    // - не имеют модификаторов доступа и не принимают параметры
+    // - как в статических методах, здесь нельзя использовать слово this для ссылки на текущий объект класса
+    // - нельзя вызывать вручную, вызовутся автоматически при первом создании объекта класса или первом обращении к статическому члену
+    // - нужны для инициализации статических данных
+    // - нужны для выполнения действия, которое должно быть выполнено один раз
+    // Статические классы могут содержать только статические поля, свойства и методы    
     public class General
-    {
-        // const инициализируется при обьявлении, константы неявно статические, слово static к ним применять нельзя
-        // readonly инициализируется во время выполнения из конструктора
-        // partial класс позволяет разбить класс на несколько частей, чтобы над каждой можно было работать отдельно
-        // Если в базовом классе есть вирт метод, то в дочернем его можно переопределить через override,
-        // либо через new сказать, что переопределять не надо, а использовать метод дочернего класса
-        // ref — передача аргумента по ссылке, инициализировать до вызова метода
-        // out — передача аргумента по ссылке, можно не инициализировать до вызова метода
-        // Структуры нужны для хранения переменных, в них можно только объявлять поля, но нельзя инициализировать
-        // Структура может наследоваться только от интерфейса, а ее саму нельзя наследовать
-        // Ключевое слово base/this в конструкторе дочернего класса
-        // Если sealed применить к классу — запрещаем наследоваться от класса
-        // Если sealed применить к override-методу — запрещаем дальнейшее переопределение
-        // override можно применять к виртуальным и абстрактным методам
-        // Константные поля неявно статические, обращаемся к ним так [имя класса].[имя поля]
-        // Стек ограничен по размеру, но он быстрее, а куча медленнее, но это почти вся оперативная память
-        // Дебаг F5 - до следующей дочки останова, F10 - на следующий шаг
-        // int? x переменная может принмать null
-        // IEnumerable - возвращает коллекцию, а фильтрация по заданным критериям критериям происходит на стороне клиента
-        // IQueriable - возвращает отфильтрованную по заданным критериям коллекцию 
-
-        // TCP - отправляет сообщение, пока не получит подтверждение об успешной доставке или не будет превышено число попыток
-        // UDP - не гарантирует доставку, но более быстрый и больше подходит для широковещательной передачи
-
-        // Вызов конструктора по умолчанию из конструктора с параметрами
-        public General()
-        { }
+    {        
+        public General() { }                     // Вызов конструктора по умолчанию из конструктора с параметрами
         public General(string data) : this() { } // this вызывает конструктор по умомлчанию
                                                  // если указать base, вызовется конструктор родительского класса
 
@@ -47,85 +62,44 @@ namespace SharpEdu
 
         public void F2()
         {
-            // Упаковка нужна, чтобы работать со значимым типом, как с ссылочным, чтобы при передаче в метод не создавался его дубликат,
-            // а передавался адрес, позволяет не указывать ref при передаче аргумента по ссылке
-            int i = 5;
-            object obj = (object)i;
+            int i = 5;              // Упаковка нужна, чтобы работать со значимым типом, как с ссылочным,
+            object obj = (object)i; // чтобы при передаче в метод не создавался его дубликат, а передавался адрес
 
-            // Распаковка должна производиться в тип, из которого производилась упаковка
-            short a = 5;
-            object o = a;       // упаковка значимого типа в ссылочный
-            short b = (short)o; // распаковка
+            short a = 5;            // Распаковка должна производиться в тип, из которого производилась упаковка
+            object o = a;           // упаковка значимого типа в ссылочный
+            short b = (short)o;     // распаковка
 
-            int? x = null;  // проверка на null
-            int y = x ?? 5; // если левый операнд != null, то вернется он, иначе - правый
+            int? x = null;          // проверка на null
+            int y = x ?? 5;         // если левый операнд != null, то вернется он, иначе - правый
         }
-
-        #region Локальная функция
-        public int LocalFunction(int a, int b)
+                
+        public int LocalFunction(int a, int b) // Локальная функция
         {
-            int LocalFunction(int c, int d)
-            {
-                return c + d;
-            }
+            int LocalFunction(int c, int d) { return c + d; }
             return LocalFunction(a, b);
         }
-        #endregion
 
-        #region Свойства
-        // Могут быть виртуальными и их можно переопределять
-        public int x { get; private set; }
-        // Строки ниже равнозначны 
-        public int X1 { get { return x; } set { x = value; } }
-        public int X2 { get => x; set => x = value; }
-
+        public int x { get; private set; }                      // Свойства могут быть виртуальными и их можно переопределять        
+        public int X1 { get { return x; } set { x = value; } }  // Строки ..
+        public int X2 { get => x; set => x = value; }           // .. равнозначны
         private string _name;
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
-        #endregion
+        private string name2;
+        public string Name2 { get { return name2; } }   // Строки ..
+        public string Name3 => name2;                   // .. равнозначны
 
-        #region Массивы
-        Double[,] myDoubles = new Double[10, 20];
-        String[,,] myStrings = new String[5, 3, 10];
-        #endregion
+        Double[,] myDoubles = new Double[10, 20];       // Массивы
+        String[,,] myStrings = new String[5, 3, 10];        
+    }
+    #endregion
 
-        #region==== Сложность O(N) ==================================================
-        // Big O описывает скорость роста времени выполнения бесконечного алгоритма
-
-        // O(N^2 + B) не упрощается, т.к. мы ничего не знаем о 'B'
-        // O(A + B) Если выполняется одна ф-я, а затем другая, то общая сложность равна сумме сложностей, т.к. они не влияют друг на друга
-        // O(A * B) Если внутри одной ф-ии выполняется другая (либо есть вложенные циклы), то общая сложность равна произведению,
-        //          т.к. при увеличении времении выполнения вложенной ф-ии, увеличивается время выполнения родительской
-
-        // O(0)      На вход не передаются данные, либо алгоритм их не обрабатывает
-
-        // O(1)      Время обработки не меняется с изменением входного объема данных
-        //           В ф-ии нет циклов и рекурсии, она всегда выполняется фиксированное число шагов
-
-        // O(logN)   На каждой итерации берется половина элементов, как при бинарном поиске в отсортированном массиве
-
-        // O(N)      На скольлько возрастает объем входных данных, на столько возрастает и время обработки
-        //           Входной аргумент ф-ии определяет число шагов цикла/рекурсии
-        //           Алгоритм, описываемый как O(2N) нужно описывать без констант как O(N)
-        //           O(N + logN) = O(N), т.к. величина logN < N
-
-        // O(NlogN)  
-
-        // O(N^A)    Есть вложенные циклы, каждый выполняет от 0 до N шагов
-        //           Алгоритм, описываемый как O(N^2 + N), нужно описывать без неважной величины N как O(N^2)
-        //           O(N^2) - сложность пузырьковой сортировки
-
-        // O(A^N)    O(5 * 2^N + 10 * N^1000) = 2^N, т.к. степень растет быстрее всего остального
-
-        // O(N!)
-
-        // O(N^N)
-        #endregion
-
-        #region==== Контейнеры ======================================================
+    #region==== Контейнеры ======================================================
+    public class Containers
+    {
         public static void F1()
         {
             // В отличие от массивов, в списках не нужно указывать размер
@@ -160,9 +134,8 @@ namespace SharpEdu
             var count = ht.Count;
             ht.Add(3, "string 3");
             ht.Remove(2);
-
-            // Позволяет хранить разнотипные объекты
-            var al = new ArrayList { Capacity = 50 };
+                        
+            var al = new ArrayList { Capacity = 50 }; // Позволяет хранить разнотипные объекты
             al.Add(1);
             al.RemoveAt(0);             // удаляем первый элемент
             al.Reverse();               // переворачиваем список
@@ -170,9 +143,8 @@ namespace SharpEdu
             al.Remove(4);               // удалить 4й элемент
             al.Sort();                  // отсортировать все элементы
             al.Clear();
-
-            // Коллекция отсортирована по ключу
-            SortedList sl = new SortedList()
+                        
+            SortedList sl = new SortedList() // Коллекция отсортирована по ключу
             {
                 { 0, "string 0" },
                 { 1, "string 1" },
@@ -180,22 +152,58 @@ namespace SharpEdu
             };
             sl.Add(3, "string 3");
             sl.Clear();
-
-            // Первый пришел - последний ушел
-            Stack st = new Stack();
+                        
+            Stack st = new Stack(); // Первый пришел - последний ушел
             st.Push("string");
             st.Push(4);
-            st.Pop(); // Удалить элемент
+            st.Pop();               // Удалить элемент
             st.Clear();
-
-            // Первый пришел - первый ушел
-            Queue qu = new Queue();
+                        
+            Queue qu = new Queue(); // Первый пришел - первый ушел
             qu.Enqueue("string");
             qu.Enqueue(5);
-            qu.Dequeue(); // Возвращает элемент из начала очереди
+            qu.Dequeue();           // Возвращает элемент из начала очереди
         }
-        #endregion
     }
+    #endregion
+
+    #region==== Структуры =======================================================
+    // Как и классы, структуры могут хранить состояние в виде переменных и определять поведение в виде методов
+    // Структуры могут быть readonly, но все их поля тоже должны быть readonly
+    struct StructuresUser
+    {
+        public string name;
+        public int age;
+        //public string gender = "Male";    // Ошибка - в отличие от класса нельзя инициализировать
+                                            // поля структуры напрямую при объявлении
+        public StructuresUser(string name, int age) // Если определяем конструктор в структуре, то он должен инициализировать все поля
+        {
+            this.name = name;
+            this.age = age;
+        }
+        public void DisplayInfo() { Console.WriteLine($"Name: {name}  Age: {age}"); }
+    }
+
+    class ProgramStructures
+    {
+        static void Main_()
+        {
+            StructuresUser tom; // В отличие от класса нам не обязательно вызывать конструктор для создания объекта структуры
+                                // Надо проинициализировать все поля структуры перед получением их значений 
+            tom.name = "Tom";
+            tom.age = 34;
+            tom.DisplayInfo();
+
+            StructuresUser tom2 = new StructuresUser("Tom", 34);
+            tom2.DisplayInfo();
+
+            StructuresUser bob = new StructuresUser();  // Можем использовать конструктор без параметров, при вызове которого
+                                                        // полям структуры будет присвоено значение по умолчанию
+            bob.DisplayInfo();
+            Console.ReadKey();
+        }
+    }
+    #endregion
 
     #region==== Расширяющие методы ==============================================
     // Имеют слово this перед первым аргументом
@@ -204,7 +212,7 @@ namespace SharpEdu
     // Можно перегружать
     // Первый аргумент не может быть помечен словами ref, out, остальные могут
     // Не имеют доступ к private и protected полям расширяемого класса
-    static class A1
+    static class ExtensionMethods
     {
         public static void Extention(this string value)
         { 
@@ -216,7 +224,7 @@ namespace SharpEdu
             Console.WriteLine(value1 + value2); 
         }
 
-        class B
+        class ProgramExtensionMethods
         {
             static void Main_()
             {
@@ -226,12 +234,197 @@ namespace SharpEdu
                 "1".Extention("2");
             }
         }
-    }    
+    }
     #endregion
-}
 
-namespace InterfaceLink
-{
+    #region==== Значимые и ссылочные типы =======================================
+    // Значимые типы: byte, sbyte, short, ushort, int, uint, long, ulong, float, double, decimal, bool, char, enum, struct
+    // Ссылочные типы: object, string, class, interface, delegate
+
+    // Стек - структура данных, которая растет снизу вверх: новый элемент помещается поверх предыдущего
+    // Время жизни переменных ограничено их контекстом
+    // Cтек - это область памяти в адресном пространстве
+    // Когда программа запускается, в конце блока памяти, зарезервированного для стека, устанавливается указатель
+    // При вызове каждого отдельного метода, в стеке будет выделяться область память,
+    // где будут храниться значения его переменных
+
+    // При вызове программы ниже в стеке будут определены два фрейма - по одному на метод
+    // Фрейм метода Main будет пустым, а метода Calculate будет содержать x, y, z, c - x будет внизу
+    // Когда метод отработает, область памяти, которая выделялась под стек, может быть использована другими методами
+
+    // Если параметр или переменная метода представляет значимый тип, то в стеке будет храниться непосредсвенное значение
+    // Ссылочные типы хранятся в куче, при создании объекта ссылочного типа в стек помещается ссылка на адрес в куче
+    // Когда объект ссылочного типа перестает использоваться, сборщик мусора видит, что на объект в куче нет ссылок,
+    // условно удаляет этот объект и очищает память, помечая, что сегмент памяти может быть использован для других данных
+    public class A
+    {
+        static void Main_()
+        {
+            Calculate(5);
+            Console.ReadKey();
+        }
+
+        static void Calculate(int x)
+        {
+            int y = 0;
+            int z = y + x;
+            object c = 0; // Ссылочный тип будет храниться в куче, а в стеке будет храниться ссылка на объект в куче
+        }
+    }
+
+    // Рассмотим ситуацию, когда тип значений и ссылочный тип представляют составные типы - структуру и класс
+    // При присвоении данных объекту значимого типа, он получает копию данных
+    // При присвоении данных объекту ссылочного типа, он получает ссылку на объект в куче
+    // В стеке будут
+    // - country
+    // - state.x
+    // - state.y
+    // В куче будут
+    // - country.x
+    // - country.y
+    // - state.country.x
+    // - state.country.y
+    struct State
+    {
+        public int x;
+        public int y;
+        public Country country;
+    }
+    
+    class Country
+    {
+        public int x;
+        public int y;
+    }
+
+    class Program2
+    {
+        private static void Main_()
+        {
+            State state = new State();
+            Country country = new Country();
+            state.country = new Country();
+        }
+    }
+
+    // Внутри структуры может быть переменная ссылочного типа, например, класса
+    // В стеке будут
+    // - state1.country
+    // - state1.x
+    // - state1.y
+    // - state2.country
+    // - state2.x
+    // - state2.y
+    // В куче будут
+    // - country.x
+    // - country.y
+    struct State3
+    {
+        public int x;
+        public int y;
+        public Country country;
+    }
+    class Country3
+    {
+        public int x;
+        public int y;
+    }
+    
+    class Program3
+    {
+        private static void Main_()
+        {
+            State state1 = new State();
+            State state2 = new State();
+
+            state2.country = new Country();
+            state2.country.x = 5;
+            state1 = state2;
+            state2.country.x = 8;
+            Console.WriteLine(state1.country.x); // 8
+            Console.WriteLine(state2.country.x); // 8
+
+            Console.Read();
+        }
+    }
+    #endregion
+
+    #region==== Перегрузка операторов ===========================================
+    // Класс Counter представляет счетчик, значение которого хранится в свойстве Value
+    // Есть два объекта класса - два счетчика, которые мы хотим сравнивать
+    // На данный момент операция == и + для объектов Counter недоступны
+    // Эти операции могут использоваться для примитивных типов
+    // Но как складывать объекты комплексных типов - классов и структур - надо выполнить перегрузку
+    // Перегрузка операторов заключается в определении в классе, для объектов которого мы хотим определить оператор, специального метода
+    // Он должен иметь модификаторы public static, так как будет использоваться для всех объектов класса
+    // Далее идет название возвращаемого типа - это тип, объекты которого мы хотим получить
+    // В результате сложения двух объектов ожидаем получить новый объект Counter
+    // В результате сравнения хотим получить bool
+    // Вместо названия метода идет ключевое слово operator и сам оператор
+    // Далее в скобках перечисляются параметры - один из них должен представлять класс или структуру, в котором определяется оператор
+    // В примере все перегруженные операторы бинарные - то есть проводятся над двумя объектами, поэтому
+    // для каждой перегрузки предусмотрено по два параметра
+    // В случае с операцией сложения хотим сложить два объекта класса Counter, то оператор принимает два объекта этого класса
+    // В результате сложения хотим получить новый объект Counter, поэтому этот класс используется в качестве возвращаемого типа
+    // Также переопределены две операции сравнения - если переопределяем одну из них, то также должны переопределить вторую
+    class Counter
+    {
+        public int Value { get; set; }
+        public static Counter operator +(Counter c1, Counter c2) { return new Counter { Value = c1.Value + c2.Value }; }
+        public static bool operator >(Counter c1, Counter c2) { return c1.Value > c2.Value; }
+        public static bool operator <(Counter c1, Counter c2) { return c1.Value < c2.Value; }
+
+        class Program
+        {
+            static void Main_()
+            {
+                Counter c1 = new Counter { Value = 23 };
+                Counter c2 = new Counter { Value = 45 };
+                bool result = c1 > c2;
+                Console.WriteLine(result);      // false
+                Counter c3 = c1 + c2;
+                Console.WriteLine(c3.Value);    // 23 + 45 = 68
+
+                Console.ReadKey();
+            }
+        }
+    }
+    #endregion
+
+    #region==== Сложность O(N) ==================================================
+    // Big O описывает скорость роста времени выполнения бесконечного алгоритма
+
+    // O(N^2 + B) не упрощается, т.к. мы ничего не знаем о 'B'
+    // O(A + B) Если выполняется одна ф-я, а затем другая, то общая сложность равна сумме сложностей, т.к. они не влияют друг на друга
+    // O(A * B) Если внутри одной ф-ии выполняется другая (либо есть вложенные циклы), то общая сложность равна произведению,
+    //          т.к. при увеличении времении выполнения вложенной ф-ии, увеличивается время выполнения родительской
+
+    // O(0)      На вход не передаются данные, либо алгоритм их не обрабатывает
+
+    // O(1)      Время обработки не меняется с изменением входного объема данных
+    //           В ф-ии нет циклов и рекурсии, она всегда выполняется фиксированное число шагов
+
+    // O(logN)   На каждой итерации берется половина элементов, как при бинарном поиске в отсортированном массиве
+
+    // O(N)      На скольлько возрастает объем входных данных, на столько возрастает и время обработки
+    //           Входной аргумент ф-ии определяет число шагов цикла/рекурсии
+    //           Алгоритм, описываемый как O(2N) нужно описывать без констант как O(N)
+    //           O(N + logN) = O(N), т.к. величина logN < N
+
+    // O(NlogN)  
+
+    // O(N^A)    Есть вложенные циклы, каждый выполняет от 0 до N шагов
+    //           Алгоритм, описываемый как O(N^2 + N), нужно описывать без неважной величины N как O(N^2)
+    //           O(N^2) - сложность пузырьковой сортировки
+
+    // O(A^N)    O(5 * 2^N + 10 * N^1000) = 2^N, т.к. степень растет быстрее всего остального
+
+    // O(N!)
+
+    // O(N^N)
+    #endregion
+
+    #region==== InterfaceLink ===================================================
     // Интерфейсы могут хранить свойства и методы
     public interface IMyInterface
     {
@@ -239,161 +432,159 @@ namespace InterfaceLink
         void F2();
     }
 
-    class A : IMyInterface
+    class Z : IMyInterface
     {
-        public void F1() 
-        { 
-            Console.WriteLine("F1"); 
-        }
-        
-
-        public void F2() 
-        { 
-            Console.WriteLine("F2");
-        }
+        public void F1() { Console.WriteLine("F1"); }
+        public void F2() { Console.WriteLine("F2"); }
     }
 
     class B
     {
         static void Main_()
         {
-            A objA = new A();
+            Z obj = new Z();
             IMyInterface inter;
-            inter = objA;
+            inter = obj;
             inter.F1();
             inter.F2();
         }
     }
-}
+    #endregion
 
-namespace Solid
-{
+    #region==== SOLID ===========================================================
     // Single Responsibility    большие классы разделять на малые, чтобы каждый выполнял конкретную задачу
     // Open Closed              методы класса должны быть открыты для расширения, но закрыты для модификации
     // Liskov Substitution      объекты можно заменить их наследниками без изменения свойств программы
     // Interface Segregation    не создавать интерфейсы с большим числом методов
     // Dependency Invertion     зависимости кода должны строиться от абстракции
-    interface IDependencyInjection
+    interface IDependencyInjection { void F1(); }
+
+    class A2 : IDependencyInjection
     {
-        void F1();
+        public void F1() { Console.WriteLine("1"); }
     }
 
-    class A : IDependencyInjection
+    class B1 : IDependencyInjection
     {
-        public void F1() 
-        { 
-            Console.WriteLine("1"); 
-        }
-    }
-
-    class B : IDependencyInjection
-    {
-        public void F1() 
-        { 
-            Console.WriteLine("2"); 
-        }
+        public void F1() { Console.WriteLine("2"); }
     }
 
     class C
     {
         private readonly IDependencyInjection _di;
-
-        public C(IDependencyInjection di)
-        {
-            _di = di;
-        }
-
-        public void F2()
-        {
-            _di.F1();
-        }
+        public C(IDependencyInjection di) { _di = di; }
+        public void F2() { _di.F1(); }
     }
 
-    class Program
+    class Program1
     {
         static void Main_()
         {
-            // A меняем на B при необходимости
-            IDependencyInjection dependencyInjection = new A();
+            IDependencyInjection dependencyInjection = new A2(); // A2 меняем на B1 при необходимости
             C c = new C(dependencyInjection);
             c.F2();
         }
     }
-}
+    #endregion
 
-namespace AbstractAndStaticClass
-{
+    #region==== AbstractAndStaticClass ==========================================
     // Статический класс нужен для группировки логически связанных членов
     // От него нельзя наследоваться и он не может реализовывать интерфейс
-    static class A
+    static class A3
     {
-        static public void F1() { Console.WriteLine("A"); }
+        static public void F1() { Console.WriteLine("A3"); }
     }
 
     // Абстрактные методы могут быть лишь в абстрактных классах, не могут иметь тело и должны быть переопределены наследником
-    // В отличие от интерфейсов, могут иметь поля, определение методов, конструктор, неявно вызываемый конструктором дочернего класса
-    abstract class B
+    // Могут иметь поля, определение методов, конструктор, неявно вызываемый конструктором дочернего класса
+    abstract class B3
     {
-        public void F2() { Console.WriteLine("B"); }
+        public void F2() { Console.WriteLine("B3"); }
         public abstract void F3();
     }
 
-    class Program : B
+    class Program4 : B3
     {
-        static void Main_()
+        static void Main3_()
         {
-            A.F1();
+            A3.F1();
 
-            B objB = new Program();
+            B3 objB = new Program4();
             objB.F2();
             objB.F3();
         }
 
         public override void F3() { Console.WriteLine("Program"); }
     }
-}
+    #endregion
 
-namespace OOP
-{
+    #region==== Наследование ====================================================
+    // Наследование реализует отношение is-a (является)
+    // Сначала отрабатывают конструкторы базовых классов, а потом производных
+    class InheritancePerson
+    {
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+        public void Display() { Console.WriteLine(Name); }
+    }
+
+    class InheritanceEmployee : InheritancePerson { }
+
+    class Inheritanve
+    {
+        static void Main()
+        {
+            InheritancePerson p = new InheritancePerson { Name = "Dima" };
+            p.Display();
+            p = new InheritanceEmployee { Name = "Kate" };
+            p.Display();
+
+            // Объект класса Employee также является объектом класса Person, поэтому можно создать объкт так
+            InheritancePerson p2 = new InheritanceEmployee { Name = "John" };
+            p2.Display();
+        }
+    }
+    #endregion
+
+    #region==== Множественное наследование ======================================
     // Множественное наследование запрещено, но его можно реализовать через интерфейсы
-    class A
+    class A4
     {
         public void F1() { Console.WriteLine("F1"); }
     }
 
-    interface IB
-    {
-        void F2();
-    }
+    interface IB { void F2(); }
 
-    class B : IB
+    class B4 : IB
     {
         public void F2() { Console.WriteLine("F2"); }
     }
 
-    class C : A, IB
+    class C4 : A4, IB
     {
-        B objB = new B();
+        B4 objB = new B4();
         public void F2() { objB.F2(); }
     }
 
-    class Program
+    class ProgramOOP
     {
-        static void Main_()
+        static void Main4_()
         {
-            C objC = new C();
+            C4 objC = new C4();
             objC.F1();
             objC.F2();
         }
     }
-}
+    #endregion
 
-namespace Polymorphism
-{
-    class A
+    #region==== Polymorphism ====================================================
+    class A5
     {
-        public A() { Console.WriteLine("ctor A"); }
-
+        public A5() { Console.WriteLine("ctor A"); }
         public virtual void F1() { Console.WriteLine("A1"); }
         public void F2() { Console.WriteLine("A2"); }
         public virtual void F3() { Console.WriteLine("A3"); }
@@ -402,10 +593,9 @@ namespace Polymorphism
         public void F6() { Console.WriteLine("A6"); }
     }
 
-    class B : A
+    class B5 : A5
     {
-        public B() { Console.WriteLine("ctor B"); }
-
+        public B5() { Console.WriteLine("ctor B"); }
         public override void F1() { Console.WriteLine("B1"); }
         public void F2() { Console.WriteLine("B2"); }
         public new void F3() { Console.WriteLine("B3"); }
@@ -413,12 +603,12 @@ namespace Polymorphism
         public void F6() { Console.WriteLine("B6"); }
     }
 
-    class Program
+    class ProgramPolymorphism
     {
-        static void Main_()
+        static void Main5_()
         {
             // upcast
-            A obj = new B();    // ctorA ctorB
+            A5 obj = new B5();    // ctorA ctorB
             obj.F1();           // B1
             obj.F2();           // A2
             obj.F3();           // A3
@@ -430,7 +620,7 @@ namespace Polymorphism
 
             // downcast
             //B obj2 = new A() as B;  // ctorA
-            B obj2 = obj as B;
+            B5 obj2 = obj as B5;
             obj.F1();           // B1
             obj.F2();           // A2
             obj.F3();           // A3
@@ -439,12 +629,11 @@ namespace Polymorphism
             obj.F6();           // A6
         }
     }
-}
+    #endregion
 
-namespace TypeConversion
-{
-    class A { }
-    class B { }
+    #region==== Преобразование типов ============================================
+    class A6 { }
+    class B6 { }
 
     class Person
     {
@@ -459,10 +648,9 @@ namespace TypeConversion
             {
                 Employee e = (Employee)o;
 
-
                 // Если А — базовый класс, а В — дочерний:
-                A a = new A();
-                B b = new B();
+                A6 a = new A6();
+                B6 b = new B6();
                 //if (a is A) // true
                 //if (b is B) // true
                 //if (a is B) // false
@@ -482,37 +670,25 @@ namespace TypeConversion
         }
 
         public string Name { get; set; }
-        public Person(string name)
-        {
-            Name = name;
-        }
-        public void Display()
-        {
-            Console.WriteLine($"Person {Name}");
-        }
+        public Person(string name) { Name = name; }
+        public void Display() { Console.WriteLine($"Person {Name}"); }
     }
 
     class Employee : Person
     {
         public string Company { get; set; }
-        public Employee(string name, string company) : base(name)
-        {
-            Company = company;
-        }
+        public Employee(string name, string company) : base(name) { Company = company; }
     }
 
     class Client : Person
     {
         public string Bank { get; set; }
-        public Client(string name, string bank) : base(name)
-        {
-            Bank = bank;
-        }
+        public Client(string name, string bank) : base(name) { Bank = bank; }
     }
 
-    class Program
+    class ProgramTypeConversion
     {
-        static void Main_()
+        static void Main6_()
         {
             // ВОСХОДЯЩИЕ ПРЕОБРАЗОВАНИЯ (upcasting)
             // Переменной person типа Person присваивается ссылка на объект Employee
@@ -521,94 +697,73 @@ namespace TypeConversion
             // Employee наследуется от Person, поэтому выполняется восходящее преобразование,
             // в итоге employee и person указывают на один объект,
             // но переменной person доступна только та часть, которая представляет функционал Person
-            Employee emp = new Employee("Dima", "Company");
-            Person per = emp;
-            Console.WriteLine(per.Name);
+            //Employee emp = new Employee("Dima", "Company");
+            //Person per = emp; // Слева базовый класс, справа дочерний
+            //Console.WriteLine(per.Name);
 
-            Person per2 = new Client("Bob", "Bank");
-            Console.WriteLine(per2.Name);
-
-            // object - базовый тип для всех остальных типов, преобразование к нему
-            // происходит автоматически
-            object per3 = new Employee("Name", "Company");  // не можем получить доступ ни к одному полю
-            object per4 = new Client("Name", "Company");    // не можем получить доступ ни к одному полю
-            object per5 = new Person("Name");               // можем получить доступ к полю Name
-            Console.WriteLine(per.Name);
+            //Person per2 = new Client("Bob", "Bank");
+            //Console.WriteLine(per2.Name);
 
             // НИСХОДЯЩИЕ ПРЕОБРАЗОВАНИЯ (downcasting)
             // Кроме восходящих преобразований от производного к базовому типу есть нисходящие преобразования
             // от базового к производному
-            // Чтобы обратиться к функционалу типа Employee через переменную типа Person, нужно применить явное преобразования,
-            // указав в скобках тип, к которому нужно выполнить преобразование
-            Employee emp2 = new Employee("Tom", "Microsoft");
-            Person per6 = emp2;                 // преобразование от Employee к Person
-                                                //Employee emp2 = per6;             // так нельзя, нужно явное преобразование
-            Employee emp3 = (Employee)per6;     // преобразование от Person к Employee
-            Console.WriteLine(emp3.Company);
+            // Чтобы обратиться к функционалу типа Employee через переменную типа Person,
+            // нужно применить явное преобразование
+            //Employee emp2 = new Employee("Tom", "Microsoft");
+            //Person per6 = emp2;             // преобразование от Employee к Person
+            //Employee emp2 = per6; // так нельзя, нужно явное преобразование
+            //Employee emp3 = (Employee)per6; // преобразование от Person к Employee
+            //Console.WriteLine(emp3.Company);
 
             // obj присвоена ссылка на Employee, поэтому можем преобразовать obj к любому типу,
             // который располагается в иерархии классов между object и Employee
-            object obj = new Employee("Bill", "Microsoft");
-            Employee emp4 = (Employee)obj;
+            //object obj = new Employee("Bill", "Microsoft");
+            //Employee emp4 = (Employee)obj;
 
-            Person person = new Client("Sam", "ContosoBank");
-            Client client = (Client)person;
+            //Person person = new Client("Sam", "ContosoBank");
+            //Client client = (Client)person;
 
-            object obj2 = new Employee("Bill", "Microsoft");
-            ((Person)obj2).Display();               // преобразование к Person для вызова метода Display
-            ((Employee)obj2).Display();             // эквивалентно предыдущей записи
-            string comp = ((Employee)obj2).Company; // преобразование к Employee, чтобы получить свойство Company
+            //object obj2 = new Employee("Bill", "Microsoft");
+            //((Person)obj2).Display();               // преобразование к Person для вызова метода Display
+            //((Employee)obj2).Display();             // эквивалентно предыдущей записи
+            //string comp = ((Employee)obj2).Company; // преобразование к Employee, чтобы получить свойство Company
 
             // Ниже получим ошибку, т.к. obj3 хранит ссылку на объект Employee, а не Client
-            object obj3 = new Employee("Bill", "Microsoft");
-            string bank = ((Client)obj3).Bank;
+            //object obj3 = new Employee("Bill", "Microsoft");
+            //string bank = ((Client)obj3).Bank;
 
             // СПОСОБЫ ПРЕОБРАЗОВАНИЙ
             // as пытается преобразовать выражение к определенному типу и не выбрасывает исключение
             // В случае неудачи вернет null
-            Person per7 = new Person("Tom");
-            Employee emp5 = per7 as Employee;
-            if (emp == null)
-            {
-                Console.WriteLine("Преобразование прошло неудачно");
-            }
-            else
-            {
-                Console.WriteLine(emp.Company);
-            }
+            //Person per7 = new Person("Tom");
+            //Employee emp5 = per7 as Employee;
+            //if (emp == null) { Console.WriteLine("Преобразование прошло неудачно"); }
+            //else { Console.WriteLine(emp.Company); }
 
             // is - проверка допустимости преобразования
             // person is Employee проверяет, является ли person объектом типа Employee
             // В данном случае не является, поэтому вернет false
-            Person per8 = new Person("Tom");
-            if (per8 is Employee)
-            {
-                Employee emp6 = (Employee)per8;
-                Console.WriteLine(emp6.Company);
-            }
-            else
-            {
-                Console.WriteLine("Преобразование не допустимо");
-            }
+            //Person per8 = new Person("Tom");
+            //if (per8 is Employee)
+            //{
+            //    Employee emp6 = (Employee)per8;
+            //    Console.WriteLine(emp6.Company);
+            //}
+            //else { Console.WriteLine("Преобразование не допустимо"); }
         }
     }
-}
+    #endregion
 
-namespace Generics
-{
-    class A<T>
+    #region==== Generics ========================================================
+    class A7<T>
     {
         public void Display<B>() { }
     }
 
-    class B<T>
+    class B7<T>
     {
         T x;
-
-        public void Display<B>(B y)
-        {
-            Console.WriteLine(x.GetType() + " " + y.GetType());
-        }
+        public void Display<B>(B y) { Console.WriteLine(x.GetType() + " " + y.GetType()); }
     }
 
     class C<T>
@@ -631,7 +786,6 @@ namespace Generics
     class E<T> : C<T>
     {
         T x;
-
         public E(T _x) : base(_x) { x = _x; }
     }
 
@@ -646,13 +800,12 @@ namespace Generics
         public T param1 { get; set; }
         public Z param2 { get; set; }
         public F(T _x, Z _y) { x = _x; y = _y; }
-
         public T F1() { return x; } // шаблонный тип можно возвращать
     }
 
     delegate R Del<R, T>(T val);
 
-    class Program
+    class ProgramGenerics
     {
         static int Displ(int val)
         {
@@ -660,12 +813,12 @@ namespace Generics
             return 0;
         }
 
-        static void Main_()
+        static void Main7_()
         {
-            A<int> objA = new A<int>();
+            A7<int> objA = new A7<int>();
             objA.Display<int>();
 
-            B<bool> objB = new B<bool>();
+            B7<bool> objB = new B7<bool>();
             objB.Display<bool>(true);
 
             Del<int, int> del = new Del<int, int>(Displ);
@@ -675,27 +828,15 @@ namespace Generics
             D<bool, string> c2 = new D<bool, string>(true, "false");
         }
     }
-}
+    #endregion
 
-namespace Iterator
-{
+    #region==== Iterator ========================================================
     // Итератор возвращает все члены коллекции от начала до конца
     // Нужен для сокрытия коллекции и способа ее обхода, т.к. массивы, структуры и т.д. обходятся по разному,
     // без итераторов пришлось бы для каждой коллекции знать, как ее обходить
     // В отличие от стандартных коллекций (Dictionary), пользовательские (Итераторы) могут иметь больше возможностей
-    class Program
-    {
-        static void Main_()
-        {
-            A objA = new A();
-
-            foreach (var i in objA)  // Цикл автоматически вызовет метод GetEnumerator
-                Console.WriteLine(i);
-        }
-    }
-
     // Интерфейс IEnumerable перебирает элементы коллекции
-    class A : IEnumerable
+    class A8 : IEnumerable
     {
         int[] arr = new int[8] { 0, 1, 2, 3, 4, 5, 6, 7 };
 
@@ -705,13 +846,23 @@ namespace Iterator
                 yield return arr[i];
         }
     }
-}
 
-namespace Cortege
-{
+    class ProgramIterator
+    {
+        static void Main8_()
+        {
+            A8 objA = new A8();
+
+            foreach (var i in objA) // Цикл автоматически вызовет метод GetEnumerator
+                Console.WriteLine(i);
+        }
+    }
+    #endregion
+
+    #region==== Кортежи =========================================================
     // Через NuGet нужно установить System.ValueTuple
     // Нужны для возвращения из функции двух и боле значений
-    class Program
+    class ProgramCortege
     {
         private static (int, int) GetValues()
         {
@@ -751,28 +902,29 @@ namespace Cortege
             Console.WriteLine(result);
         }
     }
-}
+    #endregion
 
-namespace Linq
-{
-    // IEnumerable определяет метод GetEnumerator, который возвращает IEnumerator. IEnumerator показывает элементы коллекции
+    #region==== LINQ ============================================================
+    //===========================================================================
+    // IEnumerable определяет метод GetEnumerator, который возвращает IEnumerator
+    // IEnumerator показывает элементы коллекции
     // Каждый экземпляр Enumerator находится в определенной позиции и может предоставить этот элемент (IEnumerator.Current)
     // или перейти к следующему (IEnumerator.MoveNext). Цикл foreach использует IEnumerator
-    class A
+    class A9
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
-    class Program
+    class ProgramLinq
     {
         static void Main_()
         {
-            IEnumerable<A> collA = new List<A>()
+            IEnumerable<A9> collA = new List<A9>()
         {
-            new A { Id = 2, Name = "Dima" },
-            new A { Id = 4, Name = "Champion" },
-            new A { Id = 1, Name = "Developer" },
+            new A9 { Id = 2, Name = "Dima" },
+            new A9 { Id = 4, Name = "Champion" },
+            new A9 { Id = 1, Name = "Developer" },
         };
 
             var query1 = collA.Where(f => f.Name.StartsWith("D"))
@@ -831,13 +983,12 @@ namespace Linq
             //var data14 = dbContext.PupilTable.Min(e => e.Id);                     // Min/Max значение заданного параметра
         }
     }
-}
+    #endregion
 
-namespace Indexator
-{
-    // Индексаторы — свойства с параметрами
+    #region==== Indexator =======================================================
+    // Индексаторы — свойства с параметрами и без названия, должны иметь минимум один параметр
     // В классе может быть более одного индексатора, они должны отличаться типом или количеством индексов
-    class A
+    class A10
     {
         private int[] arr = new int[5];
         public int this[int i]
@@ -859,7 +1010,7 @@ namespace Indexator
         private List<Car> _cars = new List<Car>();
         private const int MAX_CARS = 100;
 
-        public Car this[string indexNumber] // Данный индексатор позволяет обращаться к объектам коллекции Car
+        public Car this[string indexNumber] // Индексатор позволяет обращаться к объектам коллекции Car
         {
             get
             {
@@ -896,34 +1047,33 @@ namespace Indexator
         }
     }
 
-    class Program
+    class ProgramIndexator
     {
         static void Main_()
         {
-            A obj = new A();
+            A10 obj = new A10();
             obj[0] = 0;
             obj[1] = 1;
             Console.WriteLine(obj[0]);
             Console.WriteLine(obj[1]);
 
             var cars = new List<Car>()
-        {
-            new Car() { Name = "Lada", Number = "12132EA" },
-            new Car() { Name = "Hyundai", Number = "2225EN" },
-        };
+            {
+                new Car() { Name = "Lada", Number = "12132EA" },
+                new Car() { Name = "Hyundai", Number = "2225EN" },
+            };
 
             var parking = new Parking();
             foreach (var item in cars) { parking.Add(item); }
 
-            Console.WriteLine(parking["12132EA"].Name);              // Выведет Lada
+            Console.WriteLine(parking["12132EA"].Name);                     // Выведет Lada
             parking[1] = new Car() { Name = "BMW", Number = "156742XN" };   // Устанавливаем значение через индексатор 
             Console.WriteLine(parking[1]);
         }
     }
-}
+    #endregion
 
-namespace MemoryClean
-{
+    #region==== MemoryClean =====================================================
     // Большинство объектов программы относятся к управляемым и очищаются сборщиком мусора, но есть неуправляемые
     // объекты (низкоуровневые файловые дескрипторы, сетевые подключения), которые сборщик мусора не может удалить    
     // Освобождение неуправляемых ресурсов подразумевает реализацию одного из двух механизмов
@@ -932,9 +1082,9 @@ namespace MemoryClean
 
     // Финализатор вызывается непосредственно перед сборкой мусора
     // Программа может завершиться до того, как произойдет сборка мусора, поэтому финализатор может быть не вызван
-    class A
+    class A11
     {
-        ~A() { Console.WriteLine("Destructor"); }
+        ~A11() { Console.WriteLine("Destructor"); }
     }
 
     // На деле сборщик мусора вызывает не финализатор, а метод Finalize класса A, потому что компилятор компилирует
@@ -946,21 +1096,21 @@ namespace MemoryClean
     //}
 
     // IDisposable объявляет один единственный метод Dispose, освобождающий неуправляемые ресурсы, он вызывает финализатор немедленно
-    public class B : IDisposable
+    public class B11 : IDisposable
     {
         public void Dispose() { Console.WriteLine("Dispose"); }
     }
 
-    class Program
+    class ProgramMemoryClean
     {
         // try finally гарантирует, что в случае исключения Dispose освободит ресурсы
         // Можно использовать using
         private static void Test()
         {
-            B objB = null;
+            B11 objB = null;
             try
             {
-                objB = new B();
+                objB = new B11();
             }
             finally
             {
@@ -969,93 +1119,72 @@ namespace MemoryClean
             }
         }
 
-        static void Main_()
+        static void Main11_()
         {
             Test();
         }
     }
-}
+    #endregion
 
-namespace Exceptions
-{
-// Исключение не обязательно должно быть обработано в том классе, где оно произошло
-// Можно создать класс для обработки определенных исключений
-public class ExceptionHandler
-{
-    public static void Handle(Exception e)
+    #region==== Exceptions ======================================================
+    // Исключение не обязательно должно быть обработано в том классе, где оно произошло
+    // Можно создать класс для обработки определенных исключений
+    public class ExceptionHandler
     {
-        if (e.GetBaseException().GetType() == typeof(ArgumentException))
-            Console.WriteLine("You caught ArgumentException");
-        else
-            throw e;
-    }
-}
-
-public static class ExceptionThrower
-{
-    public static void TriggerException(bool isTrigger)
-    {
-        throw new ArgumentException();
-    }
-}
-
-class Program
-{
-    public static void F1()
-    {
-        // Программа выведет 1 2 3 4 6
-        try
+        public static void Handle(Exception e)
         {
-            // Сначала выполнятся try catch finally данного уровня, даже если возникнет исключение
-            try
+            if (e.GetBaseException().GetType() == typeof(ArgumentException))
+                Console.WriteLine("You caught ArgumentException");
+            else
+                throw e;
+        }
+    }
+
+    public static class ExceptionThrower
+    {
+        public static void TriggerException(bool isTrigger) { throw new ArgumentException(); }
+    }
+
+    class ProgramExceptions
+    {
+        public static void F1()
+        {
+            try // Программа выведет 1 2 3 4 6
             {
-                Console.WriteLine("1");
-                throw new NullReferenceException();
+                try // Сначала выполнятся try catch finally данного уровня, даже если возникнет исключение
+                {
+                    Console.WriteLine("1");
+                    throw new NullReferenceException();
+                }
+                catch
+                {
+                    Console.WriteLine("2");
+                    throw;  // Если убрать эту строку, программа выведет 1 2 3 6
+                            // Здесь throw перебрасывает исключение, пойманное в catch так, как будто бы catch его не поймал,
+                            // поэтому бросается то же исключение, что было поймано выше - NullReferenceException
+                            // throw без аргументов можно вызвать только из блока catch
+                }
+                // Вызовется в любом случае
+                finally { Console.WriteLine("3"); }
             }
-            catch
-            {
-                Console.WriteLine("2");
-                throw;  // Если убрать эту строку, программа выведет 1 2 3 6
-                        // Здесь throw перебрасывает исключение, пойманное в catch так, как будто бы catch его не поймал,
-                        // поэтому бросается то же исключение, что было поймано выше - NullReferenceException
-                        // throw без аргументов можно вызвать только из блока catch
-            }
+            // Если в try произошло исключение, то вызовется соответствующий блок catch
+            catch (NullReferenceException ex) { Console.WriteLine("4"); }
+            catch (Exception ex) { Console.WriteLine("5"); }
             finally // Вызовется в любом случае
             {
-                Console.WriteLine("3");
+                Console.WriteLine("6");
+                throw new NullReferenceException(); // Необработанное исключение
             }
         }
-        // Если в try произошло исключение, то вызовется соответствующий блок catch
-        catch (NullReferenceException ex)
+        static void Main12_()
         {
-            Console.WriteLine("4");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("5");
-        }
-        finally // Вызовется в любом случае
-        {
-            Console.WriteLine("6");
-            throw new NullReferenceException(); // Необработанное исключение
+            try { ExceptionThrower.TriggerException(true); }
+            catch (Exception e) { ExceptionHandler.Handle(e); }
         }
     }
-    static void Main_()
-    {
-        try
-        {
-            ExceptionThrower.TriggerException(true);
-        }
-        catch (Exception e)
-        {
-            ExceptionHandler.Handle(e);
-        }
-    }
-}
-}
+    #endregion
 
-namespace Events
-{
+    #region==== Events ==========================================================
     public class E
     {
         // В отличие от делегатов, события более защищены от непреднамеренных изменений,
@@ -1065,17 +1194,8 @@ namespace Events
         public delegate void MyDel();
         public event MyDel TankIsEmpty;     // Объявляем событие для нашего типа делегата
         public void F1() { TankIsEmpty(); } // Метод вызывает событие
-
-        static void EventHandlerMethod1() 
-        { 
-            Console.WriteLine("1"); 
-        }
-
-        static void EventHandlerMethod2()
-        { 
-            Console.WriteLine("2"); 
-        }
-
+        static void EventHandlerMethod1() { Console.WriteLine("1"); }
+        static void EventHandlerMethod2() { Console.WriteLine("2"); }
         static void Main_()
         {
             E obj = new E();
@@ -1087,28 +1207,20 @@ namespace Events
 
     // Пример 3
     public delegate void del();
-    public class A
+    public class A13
     {
-        public event del ev = null; // создаем событие
-        public void InvokeEvent()   // здесь можно проверять, кто вызывает событие
-        { ev.Invoke(); }
+        public event del ev = null; // Создаем событие
+        public void InvokeEvent() { ev.Invoke(); } // Здесь можно проверять, кто вызывает событие
     }
 
-    class B
+    class B13
     {
-        static private void F1() 
-        {
-            Console.WriteLine("0");
-        }
-
-        static private void F2() 
-        {
-            Console.WriteLine("1");
-        }
+        static private void F1() { Console.WriteLine("0"); }
+        static private void F2() { Console.WriteLine("1"); }
 
         static void Main_()
         {
-            A objA = new A();
+            A13 objA = new A13();
             // присваиваем событию делегат, на который подписываем метод
             objA.ev += new del(F1); // смысл
             objA.ev += F2;          // одинаковый
@@ -1116,7 +1228,7 @@ namespace Events
         }
     }
 
-    public class C
+    public class C13
     {
         public del ev = null;
         // add remove
@@ -1131,77 +1243,50 @@ namespace Events
 
     class D
     {
-        private static void Method0()
-        { 
-            Console.WriteLine("0"); 
-        }
-
-        private static void Method1()
-        { 
-            Console.WriteLine("1");
-        }
+        private static void Method0() { Console.WriteLine("0"); }
+        private static void Method1() { Console.WriteLine("1"); }
 
         static void Main_()
         {
-            C objC = new C();
+            C13 objC = new C13();
             objC.Event += Method0;
             objC.Event += Method1;
-            objC.Event += delegate { 
-                Console.WriteLine("Anonimnuy method"); 
-            };
+            objC.Event += delegate { Console.WriteLine("Anonimnuy method"); };
             // Отписать анонимный метод нельзя, код ниже не сработает
-            objC.Event -= delegate {
-                Console.WriteLine("Anonimnuy method"); 
-            };
+            objC.Event -= delegate { Console.WriteLine("Anonimnuy method"); };
             objC.InvokeEvent();
         }
     }
-}
+    #endregion
 
-namespace Delegates
-{
+    #region==== Delegates =======================================================
     // На делегаты можно подписать один и более методов, а затем при вызове делегата будут вызваны эти методы
     // Делегаты можно суммировать
     // Сигнатуры делегата и его методов должны совпадать
     // Если на делегат подписано несколько методов, возвращающих значение, то через делегат мы получим значение лишь последнего метода
 
     // Пример 1
-    static class A
+    static class A14
     {
-        public static void Display1() 
-        { 
-            Console.WriteLine("1"); 
-        }
-
-        public static void Display2()
-        {
-            Console.WriteLine("2"); 
-        }
+        public static void Display1() { Console.WriteLine("1"); }
+        public static void Display2() { Console.WriteLine("2"); }
     }
 
     delegate void Del4();
 
-    class Program
+    class ProgramDelegates
     {
         static void Main_()
         {
-            Del4 del1 = new Del4(A.Display1);
-            Del4 del2 = new Del4(A.Display2);
+            Del4 del1 = new Del4(A14.Display1);
+            Del4 del2 = new Del4(A14.Display2);
             Del4 del3 = del1 + del2;
             del3(); // 1 2
                     // del.Invoke();  // аналогичный, но более наглядный способ вызова делегата
         }
 
-        static void F1() 
-        { 
-            Console.WriteLine("F1"); 
-        }
-
-        static void F2() 
-        {
-            Console.WriteLine("F2"); 
-        }
-
+        static void F1() { Console.WriteLine("F1"); }
+        static void F2() { Console.WriteLine("F2"); }
         delegate void MyDel();
 
         void Start()
@@ -1247,18 +1332,16 @@ namespace Delegates
         static void Main_3()
         {
             Del2 del; // 3 варианта одного и того-же:
-
-            del = delegate (int val) { 
-                Console.WriteLine("0"); return val * 2; 
-            };
-
-            del = (val) => { 
-                Console.WriteLine("0"); return val * 2;
-            };
-
-            del = val => val * 2;   // 1е значение - аргумент, 2е - возвращаемое значение
-
+            del = delegate (int val) { Console.WriteLine("0"); return val * 2; };
+            del = (val) => { Console.WriteLine("0"); return val * 2; };
+            del = val => val * 2; // 1е значение - аргумент, 2е - возвращаемое значение
             Console.WriteLine(del(5));
         }
     }
+    #endregion
 }
+
+#region==== .................. ==============================================
+//===========================================================================
+// 
+#endregion

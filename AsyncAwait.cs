@@ -27,10 +27,7 @@ namespace SharpEdu
             static void F1_1()
             {
                 int result = 1;
-                for (int i = 1; i <= 6; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= 6; i++) { result *= i; }
                 Thread.Sleep(8000);
                 Console.WriteLine($"Factorial equals {result}");
             }
@@ -52,10 +49,7 @@ namespace SharpEdu
             await Task.Run(() =>
             {
                 int result = 1;
-                for (int i = 1; i <= 6; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= 6; i++) { result *= i; }
                 Thread.Sleep(8000);
                 Console.WriteLine($"Factorial equals {result}");
             });
@@ -68,18 +62,12 @@ namespace SharpEdu
             static void F3_1(int n)
             {
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Thread.Sleep(5000);
                 Console.WriteLine($"Факториал равен {result}");
             }
             
-            static async void F3_2Async(int n)
-            {
-                await Task.Run(() => F3_1(n));
-            }
+            static async void F3_2Async(int n) { await Task.Run(() => F3_1(n)); }
 
             F3_2Async(5);
             F3_2Async(6);
@@ -93,10 +81,7 @@ namespace SharpEdu
             static int F4_1(int n)
             {
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 return result;
             }
 
@@ -132,10 +117,7 @@ namespace SharpEdu
             static void Factorial(int n)
             {
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Факториал равен {result}");
             }
 
@@ -152,17 +134,11 @@ namespace SharpEdu
             static void F6_1(int n)
             {
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Factorial equals {result}");
             }
 
-            static async Task F6_2Async(int n)
-            {
-                await Task.Run(() => F6_1(n));
-            }
+            static async Task F6_2Async(int n) { await Task.Run(() => F6_1(n)); }
 
             F6_2Async(5);
             F6_2Async(6);
@@ -181,17 +157,11 @@ namespace SharpEdu
             static int F7_1(int n)
             {
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 return result;
             }
 
-            static async Task<int> F7_2Async(int n)
-            {
-                return await Task.Run(() => F7_1(n));
-            }
+            static async Task<int> F7_2Async(int n) { return await Task.Run(() => F7_1(n)); }
 
             int n1 = await F7_2Async(5); // Чтобы получить результат асинхронного метода,                                         
             int n2 = await F7_2Async(6); // применяем оператор await при вызове F7_2Async
@@ -209,17 +179,11 @@ namespace SharpEdu
             static int F8_1(int n)
             {
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 return result;
             }
             
-            static async ValueTask<int> F8_2Async(int n)
-            {
-                return await Task.Run(() => F8_1(n));
-            }
+            static async ValueTask<int> F8_2Async(int n) { return await Task.Run(() => F8_1(n)); }
 
             int n1 = await F8_2Async(5);
             int n2 = await F8_2Async(6);
@@ -242,10 +206,7 @@ namespace SharpEdu
             static void F9_1(int n)
             {
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Factorial of number {n} equals {result}");
             }
             // определение асинхронного метода
@@ -272,10 +233,7 @@ namespace SharpEdu
             static void F10_1(int n)
             {
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Factorial of number {n} equals {result}");
             }
             
@@ -306,23 +264,14 @@ namespace SharpEdu
                 if (n < 1)
                     throw new Exception($"{n} : number can't be less than 1");
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Factorial of number {n} equals {result}");
             }
 
             static async void F11_2Async(int n)
             {
-                try
-                {
-                    await Task.Run(() => F11_1(n));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                try { await Task.Run(() => F11_1(n)); }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
 
             F11_2Async(-4);
@@ -341,13 +290,9 @@ namespace SharpEdu
         {
             static void F12_1(int n)
             {
-                if (n < 1)
-                    throw new Exception($"{n} : number can't be less than 1");
+                if (n < 1) throw new Exception($"{n} : number can't be less than 1");
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Factorial of number {n} equals {result}");
             }
 
@@ -385,13 +330,9 @@ namespace SharpEdu
         {
             static void F13_1(int n)
             {
-                if (n < 1)
-                    throw new Exception($"{n} : number can't be less than 1");
+                if (n < 1) throw new Exception($"{n} : number can't be less than 1");
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Factorial of number {n} equals {result}");
             }
 
@@ -426,36 +367,22 @@ namespace SharpEdu
         }
         #endregion
 
-        #region==== await в блоках catch и finally ==================================
-        // В catch и finally может быть асинхронный код
-        public static void F14()
+        #region==== await в блоках catch и finally ==================================        
+        public static void F14() // В catch и finally может быть асинхронный код
         {
             static void F14_1(int n)
             {
-                if (n < 1)
-                    throw new Exception($"{n} : number can't be less than 1");
+                if (n < 1) throw new Exception($"{n} : number can't be less than 1");
                 int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    result *= i;
-                }
+                for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Factorial of number {n} equals {result}");
             }
 
             static async void F14_2Async(int n)
             {
-                try
-                {
-                    await Task.Run(() => F14_1(n)); ;
-                }
-                catch (Exception ex)
-                {
-                    await Task.Run(() => Console.WriteLine(ex.Message));
-                }
-                finally
-                {
-                    await Task.Run(() => Console.WriteLine("await в блоке finally"));
-                }
+                try { await Task.Run(() => F14_1(n)); }
+                catch (Exception ex) { await Task.Run(() => Console.WriteLine(ex.Message)); }
+                finally { await Task.Run(() => Console.WriteLine("await в блоке finally")); }
             }
 
             F14_2Async(-4);
@@ -503,8 +430,7 @@ namespace SharpEdu
             
             static async void F15_2Async(int n, CancellationToken token)
             {
-                if (token.IsCancellationRequested)
-                    return;
+                if (token.IsCancellationRequested) return;
                 await Task.Run(() => F15_1(n, token));
             }
 
@@ -548,10 +474,7 @@ namespace SharpEdu
                 }
             }
 
-            await foreach (var number in F16_1())
-            {
-                Console.WriteLine(number);
-            }
+            await foreach (var number in F16_1()) { Console.WriteLine(number); }
         }
         #endregion
 
@@ -575,16 +498,13 @@ namespace SharpEdu
         {
             Repository repo = new Repository();
             IAsyncEnumerable<string> data = repo.F1();
-            await foreach (var name in data)
-            {
-                Console.WriteLine(name);
-            }
+            await foreach (var name in data) { Console.WriteLine(name); }
         }
         #endregion
     }
 }
 
-// async void method
+#region==== Возвращение void ================================================
 // Использовать такие методы необходимо осторожно - могут вызвать непредсказуемое поведение
 // Чтобы не было проблем, async void заменить на async Task
 // Внутри async void метода должна быть обработка ошибок через try catch и в вызывающем коде тоже
@@ -595,21 +515,14 @@ namespace SharpEdu
 // - метод является event handler
 // - метод - это команда, которая является имплементацией интерфейса ICommand.Execute
 // - метод - это callback, то есть вызывается после завершения асинхронной операции
-//  если библиотека не ожидает асинхронный callback, нужно предоставить callback с синхронной сигнатурой, которая для async метода может только возвращать void
-// handle exceptions in async code
-
+// Если библиотека не ожидает асинхронный callback, нужно предоставить callback с синхронной сигнатурой,
+// которая для async метода может только возвращать void handle exceptions in async code
 public static class TaskExtensions
 {
     public async static void Await(this Task task)
     {
-        try
-        {
-            await task;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
+        try { await task; }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
 }
 
@@ -622,59 +535,19 @@ class Program
         throw new Exception("throw new Exception, thread " + Thread.CurrentThread.ManagedThreadId);
         Console.WriteLine("3, thread " + Thread.CurrentThread.ManagedThreadId);
     }
-    
-    static void Main(string[] args)
+
+    static void Main_(string[] args)
     {
         try
         {
             Console.WriteLine("1, thread " + Thread.CurrentThread.ManagedThreadId);
-            F1().Await(); // Вызываем расширяющий метод, который перехватывает исключение, без него код отработает без ошибок и исключение так и останется не перехваченным
+            F1().Await(); // Вызываем расширяющий метод, который перехватывает исключение,
+                          // без него код отработает без ошибок и исключение так и останется не перехваченным
             Console.WriteLine("4, thread " + Thread.CurrentThread.ManagedThreadId);
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine("catch_2 " + ex);
-        }
+        catch (Exception ex) { Console.WriteLine("catch_2 " + ex); }
         Console.WriteLine("5, thread " + Thread.CurrentThread.ManagedThreadId);
         Console.ReadKey();
     }
 }
-
-// Dependecy Injection, Autofac
-// https://www.youtube.com/watch?v=mCUNrRtVVWY
-
-// Viper
-// Чистая архитектура для приложений iOS
-// В VIPER каждый блок соответствует объекту с конкретными задачами, входами и выходами
-// Как у рабочих на сборочной линии - когда рабочий завершает работу над объектом, объект передается следующему рабочему
-
-// V (View) обновление пользовательского интерфейса
-//               View пассивна, она ждет Presenter, чтобы передать содержание для выведения на экран
-//               Никогда не запрашивает данные у Presenter             
-// View — это абстрактный интерфейс, определенный в Objective-C с помощью протокола. UIViewController или один из его подклассов реализуют протокол View. Например, это может быть экран входа в систему
-// I (Interactor) выборка данных из модели, реализация независима от интерфейса
-//        вся логика написана внутри Interactor, например, вызов API
-//        содержит бизнес-логику для управления объектами (Entity)
-// P(Presenter) получает данные от Interactor и передает их в View, и наоборот
-//        Entity никогда не передаются из Interactor'а к Presenter'у
-//        Вместо этого простые структуры данных, у которых нет поведения, передаются из Interactor'а к Presenter'у
-//        Это препятствует любой ‘реальной работе’ в Presenter'е
-//        Presenter может только подготовить данные для отображения на View
-// E (Entity) содержит объектную модель, которая используется Interactor, например, студент, друг, колледж
-//        никогда не передает сущности уровню представления
-// R (Routing / Wireframe - Маршрутизатор) содержит навигационную логику для приложения, например, действие кнопки "Далее" показывает второй экран
-//        Обрабатывает навигацию от одного экрана к другому
-//        Ответственен за создание Interactor, Presenter и View/ViewController и за настройки ViewController
-//        Так как Presenter содержит логику, чтобы реагировать на ввод данных пользователем, Presenter знает, когда перейти на другой экран
-//        Wireframe знает, как это сделать? поэтому Presenter использует Wireframe
-// Data Store (Хранилище данных) веб - сервис или БД, отвечает за предоставление Entity в Interactor
-//        Поскольку Interactor применяет свою бизнес-логику, он будет осуществлять выборку Entity из хранилища данных, управлять Entity и затем возвращать обновленные Entity назад в хранилище данных
-//        Entity не знают о хранилище данных и не знают, как сохраняться
-
-// Модули независимы, поэтому VIPER хорош для больших команд
-// Делает исходный код более чистым, компактным и пригодным для повторного использования
-// Проще принять TDD - разработку через тестирование
-// Легко добавлять новые функции в существующее приложение, не меняя другие модули
-// Можно применять SOLID принципы
-// Меньше конфликтов слияния
-// Упрощает написание автотестов, поскольку логика интерфейса отделена от бизнес-логики
+#endregion
