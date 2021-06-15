@@ -7,14 +7,12 @@ namespace SharpEdu
 {
     public class AsyncAwait
     {
+        #region==== Общее ===========================================================
         // Асинхронность позволяет вынести отдельные задачи из основного потока в асинхронные методы
         // Актуально в графических программах, в веб-приложениях при обработке запросов от пользователей,
         // при обращении к БД или сетевым ресурсам
-        // При больших запросах к БД асинхронный метод уснет на время, пока не получит данные,
-        // а основной поток продолжит работу
+        // При больших запросах к БД асинхронный метод уснет на время, пока не получит данные, а основной поток продолжит работу
         // Асинхронный метод не может определять параметры с модификаторами ref и out
-
-        #region==== Обычный вызов ===================================================
         // Запускается метод F1, в котором вызывается асинхронный метод F1_2Async
         // Метод F1_2Async начинает выполняться синхронно вплоть до выражения await
         // Выражение await запускает асинхронную задачу Task.Run(()=>F1_1())
@@ -97,6 +95,114 @@ namespace SharpEdu
         }
         #endregion
 
+        #region==== Отмена асинхронных операций =====================================
+        // Для отмены асинхронных операций используются классы CancellationToken и CancellationTokenSource
+        // CancellationToken содержит информацию о том, надо ли отменять асинхронную задачу
+        // Асинхронная задача, в которую передается объект CancellationToken, периодически проверяет
+        // состояние этого объекта
+        // Если его свойство IsCancellationRequested равно true, то задача должна остановиться
+
+        // Для создания объекта CancellationToken применяется объект CancellationTokenSource
+        // При вызове у CancellationTokenSource метода Cancel(), у объекта CancellationToken свойство
+        // IsCancellationRequested будет установлено в true
+
+        // Для создания токена определяется объект CancellationTokenSource
+        // Метод FactorialAsync принимает токен, и если во внешнем коде произойдет отмена операции
+        // через cts.Cancel, то в методе Factorial свойство token.IsCancellationRequested будет равно true
+        // и при очередной итерации цикла в методе Factorial произойдет выход из метода,
+        // а асинхронная операция завершится
+        public static void F15()
+        {
+            static void F15_1(int n, CancellationToken token)
+            {
+                int result = 1;
+                for (int i = 1; i <= n; i++)
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        Console.WriteLine("Operation was canceled");
+                        return;
+                    }
+                    result *= i;
+                    Console.WriteLine($"Factorial of number {i} equals {result}");
+                    Thread.Sleep(1000);
+                }
+            }
+
+            static async void F15_2Async(int n, CancellationToken token)
+            {
+                if (token.IsCancellationRequested) return;
+                await Task.Run(() => F15_1(n, token));
+            }
+
+            CancellationTokenSource cts = new CancellationTokenSource();
+            CancellationToken token = cts.Token;
+            F15_2Async(6, token);
+            Thread.Sleep(3000);
+            cts.Cancel();
+            Console.Read();
+        }
+        #endregion
+
+        #region==== Асинхронные стримы ==============================================
+        // Асинхронные методы до сих пор позволяли получать один объект, когда асинхронная операция
+        // была готова предоставить результат
+        // Для возвращения нескольких значений в C# могут применяться итераторы, но они имеют
+        // синхронную природу, блокируют вызывающий поток и не могут использоваться в асинхронном контексте
+        // Асинхронные стримы обходят эту проблему, позволяя получать множество значений и возвращать
+        // их по мере готовности в асинхронном режиме
+        // Асинхронный стрим представляет метод, который обладает  характеристиками:
+        // - имеет модификатор async
+        // - возращает объект IAsyncEnumerable<T>
+        //   интерфейс IAsyncEnumerable определяет метод GetAsyncEnumerator, который возвращает IAsyncEnumerator
+        // - содержит выражения yield return для последовательного получения элементов из асинхронного стрима
+
+        // Метод GetNumbersAsync() представляет асинхронный стрим, он является асинхронным
+        // Его возвращаемый тип - IAsyncEnumerable<int>
+        // Он возвращает с помощью yield return каждый 100 некоторое число
+        // То есть метод должен вернуть 10 чисел от 0 до 10 с промежутком в 100 миллисекунд
+        // Для получения данных из стрима используется foreach
+        // Он предваряется оператором await
+        // В этом случае метод F16 должен быть определен с оператором async
+        public static async void F16()
+        {
+            static async IAsyncEnumerable<int> F16_1()
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    await Task.Delay(100);
+                    yield return i;
+                }
+            }
+
+            await foreach (var number in F16_1()) { Console.WriteLine(number); }
+        }
+        #endregion
+
+        #region==== Применение асинхронных стримов ==================================
+        // Могут применяться для получения данных из внешнего хранилища
+        class Repository
+        {
+            string[] data = { "Tom", "Sam", "Kate", "Alice", "Bob" };
+            public async IAsyncEnumerable<string> F1()
+            {
+                for (int i = 0; i < data.Length; i++)
+                {
+                    Console.WriteLine($"Getting {i + 1} element");
+                    await Task.Delay(500);
+                    yield return data[i];
+                }
+            }
+        }
+
+        public static async void F17()
+        {
+            Repository repo = new Repository();
+            IAsyncEnumerable<string> data = repo.F1();
+            await foreach (var name in data) { Console.WriteLine(name); }
+        }
+        #endregion
+
         // Возвращение результата из асинхронного метода
 
         #region==== Возвращение void ================================================
@@ -165,7 +271,7 @@ namespace SharpEdu
 
             int n1 = await F7_2Async(5); // Чтобы получить результат асинхронного метода,                                         
             int n2 = await F7_2Async(6); // применяем оператор await при вызове F7_2Async
-            Console.WriteLine($"n1={n1}  n2={n2}");
+            Console.WriteLine($"n1={n1} n2={n2}");
         }
         #endregion
 
@@ -187,7 +293,7 @@ namespace SharpEdu
 
             int n1 = await F8_2Async(5);
             int n2 = await F8_2Async(6);
-            Console.WriteLine($"n1={n1}  n2={n2}");
+            Console.WriteLine($"n1={n1} n2={n2}");
         }
         #endregion
 
@@ -389,116 +495,6 @@ namespace SharpEdu
             F14_2Async(6);
 
             Console.Read();
-        }
-        #endregion
-
-        //
-
-        #region==== Отмена асинхронных операций =====================================
-        // Для отмены асинхронных операций используются классы CancellationToken и CancellationTokenSource
-        // CancellationToken содержит информацию о том, надо ли отменять асинхронную задачу
-        // Асинхронная задача, в которую передается объект CancellationToken, периодически проверяет
-        // состояние этого объекта
-        // Если его свойство IsCancellationRequested равно true, то задача должна остановиться
-
-        // Для создания объекта CancellationToken применяется объект CancellationTokenSource
-        // При вызове у CancellationTokenSource метода Cancel(), у объекта CancellationToken свойство
-        // IsCancellationRequested будет установлено в true
-
-        // Для создания токена определяется объект CancellationTokenSource
-        // Метод FactorialAsync принимает токен, и если во внешнем коде произойдет отмена операции
-        // через cts.Cancel, то в методе Factorial свойство token.IsCancellationRequested будет равно true
-        // и при очередной итерации цикла в методе Factorial произойдет выход из метода,
-        // а асинхронная операция завершится
-        public static void F15()
-        {
-            static void F15_1(int n, CancellationToken token)
-            {
-                int result = 1;
-                for (int i = 1; i <= n; i++)
-                {
-                    if (token.IsCancellationRequested)
-                    {
-                        Console.WriteLine("Operation was canceled");
-                        return;
-                    }
-                    result *= i;
-                    Console.WriteLine($"Factorial of number {i} equals {result}");
-                    Thread.Sleep(1000);
-                }
-            }
-            
-            static async void F15_2Async(int n, CancellationToken token)
-            {
-                if (token.IsCancellationRequested) return;
-                await Task.Run(() => F15_1(n, token));
-            }
-
-            CancellationTokenSource cts = new CancellationTokenSource();
-            CancellationToken token = cts.Token;
-            F15_2Async(6, token);
-            Thread.Sleep(3000);
-            cts.Cancel();
-            Console.Read();
-        }
-        #endregion
-
-        #region==== Асинхронные стримы ==============================================
-        // Асинхронные методы до сих пор позволяли получать один объект, когда асинхронная операция
-        // была готова предоставить результат
-        // Для возвращения нескольких значений в C# могут применяться итераторы, но они имеют
-        // синхронную природу, блокируют вызывающий поток и не могут использоваться в асинхронном контексте
-        // Асинхронные стримы обходят эту проблему, позволяя получать множество значений и возвращать
-        // их по мере готовности в асинхронном режиме
-        // Асинхронный стрим представляет метод, который обладает  характеристиками:
-        // - имеет модификатор async
-        // - возращает объект IAsyncEnumerable<T>
-        //   интерфейс IAsyncEnumerable определяет метод GetAsyncEnumerator, который возвращает IAsyncEnumerator
-        // - содержит выражения yield return для последовательного получения элементов из асинхронного стрима
-
-        // Метод GetNumbersAsync() представляет асинхронный стрим, он является асинхронным
-        // Его возвращаемый тип - IAsyncEnumerable<int>
-        // Он возвращает с помощью yield return каждый 100 некоторое число
-        // То есть метод должен вернуть 10 чисел от 0 до 10 с промежутком в 100 миллисекунд
-        // Для получения данных из стрима используется foreach
-        // Он предваряется оператором await
-        // В этом случае метод F16 должен быть определен с оператором async
-        public static async void F16()
-        {
-            static async IAsyncEnumerable<int> F16_1()
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    await Task.Delay(100);
-                    yield return i;
-                }
-            }
-
-            await foreach (var number in F16_1()) { Console.WriteLine(number); }
-        }
-        #endregion
-
-        #region==== Применение асинхронных стримов ==================================
-        // Могут применяться для получения данных из внешнего хранилища
-        class Repository
-        {
-            string[] data = { "Tom", "Sam", "Kate", "Alice", "Bob" };
-            public async IAsyncEnumerable<string> F1()
-            {
-                for (int i = 0; i < data.Length; i++)
-                {
-                    Console.WriteLine($"Getting {i + 1} element");
-                    await Task.Delay(500);
-                    yield return data[i];
-                }
-            }
-        }
-
-        public static async void F17()
-        {
-            Repository repo = new Repository();
-            IAsyncEnumerable<string> data = repo.F1();
-            await foreach (var name in data) { Console.WriteLine(name); }
         }
         #endregion
     }

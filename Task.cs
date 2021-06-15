@@ -173,10 +173,10 @@ namespace SharpEdu
             }
 
             Task task1 = new Task(() => { Console.WriteLine($"Id задачи: {Task.CurrentId}"); });
-                        
+
             Task task2 = task1.ContinueWith(F8_1); // Задача продолжения
             task1.Start();
-                        
+
             task2.Wait(); // Ждем окончания второй задачи
             Console.WriteLine("Выполняется работа метода Main");
         }
@@ -244,7 +244,7 @@ namespace SharpEdu
         }
 
         public static void F17()
-        {            
+        {
             static int F17_1(object value)
             {
                 int a = ((Struct_1)value).a;
@@ -425,7 +425,7 @@ namespace SharpEdu
         {
             static void F11_1(object value)
             {
-                CancellationToken token = (CancellationToken)value;                
+                CancellationToken token = (CancellationToken)value;
                 token.ThrowIfCancellationRequested();
                 for (int i = 0; i < 10; i++)
                 {
@@ -702,7 +702,7 @@ namespace SharpEdu
         // Поэтому применять метод Invoke() показанным здесь способом нельзя, если требуется,
         // чтобы исполнение вызывающего потока продолжалось
         public static void F3()
-        {            
+        {
             static void F3_1() // Методы, исполняемые как задача
             {
                 Console.WriteLine("MyMeth запущен");
@@ -725,7 +725,7 @@ namespace SharpEdu
                 Console.WriteLine("MyMeth2 завершен");
             }
 
-            Console.WriteLine("Основной поток запущен");            
+            Console.WriteLine("Основной поток запущен");
             Parallel.Invoke(F3_1, F3_2); // Выполнить параллельно оба именованных метода
             Console.WriteLine("Основной поток завершен");
         }

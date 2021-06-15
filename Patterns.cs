@@ -178,7 +178,7 @@ namespace Builder
     {
         static void Main_()
         {
-            Builder builder = new ConcreteBuilder();            
+            Builder builder = new ConcreteBuilder();
             Foreman foreman = new Foreman(builder); // Какого builder подставим, такой результат (House) и получим
             foreman.Construct();                    // Конструируем House
             House house = builder.GetResult();      // Возвращаем результат
@@ -282,7 +282,7 @@ namespace Adapter_2
     {
         public override void Request()
         {
-            Adaptee adaptee = new Adaptee();            
+            Adaptee adaptee = new Adaptee();
             adaptee.SpecificRequest(); // Через адаптер вызываем нужный метод
         }
     }
@@ -400,7 +400,7 @@ namespace Composite
             Component branch2 = new Composite("b2");
             Component leaf1 = new Composite("l1");
             Component leaf2 = new Composite("l2");
-                        
+            
             root.Add(branch1); // Создание элементов дерева и его рекурсивный обход
             root.Add(branch2);
             branch1.Add(leaf1);
@@ -546,7 +546,7 @@ namespace Flyweight
             Actor actor = new Actor();
 
             Role1 role1 = new Role1(actor); // Актер играет одну роль
-            role1.Greeting("I'm actor1, play role1");  
+            role1.Greeting("I'm actor1, play role1");
 
             Role2 role2 = new Role2(actor); // Тот-же актер играет уже другую роль
             role2.Greeting("I'm actor1, play role2");
@@ -648,8 +648,8 @@ namespace ChainOfResponsibility
     {
         public override void HandlerRequest(int request)
         {
-            if (request == 1)           Console.WriteLine("One");
-            else if (Succesor != null)  Succesor.HandlerRequest(request);
+            if (request == 1)          Console.WriteLine("One");
+            else if (Succesor != null) Succesor.HandlerRequest(request);
         }
     }
 
@@ -657,8 +657,8 @@ namespace ChainOfResponsibility
     {
         public override void HandlerRequest(int request)
         {
-            if (request == 2)           Console.WriteLine("Two");
-            else if (Succesor != null)  Succesor.HandlerRequest(request);
+            if (request == 2)          Console.WriteLine("Two");
+            else if (Succesor != null) Succesor.HandlerRequest(request);
         }
     }
 
@@ -686,7 +686,7 @@ namespace Command
     //   То есть когда необходимы функции обратного действия в ответ на определенные действия
     // - Когда необходимо обеспечить выполнение очереди запросов, а также их возможную отмену
     abstract class Command
-    {        
+    {
         protected ArithmeticUnit unit;      // Ссылка на арифметическое устройство
         protected int operand;
         public abstract void Execute();     // Выполнить
@@ -973,7 +973,7 @@ namespace Mediator
         public Shop Shop { get; set; }
                 
         public override void Send(string msg, Colleague colleague) // Посредник получает сообщение
-        {            
+        {
             if (colleague == Farmer)        // Если сообщение передал фермер, значит он прислал нам ящик помидоров
                 Cannery.MakeKetchup(msg);   // Пересылаем помидоры фабрике
             
@@ -999,7 +999,7 @@ namespace Mediator
             mediator.Send(tomato, this);
         }
     }
-        
+
     class Cannery : Colleague // Фабрика из помидоров делает кетчуп
     {
         public Cannery(Mediator mediator) : base(mediator) { }
@@ -1046,7 +1046,7 @@ namespace Memento
     // чтобы позднее можно было восстановить в нем объект
     // Когда применяется:
     // - Когда нужно сохранить состояние объекта для возможного последующего восстановления
-    // - Когда сохранение состояния должно проходить без нарушения инкапсуляции    
+    // - Когда сохранение состояния должно проходить без нарушения инкапсуляции
     class Man // Человек, который изменяет свое состояние
     {
         public string Сlothes { get; set; }
@@ -1068,10 +1068,10 @@ namespace Memento
         static void Main_()
         {
             Man David = new Man();
-            Robot ASIMO = new Robot();                        
-            David.Сlothes = "Футболка, Джинсы, Кеды";   // Одеваем челоека в одежду            
+            Robot ASIMO = new Robot();
+            David.Сlothes = "Футболка, Джинсы, Кеды";   // Одеваем челоека в одежду
             ASIMO.Backpack = David.Undress();           // Отдаем рюкзак роботу
-            David.Сlothes = "Шорты спортивные";                        
+            David.Сlothes = "Шорты спортивные";
             David.Dress(ASIMO.Backpack);                // Берем у робота рбкзак и одеваем другую одежду
         }
     }
