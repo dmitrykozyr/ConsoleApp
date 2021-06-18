@@ -495,15 +495,28 @@ namespace SharpEdu
     // Они могут иметь что-то общее, например, имя и фамилию
     // Общую функциональность выносят в абстрактный класс - напрямую его экземпляры мы создавать не будем,
     // он будет хранить что-то общее для дочерних классов
+
+    // Кроме обычных свойств и методов абстрактный класс может иметь абстрактные методы, свойства, индексаторы, события
+    // Абстрактные члены не должны иметь модификатор private
+    // Производный класс обязан переопределить (override) и реализовать все абстрактные методы и свойства, которые имеются в базовом абстрактном классе ..
+    // .. исключение - если дочерний класс тоже абстрактный
     abstract class BAbs
     {
+        public abstract string Name { get; set; }
         public void F2() { Console.WriteLine("B3"); }
         public abstract void F3();
     }
 
     class ProgramAbstractAndStaticClass : BAbs
     {
-        static void Main3_()
+        private string name; // Переопределение абстрактного св-ва из базового абстрактного класса
+        public override string Name
+        {
+            get { return "Mr/Ms. " + name; }
+            set { name = value; }
+        }
+
+        static void Main_()
         {
             AStat.F1();
 
@@ -588,7 +601,6 @@ namespace SharpEdu
         public virtual void F3() { Console.WriteLine("A3"); }
         public void F4() { F1(); }
         public void F5() { Console.WriteLine("A5"); }
-        public void F6() { Console.WriteLine("A6"); }
     }
 
     class BP : AP
@@ -598,7 +610,6 @@ namespace SharpEdu
         public void F2() { Console.WriteLine("B2"); }
         public new void F3() { Console.WriteLine("B3"); }
         public new virtual void F5() { Console.WriteLine("B5"); }
-        public void F6() { Console.WriteLine("B6"); }
     }
 
     class ProgramPolymorphism
@@ -606,67 +617,30 @@ namespace SharpEdu
         static void Main_()
         {
             // upcast
-            AP obj = new BP();    // ctorA ctorB
+            AP obj = new BP();  // ctorA ctorB
             obj.F1();           // B1
             obj.F2();           // A2
             obj.F3();           // A3
             obj.F4();           // B1
             obj.F5();           // A5
-            obj.F6();           // A6
-
+            
             Console.WriteLine("==");
 
             // downcast
-            //B obj2 = new A() as B;  // ctorA
-            BP obj2 = obj as BP;
-            obj.F1();           // B1
-            obj.F2();           // A2
-            obj.F3();           // A3
-            obj.F4();           // B1
-            obj.F5();           // A5
-            obj.F6();           // A6
+            
+            BP obj2 = obj as BP; // B obj2 = new A() as B;
+            obj.F1();            // B1
+            obj.F2();            // A2
+            obj.F3();            // A3
+            obj.F4();            // B1
+            obj.F5();            // A5
         }
     }
     #endregion
 
     #region==== Преобразование типов ============================================
-    class A6 { }
-    class B6 { }
-
     class Person
     {
-        public void F1()
-        {
-            // is проверяет совместимость объекта с данным типом и выдает true или false
-            Object o = new Object();
-            Boolean b1 = (o is Object);   // b1 равно true
-            Boolean b2 = (o is Employee); // b2 равно false
-
-            if (o is Employee)
-            {
-                Employee e = (Employee)o;
-
-                // Если А — базовый класс, а В — дочерний:
-                A6 a = new A6();
-                B6 b = new B6();
-                //if (a is A) // true
-                //if (b is B) // true
-                //if (a is B) // false
-                //if (b is A) // true
-
-                // as
-                // Проверка совместимости o с типом Employee
-                // Если o и Employee совместимы, as возвращает ненулевой указатель на этот объект, иначе — null
-                // as отличается от оператора приведения типа тем, что не генерирует исключение
-                //Employee e = o as Employee;
-                //if (e != null) { }
-
-                // а — экземпляр класса А, b — экземпляр класса В
-                // Если b можно привести к классу А (можно, если В наследуется от А), то в а запишется b, иначе null
-                //a = b as A;
-            }
-        }
-
         public string Name { get; set; }
         public Person(string name) { Name = name; }
         public void Display() { Console.WriteLine($"Person {Name}"); }
@@ -686,118 +660,103 @@ namespace SharpEdu
 
     class ProgramTypeConversion
     {
-        static void Main6_()
+        static void Main_()
         {
-            // ВОСХОДЯЩИЕ ПРЕОБРАЗОВАНИЯ (upcasting)
-            // Переменной person типа Person присваивается ссылка на объект Employee
-            // Чтобы сохранить ссылку на объект одного класса в переменную другого класса,
-            // необходимо выполнить преобразование от Employee к Person
+            // ВОСХОДЯЩИЕ ПРЕОБРАЗОВАНИЕ (upcasting)
+            // Переменной per типа Person присваивается ссылка на Employee
             // Employee наследуется от Person, поэтому выполняется восходящее преобразование,
             // в итоге employee и person указывают на один объект,
-            // но переменной person доступна только та часть, которая представляет функционал Person
-            //Employee emp = new Employee("Dima", "Company");
-            //Person per = emp; // Слева базовый класс, справа дочерний
-            //Console.WriteLine(per.Name);
+            // но per доступна только та часть, которая представляет функционал Person
+            Employee emp = new Employee("Dima", "Company");
+            Person per = emp;
+            Console.WriteLine(per.Name);
 
-            //Person per2 = new Client("Bob", "Bank");
-            //Console.WriteLine(per2.Name);
-
-            // НИСХОДЯЩИЕ ПРЕОБРАЗОВАНИЯ (downcasting)
-            // Кроме восходящих преобразований от производного к базовому типу есть нисходящие преобразования
-            // от базового к производному
-            // Чтобы обратиться к функционалу типа Employee через переменную типа Person,
-            // нужно применить явное преобразование
-            //Employee emp2 = new Employee("Tom", "Microsoft");
-            //Person per6 = emp2;             // преобразование от Employee к Person
-            //Employee emp2 = per6; // так нельзя, нужно явное преобразование
-            //Employee emp3 = (Employee)per6; // преобразование от Person к Employee
-            //Console.WriteLine(emp3.Company);
+            // НИСХОДЯЩИЕ ПРЕОБРАЗОВАНИЯ (downcasting) - от базового класса к производному
+            // Чтобы обратиться к функционалу Employee через переменную типа Person,
+            // нужно явное преобразование
+            Employee emp2 = new Employee("Tom", "Microsoft");
+            Person per2 = emp2;             // преобразование от Employee к Person
+            Employee emp3 = (Employee)per2; // преобразование от Person к Employee
+            Console.WriteLine(emp3.Company);
 
             // obj присвоена ссылка на Employee, поэтому можем преобразовать obj к любому типу,
             // который располагается в иерархии классов между object и Employee
-            //object obj = new Employee("Bill", "Microsoft");
-            //Employee emp4 = (Employee)obj;
+            object obj = new Employee("Bill", "Microsoft");
+            Employee emp4 = (Employee)obj;
 
-            //Person person = new Client("Sam", "ContosoBank");
-            //Client client = (Client)person;
-
-            //object obj2 = new Employee("Bill", "Microsoft");
-            //((Person)obj2).Display();               // преобразование к Person для вызова метода Display
-            //((Employee)obj2).Display();             // эквивалентно предыдущей записи
-            //string comp = ((Employee)obj2).Company; // преобразование к Employee, чтобы получить свойство Company
-
-            // Ниже получим ошибку, т.к. obj3 хранит ссылку на объект Employee, а не Client
-            //object obj3 = new Employee("Bill", "Microsoft");
-            //string bank = ((Client)obj3).Bank;
+            object obj2 = new Employee("Bill", "Microsoft");
+            ((Person)obj2).Display();               // преобразование к Person для вызова метода Display
+            ((Employee)obj2).Display();             // эквивалентно предыдущей записи
+            string comp = ((Employee)obj2).Company; // преобразование к Employee, чтобы получить свойство Company
 
             // СПОСОБЫ ПРЕОБРАЗОВАНИЙ
             // as пытается преобразовать выражение к определенному типу и не выбрасывает исключение
             // В случае неудачи вернет null
-            //Person per7 = new Person("Tom");
-            //Employee emp5 = per7 as Employee;
-            //if (emp == null) { Console.WriteLine("Преобразование прошло неудачно"); }
-            //else { Console.WriteLine(emp.Company); }
+            Person per7 = new Person("Tom");
+            Employee emp5 = per7 as Employee;
+            if (emp == null) { Console.WriteLine("Преобразование прошло неудачно"); }
+            else { Console.WriteLine(emp.Company); }
 
             // is - проверка допустимости преобразования
             // person is Employee проверяет, является ли person объектом типа Employee
             // В данном случае не является, поэтому вернет false
-            //Person per8 = new Person("Tom");
-            //if (per8 is Employee)
-            //{
-            //  Employee emp6 = (Employee)per8;
-            //  Console.WriteLine(emp6.Company);
-            //}
-            //else { Console.WriteLine("Преобразование не допустимо"); }
+            Person per8 = new Person("Tom");
+            if (per8 is Employee)
+            {
+              Employee emp6 = (Employee)per8;
+              Console.WriteLine(emp6.Company);
+            }
+            else { Console.WriteLine("Преобразование недопустимо"); }
         }
     }
     #endregion
 
     #region==== Generics ========================================================
-    class A7<T>
+    class AG<T>
     {
         public void Display<B>() { }
     }
 
-    class B7<T>
+    class BG<T>
     {
         T x;
         public void Display<B>(B y) { Console.WriteLine(x.GetType() + " " + y.GetType()); }
     }
 
-    class C<T>
+    class CG<T>
     {
         public T x;
         public T param { get; set; }
-        public C() { }
-        public C(T _x) { x = _x; }
+        public CG() { }
+        public CG(T _x) { x = _x; }
     }
 
-    class D<T, Z>
+    class DG<T, Z>
     {
         public T x;
         public Z y;
         public T param1 { get; set; }
         public Z param2 { get; set; }
-        public D(T _x, Z _y) { x = _x; y = _y; }
+        public DG(T _x, Z _y) { x = _x; y = _y; }
     }
 
-    class E<T> : C<T>
+    class EG<T> : CG<T>
     {
         T x;
-        public E(T _x) : base(_x) { x = _x; }
+        public EG(T _x) : base(_x) { x = _x; }
     }
 
     // where означает, что тип T может быть только типа C, либо быть любым его наследником
     // where T : new() - у класса должен быть публичный конструктор без параметров
-    class F<T, Z>
-        where T : C<int>
+    class FG<T, Z>
+        where T : CG<int>
         where Z : new()
     {
         public T x;
         public Z y;
         public T param1 { get; set; }
         public Z param2 { get; set; }
-        public F(T _x, Z _y) { x = _x; y = _y; }
+        public FG(T _x, Z _y) { x = _x; y = _y; }
         public T F1() { return x; } // шаблонный тип можно возвращать
     }
 
@@ -811,19 +770,19 @@ namespace SharpEdu
             return 0;
         }
 
-        static void Main7_()
+        static void Main_()
         {
-            A7<int> objA = new A7<int>();
+            AG<int> objA = new AG<int>();
             objA.Display<int>();
 
-            B7<bool> objB = new B7<bool>();
+            BG<bool> objB = new BG<bool>();
             objB.Display<bool>(true);
 
             Del<int, int> del = new Del<int, int>(Displ);
             del(1);
 
-            C<int> c1 = new C<int>(5);
-            D<bool, string> c2 = new D<bool, string>(true, "false");
+            CG<int> c1 = new CG<int>(5);
+            DG<bool, string> c2 = new DG<bool, string>(true, "false");
         }
     }
     #endregion
@@ -832,7 +791,7 @@ namespace SharpEdu
     // Итератор возвращает все члены коллекции от начала до конца
     // Нужен для сокрытия коллекции и способа ее обхода, т.к. массивы, структуры и т.д. обходятся по разному,
     // без итераторов пришлось бы для каждой коллекции знать, как ее обходить
-    // В отличие от стандартных коллекций (Dictionary), пользовательские (Итераторы) могут иметь больше возможностей
+    // В отличие от стандартных коллекций (Dictionary), иИтераторы имеют больше возможностей
     // Интерфейс IEnumerable перебирает элементы коллекции
     class A8 : IEnumerable
     {
@@ -876,15 +835,15 @@ namespace SharpEdu
         static void Main_()
         {
             var tuple = (5, 10);
-            Console.WriteLine(tuple.Item1); // 5
-            Console.WriteLine(tuple.Item2); // 10
+            Console.WriteLine(tuple.Item1);     // 5
+            Console.WriteLine(tuple.Item2);     // 10
             tuple.Item1 += 2;
-            Console.WriteLine(tuple.Item1); // 7
+            Console.WriteLine(tuple.Item1);     // 7
 
             // Можно дать названия полям и обращаться по имени а не черезItem1 и Item2
             var tuple2 = (count: 5, sum: 10);
-            Console.WriteLine(tuple2.count); // 5
-            Console.WriteLine(tuple2.sum);   // 10
+            Console.WriteLine(tuple2.count);    // 5
+            Console.WriteLine(tuple2.sum);      // 10
             tuple2 = GetValues();
             Console.WriteLine(tuple2.count);
             Console.WriteLine(tuple2.sum);
@@ -903,12 +862,7 @@ namespace SharpEdu
     #endregion
 
     #region==== LINQ ============================================================
-    //===========================================================================
-    // IEnumerable определяет метод GetEnumerator, который возвращает IEnumerator
-    // IEnumerator показывает элементы коллекции
-    // Каждый экземпляр Enumerator находится в определенной позиции и может предоставить этот элемент (IEnumerator.Current)
-    // или перейти к следующему (IEnumerator.MoveNext). Цикл foreach использует IEnumerator
-    class A9
+    class AL
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -918,15 +872,14 @@ namespace SharpEdu
     {
         static void Main_()
         {
-            IEnumerable<A9> collA = new List<A9>()
-        {
-            new A9 { Id = 2, Name = "Dima" },
-            new A9 { Id = 4, Name = "Champion" },
-            new A9 { Id = 1, Name = "Developer" },
-        };
+            IEnumerable<AL> collA = new List<AL>()
+            {
+                new AL { Id = 2, Name = "Dima" },
+                new AL { Id = 4, Name = "Champion" },
+                new AL { Id = 1, Name = "Developer" },
+            };
 
-            var query1 = collA.Where(f => f.Name.StartsWith("D"))
-                              .OrderBy(f => f.Id);
+            var query1 = collA.Where(z => z.Name.StartsWith("D")).OrderBy(z => z.Id);
 
             var query2 = from i in collA
                          where i.Id > 1
@@ -936,56 +889,24 @@ namespace SharpEdu
             foreach (var i in query2)
                 Console.WriteLine(i.Id + " " + i.Name);
 
-            string[] cities = new string[] { "Donetsk", "San Francisco", "New York", "Tokyo" };
-            IEnumerable<string> collectionCities =
-                from i in cities
-                where i.StartsWith("D") && i.Length == 7
-                orderby i
-                select i;
-
-            foreach (var i in collectionCities)
-                Console.WriteLine(i);
-
-            // Примеры запросов
-            //var data = dbContext.PupilTable.Include(e => e.Name).Where(e => e.Id == updateTeacher.Id);
-            //var data2 = dbContext.PupilTable
-            //    .Where(e => e.Id > 3)
-            //    .OrderBy(e => e.Id)
-            //    //.OrderByDescending(e => e.Id)
-            //    .ThenBy(e => e.Name);
-            //var data3 = dbContext.PupilTable.Where(e => EF.Functions.Like(e.Name, "%Dima%"));   // Выберутся записи со словом 'Dima'
-            //var data4 = dbContext.PupilTable.Find(1);                                           // Выбор единичного элемента по id
-
-            //// FirstOrDefault - возвращает первый соответствующий критерию элемент, а не найдя ни одного элемента, вернет null
-            //// Single/SingleOrDefault выдает исключение, если кртерию соответствуют несколько элементов
-            //var data5 = dbContext.PupilTable.FirstOrDefault(e => e.Id == 3);
-
-            //// Select проверяет все написи на соответствие критерию и возвращает true/false
-            //var data6 = dbContext.PupilTable.Select(e => new Pupil   // Если много свойств, делаем выборку только с нужными
+            //var data = dbContext.PupilTable.Include(e => e.Name).Where(e => e.Id > 3).OrderBy(e => e.Id).ThenBy(e => e.Name);
+            //var data = dbContext.PupilTable.FirstOrDefault(e => e.Id == 3);
+            //var data = dbContext.PupilTable.Select(e => new Pupil
             //{
-            //    Name = e.Name,                                       // Имена слева указываем сами
+            //    Name = e.Name,
             //    FavouriteLesson = e.FavouriteLesson
             //});
-
-            //// new создает новую коллекцию с новыми полями, значения для которых мы задаем
-            //var data7 = list.Select(q => new { Name = q, IsA = q.Contains("а") });
-            //var data8 = collection.Select(i => new { Id = i.Id, Name = i.Name }).Where(q => q.Name.Contains("i").OrderBy(q => q.Id);
-
-            //// SelectMany - выбирает данные из массива
-            //var data9 = a.SelectMany(q => q.Numbers, (box, number) => (number, box.Name));
-            //var data10 = a.SelectMany((x, index) => x.Numbers.Select(number => (number, index)));
-
-            //var data11 = dbContext.PupilTable.Any(e => e.Id == 4);                // Проверяет, что есть указанные данные, Возвращает bool
-            //var data12 = dbContext.PupilTable.All(e => e.Name == "Some text");    // Все данные должны удовлетворять критерию
-            //var data13 = dbContext.PupilTable.Count(e => e.Name == "Some text");  // Число строк в таблице, удовлетворяющих криртерию
-            //var data14 = dbContext.PupilTable.Min(e => e.Id);                     // Min/Max значение заданного параметра
+            //var data = collection.Select(i => new { Id = i.Id, Name = i.Name }).Where(q => q.Name.Contains("i").OrderBy(q => q.Id);
+            //var data = dbContext.PupilTable.Any(e => e.Id == 4);                // Проверяет, что есть указанные данные, возвращает bool
+            //var data = dbContext.PupilTable.All(e => e.Name == "Some text");    // Все данные должны удовлетворять критерию
+            //var data = dbContext.PupilTable.Count(e => e.Name == "Some text");  // Число строк в таблице, удовлетворяющих криртерию
         }
     }
     #endregion
 
     #region==== Indexator =======================================================
-    // Индексаторы — свойства с параметрами и без названия, должны иметь минимум один параметр
-    // В классе может быть более одного индексатора, они должны отличаться типом или количеством индексов
+    // Свойства с параметрами и без названия, должны иметь минимум один параметр
+    // В классе может быть несколько индексаторов, должны отличаться сигнатурой
     class A10
     {
         private int[] arr = new int[5];
@@ -1072,9 +993,8 @@ namespace SharpEdu
     #endregion
 
     #region==== MemoryClean =====================================================
-    // Большинство объектов программы относятся к управляемым и очищаются сборщиком мусора, но есть неуправляемые
-    // объекты (низкоуровневые файловые дескрипторы, сетевые подключения), которые сборщик мусора не может удалить    
-    // Освобождение неуправляемых ресурсов подразумевает реализацию одного из двух механизмов
+    // Большинство объектов относятся к управляемым и очищаются сборщиком мусора, но есть неуправляемые объекты
+    // Освобождение неуправляемых ресурсов выполняет
     // - Финализатор
     // - Реализация интерфейса IDisposable
 
@@ -1085,15 +1005,7 @@ namespace SharpEdu
         ~A11() { Console.WriteLine("Destructor"); }
     }
 
-    // На деле сборщик мусора вызывает не финализатор, а метод Finalize класса A, потому что компилятор компилирует
-    // финализатор в конструкцию
-    //protected override void Finalize()
-    //{
-    //    try { /* здесь идут инструкции деструктора */ }
-    //    finally { base.Finalize(); }
-    //}
-
-    // IDisposable объявляет один единственный метод Dispose, освобождающий неуправляемые ресурсы, он вызывает финализатор немедленно
+    // IDisposable объявляет единственный метод Dispose, освобождающий неуправляемые ресурсы - вызывает финализатор немедленно
     public class B11 : IDisposable
     {
         public void Dispose() { Console.WriteLine("Dispose"); }
@@ -1102,7 +1014,7 @@ namespace SharpEdu
     class ProgramMemoryClean
     {
         // try finally гарантирует, что в случае исключения Dispose освободит ресурсы
-        // Можно использовать using
+        // Можно использовать using, вызывающий Dispose неявно
         private static void Test()
         {
             B11 objB = null;
@@ -1117,7 +1029,7 @@ namespace SharpEdu
             }
         }
 
-        static void Main11_()
+        static void Main_()
         {
             Test();
         }
@@ -1174,85 +1086,10 @@ namespace SharpEdu
                 throw new NullReferenceException(); // Необработанное исключение
             }
         }
-        static void Main12_()
+        static void Main_()
         {
             try { ExceptionThrower.TriggerException(true); }
             catch (Exception e) { ExceptionHandler.Handle(e); }
-        }
-    }
-    #endregion
-
-    #region==== Events ==========================================================
-    public class E
-    {
-        // В отличие от делегатов, события более защищены от непреднамеренных изменений,
-        // тогда как делегат может быть случайно обнулен, если использовать '=' вместо '+='
-        // Событие можно использовать лишь внутри класса, в котором оно определено
-        // Пример 1
-        public delegate void MyDel();
-        public event MyDel TankIsEmpty;     // Объявляем событие для нашего типа делегата
-        public void F1() { TankIsEmpty(); } // Метод вызывает событие
-        static void EventHandlerMethod1() { Console.WriteLine("1"); }
-        static void EventHandlerMethod2() { Console.WriteLine("2"); }
-        static void Main_()
-        {
-            E obj = new E();
-            obj.TankIsEmpty += EventHandlerMethod1; // Подписка на событие
-            obj.TankIsEmpty += EventHandlerMethod2;
-            obj.F1();
-        }
-    }
-
-    // Пример 3
-    public delegate void del();
-    public class A13
-    {
-        public event del ev = null; // Создаем событие
-        public void InvokeEvent() { ev.Invoke(); } // Здесь можно проверять, кто вызывает событие
-    }
-
-    class B13
-    {
-        static private void F1() { Console.WriteLine("0"); }
-        static private void F2() { Console.WriteLine("1"); }
-
-        static void Main_()
-        {
-            A13 objA = new A13();
-            // присваиваем событию делегат, на который подписываем метод
-            objA.ev += new del(F1); // смысл
-            objA.ev += F2;          // одинаковый
-            objA.InvokeEvent();     // напрямую запрещено вызывать события через objA.ev.Invoke()
-        }
-    }
-
-    public class C13
-    {
-        public del ev = null;
-        // add remove
-        // Как в свойствах, здесь можно включить дополнительные проверки
-        public event del Event
-        {
-            add { ev += value; }
-            remove { ev -= value; }
-        }
-        public void InvokeEvent() { ev.Invoke(); }
-    }
-
-    class D
-    {
-        private static void Method0() { Console.WriteLine("0"); }
-        private static void Method1() { Console.WriteLine("1"); }
-
-        static void Main_()
-        {
-            C13 objC = new C13();
-            objC.Event += Method0;
-            objC.Event += Method1;
-            objC.Event += delegate { Console.WriteLine("Anonimnuy method"); };
-            // Отписать анонимный метод нельзя, код ниже не сработает
-            objC.Event -= delegate { Console.WriteLine("Anonimnuy method"); };
-            objC.InvokeEvent();
         }
     }
     #endregion
@@ -1298,21 +1135,12 @@ namespace SharpEdu
                          // удаляются в том порядке, в котором были добавлены
         }
 
-        // Пример 3 - шаблонные делегаты
-        // Action
-        Action action = F1; // public delegate void Action(); это можно не писать, этот делегат можно сразу использовать без объявления
-                            // ничего не возвращает, но может быть перегружен, чтобы принимать от 0 до 16 аргументов
+        // Пример 3 - шаблонные делегаты        
+        Action action = F1;         // ничего не возвращает
+        Predicate<int> predicate;   // принимает минимум один аргумент
+        Func<int, string> func;     // принимает от 1 до 16 аргументов и возвращает значение
 
-        // Predicate - принимает минимум один аргумент
-        Predicate<int> predicate; // эквивалентно этому delegate bool Predicate<T>(T value);
-                                  // и этому            delegate bool Predicate(int value);
-
-        // Func - принимает от 1 до 16 аргументов
-        Func<int, string> func;  // Delegate int Func(string i) здесь последний тип - это тип возвращаемого значения
-                                 // в любом случае возвращает значение
-
-        // Анонимные методы
-        // Позволяют присвоить делегату метод, не обЪявляя его
+        // Анонимные методы позволяют присвоить делегату метод, не обЪявляя его
         public delegate int Del(int a, int b);
 
         static void Main_2()
@@ -1322,9 +1150,8 @@ namespace SharpEdu
             Console.WriteLine(del(1, 2));
         }
 
-        // Лямбда-операторы
-        // В них не нужно указывать тип, ведь эта информация есть внутри делегата
-        // Это лишь короткая запись анонимного метода, присваемого экземпляру класса-делегата
+        // Лямбда-операторы - в них не нужно указывать тип, эта информация есть внутри делегата
+        // Короткая запись анонимного метода, присваемого экземпляру класса-делегата
         delegate int Del2(int val);
 
         static void Main_3()
@@ -1337,9 +1164,80 @@ namespace SharpEdu
         }
     }
     #endregion
+
+    #region==== Events ==========================================================
+    public class E
+    {
+        // В отличие от делегатов, события более защищены от непреднамеренных изменений,
+        // тогда как делегат может быть случайно обнулен, если использовать '=' вместо '+='
+        // Событие можно использовать лишь внутри класса, в котором оно определено
+        // Пример 1
+        public delegate void MyDel();
+        public event MyDel TankIsEmpty;     // Объявляем событие для нашего типа делегата
+        public void F1() { TankIsEmpty(); } // Метод вызывает событие
+        static void EventHandlerMethod1() { Console.WriteLine("1"); }
+        static void EventHandlerMethod2() { Console.WriteLine("2"); }
+        static void Main_()
+        {
+            E obj = new E();
+            obj.TankIsEmpty += EventHandlerMethod1; // Подписка на событие
+            obj.TankIsEmpty += EventHandlerMethod2;
+            obj.F1();
+        }
+    }
+
+    // Пример 3
+    public delegate void del();
+    public class A13
+    {
+        public event del ev = null;                 // Создаем событие
+        public void InvokeEvent() { ev.Invoke(); }  // Здесь можно проверять, кто вызывает событие
+    }
+
+    class B13
+    {
+        static private void F1() { Console.WriteLine("0"); }
+        static private void F2() { Console.WriteLine("1"); }
+
+        static void Main_()
+        {
+            A13 objA = new A13();
+            // присваиваем событию делегат, на который подписываем метод
+            objA.ev += new del(F1); // смысл ..
+            objA.ev += F2;          // .. одинаковый
+            objA.InvokeEvent();     // напрямую запрещено вызывать события через objA.ev.Invoke()
+        }
+    }
+
+    public class C13
+    {
+        public del ev = null;
+        // add remove
+        // Как в свойствах, здесь можно включить дополнительные проверки
+        public event del Event
+        {
+            add { ev += value; }
+            remove { ev -= value; }
+        }
+        public void InvokeEvent() { ev.Invoke(); }
+    }
+
+    class D
+    {
+        private static void Method0() { Console.WriteLine("0"); }
+        private static void Method1() { Console.WriteLine("1"); }
+
+        static void Main_()
+        {
+            C13 objC = new C13();
+            objC.Event += Method0;
+            objC.Event += Method1;
+            objC.Event += delegate { Console.WriteLine("Anonimnuy method"); };
+            // Отписать анонимный метод нельзя, код ниже не сработает
+            objC.Event -= delegate { Console.WriteLine("Anonimnuy method"); };
+            objC.InvokeEvent();
+        }
+    }
+    #endregion
 }
 
-#region==== .................. ==============================================
-//===========================================================================
-// 
-#endregion
