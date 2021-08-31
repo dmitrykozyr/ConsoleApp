@@ -10,14 +10,11 @@ namespace FactoryMethod
     // Каждый подотдел заведует своим типом сока
     // Если потребуется пакет апельсинового сока, скажем об этом отделу по производству апельсинового сока,
     // а он скажет отделу по созданию пакетов сока, чтобы сделал пакет и залил этот сок
-    // Сперва реализуют фабричный метод, а по мере усложнения кода выбирают, во что его преобразовать - фабрику, строитель или прототип
+    // Сперва реализуют фабричный метод, а по мере усложнения кода его преобразуют в фабрику, строитель или прототип
     // При использовании фабричного метода каждый объект является фабрикой
-    // Определяет интерфейс создания объекта, но оставляет подклассам решение, какой класс инстанцировать
     // Используется, когда заранее неизвестно, объекты каких типов необходимо создавать, когда система должна быть независимой
     // от процесса создания новых объектов - в нее можно легко вводить новые классы, объекты которых система должна создавать,
     // когда создание новых объектов необходимо делегировать из базового класса наследникам
-    abstract class Product { }
-
     abstract class Creator
     {
         Product product;
@@ -29,6 +26,8 @@ namespace FactoryMethod
     {
         public override Product FactoryMethod() { return new ConcreteProduct(); }
     }
+
+    abstract class Product { }
 
     class ConcreteProduct : Product
     {
@@ -128,19 +127,25 @@ namespace Builder
     // Если потребуется другой сок, говорим об этом, а строитель позаботится об остальном (какие-то процессы повторит, какие-то сделает заново)
     // Процессы в строителе можно менять (изменить рисунок на упаковке), но потребителю сока этого
     // знать не нужно, он будет получать сок по тому же запросу
-    // А фабрика - это автомат по продаже напитков, в нем уже есть всё готовое, мы только говорим, что нам нужно (нажимаем кнопку)
+    // Фабрика - это автомат по продаже напитков, в нем уже есть всё готовое, мы только говорим, что нам нужно (нажимаем кнопку)
     // Строитель - это завод, который производит напитки и может собирать сложные объекты из более простых
     abstract class Builder
     {
         public abstract void BuildBassement();
         public abstract void BuildStorey();
-        public abstract void BuildRoof();
         public abstract House GetResult();
+    }
+
+    class ConcreteBuilder : Builder
+    {
+        House house = new House();
+        public override void BuildBassement() { house.Add(new Bassement()); }
+        public override void BuildStorey() { house.Add(new Storey()); }
+        public override House GetResult() { return house; } // Возвращаем построенный продукт
     }
 
     class Bassement { public Bassement() { Console.WriteLine("Bassement build successful"); } }
     class Storey { public Storey() { Console.WriteLine("Storey build successful"); } }
-    class Roof { public Roof() { Console.WriteLine("Roof build successful"); } }
 
     class House
     {
@@ -149,16 +154,6 @@ namespace Builder
         { 
             partsOfHouse.Add(part); 
         }
-
-    }
-
-    class ConcreteBuilder : Builder
-    {
-        House house = new House();
-        public override void BuildBassement() { house.Add(new Bassement()); }
-        public override void BuildStorey() { house.Add(new Storey()); }
-        public override void BuildRoof() { house.Add(new Roof()); }
-        public override House GetResult() { return house; } // Возвращаем построенный продукт
     }
 
     class Foreman
@@ -170,7 +165,6 @@ namespace Builder
         {            
             builder.BuildBassement(); // Вызываем методы в правильном порядке
             builder.BuildStorey();
-            builder.BuildRoof();
         }
     }
 
@@ -242,14 +236,14 @@ namespace Singleton
 //+
 namespace Adapter
 {
+    interface ITarget { void Request(); }
+
     // Адаптер уровня классов
     // Преобразует интерфейс одного класса в интерфейс другого, как переходник меджу обычными и китайскими розетками
     class Adaptee
     {
         public void SpecificRequest() { Console.WriteLine("Specific request"); }
     }
-
-    interface ITarget { void Request(); }
 
     // Недостаток - не всегда есть свободный слот для наследования от класса,
     // ведь наследоваться можно лишь от 1 класса
@@ -473,7 +467,7 @@ namespace Decorator
         }
     }
 }
-//+
+//+ Несколько методов вызываем в одном методе
 namespace Facade
 {
     // Делает сложные вещи простыми
@@ -508,7 +502,7 @@ namespace Facade
         }
     }
 }
-//+
+//+ Актер может исполнить несколько ролей
 namespace Flyweight
 {
     // Один актер может исполнить много разных ролей, чтобы не нанимать много актеров и не платить им много денег,
@@ -525,14 +519,14 @@ namespace Flyweight
         public override void Greeting(string speech) { Console.WriteLine(speech); }
     }
     
-    class Role1 : Flyweight // Неразделяемый класс Роль1
+    class Role1 : Flyweight
     {
         Flyweight flyweight;
         public Role1(Flyweight flyweight) { this.flyweight = flyweight; }
         public override void Greeting(string speech) { this.flyweight.Greeting(speech); }
     }
     
-    class Role2 : Flyweight // Неразделяемый класс Роль2
+    class Role2 : Flyweight
     {
         Flyweight flyweight;
         public Role2(Flyweight flyweight) { this.flyweight = flyweight; }
@@ -1194,7 +1188,7 @@ namespace State
         }
     }
 }
-//+
+//+ Хочу права, есть много денег
 namespace Strategy
 {
     // Используется для выбора различных путей получения результата
@@ -1246,7 +1240,7 @@ namespace TemplateMethod
     // Определяет основу алгоритма и позволяет подклассам переопределить некоторые шаги, не изменяя структуру
     // Когда применяется:
     // - Когда планируется, что в будущем подклассы будут переопределять алгоритмы без изменения структуры
-    // - Когда в классах, реализующим схожий алгоритм, происходит дублирование кода
+    // - Когда в классах, реализующих схожий алгоритм, происходит дублирование кода
     abstract class AbstractClass
     {
         public abstract void PrimitiveOperation1();

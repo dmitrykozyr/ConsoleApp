@@ -40,6 +40,45 @@ namespace SharpEdu
     // - вызовутся автоматически при первом создании объекта класса или первом обращении к статическому члену
     // - нужны для инициализации статических данных
     // - нужны для выполнения действия, которое должно быть выполнено один раз
+
+    // 77 ключевых слов языка
+    // abstract     as          base        bool        break
+    // byte         case        catch       char        checked
+    // class        const       continue    decimal     default
+    // delegate     do          double      else        enum
+    // event        explicit    extern      false       finally
+    // fixed        float       for         foreach     goto
+    // if           implicit    in          int         interface
+    // internal     is          lock        long        namespace
+    // new          null        object      operator    out
+    // override     params      private     protected   public
+    // readonly     ref         return      sbyte       sealed
+    // short        sizeof      stackalloc  static      string
+    // struct       switch      this        throw       true
+    // try          typeof      uint        ulong       unchecked
+    // unsafe       ushort      using       virtual     volatile
+    // void         while
+
+    // 18 контекстных ключевых слов
+    // add      dynamic from    get     global
+    // group    into    join    let     orderby
+    // partial  remove  select  set     value
+    // var      where   yield
+
+    // 13 значимых типов                                Разрядность в битах     Диапазон представления чисел
+    // bool     логический
+    // byte     8-разрядный целочисленный без знака     8   ------------------  0 - 255
+    // char     символьный                              16  ------------------  0 - 65.535
+    // decimal  десятичный (для финансовых расчетов)    128 ------------------  1Е-28 - 7,9Е+28
+    // double   с плавающей точкой двойной точности     64  ------------------  5Е-324 - 1,7Е+308
+    // float    с плавающей точкой одинарной точности   32  ------------------  5Е-45 - 3,4Е+38
+    // int      целочисленный                           32  ------------------  -2.147.483.648 - 2.147.483.647
+    // long     длинный целочисленный                   64  ------------------  -9.223.372.036.854.775.808 - 9.223.372.036.854.775.807
+    // sbyte    8-разрядный целочисленный со знаком     16  ------------------  -128-127
+    // short    короткий целочисленный                  16  ------------------  -32.768 - 32.767
+    // uint     целочисленный без знака                 32  ------------------  0 - 4.294.967.295
+    // ulong    длинный целочисленный без знака         64  ------------------  0 - 18.446.744.073.709.551.615
+    // ushort   короткий целочисленный без знака        16  ------------------  0 - 65.535
     public class General
     {        
         public General() { }                     // Вызов конструктора по умолчанию из конструктора с параметрами
@@ -968,7 +1007,7 @@ namespace SharpEdu
 
     class ProgramIndexator
     {
-        static void Main_()
+        static void Main()
         {
             A10 obj = new A10();
             obj[0] = 0;
@@ -1240,4 +1279,3 @@ namespace SharpEdu
     }
     #endregion
 }
-
