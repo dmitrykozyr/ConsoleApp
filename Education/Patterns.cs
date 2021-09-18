@@ -6,107 +6,70 @@ using System.Collections.Generic;
 
 namespace FactoryMethod
 {
-    // Создаем отдел производства пакетов сока и предупреждаем подотделы, что каждый должен реализовать фабричный метод
-    // Каждый подотдел заведует своим типом сока
-    // Если потребуется пакет апельсинового сока, скажем об этом отделу по производству апельсинового сока,
-    // а он скажет отделу по созданию пакетов сока, чтобы сделал пакет и залил этот сок
-    // Сперва реализуют фабричный метод, а по мере усложнения кода его преобразуют в фабрику, строитель или прототип
-    // При использовании фабричного метода каждый объект является фабрикой
-    // Используется, когда заранее неизвестно, объекты каких типов необходимо создавать, когда система должна быть независимой
-    // от процесса создания новых объектов - в нее можно легко вводить новые классы, объекты которых система должна создавать,
-    // когда создание новых объектов необходимо делегировать из базового класса наследникам
     abstract class House { }
+    class WoodHouse : House { public WoodHouse() { Console.WriteLine("Wood house was build"); } }
+    class PanelHouse : House { public PanelHouse() { Console.WriteLine("Panel house was build"); } }
 
-    abstract class Developer            // Класс строительной компании
-    {
-        public string Name { get; set; }
-        public Developer(string name) { Name = name; }
-        abstract public House Create(); // Фабричный метод
-    }
+    abstract class Developer { abstract public House FactoryMethod(); }
+    class WoodDeveloper : Developer { public override House FactoryMethod() { return new WoodHouse(); } }
+    class PanelDeveloper : Developer { public override House FactoryMethod() { return new PanelHouse(); } }
 
-    class PanelHouse : House
-    {
-        public PanelHouse() { Console.WriteLine("Panel house was build"); }
-    }
-
-    class WoodHouse : House
-    {
-        public WoodHouse() { Console.WriteLine("Wood house was build"); }
-    }
-
-    class PanelDeveloper : Developer
-    {
-        public PanelDeveloper(string name) : base(name) { }
-        public override House Create() { return new PanelHouse(); }
-    }
-
-    class WoodDeveloper : Developer
-    {
-        public WoodDeveloper(string name) : base(name) { }
-        public override House Create() { return new WoodHouse(); }
-    }
-
-    public class Program
+    class Program
     {
         static void Main_()
         {
-            Developer developer = new PanelDeveloper("Panel building company");
-            House housePanel = developer.Create();
+            Developer developer = new WoodDeveloper();
+            House woodHouse = developer.FactoryMethod();
 
-            developer = new WoodDeveloper("Wood building company");
-            House houseWood = developer.Create();
+            developer = new PanelDeveloper();
+            House panelHouse = developer.FactoryMethod();
         }
     }
 }
 
 namespace AbstractFactory
 {
-    // Предоставляет интерфейс для создания взаимосвязанных или взаимозависимых объектов
-    // Фабрика получает запрос на создание продукта и возвращает его
-    // Клиент не знает, как создается продукт
-    // Способ производства продукта может быть изменен, но способ получения - нет
-    // Одна фабрика должна создавать один вид продукта
     abstract class Weapon { public abstract void Hit(); }
     class Arbalet : Weapon { public override void Hit() { Console.WriteLine("Shoot from arbalet"); } }
     class Sword : Weapon { public override void Hit() { Console.WriteLine("Hit by sword"); } }
-    abstract class Movement { public abstract void Move(); }
-    class FlyMovement : Movement { public override void Move() { Console.WriteLine("Fly"); } }
-    class RunMovement : Movement { public override void Move() { Console.WriteLine("Run"); } }
 
-    // Класс абстрактной фабрики
-    abstract class HeroFactory
+    abstract class Movement { public abstract void Move(); }
+    class Fly : Movement { public override void Move() { Console.WriteLine("Fly"); } }
+    class Run : Movement { public override void Move() { Console.WriteLine("Run"); } }
+
+    abstract class HeroesFactory
     {
-        public abstract Movement CreateMovement();
         public abstract Weapon CreateWeapon();
+        public abstract Movement CreateMovement();
     }
 
-    // Через фабрику создаем летающего эльфа с арбалетом
-    class ElfFactory : HeroFactory
+    class ElfFactory : HeroesFactory
     {
-        public override Movement CreateMovement() { return new FlyMovement(); }
+        public ElfFactory() { Console.WriteLine("Elf was created"); }
+        public override Movement CreateMovement() { return new Fly(); }
         public override Weapon CreateWeapon() { return new Arbalet(); }
     }
 
-    // .. и бегущего воина с мечом
-    class WarriorFactory : HeroFactory
+    class WarriorFactory : HeroesFactory
     {
-        public override Movement CreateMovement() { return new RunMovement(); }
-
+        public WarriorFactory() { Console.WriteLine("Warrior was created"); }
+        public override Movement CreateMovement() { return new Run(); }
         public override Weapon CreateWeapon() { return new Sword(); }
     }
 
     class Hero
     {
-        private Weapon weapon;
-        private Movement movement;
-        public Hero(HeroFactory factory)
+        private Weapon _weapon;
+        private Movement _movement;
+
+        public Hero(HeroesFactory factory)
         {
-            weapon = factory.CreateWeapon();
-            movement = factory.CreateMovement();
+            _weapon = factory.CreateWeapon();
+            _movement = factory.CreateMovement();
         }
 
-        public void Run() { movement.Move(); }
-        public void Hit() { weapon.Hit(); }
+        public void Run() { _movement.Move(); }
+        public void Hit() { _weapon.Hit(); }
     }
 
     class Program
@@ -117,6 +80,8 @@ namespace AbstractFactory
             elf.Hit();
             elf.Run();
 
+            Console.WriteLine();
+
             Hero warrior = new Hero(new WarriorFactory());
             warrior.Hit();
             warrior.Run();
@@ -126,53 +91,50 @@ namespace AbstractFactory
 
 namespace Builder
 {
-    // Связан с паттерном Фабрика, содержит операции создания объекта (пакета сока)
-    // Мы говорим "хочу сока", а строитель запускает цепочку операций (создание пакета, заправка сока)
-    // Если потребуется другой сок, говорим об этом, а строитель позаботится об остальном (какие-то процессы повторит, какие-то сделает заново)
-    // Процессы в строителе можно менять (изменить рисунок на упаковке), но потребителю сока этого
-    // знать не нужно, он будет получать сок по тому же запросу
-    // Фабрика - это автомат по продаже напитков, в нем уже есть всё готовое, мы только говорим, что нам нужно (нажимаем кнопку)
-    // Строитель - это завод, который производит напитки и может собирать сложные объекты из более простых
-    // Разделяет процесс создания объекта на разные этапы
-    // Нужно, когда процесс создания не должен зависеть от того, из каких частей
-    // состоит объект и как эти части между собой связаны
-    abstract class Builder
-    {
-        public abstract void BuildPartA();
-        public abstract void BuildPartB();
-        public abstract void BuildPartC();
-        public abstract void GetResult();
-    }
-
     class Product
     {
         public List<object> parts = new List<object>();
         public void Add(string part) { parts.Add(part); }
     }
 
+    public interface IBuilder
+    {
+        abstract void BuildPartA();
+        abstract void BuildPartB();
+        abstract void GetResult();
+    }
+
+    abstract class Builder : IBuilder
+    {
+        public abstract void BuildPartA();
+        public abstract void BuildPartB();
+        public abstract void GetResult();
+    }
+
+    // В программе может быть несколько рализаций строителя
     class ConcreteBuilder : Builder
     {
         Product product = new Product();
+
         public override void BuildPartA() { product.Add("Part A"); }
         public override void BuildPartB() { product.Add("Part B"); }
-        public override void BuildPartC() { product.Add("Part C"); }
         public override void GetResult()
         {
-            foreach (var p in product.parts)
-                Console.WriteLine(p);
+            foreach (var part in product.parts)
+                Console.WriteLine(part);
         }
     }
 
+    // Директор отвечает за выполнение шагов построения в определенной последовательности,
+    // не является обязательным, можно определить его код на стороне клиента
     class Director
     {
         Builder _builder;
         public Director(Builder builder) { _builder = builder; }
-
-        public void Costruct()
+        public void Construnt()
         {
             _builder.BuildPartA();
             _builder.BuildPartB();
-            _builder.BuildPartC();
         }
     }
 
@@ -182,7 +144,7 @@ namespace Builder
         {
             Builder builder = new ConcreteBuilder();
             Director director = new Director(builder);
-            director.Costruct();
+            director.Construnt();
             builder.GetResult();
         }
     }
@@ -190,49 +152,62 @@ namespace Builder
 
 namespace Prototype
 {
-    // Создаем объект прототип и на его онове другие такие-же объекты - клоны
-    abstract class Prototype
+    // Создаем прототип и на его онове клоны
+    interface IClone { IClone Clone(); }
+
+    class Box : IClone
     {
-        public int Id { get; set; }
-        public Prototype(int id) { Id = id; }
-        public abstract void Clone();
+        int _width;
+        int _height;
+
+        public Box(int width, int height)
+        {
+            _width = width;
+            _height = height;
+        }
+
+        public IClone Clone()
+        {
+            Console.WriteLine("Box was cloned");
+            return new Box(_width, _height);
+        }
     }
 
-    class ConcretePrototypeBox : Prototype
+    class Sphere : IClone
     {
-        public ConcretePrototypeBox(int id) : base(id) { }
-        public override void Clone() { Console.WriteLine($"Box with id {Id} was cloned"); }
-    }
-
-    class ConcretePrototypeSphere : Prototype
-    {
-        public ConcretePrototypeSphere(int id) : base(id) { }
-        public override void Clone() { Console.WriteLine($"Sphere with id {Id} was cloned"); }
+        int _radius;
+        public Sphere(int radius) { _radius = radius; }
+        public IClone Clone()
+        {
+            Console.WriteLine("Sphere was cloned");
+            return new Sphere(_radius);
+        }
     }
 
     class Program
     {
         static void Main_()
         {
-            Prototype protypeOfBox = new ConcretePrototypeBox(1);
-            protypeOfBox.Clone();
-            protypeOfBox.Clone();
+            IClone boxPrototype = new Box(20, 40);
+            IClone boxClone1 = boxPrototype.Clone();
+            IClone boxClone2 = boxPrototype.Clone();
 
-            Prototype protypeOfSphere = new ConcretePrototypeSphere(2);
-            protypeOfSphere.Clone();
-            protypeOfSphere.Clone();
+            Console.WriteLine();
+
+            IClone spherePrototype = new Sphere(30);
+            IClone sphereCloned1 = spherePrototype.Clone();
+            IClone sphereCloned2 = spherePrototype.Clone();
         }
     }
 }
 
 namespace Singleton
 {
-    // Гарантирует, что у класса есть только один экземпляр, и предоставляет к нему глобальную точку доступа
     public class Singleton
     {
         private Singleton() { }
-        private static Singleton instance = new Singleton();
-        public static Singleton getInstance() { return instance; }
+        private static Singleton singleton = new Singleton();
+        public static Singleton GetSingleton() { return singleton; }
     }
 }
 
@@ -240,172 +215,148 @@ namespace Singleton
 
 namespace Adapter
 {
-    // Переходник между японской и европейской розеткой
-    // Может быть преходноком как в одну сторону, так и в обе
-    interface IRozetkaEurope { void GetElectricityEuropeanRozetka(); }
+    class EuropeanRozetka { public string GetElectricity() { return "European rozetka"; } }
+    class JapaneseRozetka { public string GetElectricity() { return "Japanese rozetka"; } }
 
-    class TV : IRozetkaEurope
+    public interface IEuropeanRozetka { string GetElectricity(); }
+    class Adapter : IEuropeanRozetka
     {
-        public void GetElectricityEuropeanRozetka() 
-            { Console.WriteLine("Electricity is going, tv"); }
-    }
-
-    interface IRozetkaJapan { void GetElectricityJapaneseRozetka(); }
-
-    class Refregerator : IRozetkaJapan
-    {
-        public void GetElectricityJapaneseRozetka()
-            { Console.WriteLine("Electricity is going, refregerator"); }
-    }
-
-    class JapanToEuropeanAdatper : IRozetkaEurope
-    {
-        Refregerator _refregerator;
-
-        public JapanToEuropeanAdatper(Refregerator refregerator)
-        {
-            _refregerator = refregerator;
-        }
-
-        public void GetElectricityEuropeanRozetka()
-            { _refregerator.GetElectricityJapaneseRozetka(); }
+        private readonly JapaneseRozetka _japaneseRozetka;
+        public Adapter(JapaneseRozetka japaneseRozetka) { _japaneseRozetka = japaneseRozetka; }
+        public string GetElectricity() { return _japaneseRozetka.GetElectricity(); }
     }
 
     class Program
     {
         static void Main_()
         {
-            var tv = new TV();                      // Подключаем ТВ к европейской розетке
-            var refregerator = new Refregerator();  // Подключаем холодильник к японской розетке
+            var europeanRozetka = new EuropeanRozetka();
+            Console.WriteLine(europeanRozetka.GetElectricity());
 
-            tv.GetElectricityEuropeanRozetka();
-            refregerator.GetElectricityJapaneseRozetka();
+            // Если есть японская розетка, используем ее напрямую
+            var japaneseRozetka = new JapaneseRozetka();
+            Console.WriteLine(japaneseRozetka.GetElectricity());
 
-            // Через адаптер подключаем холодильник к европейской розетке
-            IRozetkaEurope rozetkaEurope = new JapanToEuropeanAdatper(refregerator);
-            rozetkaEurope.GetElectricityEuropeanRozetka();
+            // Если нет - используем адаптер
+            IEuropeanRozetka adapter = new Adapter(japaneseRozetka);
+            Console.WriteLine(adapter.GetElectricity());
         }
     }
 }
 
 namespace Bridge
 {
-    // В авто есть абстракция в виде руля
-    // При изготовлении авто задаем общие правила взаимодействия и можем одинаково управлять каждым
-    // Мост здесь - это два объекта: конкретный авто и правила взаимодействия с ним
-    abstract class Implementor { public abstract void WheelImplementation(); }
+    // Разделяет абстракцию и реализацию, позволяя изменять их независимо друг от друга
+    // Храним информацию об цвете геометрической фигуры в отдельном классе
+    // и при добавлении новых цветов не нужно расширять классы фигур
+    public interface IColor { string Color(); }
+    class RedColor : IColor { public string Color() { return "RedColor"; } }
+    class BlueColor : IColor { public string Color() { return "BlueColor"; } }
 
-    abstract class Abstraction
+    class Figure
     {
-        protected Implementor implementor;
-        public Abstraction(Implementor imp) { this.implementor = imp; }
-        public virtual void WheelGeneral() { implementor.WheelImplementation(); }
+        protected IColor _color;
+        public Figure(IColor color) { _color = color; }
+        public virtual string Paint() { return "Paint all figures with " + _color.Color(); }
     }
 
-    class RefinedAbstraction : Abstraction
+    class Sphere : Figure
     {
-        public RefinedAbstraction(Implementor imp) : base(imp) { }
-        public override void WheelGeneral() { base.WheelGeneral(); }
+        public Sphere(IColor color) : base(color) { }
+        public override string Paint() { return "Paint sphere with " + _color.Color(); }
     }
 
-    class Citroen : Implementor
-    {
-        public override void WheelImplementation() { Console.WriteLine("Citroen"); }
-    }
-
-    class Hyundai : Implementor
-    {
-        public override void WheelImplementation() { Console.WriteLine("Hyundai"); }
-    }
-
-    class A
+    class Program
     {
         static void Main_()
         {
-            Abstraction abstraction;
-            abstraction = new RefinedAbstraction(new Citroen());
-            abstraction.WheelGeneral();
-            abstraction = new RefinedAbstraction(new Hyundai());
-            abstraction.WheelGeneral();
+            var figure = new Figure(new RedColor());
+            Console.WriteLine(figure.Paint());
+
+            figure = new Sphere(new BlueColor());
+            Console.WriteLine(figure.Paint());
         }
     }
 }
 
 namespace Composite
 {
-    // Компоновщик минимизирует различия в управлении группами объектов и индивидуальными объектами
-    // Например, существует алгоритм управления роботами, определяющий способ управления
-    // Не важно, кому отдается команда - одному роботу или группе
-    // В алгориитм нельзя включить команду, которую может
-    // исполнить только один робот, но не может исполнить группа
-    abstract class Component
+    // Есть большая коробка, в которую ложим игрушки и еще одну коробку с игрушкой
+    // Можем посчитать стоимость всех игрушек, обойдя эту древовидную структуру
+    public abstract class Gift
     {
-        protected string name;
-        public Component(string name) { this.name = name; }
-        public abstract void Operation();
-        public abstract void Add(Component component);
-        public abstract void Remove(Component component);
-        public abstract Component GetChild(int index);
+        public string Name { get; }
+        public int Price { get; set; }
+        public Gift(string name, int price) { Name = name; Price = price; }
+        public abstract int TotalPrice();
     }
 
-    class Leaf : Component
-    {
-        public Leaf(string name) : base(name) { }
-        public override void Operation() { Console.WriteLine(name); }
+    public interface IGiftOperations { void Add(Gift gift); }
 
-        // Leaf (лист дерева) - это компонент, не имеющий потомков
-        // Поэтому при добавлении/удалении элемента из листа генерируем исключение
-        public override void Add(Component component) { throw new InvalidOperationException(); }
-        public override void Remove(Component component) { throw new InvalidOperationException();}
-        public override Component GetChild(int index) { throw new InvalidOperationException();}
-    }
-
-    class Composite : Component
+    public class Box : Gift, IGiftOperations
     {
-        ArrayList nodes = new ArrayList();
-        public Composite(string name) : base(name) { }
-        
-        public override void Operation() // Метод рекурсивно обходит все дерево
+        private List<Gift> _gifts = new List<Gift>();
+        public Box(string name, int price) : base(name, price) { }
+        public void Add(Gift gift) { _gifts.Add(gift); }
+        public override int TotalPrice()
         {
-            Console.WriteLine(name);
-
-            foreach (Component component in nodes)
-                component.Operation();
+            int totalPrice = 0;
+            Console.WriteLine();
+            Console.WriteLine($"{Name} contains: ");
+            foreach (var gift in _gifts)
+                totalPrice += gift.TotalPrice();
+            return totalPrice;
         }
 
-        public override void Add(Component component) { nodes.Add(component); }
-        public override void Remove(Component component) { nodes.Remove(component); }
-        public override Component GetChild(int index) { return nodes[index] as Component; }
-    }
-
-    class A
-    {
-        static void Main_()
+        public class ConcreteGift : Gift
         {
-            Component root = new Composite("root");
-            Component branch1 = new Composite("b1");
-            Component branch2 = new Composite("b2");
-            Component leaf1 = new Composite("l1");
-            Component leaf2 = new Composite("l2");
-            
-            root.Add(branch1); // Создание элементов дерева и его рекурсивный обход
-            root.Add(branch2);
-            branch1.Add(leaf1);
-            branch2.Add(leaf2);
-            root.Operation();
+            public ConcreteGift(string name, int price) : base(name, price) { }
+            public override int TotalPrice()
+            {
+                Console.WriteLine($"{Name}, price {Price}");
+                return Price;
+            }
+        }
+
+        class Program
+        {
+            static void Main_()
+            {
+                // Считаем стоимость отдельной игрушки не в коробке
+                var ball = new ConcreteGift("Ball", 1);
+                ball.TotalPrice();
+
+                // Ложим в большую коробку игрушки
+                var bigBox = new Box("Big box", 0);
+                var phone = new ConcreteGift("Phone", 10);
+                var ps5 = new ConcreteGift("PS5", 100);
+                bigBox.Add(phone);
+                bigBox.Add(ps5);
+
+                // Ложим в маленькую коробку игрушку
+                var smallBox = new Box("Small box", 0);
+                var laptop = new ConcreteGift("Laptop", 1000);
+                smallBox.Add(laptop);
+
+                // Ложим в большую коробку маленькую коробку
+                bigBox.Add(smallBox);
+
+                // Считаем стоимость всех игрушек в большой коробке
+                Console.WriteLine($"Price of all toys in big box: {bigBox.TotalPrice()}");
+            }
         }
     }
 }
 
 namespace Decorator
 {
-    // Декоратор
     // Пиццерия готовит разные пиццы с разными добавками
-    // Есть два вида пиццы и два вида добавок, в зависимости от комбинации меняется стоимость
+    // Есть разные виды пиццы и разные виды добавок
+    // В зависимости от комбинации меняется стоимость
     abstract class Pizza
     {
         public string Name { get; set; }
-        public Pizza(string name) { this.Name = name; }
+        public Pizza(string name) { Name = name; }
         public abstract int GetCost();
     }
 
@@ -415,52 +366,45 @@ namespace Decorator
         public override int GetCost() { return 10; }
     }
 
-    class BulgerianPizza : Pizza
-    {
-        public BulgerianPizza() : base("Bulgerian pizza") { }
-        public override int GetCost() { return 8; }
-    }
-
-    // Декоратор класса Pizza -  наследуется от него
     abstract class PizzaDecorator : Pizza
     {
-        protected Pizza pizza; // Ссылка на декорируемый объект
-        public PizzaDecorator(string name, Pizza pizza) : base(name) { this.pizza = pizza; }
+        protected Pizza Pizza; // Ссылка на декорируемый объект
+        public PizzaDecorator(string name, Pizza pizza) : base(name) { Pizza = pizza; }
     }
-    // Добавляем новый функционал
+
     class TomatoPizza : PizzaDecorator
     {
         public TomatoPizza(Pizza pizza) : base(pizza.Name + ", with tomatos", pizza) { }
-        public override int GetCost() { return pizza.GetCost() + 3; }
+        public override int GetCost() { return Pizza.GetCost() + 3; }
     }
-    // Добавляем новый функционал
+
     class CheesePizza : PizzaDecorator
     {
         public CheesePizza(Pizza pizza) : base(pizza.Name + ", with cheeze", pizza) { }
-        public override int GetCost() { return pizza.GetCost() + 5; }
+        public override int GetCost() { return Pizza.GetCost() + 5; }
     }
 
     class Program
     {
         static void Main_()
         {
-            Pizza bulgerianPizza = new BulgerianPizza();
-            var costBulgerianPizza = bulgerianPizza.GetCost();
+            Pizza italianPizza = new ItalianPizza();
+            Console.WriteLine($"{italianPizza.Name}, price {italianPizza.GetCost()}");
 
-            bulgerianPizza = new TomatoPizza(bulgerianPizza);   // Декорируем пиццу томатом
-            var costBulgerianPizzaWithTomato = bulgerianPizza.GetCost();
+            italianPizza = new TomatoPizza(italianPizza);   // Декорируем пиццу томатом
+            Console.WriteLine($"{italianPizza.Name}, price {italianPizza.GetCost()}");
 
-            bulgerianPizza = new CheesePizza(bulgerianPizza);   // Декорируем пиццу сыром
-            var costBulgerianPizzaWithTomatoWithCheeae = bulgerianPizza.GetCost();
+            italianPizza = new CheesePizza(italianPizza);   // Декорируем пиццу сыром
+            Console.WriteLine($"{italianPizza.Name}, price {italianPizza.GetCost()}");
         }
     }
 }
 
 namespace Facade
 {
-    // Если бы управление автомобилем происходило так - нажать одну кнопку чтобы подать питание с аккумулятора,
-    // другую чтобы подать питание на инжектор, третью чтобы включить генератор, это было бы сложно
-    // Такие наборы действий заменяются простыми - поворот ключа зажигания будет фасадом
+    // Если бы для управления авто нужно было нажать кнопку подачи питания с аккумулятора,
+    // потом кнопки подачи питания на инжектор и кнопки включения генератора, это было-бы сложно
+    // Эти действя заменяются поворотом ключа зажигания, а остальное происходит под капотом
     class Facade
     {
         SubsystemA subsystemA = new SubsystemA();
@@ -489,77 +433,49 @@ namespace Facade
     }
 }
 
+//!
 namespace Flyweight
 {
-    // Один актер может исполнить много разных ролей
-    // Применяется, когда приложение использует много однообразных объектов,
-    // из-за чего выделяется большое количество памяти
-    abstract class Flyweight { public abstract void Greeting(string speech); }
 
-    class Actor : Flyweight
-    {
-        public override void Greeting(string speech) { Console.WriteLine(speech); }
-    }
-    
-    class Role1 : Flyweight
-    {
-        Flyweight flyweight;
-        public Role1(Flyweight flyweight) { this.flyweight = flyweight; }
-        public override void Greeting(string speech) { this.flyweight.Greeting(speech); }
-    }
-    
-    class Role2 : Flyweight
-    {
-        Flyweight flyweight;
-        public Role2(Flyweight flyweight) { this.flyweight = flyweight; }
-        public override void Greeting(string speech) { this.flyweight.Greeting(speech);}
-    }
-
-    class A
-    {
-        static void Main_()
-        {
-            Actor actor = new Actor();
-
-            Role1 role1 = new Role1(actor); // Актер играет одну роль
-            role1.Greeting("I'm actor1, play role1");
-
-            Role2 role2 = new Role2(actor); // Тот-же актер играет уже другую роль
-            role2.Greeting("I'm actor1, play role2");
-        }
-    }
 }
 
 namespace Proxy
 {
     // Сначала отрабатывает прокси, потом основной объект и опять прокси
     // Прокси может замещать или дополнять объект
-    public abstract class Subject { public abstract void Request(); }
-
-    public class RealSubject : Subject
+    public interface ISubject { void Request(); }
+    public class Client { public void ClientCode(ISubject subject) { subject.Request(); } }
+    class RealObject : ISubject { public void Request() { Console.WriteLine("Real subject"); } }
+    class Proxy : ISubject
     {
-        public override void Request() { Console.WriteLine("RealSubject"); }
-    }
-
-    public class ProxySubject : Subject
-    {
-        private RealSubject realSubject;
-        public override void Request()
+        private RealObject _realSubject;
+        public Proxy(RealObject realSubject) { _realSubject = realSubject; }
+        public void Request()
         {
-            Console.WriteLine("ProxySubject begin");
-            if (realSubject == null)
-                realSubject = new RealSubject();
-            realSubject.Request();
-            Console.WriteLine("ProxySubject end");
+            ProxyBegin();
+            _realSubject.Request();
+            ProxyEnd();
         }
+
+        public void ProxyBegin() { Console.WriteLine("Proxy begin"); }
+        public void ProxyEnd() { Console.WriteLine("Proxy end"); }
     }
 
-    public class Program
+    class Program
     {
-        public static void Main_()
+        static void Main_()
         {
-            ProxySubject proxy = new ProxySubject();
-            proxy.Request();
+            var client = new Client();
+
+            Console.WriteLine("Executing code with real subject:");
+            var realObject = new RealObject();
+            client.ClientCode(realObject);
+
+            Console.WriteLine();
+
+            Console.WriteLine("Executing code with proxy:");
+            var proxy = new Proxy(realObject);
+            client.ClientCode(proxy);
         }
     }
 }
