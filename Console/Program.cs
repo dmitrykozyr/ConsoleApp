@@ -6,7 +6,7 @@ namespace ConsoleEmpty
 {
     class Program
     {
-        static void Main()
+        static void Main_()
         {
             //Empty();
             //IsValid();

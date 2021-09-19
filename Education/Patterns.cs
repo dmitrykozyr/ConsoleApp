@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// Дописать описания ко всем паттернам
+
 // Порождающие
 
 namespace FactoryMethod
@@ -29,6 +31,7 @@ namespace FactoryMethod
 
 namespace AbstractFactory
 {
+    // Конструируем объекты из готовых частей
     abstract class Weapon { public abstract void Hit(); }
     class Arbalet : Weapon { public override void Hit() { Console.WriteLine("Shoot from arbalet"); } }
     class Sword : Weapon { public override void Hit() { Console.WriteLine("Hit by sword"); } }
@@ -91,6 +94,7 @@ namespace AbstractFactory
 
 namespace Builder
 {
+    // Динамически создаем объект из нескольких частей
     class Product
     {
         public List<object> parts = new List<object>();
@@ -502,10 +506,8 @@ namespace ChainOfResponsibility
         private IHandler _nextHandler;
         public IHandler SetNext(IHandler handler)
         {
-            _nextHandler = handler;
-
-            // Возврат обработчика позволит связать обработчики так: monkey.SetNext(squirrel)
-            return handler;
+            _nextHandler = handler;            
+            return handler; // Возврат обработчика позволит связать обработчики так: monkey.SetNext(squirrel)
         }
 
         public virtual object Handle(object request)
@@ -574,94 +576,14 @@ namespace ChainOfResponsibility
         }
     }
 }
-//! Остановился здесь
+
+//!
 namespace Command
 {
-    // В ресторане к нам (клиент) подходит официант, записывает заказ на бумажку (команда)
-    // и отдает ее повару (получатель)
-    // Клиент и получатель не знают друг об друге
-
-    // Интерфейс команды имеет единственный метод для запуска
-    public interface ICommand { void Execute(); }
-
-    // Некоторые команды сами выполняют простые операции
-    class SimpleCommand : ICommand
-    {
-        private string _payload = "";
-
-        public SimpleCommand(string payload)
-        {
-            _payload = payload;
-        }
-
-        public void Execute() { Console.WriteLine($"I can do {_payload}"); }
-    }
-
-    class Receiver
-    {
-        public void DoSomething(string value) { Console.WriteLine($"Working on {value}"); }
-
-        public void DoSomethingElse(string value) { Console.WriteLine($"and working on {value}"); }
-    }
-
-    // Некоторые команды делегируют сложные задачи другим объектам (получателям)
-    class ComplexCommand : ICommand
-    {
-        private Receiver _receiver;
-        private string _a;
-        private string _b;
-
-        public ComplexCommand(Receiver receiver, string a, string b)
-        {
-            _receiver = receiver;
-            _a = a;
-            _b = b;
-        }
-
-        // Команды могут делегировать выполнение любым методам-получателям
-        public void Execute()
-        {
-            _receiver.DoSomething(_a);
-            _receiver.DoSomethingElse(_b);
-        }
-    }
-
-    // Получатель
-    class Invoker
-    {
-        private ICommand _onStart;
-        private ICommand _onFinish;
-
-        public void SetOnStart(ICommand comand) { _onStart = comand; }
-        public void SetOnFinish(ICommand comand) { _onFinish = comand; }
-
-        // Отправитель передает запрос получателю
-        public void DoSomethingImportant()
-        {
-            Console.WriteLine("Inwoker: does anyone want to do something before I begin?");
-            if (_onStart is ICommand) _onStart.Execute();
-
-            Console.WriteLine("Inwoker: ... doing some job ...");
-
-            Console.WriteLine("Inwoker: does anyone want to do something after I finish?");
-            if (_onFinish is ICommand) _onFinish.Execute();
-        }
-    }
-
-    class Program
-    {
-        static void Main()
-        {
-            var invoker = new Invoker();
-            invoker.SetOnStart(new SimpleCommand("Do something simple"));
-            var receiver = new Receiver();
-            invoker.SetOnFinish(new  ComplexCommand(receiver, "hamburger", "desert"));
-
-            invoker.DoSomethingImportant();
-        }
-    }
+    
 }
 
+//! 
 namespace Interpreter
 {
     // Закладываем часто используемые действия в сокращенный набор слов, чтобы интерпретатор превратил его
@@ -725,11 +647,11 @@ namespace Interpreter
     }
 }
 
+//!
 namespace Iterator
 {
-    // Предоставляет правила доступа к списку объектов независимо от того, что это за объекты
     // Не важно, какой класс построен и из каких учеников, должны быть общие правила подсчета и
-    // обращения как каждому ученику по списку, вроде "13-ый, выйти из строя"
+    // обращения как каждому ученику по списку
     abstract class Iterator
     {
         public abstract object First();
@@ -776,7 +698,6 @@ namespace Iterator
     class ConcreteAggregete : Aggregate
     {
         private ArrayList items = new ArrayList();
-
         public override Iterator CreateIterator() { return new ConcreteIterator(this); }
         public override int Count { get { return items.Count; } }
 
@@ -806,88 +727,91 @@ namespace Iterator
 
 namespace Mediator
 {
-    // Есть группа роботов и администратор (медиатор), который ими управляет
-    // Нет необходимости взаимодействовать с каждым роботом отдельно, достаточно отдавать команды администратору,
-    // а он решит, какие действия выполнить
-    // Посредник обеспечивает слабую связанность системы, избавляя объекты от необходимости явно ссылаться
-    // друг на друга и позволяя независимо изменять взаимодействия между ними
-    // Когда применяется:
-    // - Когда имеется множество взаимосвязаных объектов, связи между которыми сложны и запутаны
-    // - Когда необходимо повторно использовать объект, но повторное использование затруднено
-    //   в силу сильных связей с другими объектами
-    abstract class Mediator { public abstract void Send(string msg, Colleague colleague); }
+    // Самолеты в небе не общаются друг с другом напрямую,
+    // их поведение корректирует диспетчер (медиатор), с которым самолеты общаются
+    public interface IDispatcher { void Notify(string destination); }
 
-    // Посредник меджу фермером, фабрикой и магазином, которые друг об друге не знают
-    class ConcreteMediator : Mediator
+    class Dispatcher : IDispatcher
     {
-        public Farmer Farmer { get; set; }
-        public Cannery Cannery { get; set; }
-        public Shop Shop { get; set; }
-                
-        public override void Send(string msg, Colleague colleague) // Посредник получает сообщение
+        private PlaneBoeing _planeBoeing;
+        private PlaneAirbus _planeAirbus;
+        public Dispatcher(PlaneBoeing planeBoeing, PlaneAirbus planeAirbus)
         {
-            if (colleague == Farmer)        // Если сообщение передал фермер, значит он прислал нам ящик помидоров
-                Cannery.MakeKetchup(msg);   // Пересылаем помидоры фабрике
-            
-            else if (colleague == Cannery)  // Если сообщение прислала фабрика, значит она из помидроров сделал кетчуп
-                Shop.SellKetchup(msg);      // Отправляем кетчуп в магазин
+            _planeBoeing = planeBoeing;
+            _planeBoeing.SetDispatcher(this);
+            _planeAirbus = planeAirbus;
+            _planeAirbus.SetDispatcher(this);
+        }
+
+        public void Notify(string destination)
+        {
+            if (destination == "Paris")
+            {
+                Console.WriteLine("Dispatcher reacts on Paris:");
+                _planeAirbus.FlyToTokyo();
+            }
+            if (destination == "London")
+            {
+                Console.WriteLine("Dispatcher reacts on London:");
+                _planeBoeing.FlyToSanFrancisco();
+                _planeAirbus.FlyToTokyo();
+            }
         }
     }
 
-    abstract class Colleague
+    class Planes
     {
-        protected Mediator mediator;
-        public Colleague(Mediator mediator) { this.mediator = mediator; }
+        protected IDispatcher _dispatcher;
+        public Planes(IDispatcher dispatcher = null) { _dispatcher = dispatcher; }
+        public void SetDispatcher(IDispatcher dispatcher) { _dispatcher = dispatcher; }
     }
-    
-    class Farmer : Colleague // Фермер выращивает помидоры
-    {
-        public Farmer(Mediator mediator) : base(mediator) { }
 
-        public void GrowTomato()
+    class PlaneBoeing : Planes
+    {
+        public void FlyToParis()
         {
-            string tomato = "Tomato";
-            Console.WriteLine(this.GetType().Name + " raised " + tomato);
-            mediator.Send(tomato, this);
+            Console.WriteLine("Boeing flying to Paris");
+            _dispatcher.Notify("Paris");
+        }
+
+        public void FlyToSanFrancisco()
+        {
+            Console.WriteLine("Boeing flying to San Francisco");
+            _dispatcher.Notify("San Francisco");
         }
     }
 
-    class Cannery : Colleague // Фабрика из помидоров делает кетчуп
+    class PlaneAirbus : Planes
     {
-        public Cannery(Mediator mediator) : base(mediator) { }
-
-        public void MakeKetchup(string message)
+        public void FlyToTokyo()
         {
-            string ketchup = message + "Ketchup";
-            Console.WriteLine(this.GetType().Name + " produced " + ketchup);
-            mediator.Send(ketchup, this);
+            Console.WriteLine("Airbus flying to Tokyo");
+            _dispatcher.Notify("Tokyo");
+        }
+
+        public void FlyToLondon()
+        {
+            Console.WriteLine("Airbus flying to London");
+            _dispatcher.Notify("London");
         }
     }
-        
-    class Shop : Colleague // Магазин продает кетчуп
-    {
-        public Shop(Mediator mediator) : base(mediator) { }
-        public void SellKetchup(string message) { Console.WriteLine(this.GetType().Name + " sold " + message); }
-    }
 
-    class A
+    class Program
     {
         static void Main_()
         {
-            var mediator = new ConcreteMediator();
-            var farmer = new Farmer(mediator);
-            var cannery = new Cannery(mediator);
-            var shop = new Shop(mediator);
+            var planeBoeing = new PlaneBoeing();
+            var planeAirbus = new PlaneAirbus();
+            new Dispatcher(planeBoeing, planeAirbus);
 
-            mediator.Farmer = farmer;
-            mediator.Cannery = cannery;
-            mediator.Shop = shop;
-
-            farmer.GrowTomato();
+            planeBoeing.FlyToParis();
+            Console.WriteLine();
+            planeAirbus.FlyToLondon();
         }
     }
 }
 
+//!
 namespace Memento
 {
     // Хранитель - когда просим друга с мобильным телефоном на время записать себе номер, что диктуют нам по телефону,
@@ -899,146 +823,139 @@ namespace Memento
     // Когда применяется:
     // - Когда нужно сохранить состояние объекта для возможного последующего восстановления
     // - Когда сохранение состояния должно проходить без нарушения инкапсуляции
-    class Man // Человек, который изменяет свое состояние
+    class Man
     {
         public string Сlothes { get; set; }
         public void Dress(Backpack backpack) { Сlothes = backpack.Сontents; }
         public Backpack Undress() { return new Backpack(Сlothes); }
     }
         
-    class Backpack // Рюкзак, где человек хранит свою одежду - состояние
+    class Backpack
     {
         public string Сontents { get; private set; }
         public Backpack(string сontents) { this.Сontents = сontents; }
     }
 
-    // Робот, который держит рюкзак с одежной человека - состоянием
     class Robot { public Backpack Backpack { get; set; } }
 
     class A
     {
         static void Main_()
         {
-            Man David = new Man();
-            Robot ASIMO = new Robot();
-            David.Сlothes = "Футболка, Джинсы, Кеды";   // Одеваем челоека в одежду
-            ASIMO.Backpack = David.Undress();           // Отдаем рюкзак роботу
-            David.Сlothes = "Шорты спортивные";
-            David.Dress(ASIMO.Backpack);                // Берем у робота рбкзак и одеваем другую одежду
-        }
-    }
-}
-
-namespace Memento_2
-{
-    class Originator
-    {
-        public string State { get; set; }
-        public void SetMemento(Memento memento) { State = memento.State; }
-        public Memento CreateMemento() { return new Memento(State); }
-    }
-
-    class Memento
-    {
-        public string State { get; private set; }
-        public Memento(string state) { this.State = state; }
-    }
-
-    class Caretaker { public Memento Memento { get; set; } }
-
-    class A
-    {
-        static void Main_()
-        {
-            Originator originator = new Originator();
-            originator.State = "On";
-
-            Caretaker caretaker = new Caretaker();
-            caretaker.Memento = originator.CreateMemento();
-            originator.State = "Off";
-            originator.SetMemento(caretaker.Memento);
+            var man = new Man();
+            var robot = new Robot();
+            man.Сlothes = "Clothes";            // Одеваем челоека в одежду
+            robot.Backpack = man.Undress();     // Отдаем рюкзак роботу
+            man.Сlothes = "Another clothes";
+            man.Dress(robot.Backpack);          // Берем у робота рбкзак и одеваем другую одежду
         }
     }
 }
 
 namespace Observer
 {
-    // Если подписались на email рассылку, то email начинает реализовывать паттерн наблюдатель
-    // Когда подписываемся на событие, всем подписанным высылается уведомление, а они могут выбрать, как реагировать
-    // Определяет зависимость один ко многим между объектами так, что при изменении состояния одного объекта
-    // все зависящие от него оповещаются и автоматически обновляются
-    // Когда применяется:
-    // - Когда система состоит из множества классов, объекты которых должны быть согласованы
-    // - Когда схема взаимодействия объектов предполагает две стороны: одна рассылает сообщения,
-    //   другая получает сообщения и реагирует на них
-    // - Когда существует один объект, рассылающий сообщения, и множество подписчиков, которые получают сообщения
-    //   При этом точное число подписчиков заранее неизвестно и может изменяться
-    abstract class Observer { public abstract void Update(); }
+    // Подписчики подписались на рассылку издателя и в зависимости 
+    // от типа рассылки, реагирую на нее по разному
 
-    abstract class Subject
+    public interface IObserver { void ReactToPublisherEvent(IPublisher publisher); }
+
+    public interface IPublisher
     {
-        ArrayList observers = new ArrayList();
-        public void Attach(Observer observer) { observers.Add(observer); }
-        public void Detach(Observer observer) { observers.Remove(observer); }
-        public void Notify()
+        void Attach(IObserver observer);
+        void Detach(IObserver observer);
+        void NotifySubscribers();
+    }
+
+    public class Publisher : IPublisher
+    {        
+        public int State { get; set; }
+        private List<IObserver> _subscribers = new List<IObserver>();
+
+        public void Attach(IObserver subscriber)
         {
-            foreach (Observer observer in observers)
-                observer.Update();
+            Console.WriteLine("Attached subscriber " + subscriber.GetType().Name);
+            _subscribers.Add(subscriber);
+        }
+
+        public void Detach(IObserver subscriber)
+        {
+            _subscribers.Remove(subscriber);
+            Console.WriteLine("Detached subscriber");
+        }
+
+        public void NotifySubscribers()
+        {
+            Console.WriteLine("Notifying all subscribers");
+            foreach (var subscriber in _subscribers)
+                subscriber.ReactToPublisherEvent(this);
+        }
+
+        public void SomeBusinessLogic()
+        {
+            State = new Random().Next(0, 10);
+            Console.WriteLine("\nPublisher changed state to: " + State);
+            NotifySubscribers();
         }
     }
 
-    class ConcreteObserver : Observer
+    class SubscriberA : IObserver
     {
-        string observerState; ConcreteSubject subject;
-        public ConcreteObserver(ConcreteSubject subject) { this.subject = subject; }
-        public override void Update() { observerState = subject.State; }
+        public void ReactToPublisherEvent(IPublisher publisher)
+        {
+            if ((publisher as Publisher).State < 3)
+                Console.WriteLine("Subscriber A reacted to the event");
+        }
     }
 
-    class ConcreteSubject : Subject { public string State { get; set; } }
+    class SubscriberB : IObserver
+    {
+        public void ReactToPublisherEvent(IPublisher publisher)
+        {
+            if ((publisher as Publisher).State == 0 || (publisher as Publisher).State >= 2)
+                Console.WriteLine("Subscriber B reacted to the event");
+        }
+    }
 
-    class A
+    class Program
     {
         static void Main_()
         {
-            ConcreteSubject subject = new ConcreteSubject();
-            subject.Attach(new ConcreteObserver(subject));
-            subject.Attach(new ConcreteObserver(subject));
-            subject.State = "Some State ...";
-            subject.Notify();
+            var publisher = new Publisher();
+            var subscriberA = new SubscriberA();
+            publisher.Attach(subscriberA);
+
+            var subscriberB = new SubscriberB();
+            publisher.Attach(subscriberB);
+
+            publisher.SomeBusinessLogic();
+            publisher.SomeBusinessLogic();
+
+            publisher.Detach(subscriberB);
         }
     }
 }
 
 namespace State
 {
-    // Человек может прибывать в разных состояниях, а объекты могут вести себя по разному в зависимости от состояний
-    // Если мы устали, то на фразу "Сходи в магазин" скажем "Не пойду", а если нужно
-    // сходить в магазин за пивом, то на "Сходи в магазин" скажем "Уже бегу"
-    // Человек один и тот же, а поведение разное
+    // Если мы устали, то на фразу "Сходи в магазин" скажем "Не пойду",
+    // а если нужно сходить за пивом - скажем "Уже бегу"
+    // Человек тот-же, а поведение разное
     abstract class State { public abstract void Handle(Context context); }
-
-    class ConcreteStateA : State
-    {
-        public override void Handle(Context context) { context.State = new ConcreteStateB(); }
-    }
-
-    class ConcreteStateB : State
-    {
-        public override void Handle(Context context) { context.State = new ConcreteStateA(); }
-    }
+    class ConcreteStateA : State { public override void Handle(Context context) { context.State = new ConcreteStateB(); } }
+    class ConcreteStateB : State { public override void Handle(Context context) { context.State = new ConcreteStateA(); } }
 
     class Context
     {
         public State State { get; set; }
-        public Context(State state) { this.State = state; }
-        public void Request() { this.State.Handle(this); }
+        public Context(State state) { State = state; }
+        public void Request() { State.Handle(this); }
     }
 
-    class A
+    class Program
     {
         static void Main_()
         {
-            Context context = new Context(new ConcreteStateA());
+            var context = new Context(new ConcreteStateA());
             context.Request();
 
             context = new Context(new ConcreteStateB());
@@ -1050,44 +967,29 @@ namespace State
 namespace Strategy
 {
     // Используется для выбора различных путей получения результата
-    // Говорим "Хочу права, денег мало" - получим права через месяц и с большой тратой ресурсов
+    // Говорим "Хочу права, денег мало" - получим права через месяц
     // Говорим "Хочу права, денег много" - получим права завтра
-    // Что делал человек, мы не знаем, но задаем начальные условия, а он решает, как себя вести, сам выбирает стратегию
-    // Внутри стратегии хранятся различные способы поведения и чтобы выбрать, нужны параметры
+    // Что делал человек, мы не знаем, но задаем начальные условия, а он решает, как себя вести
     // Как устроена стратегия, нам знать не требуется
-    // Когда применяется:
-    // - Когда необходимо обеспечить выбор из нескольких вариантов алгоритмов,
-    //   которые можно менять в зависимости от условий
-    // - Когда необходимо менять поведение объектов на стадии выполнения программы
     abstract class Strategy { public abstract void AlgorithmInterface(); }
-
-    class ConcreteStrategyA : Strategy
-    {
-        public override void AlgorithmInterface() { Console.WriteLine("ConcreteStrategyA"); }
-    }
-
-    class ConcreteStrategyB : Strategy
-    {
-        public override void AlgorithmInterface() { Console.WriteLine("ConcreteStrategyB"); }
-    }
+    class StrategyA : Strategy { public override void AlgorithmInterface() { Console.WriteLine("Strategy A"); } }
+    class StrategyB : Strategy { public override void AlgorithmInterface() { Console.WriteLine("Strategy B"); } }
 
     class Context
     {
-        Strategy strategy;
-        public Context(Strategy strategy) { this.strategy = strategy; }
-        public void ContextInterface() { strategy.AlgorithmInterface(); }
+        Strategy _strategy;
+        public Context(Strategy strategy) { _strategy = strategy; }
+        public void ContextInterface() { _strategy.AlgorithmInterface(); }
     }
 
-    class A
+    class Program
     {
         static void Main_()
         {
-            Context context;
-            
-            context = new Context(new ConcreteStrategyA());
+            var context = new Context(new StrategyA());
             context.ContextInterface();
 
-            context = new Context(new ConcreteStrategyB());
+            context = new Context(new StrategyB());
             context.ContextInterface();
         }
     }
@@ -1096,14 +998,11 @@ namespace Strategy
 namespace TemplateMethod
 {
     // Определяет основу алгоритма и позволяет подклассам переопределить некоторые шаги, не изменяя структуру
-    // Когда применяется:
-    // - Когда планируется, что в будущем подклассы будут переопределять алгоритмы без изменения структуры
-    // - Когда в классах, реализующих схожий алгоритм, происходит дублирование кода
+    // Применяется, когда планируется, что в будущем подклассы будут переопределять алгоритмы без изменения структуры
     abstract class AbstractClass
     {
         public abstract void PrimitiveOperation1();
         public abstract void PrimitiveOperation2();
-
         public void TemplateMethod()
         {
             PrimitiveOperation1();
@@ -1127,6 +1026,7 @@ namespace TemplateMethod
     }
 }
 
+//! Тут остановился
 namespace Visitor
 {
     // Паттерн можно сравнить с обследованием в больнице, но посетителем будут врачи
@@ -1137,65 +1037,82 @@ namespace Visitor
     // Так можно использовать врачей для разных больных по одним и тем же алгоритмам
     // Паттерн посетитель позволяет определить новую операцию, не изменяя классы этих объектов
     // Когда применяется:
-    // - Когда имеется много объектов разных классов с разными интерфейсами,
-    //   и требуется выполнить ряд операций над каждым из этих объектов
+    // - Когда имеется много объектов разных классов с разными интерфейсами, и требуется выполнить ряд операций над каждым из этих объектов
     // - Когда классам необходимо добавить одинаковый набор операций без изменения этих классов
-    // - Когда часто добавляются новые операции к классам, при этом общая структура классов
-    //   стабильна и практически не изменяется
-    abstract class Visitor
+    // - Когда часто добавляются новые операции к классам, при этом общая структура классов стабильна и практически не изменяется
+    public interface IComponent { void Accept(IVisitor visitor); }
+    public class ConcreteComponentA : IComponent
     {
-        public abstract void VisitElementA(ConcreteElementA elementA);
-        public abstract void VisitElementB(ConcreteElementB elementB);
+        public void Accept(IVisitor visitor) { visitor.VisitConcreteComponentA(this); }
+        public string ExclusiveMethodOfConcreteComponentA() { return "A"; }
     }
 
-    class ConcreteVisitor1 : Visitor
+    public class ConcreteComponentB : IComponent
     {
-        public override void VisitElementA(ConcreteElementA elementA) { elementA.OperationA(); }
-        public override void VisitElementB(ConcreteElementB elementB) { elementB.OperationB(); }
+        public void Accept(IVisitor visitor) { visitor.VisitConcreteComponentB(this); }
+        public string SpecialMethodOfConcreteComponentB() { return "B"; }
     }
 
-    class ConcreteVisitor2 : Visitor
+    public interface IVisitor
     {
-        public override void VisitElementA(ConcreteElementA elementA) { elementA.OperationA(); }
-        public override void VisitElementB(ConcreteElementB elementB) { elementB.OperationB(); }
+        void VisitConcreteComponentA(ConcreteComponentA element);
+        void VisitConcreteComponentB(ConcreteComponentB element);
     }
 
-    class ObjectStructure
+    class ConcreteVisitor1 : IVisitor
     {
-        ArrayList elements = new ArrayList();
-        public void Add(Element element) { elements.Add(element); }
-        public void Remove(Element element) { elements.Remove(element); }
-
-        public void Accept(Visitor visitor)
+        public void VisitConcreteComponentA(ConcreteComponentA element)
         {
-            foreach (Element element in elements)
-                element.Accept(visitor); 
+            Console.WriteLine(element.ExclusiveMethodOfConcreteComponentA() + " + ConcreteVisitor1");
+        }
+
+        public void VisitConcreteComponentB(ConcreteComponentB element)
+        {
+            Console.WriteLine(element.SpecialMethodOfConcreteComponentB() + " + ConcreteVisitor1");
         }
     }
 
-    abstract class Element { public abstract void Accept(Visitor v); }
-
-    class ConcreteElementA : Element
+    class ConcreteVisitor2 : IVisitor
     {
-        public override void Accept(Visitor v) { v.VisitElementA(this); }
-        public void OperationA() { Console.WriteLine("OperationA"); }
-    }
-
-    class ConcreteElementB : Element
-    {
-        public override void Accept(Visitor v) { v.VisitElementB(this); }
-        public void OperationB() { Console.WriteLine("OperationB"); }
-    }
-
-    class A
-    {
-        static void Main_()
+        public void VisitConcreteComponentA(ConcreteComponentA element)
         {
-            var structure = new ObjectStructure();
-            structure.Add(new ConcreteElementA());
-            structure.Add(new ConcreteElementB());
-            structure.Accept(new ConcreteVisitor1());
-            structure.Accept(new ConcreteVisitor2());
+            Console.WriteLine(element.ExclusiveMethodOfConcreteComponentA() + " + ConcreteVisitor2");
+        }
+
+        public void VisitConcreteComponentB(ConcreteComponentB element)
+        {
+            Console.WriteLine(element.SpecialMethodOfConcreteComponentB() + " + ConcreteVisitor2");
+        }
+    }
+
+    public class Client
+    {
+        public static void ClientCode(List<IComponent> components, IVisitor visitor)
+        {
+            foreach (var component in components)
+                component.Accept(visitor);
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            var components = new List<IComponent> 
+            { 
+                new ConcreteComponentA(), 
+                new ConcreteComponentB() 
+            };
+
+            Console.WriteLine("The client code works with all visitors via the base Visitor interface:");
+            var visitor1 = new ConcreteVisitor1();
+            Client.ClientCode(components, visitor1);
+
+            Console.WriteLine();
+
+            Console.WriteLine("It allows the same client code to work with different types of visitors:");
+            var visitor2 = new ConcreteVisitor2();
+            Client.ClientCode(components, visitor2);
         }
     }
 }
