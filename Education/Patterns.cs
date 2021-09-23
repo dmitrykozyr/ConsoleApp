@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 // Порождающие
 
@@ -434,10 +434,65 @@ namespace Facade
     }
 }
 
-//!
 namespace Flyweight
 {
+    // Если играем в шутер, то нет смысла создавать для каждой пули новый объект
+    // Лучше создать несколько и переиспользовать их
+    interface IBullet { abstract void Shoot(); }
 
+    class Bullet : IBullet 
+    {
+        public string Name { get; set; }
+        public Bullet(string name)
+        {
+            Name = name;
+            Console.WriteLine($"{name} was created");
+        }
+
+        public void Shoot() { Console.WriteLine($"Shoot {Name}"); } 
+    }
+
+    class BulletFactory
+    {
+        // Фабрика приспособленцев возвращает запрошенные объекты
+        // Если такого нет, то создает его и возвращает
+        List<Bullet> allBullets = new List<Bullet>();
+
+        public BulletFactory()
+        {
+            allBullets.Add(new Bullet("Bullet 1"));
+            allBullets.Add(new Bullet("Bullet 2"));
+        }
+        
+        public IBullet GetBullet(string key)
+        {
+            if (!allBullets.Any(z => z.Name == key))
+            {
+                var newBullet = new Bullet(key);
+                allBullets.Add(newBullet);
+                return newBullet;
+            }
+
+            return allBullets.FirstOrDefault(z => z.Name == key);
+        }
+    }
+    
+    class Program
+    {
+        static void Main_()
+        {
+            var bulletFactory = new BulletFactory();
+
+            IBullet bullet1 = bulletFactory.GetBullet("Bullet 1");
+            bullet1.Shoot();
+
+            IBullet bullet2 = bulletFactory.GetBullet("Bullet 2");
+            bullet2.Shoot();
+
+            IBullet bullet3 = bulletFactory.GetBullet("Bullet 3");
+            bullet3.Shoot();
+        }
+    }
 }
 
 namespace Proxy
@@ -573,56 +628,49 @@ namespace ChainOfResponsibility
     }
 }
 
-//!
 namespace Command
 {
-    
-}
-
-//! 
-namespace Interpreter
-{
-    // Закладываем часто используемые действия в сокращенный набор слов, чтобы интерпретатор превратил его
-    // в более комплексные действия
-    // Если знакомому сказать "Литр молока, половинку белого, 200 грамм творога",
-    // то мы перечислили набор продуктов, но интерпретатор транслирует это в команду "зайди в магазин и купи следующее"
-    class Context
+    // Клиент в ресторане говорит официанту заказ, тот записывает его
+    // и передает повару, а он готовит блюда
+    class Chief
     {
-        public string Source { get; set; }
-        public char Vocabulary { get; set; }
-        public bool Result { get; set; }
-        public int Position { get; set; }
+        public void CookFirstDish(string a) { Console.WriteLine($"Chief: Cooking {a}"); }
+        public void CookSecondDish(string b) { Console.WriteLine($"Chief: Also cooking {b}"); }
     }
 
-    interface IAbstractExpression { public abstract void Interpreter(Context context); }
-
-    class TerminalExpression : IAbstractExpression
+    interface ICommand { void GiveOrderToChief(); }
+    
+    class Waiter : ICommand
     {
-        public void Interpreter(Context context)
+        private Chief _chief;
+        private string _a;
+        private string _b;
+
+        public Waiter(Chief chief, string a, string b)
         {
-            context.Result = context.Source[context.Position] == context.Vocabulary;
+            _chief = chief;
+            _a = a;
+            _b = b;
+        }
+
+        public void GiveOrderToChief()
+        {
+            _chief.CookFirstDish(_a);
+            _chief.CookSecondDish(_b);
         }
     }
-
-    class NonterminalExpression : IAbstractExpression
+    
+    // Отправитель связан с одной или несколькими командами, отправляет запрос команде
+    class Client
     {
-        IAbstractExpression nonterminalExpression;
-        IAbstractExpression terminalExpression;
-
-        public void Interpreter(Context context)
+        private ICommand _onStart;
+        private ICommand _onFinish;
+        public void OrderFirstDishes(ICommand command) { _onStart = command; }
+        public void OrderSecondDishes(ICommand command) { _onFinish = command; }
+        public void DoSomethingImportant()
         {
-            if (context.Position < context.Source.Length)
-            {
-                terminalExpression = new TerminalExpression();
-                terminalExpression.Interpreter(context);
-                context.Position++;
-
-                if (context.Result)
-                {
-                    nonterminalExpression = new NonterminalExpression();
-                    nonterminalExpression.Interpreter(context);
-                }
-            }
+            _onStart.GiveOrderToChief();
+            _onFinish.GiveOrderToChief();
         }
     }
 
@@ -630,76 +678,45 @@ namespace Interpreter
     {
         static void Main_()
         {
-            Context context = new Context
-            {
-                Vocabulary = 'a',
-                Source = "aa"
-            };
+            var cient = new Client();
+            var chief = new Chief();
 
-            var expression = new NonterminalExpression();
-            expression.Interpreter(context);
-            Console.WriteLine(context.Result);
+            cient.OrderFirstDishes(new Waiter(chief, "Meat", "Salad"));
+            cient.OrderSecondDishes(new Waiter(chief, "Dessert", "Drinks"));
+
+            cient.DoSomethingImportant();
         }
     }
 }
 
-//!
 namespace Iterator
 {
     // Не важно, какой класс и из каких учеников построен, должны быть общие правила подсчета
-    interface IIterator
+    interface IStudentsIterator
     {
-        public abstract object First();
-        public abstract object Next();
-        public abstract bool IsDone();
-        public abstract object CurrentItem();
+        string Current { get; }
+
+        bool MoveNext();
     }
-
-    interface IAggregate
+    
+    class StudentsIterator : IStudentsIterator
     {
-        public abstract IIterator CreateIterator();
-        public abstract int Count { get; }
-        public abstract object this[int index] { get; set; }
-    }
+        private List<string> _students;
+        private int _position;
 
-    class ConcreteIterator : IIterator
-    {
-        private IAggregate aggregate;
-        private int current = 0;
-
-        public ConcreteIterator(IAggregate aggregate) { this.aggregate = aggregate; }
-        public object First() { return aggregate[0]; }
-
-        public object Next()
+        public StudentsIterator(List<string> students)
         {
-            if (current++ < aggregate.Count - 1)
-                return aggregate.Count;
-            else
-                return null;
+            _students = students;
+            _position = -1;
         }
 
-        public bool IsDone()
+        public string Current => _students[_position];
+
+        public bool MoveNext()
         {
-            if (current < aggregate.Count)
+            if (++_position == _students.Count)
                 return false;
-
-            current = 0;
             return true;
-        }
-
-        public object CurrentItem() { return aggregate[current]; }
-    }
-
-    class ConcreteAggregete : IAggregate
-    {
-        private ArrayList items = new ArrayList();
-        public IIterator CreateIterator() { return new ConcreteIterator(this); }
-        public int Count { get { return items.Count; } }
-
-        public object this[int index]
-        {
-            get { return items[index]; }
-            set { items.Insert(index, value); }
         }
     }
 
@@ -707,15 +724,10 @@ namespace Iterator
     {
         static void Main_()
         {
-            IAggregate a = new ConcreteAggregete();
-            a[0] = "A";
-            a[1] = "B";
-            a[2] = "C";
-            a[3] = "D";
-            IIterator i = a.CreateIterator();
-            
-            for (object e = i.First(); !i.IsDone(); e = i.Next())
-                Console.WriteLine(e);
+            var students = new List<string> { "Student 1", "Student 2", "Student 3" };
+            var iterator = new StudentsIterator(students);
+            while (iterator.MoveNext())
+                Console.WriteLine(iterator.Current);
         }
     }
 }
@@ -808,34 +820,34 @@ namespace Mediator
 
 namespace Memento
 {
-    // Просим друга с мобильным телефоном на время записать номер, что диктуют нам по телефону
-    // Объект сохранчет состояние в другом объекте и потом восстанавливает его
+    // Просим друга запомнить номер, что диктуют нам по телефону, он запоминает,
+    // нам диктуют новый и старый мы забываем, но можем попросить друга напомнить его
     class Man
     {
-        public string Сlothes { get; set; }
-        public void Dress(Backpack backpack) { Сlothes = backpack.Сontents; }
-        public Backpack Undress() { return new Backpack(Сlothes); }
+        public string PhoneNumber { get; set; }
+        public void RestoreNumber(DataToRemember phoneNumber) { PhoneNumber = phoneNumber.PhoneNumber; }
+        public DataToRemember GetNumber() { return new DataToRemember(PhoneNumber); }
     }
         
-    class Backpack
+    class DataToRemember
     {
-        public string Сontents { get; private set; }
-        public Backpack(string сontents) { this.Сontents = сontents; }
+        public string PhoneNumber { get; private set; }
+        public DataToRemember(string phoneNumber) { PhoneNumber = phoneNumber; }
     }
 
-    class Robot { public Backpack Backpack { get; set; } }
+    class Friend { public DataToRemember PhoneNumber { get; set; } }
 
     class Program
     {
         static void Main_()
         {
             var man = new Man();
-            var robot = new Robot();
+            var friend = new Friend();
 
-            man.Сlothes = "Clothes";            // Одеваем челоека в одежду
-            robot.Backpack = man.Undress();     // Отдаем рюкзак роботу
-            man.Сlothes = "Another clothes";
-            man.Dress(robot.Backpack);          // Берем у робота рбкзак и одеваем другую одежду
+            man.PhoneNumber = "000-000-0000";       // Получаем номер телефона
+            friend.PhoneNumber = man.GetNumber();   // Просим друга запомнить номер
+            man.PhoneNumber = "777-777-7777";       // Получаем другой номер, старый забываем
+            man.RestoreNumber(friend.PhoneNumber);  // Просим друга напомнить старый номер
         }
     }
 }
@@ -1012,69 +1024,68 @@ namespace TemplateMethod
 
 namespace Visitor
 {
-    // Есть несколько покупателей и несколько магазинов
-    // Разные покупатели могут прийти в разные магазины и что-то купить
-    interface IVisitor
+    // Есть студенты. Их посещает доктор, а потом продавец, каждый выполняет
+    // с каждый студентом определенные действия (проверяет здоровье | дает книгу)
+    interface IElement { void Accept(IVisitor visitor); }
+
+    class Student : IElement
     {
-        void VisitComixShop(ComixShop comixShop);
-        void VisitDressShop(DressShop dressShop);
+        public string Name { get; set; }
+        public Student(string name) { Name = name; }
+        public void Accept(IVisitor visitor) { visitor.Visit(this); }
     }
 
-    class VisitorJohn : IVisitor
-    {
-        public void VisitComixShop(ComixShop comixShop) { comixShop.BuyComix(); }
-        public void VisitDressShop(DressShop dressShop) { dressShop.BuyDress(); }
-    }
+    interface IVisitor { void Visit(IElement element); }
 
-    class VisitorKate : IVisitor
+    class Doctor : IVisitor
     {
-        public void VisitComixShop(ComixShop comixShop) { comixShop.BuyComix(); }
-        public void VisitDressShop(DressShop dressShop) { dressShop.BuyDress(); }
-    }   
-
-    interface IShop
-    {
-        void Accept(IVisitor visitor);
-        public string SomeState { get; set; }
-    }
-
-    class ComixShop : IShop
-    {
-        public string SomeState { get; set; }
-        public void Accept(IVisitor visitor) { visitor.VisitComixShop(this); }
-        public void BuyComix() { Console.WriteLine("Comix was bought"); }
-    }
-
-    class DressShop : IShop
-    {
-        public string SomeState { get; set; }
-        public void Accept(IVisitor visitor) { visitor.VisitDressShop(this); }
-        public void BuyDress() { Console.WriteLine("Dress was bought"); }
-    }
-
-    class Client
-    {
-        List<IShop> shops = new List<IShop>();
-        public void Add(IShop shop) { shops.Add(shop); }
-        public void Remove(IShop shop) { shops.Remove(shop); }
-        public void Accept(IVisitor visitor)
+        public string Name { get; set; }
+        public Doctor(string name) { Name = name; }
+        public void Visit(IElement element)
         {
-            foreach (var shop in shops)
-                shop.Accept(visitor);
+            Student student = (Student)element;
+            Console.WriteLine(Name + " checked student: " + student.Name);
+        }
+    }
+
+    class Salesman : IVisitor
+    {
+        public string Name { get; set; }
+        public Salesman(string name) { Name = name; }
+        public void Visit(IElement element)
+        {
+            Student student = (Student)element;
+            Console.WriteLine(Name + " gave book to student: " + student.Name);
+        }
+    }
+
+    class School
+    {
+        private static List<IElement> students;
+        static School()
+        {
+            students = new List<IElement> { new Student("Ram"), new Student("Sara") };
+        }
+        public void PerformOperation(IVisitor visitor)
+        {
+            foreach (var kid in students)
+                kid.Accept(visitor);
         }
     }
 
     class Program
     {
-        static void Main()
+        static void Main_()
         {
-            var client = new Client();
+            var school = new School();
 
-            client.Add(new ComixShop());
-            client.Add(new DressShop());
+            var doctor = new Doctor("Doctor");
+            school.PerformOperation(doctor);
+            
+            Console.WriteLine();
 
-            client.Accept(new VisitorJohn());
-            client.Accept(new VisitorKate());
+            var salesman = new Salesman("Salesman");
+            school.PerformOperation(salesman);
         }
     }
 }
