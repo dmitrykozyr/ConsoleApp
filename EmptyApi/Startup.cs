@@ -1,11 +1,12 @@
-﻿using EmptyApi.Models;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using EmptyApi.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace EmptyApi
 {
@@ -30,17 +31,19 @@ namespace EmptyApi
         // Если изменим порядок - приложение нормально работать не будет
         public delegate Task RequestDelegate(HttpContext context);
 
-        IWebHostEnvironment _env;
-        public Startup(IWebHostEnvironment env)
+        IConfiguration _configuration;
+        public Startup(IConfiguration configuration)
         {
-            _env = env;
+            _configuration = configuration;
         }
 
         // Необязательный метод для реистрации сервисов
         public void ConfigureServices(IServiceCollection services)
         {
-            const string con = "Server=(localdb)\\mssqllocaldb;Database=usersdbstore;Trusted_Connection=True;";
-            services.AddDbContext<UsersContext>(options => options.UseSqlServer(con));
+            //const string con = "Server=(localdb)\\mssqllocaldb;Database=usersdbstore;Trusted_Connection=True;";
+            //services.AddDbContext<UsersContext>(options => options.UseSqlServer(con));
+
+            services.AddDbContext<UsersContext>(options => options.UseInMemoryDatabase(UserList));
             services.AddControllers();
         }
 
@@ -65,7 +68,7 @@ namespace EmptyApi
                 // Для всех запросов по маршруту '/' (http://localhost:6865) в ответ будет выводиться название приложения
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync($"Application Name: {_env.ApplicationName}");
+                    await context.Response.WriteAsync($"Application Name: {_configuration.ApplicationName}");
                 });
             });
         }
