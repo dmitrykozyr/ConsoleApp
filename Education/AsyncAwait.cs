@@ -542,7 +542,6 @@ class Program
         }
         catch (Exception ex) { Console.WriteLine("catch_2 " + ex); }
         Console.WriteLine("5, thread " + Thread.CurrentThread.ManagedThreadId);
-        Console.ReadKey();
     }
 }
 #endregion

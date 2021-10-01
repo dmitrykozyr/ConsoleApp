@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ConsoleEmpty
+namespace Algoritms
 {
     class Program
     {
@@ -332,6 +332,17 @@ namespace ConsoleEmpty
 
                 return false;
             }
+        }
+    }
+}
+
+namespace ConsoleEmpty
+{
+    class Program
+    {
+        static void Main()
+        {
+
         }
     }
 }

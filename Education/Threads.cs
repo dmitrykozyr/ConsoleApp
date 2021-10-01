@@ -365,20 +365,14 @@ namespace SharpEdus
 
             var thread = new Thread(F1);
             thread.Start();
-            Console.WriteLine("Press any button to continue");
-            Console.ReadKey();
             autoResetEvent.Set();   // Метод уведомляет все ожидающие потоки, что объект waitHandler
                                     // снова находится в сигнальном состоянии, и один из потоков захватывает
                                     // данный объект, переводит в несигнальное состояние,
                                     // а остальные потоки снова ожидают
-            Console.WriteLine("Press any button to continue");
-            Console.ReadKey();
             autoResetEvent.Set();   // Продолжение выполнения вторичного потока
 
             new Thread(F2).Start();
             new Thread(F3).Start();
-            Console.WriteLine("Press any button to continue");
-            Console.ReadKey();
             autoResetEvent.Set();   // Сигнал одному потоку
             autoResetEvent.Set();   // Сигнал другому потоку
 
@@ -412,8 +406,6 @@ namespace SharpEdus
 
             new Thread(F1).Start();
             new Thread(F2).Start();
-            Console.WriteLine("Press any button to continue");
-            Console.ReadKey();
             manualResetEvent.Set(); // Сигнал всем потокам
 
             //Task.Factory.StartNew(F10_1);

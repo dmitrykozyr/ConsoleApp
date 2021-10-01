@@ -5,56 +5,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// Тестирование: в постман отправить запрос на http://localhost:61922/api/todoitems
-// В Body указать
-//{
-//    "name":"walk dog",
-//    "isComplete":true
-//}
-
 namespace Api.Controllers
 {
+    // action нужен, когда есть два метода одного типа, например, два Post, тогда в урле указываем название метода GET api/users/get
+    //[Route("api/[controller]/[action]")]
+
+    // POST https://localhost:5001/api/todoitems
+    /*{
+        "name":"walk dog",
+        "isComplete":true
+    }*/
+
+    // GET https://localhost:5001/api/todoitems/1 
+
     [Route("api/[controller]")]
-    [ApiController] // Атрибут означает, что контроллер отвечает на запросы веб API
+    [ApiController] // Контроллер отвечает на запросы веб API
     public class TodoItemsController : ControllerBase
     {
-        private readonly Models.DbContextSetUp _context;
+        private readonly DbContextSetUp _context;
+        public TodoItemsController(DbContextSetUp context) { _context = context; }
 
-        public TodoItemsController(Models.DbContextSetUp context)
-        {
-            _context = context;
-        }
-
-        // GET: api/TodoItems
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
             return await _context.TodoItems.ToListAsync();
         }
 
-        // GET: api/TodoItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
             var todoItem = await _context.TodoItems.FindAsync(id);
-
-            if (todoItem == null)
-            {
+            if (todoItem == null) 
                 return NotFound();
-            }
-
             return todoItem;
         }
 
-        // PUT: api/TodoItems/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
         {
-            if (id != todoItem.Id)
-            {
+            if (id != todoItem.Id) 
                 return BadRequest();
-            }
-
             _context.Entry(todoItem).State = EntityState.Modified;
 
             try
@@ -63,42 +53,30 @@ namespace Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TodoItemExists(id))
-                {
+                if (!TodoItemExists(id)) 
                     return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                else throw;
             }
 
             return NoContent();
         }
 
-        // POST: api/TodoItems
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
         {
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
         }
 
-        // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<TodoItem>> DeleteTodoItem(long id)
         {
             var todoItem = await _context.TodoItems.FindAsync(id);
-            if (todoItem == null)
-            {
+            if (todoItem == null) 
                 return NotFound();
-            }
-
             _context.TodoItems.Remove(todoItem);
             await _context.SaveChangesAsync();
-
             return todoItem;
         }
 

@@ -34,10 +34,10 @@ namespace FactoryMethod
 
 namespace AbstractFactory
 {
-    // Задает интерфейс создания доступных типов продуктов,
-    // каждая реализация фабрики порождает продукты одной из вариаций
+    // Задает интерфейс создания продуктов
+    // Каждая реализация фабрики порождает продукты одной из вариаций
     // Клиент вызывает методы фабрики для получения продуктов,
-    // вместо самостоятельного создания с new
+    // вместо самостоятельного создания через new
     interface IWeapon { public void Hit(); }
     class Arbalet : IWeapon { public void Hit() { Console.WriteLine("Shoot from arbalet"); } }
     class Sword : IWeapon { public void Hit() { Console.WriteLine("Hit by sword"); } }
@@ -352,7 +352,6 @@ namespace Composite
 namespace Decorator
 {
     // Пиццерия готовит разные пиццы с разными добавками
-    // Есть разные виды пиццы и разные виды добавок
     // В зависимости от комбинации меняется стоимость
     abstract class Pizza
     {
@@ -403,8 +402,8 @@ namespace Decorator
 
 namespace Facade
 {
-    // Если бы для управления авто нужно было нажать кнопку подачи питания с аккумулятора,
-    // потом кнопкн подачи питания на инжектор и кнопку включения генератора - это было-бы сложно
+    // Если бы для управления авто нужно было подать питание с аккумулятора на инжектор
+    // и нажать кнопку включения генератора - это было-бы сложно
     // Эти действя заменяются поворотом ключа, остальное происходит под капотом
     class Facade
     {
@@ -541,9 +540,8 @@ namespace Proxy
 namespace ChainOfResponsibility
 {
     // Требуется получить справку из банка, но не ясно, кто должен ее дать
-    // В банке говорят что нужно идти в другое отделение, в другом
-    // отправляют в региональное отделение и там получаем справку
-    // Запрос может быть обработан в первом отделении или в нескольких
+    // В банке направляют в другое отделение, там в региональное и там получаем справку
+    // Запрос может быть обработан в первом отделении, втором или нескольких
     interface IHandler
     {
         IHandler SetNext(IHandler handler);
@@ -556,9 +554,7 @@ namespace ChainOfResponsibility
         public IHandler SetNext(IHandler handler)
         {
             _nextHandler = handler;
-
-            // Возврат обработчика позволит связать обработчики так: monkey.SetNext(squirrel)
-            return handler;
+            return handler; // Возврат обработчика позволит связать обработчики так: monkey.SetNext(squirrel)
         }
 
         public virtual object Handle(object request)
@@ -630,8 +626,7 @@ namespace ChainOfResponsibility
 
 namespace Command
 {
-    // Клиент в ресторане говорит официанту заказ, тот записывает его
-    // и передает повару, а он готовит блюда
+    // Клиент в ресторане говорит официанту заказ, тот записывает его и передает повару, а он готовит блюда
     class Chief
     {
         public void CookFirstDish(string a) { Console.WriteLine($"Chief: Cooking {a}"); }
@@ -660,7 +655,7 @@ namespace Command
         }
     }
     
-    // Отправитель связан с одной или несколькими командами, отправляет запрос команде
+    // Отправитель связан с одной или несколькими командами
     class Client
     {
         private ICommand _onStart;
@@ -695,7 +690,6 @@ namespace Iterator
     interface IStudentsIterator
     {
         string Current { get; }
-
         bool MoveNext();
     }
     
@@ -734,7 +728,7 @@ namespace Iterator
 
 namespace Mediator
 {
-    // Самолеты не общаются друг с другом напрямую, их корректирует диспетчер (медиатор)
+    // Самолеты не общаются друг с другом напрямую, их координирует диспетчер (медиатор)
     interface IDispatcher { void Notify(string destination); }
 
     class Dispatcher : IDispatcher
@@ -854,14 +848,13 @@ namespace Memento
 
 namespace Observer
 {
-    // Подписчики подписались на рассылку издателя и в зависимости 
-    // от типа рассылки, реагируют на нее по разному
+    // Подписчики подписались на рассылку издателя и, в зависимости от типа рассылки, реагируют по разному
     interface IObserver { void ReactToPublisherEvent(IPublisher publisher); }
 
     interface IPublisher
     {
-        void Attach(IObserver observer);
-        void Detach(IObserver observer);
+        void Subscribe(IObserver observer);
+        void Unsubscribe(IObserver observer);
         void NotifySubscribers();
     }
 
@@ -870,13 +863,13 @@ namespace Observer
         public int State { get; set; }
         private List<IObserver> _subscribers = new List<IObserver>();
 
-        public void Attach(IObserver subscriber)
+        public void Subscribe(IObserver subscriber)
         {
             Console.WriteLine("Attached subscriber " + subscriber.GetType().Name);
             _subscribers.Add(subscriber);
         }
 
-        public void Detach(IObserver subscriber)
+        public void Unsubscribe(IObserver subscriber)
         {
             _subscribers.Remove(subscriber);
             Console.WriteLine("Detached subscriber");
@@ -921,15 +914,15 @@ namespace Observer
         {
             var publisher = new Publisher();
             var subscriberA = new SubscriberA();
-            publisher.Attach(subscriberA);
+            publisher.Subscribe(subscriberA);
 
             var subscriberB = new SubscriberB();
-            publisher.Attach(subscriberB);
+            publisher.Subscribe(subscriberB);
 
             publisher.SomeBusinessLogic();
             publisher.SomeBusinessLogic();
 
-            publisher.Detach(subscriberB);
+            publisher.Unsubscribe(subscriberB);
         }
     }
 }
@@ -940,8 +933,18 @@ namespace State
     // а если нужно сходить за пивом - скажем "Уже бегу"
     // Человек тот-же, а поведение разное
     interface IState { public abstract void Handle(Context context); }
-    class StateBuyFood : IState { public void Handle(Context context) { context.State = new StateBuyBeer(); } }
-    class StateBuyBeer : IState { public void Handle(Context context) { context.State = new StateBuyFood(); } }
+
+    class StateBuyFood : IState 
+    {
+        public StateBuyFood() { Console.WriteLine("Buy food"); }
+        public void Handle(Context context) { context.State = new StateBuyFood(); } 
+    }
+
+    class StateBuyBeer : IState 
+    {
+        public StateBuyBeer() { Console.WriteLine("Buy beer"); }
+        public void Handle(Context context) { context.State = new StateBuyBeer(); } 
+    }
 
     class Context
     {
@@ -1024,8 +1027,8 @@ namespace TemplateMethod
 
 namespace Visitor
 {
-    // Есть студенты. Их посещает доктор, а потом продавец, каждый выполняет
-    // с каждый студентом определенные действия (проверяет здоровье | дает книгу)
+    // Есть студенты - сначала их посещает доктор, а потом продавец
+    // Каждый выполняет с каждый студентом определенные действия (проверяет здоровье | дает книгу)
     interface IElement { void Accept(IVisitor visitor); }
 
     class Student : IElement
