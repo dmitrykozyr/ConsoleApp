@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 
@@ -992,6 +993,62 @@ namespace SharpEdu
                     signingCredentials: signingCredentials);
                 token.Payload["OwnerId"] = new Guid("FCD2EFC9-518E-419F-A1AA-61E220932A98");
                 var bearerToker = "Bearer " + tokenHandler.WriteToken(token);
+            }
+        }
+
+        class IsAsTypeof
+        {
+            class A { }
+            class B : A { }
+            static void Main_()
+            {
+                UseIs();
+                UseAs();
+                UseTypeof();
+            }
+
+            static void UseIs()
+            {
+                // is проверяет совместимость типов
+                A objA = new A();
+                B objB = new B();
+                if (objA is A) Console.WriteLine("a is A");
+                if (objB is A) Console.WriteLine("b is A");
+                if (objA is B) Console.WriteLine("Error");
+                if (objA is object) Console.WriteLine("a is object");
+            }
+
+            static void UseAs()
+            {
+                // as выполняе преобразование типов во время выполнения и не
+                // генерирует исключение, если преобразование не удалось
+                // Если удалось - возвращается ссылка на тип
+                A objA = new A();
+                B objB = new B();
+                if (objA is B) 
+                    objB = (B)objA;
+                else 
+                    Console.WriteLine("Error");
+
+                // В примере выше выполняем проверку и в случае успеха делаем присвоение,
+                // as делает это в один шаг
+                objB = objA as B;
+                if (objB != null) 
+                    Console.WriteLine("Success");
+                else 
+                    Console.WriteLine("Error");
+            }
+
+            static void UseTypeof()
+            {
+                // Type содержит свойства и методы, для получения информации о типе
+                Type type = typeof(StreamReader);
+                Console.WriteLine(type.FullName);
+                if (type.IsClass)
+                    Console.WriteLine("Является классом");
+                if (type.IsAbstract)
+                    Console.WriteLine("Является абстрактным классом");
+                else                    Console.WriteLine("Является конкретным классом");
             }
         }
     }
