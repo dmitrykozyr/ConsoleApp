@@ -6,7 +6,7 @@ namespace Algoritms
 {
     class Program
     {
-        static void Main_()
+        static void Main()
         {
             //Empty();
             //IsValid();
@@ -19,7 +19,7 @@ namespace Algoritms
             //MissingNumber();
             //CountPrimes();
             //GetConcatenation();     // 1929. Concatenation of Array
-            IsHappy();              // 202. Happy Number
+            //IsHappy();              // 202. Happy Number
         }
 
         public static void IsValid()
@@ -332,17 +332,6 @@ namespace Algoritms
 
                 return false;
             }
-        }
-    }
-}
-
-namespace ConsoleEmpty
-{
-    class Program
-    {
-        static void Main()
-        {
-
         }
     }
 }
