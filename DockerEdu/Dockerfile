@@ -1,32 +1,32 @@
-#FROM mcr.microsoft.com/dotnet/core/runtime:3.1-nanoserver-1903 AS base
-#WORKDIR /app
-#
-#FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1903 AS build
-#WORKDIR /src										# указываем рабочую дирректорию
-#COPY ["DockerEdu/DockerEdu.csproj", "DockerEdu/"]	# копируем файл проекта
-#RUN dotnet restore "DockerEdu/DockerEdu.csproj"		# выполняем команду - скачать все зависимости из NuGet
-#COPY . .
-#WORKDIR "/src/DockerEdu"
-#RUN dotnet build "DockerEdu.csproj" -c Release -o /app/build		# запускаем билд проекта
-#
-#FROM build AS publish
-#RUN dotnet publish "DockerEdu.csproj" -c Release -o /app/publish	# делаем, чтобы все зависимости лежали внутри контейнера
-#
-#FROM base AS final
-#WORKDIR /app
-#COPY --from=publish /app/publish .
-#ENTRYPOINT ["dotnet", "DockerEdu.dll"]				# точка входа
+# Команды для создания image, из которого будет создан новый контейнер
+# node - название image
+# когда докер прочитает эту строчку, то проверит, есть-ли у нас этот image
+# если нет - скачает с docker.hub, а если там не найдет - вернет ошибку
+FROM node   
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+# указываем, в какой папке работаем
 WORKDIR /app
 
-COPY *.csproj ./
-RUN dotnet restore
+# если у нас уже скачаны какие-то пакеты, то повторно их скачивать не будем
+COPY package.json /app
 
-COPY ../engine/examples ./
-RUN dotnet publish -c Release -o out
+# на основе файла package.json можем установить модули
+RUN npm install
 
-FROM mcr.microsoft.com/dotnet/aspnet:3.1
-WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+# указываем, какие файлы хотим переместить в образ и там зафиксировать, т.к.
+# образ создается только для чтения (нельзя изменить после создания)
+# файлы копируются из проекта в image
+# говорим, откуда копировать, первая точка означает взять все из корня проекта,
+# где лежит dockerfile
+# второе значение - куда в образе поместить файлы (в корень)
+# точка - это абсолютный путь, но мы указали workdir и точка указывает на этот путь
+COPY . /app
+
+# переменная, где будет храниться номер порта
+ENV PORT 4200
+
+# указываем порт, который запускает приложение (необязательно)
+EXPOSE $PORT
+
+# запуск приложения
+CMD ["node", "app.js"]

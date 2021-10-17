@@ -46,7 +46,7 @@ namespace SharpEdu
         }
         #endregion
 
-        static void Main_()
+        static void Main()
         {
             
         }
