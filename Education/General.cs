@@ -514,49 +514,38 @@ namespace SharpEdu
         {
             class A<T>
             {
-                public void Display<B>() { }
-            }
-
-            class B<T>
-            {
-                T x;
-                public void Display<B>(B y) { Console.WriteLine(x.GetType() + " " + y.GetType()); }
-            }
-
-            class C<T>
-            {
                 public T x;
                 public T param { get; set; }
-                public C() { }
-                public C(T _x) { x = _x; }
+                public A() { }
+                public A(T _x) { x = _x; }
             }
 
-            class D<T, Z>
+            class B<T, Z>
             {
                 public T x;
                 public Z y;
                 public T param1 { get; set; }
                 public Z param2 { get; set; }
-                public D(T _x, Z _y) { x = _x; y = _y; }
+                public B(T _x, Z _y) { x = _x; y = _y; }
             }
 
-            class E<T> : C<T>
+            class C<T> : A<T>
             {
                 T x;
-                public E(T _x) : base(_x) { x = _x; }
+                public C(T _x) : base(_x) { x = _x; }
             }
 
             // where означает, что тип T может быть только типа C, либо быть любым его наследником
             // where T : new() - у класса должен быть публичный конструктор без параметров
-            class F<T, Z>
-                where T : C<int>
+            class D<T, Z>
+                where T : A<int>
                 where Z : new()
             {
                 public T x;
                 public Z y;
                 public T param1 { get; set; }
                 public Z param2 { get; set; }
-                public F(T _x, Z _y) { x = _x; y = _y; }
+                public D(T _x, Z _y) { x = _x; y = _y; }
                 public T F1() { return x; } // шаблонный тип можно возвращать
             }
 
@@ -568,19 +557,13 @@ namespace SharpEdu
                 return 0;
             }
 
-            static void Main_()
+            static void Main()
             {
-                var objA = new A<int>();
-                objA.Display<int>();
-
-                var objB = new B<bool>();
-                objB.Display<bool>(true);
-
                 var del = new Del<int, int>(Displ);
                 del(1);
 
-                var c1 = new C<int>(5);
-                var c2 = new D<bool, string>(true, "false");
+                var a1 = new A<int>(5);
+                var a2 = new B<bool, string>(true, "false");
             }
         }
 
