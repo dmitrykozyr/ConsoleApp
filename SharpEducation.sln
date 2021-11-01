@@ -3,19 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleEmpty", "Console\ConsoleEmpty.csproj", "{9C755B8E-0A5D-40FA-BAEF-1C966566A81B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Education", "Education\Education.csproj", "{88AB7DCE-BB79-4427-A373-8DAFBACF1A9E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{78C8B6A8-E3EB-45E4-8C33-AE0801E14919}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DockerEdu", "DockerEdu\DockerEdu.csproj", "{F33F5DFC-6AE8-48C0-95FC-B84467BD195F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api_2", "Api_2\Api_2.csproj", "{94711AF7-861C-4DCC-82B7-1360751CEBA3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KafkaEdu", "KafkaEdu\KafkaEdu.csproj", "{39252D1E-5878-478E-B461-92AB5C98B856}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkEdu", "EntityFrameworkEdu\EntityFrameworkEdu.csproj", "{9A1BB90F-2948-44B5-AFA9-76158E8D619C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkEdu", "EntityFrameworkEdu\EntityFrameworkEdu.csproj", "{9A1BB90F-2948-44B5-AFA9-76158E8D619C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9C755B8E-0A5D-40FA-BAEF-1C966566A81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C755B8E-0A5D-40FA-BAEF-1C966566A81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C755B8E-0A5D-40FA-BAEF-1C966566A81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C755B8E-0A5D-40FA-BAEF-1C966566A81B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88AB7DCE-BB79-4427-A373-8DAFBACF1A9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88AB7DCE-BB79-4427-A373-8DAFBACF1A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88AB7DCE-BB79-4427-A373-8DAFBACF1A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,14 +29,6 @@ Global
 		{F33F5DFC-6AE8-48C0-95FC-B84467BD195F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F33F5DFC-6AE8-48C0-95FC-B84467BD195F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F33F5DFC-6AE8-48C0-95FC-B84467BD195F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94711AF7-861C-4DCC-82B7-1360751CEBA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94711AF7-861C-4DCC-82B7-1360751CEBA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94711AF7-861C-4DCC-82B7-1360751CEBA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94711AF7-861C-4DCC-82B7-1360751CEBA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39252D1E-5878-478E-B461-92AB5C98B856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39252D1E-5878-478E-B461-92AB5C98B856}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39252D1E-5878-478E-B461-92AB5C98B856}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39252D1E-5878-478E-B461-92AB5C98B856}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A1BB90F-2948-44B5-AFA9-76158E8D619C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A1BB90F-2948-44B5-AFA9-76158E8D619C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A1BB90F-2948-44B5-AFA9-76158E8D619C}.Release|Any CPU.ActiveCfg = Release|Any CPU

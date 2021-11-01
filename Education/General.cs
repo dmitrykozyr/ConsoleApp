@@ -557,7 +557,7 @@ namespace SharpEdu
                 return 0;
             }
 
-            static void Main()
+            static void Main_()
             {
                 var del = new Del<int, int>(Displ);
                 del(1);

@@ -29,7 +29,7 @@ namespace EntityFrameworkEdu
 
     class Program
     {
-        static void Main()
+        static void Main_()
         {
             using (UserContext db = new UserContext())
             {

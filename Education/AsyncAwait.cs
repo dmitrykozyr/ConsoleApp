@@ -63,7 +63,7 @@ namespace SharpEdu
                 Thread.Sleep(5000);
                 Console.WriteLine($"Факториал равен {result}");
             }
-            
+
             static async void F3_2Async(int n) { await Task.Run(() => F3_1(n)); }
 
             F3_2Async(5);
@@ -287,7 +287,7 @@ namespace SharpEdu
                 for (int i = 1; i <= n; i++) { result *= i; }
                 return result;
             }
-            
+
             static async ValueTask<int> F8_2Async(int n) { return await Task.Run(() => F8_1(n)); }
 
             int n1 = await F8_2Async(5);
@@ -341,7 +341,7 @@ namespace SharpEdu
                 for (int i = 1; i <= n; i++) { result *= i; }
                 Console.WriteLine($"Factorial of number {n} equals {result}");
             }
-            
+
             static async void F10_2Async()
             {
                 Task t1 = Task.Run(() => F10_1(4));
@@ -497,51 +497,99 @@ namespace SharpEdu
         }
         #endregion
     }
-}
 
-#region Возвращение void
-// Использовать такие методы необходимо осторожно - могут вызвать непредсказуемое поведение
-// Чтобы не было проблем, async void заменить на async Task
-// Внутри async void метода должна быть обработка ошибок через try catch и в вызывающем коде тоже
-// При использовании async void метода нельзя написать await перед его вызовом
+    #region Возвращение void
+    // Использовать такие методы необходимо осторожно - могут вызвать непредсказуемое поведение
+    // Чтобы не было проблем, async void заменить на async Task
+    // Внутри async void метода должна быть обработка ошибок через try catch и в вызывающем коде тоже
+    // При использовании async void метода нельзя написать await перед его вызовом
 
-// Асинхронный метод может возвращать void в таких случаях:
-// - метод main сам по себе async
-// - метод является event handler
-// - метод - это команда, которая является имплементацией интерфейса ICommand.Execute
-// - метод - это callback, то есть вызывается после завершения асинхронной операции
-// Если библиотека не ожидает асинхронный callback, нужно предоставить callback с синхронной сигнатурой,
-// которая для async метода может только возвращать void handle exceptions in async code
-public static class TaskExtensions
-{
-    public async static void Await(this Task task)
+    // Асинхронный метод может возвращать void в таких случаях:
+    // - метод main сам по себе async
+    // - метод является event handler
+    // - метод - это команда, которая является имплементацией интерфейса ICommand.Execute
+    // - метод - это callback, то есть вызывается после завершения асинхронной операции
+    // Если библиотека не ожидает асинхронный callback, нужно предоставить callback с синхронной сигнатурой,
+    // которая для async метода может только возвращать void handle exceptions in async code
+    public static class TaskExtensions
     {
-        try { await task; }
-        catch (Exception ex) { Console.WriteLine(ex.Message); }
-    }
-}
-
-class Program
-{
-    public static async Task F1()
-    {
-        Console.WriteLine("2, thread " + Thread.CurrentThread.ManagedThreadId);
-        await Task.Delay(2000);
-        throw new Exception("throw new Exception, thread " + Thread.CurrentThread.ManagedThreadId);
-        Console.WriteLine("3, thread " + Thread.CurrentThread.ManagedThreadId);
-    }
-
-    static void Main_(string[] args)
-    {
-        try
+        public async static void Await(this Task task)
         {
-            Console.WriteLine("1, thread " + Thread.CurrentThread.ManagedThreadId);
-            F1().Await(); // Вызываем расширяющий метод, который перехватывает исключение,
-                          // без него код отработает без ошибок и исключение так и останется не перехваченным
-            Console.WriteLine("4, thread " + Thread.CurrentThread.ManagedThreadId);
+            try { await task; }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
-        catch (Exception ex) { Console.WriteLine("catch_2 " + ex); }
-        Console.WriteLine("5, thread " + Thread.CurrentThread.ManagedThreadId);
     }
+
+    class Program_
+    {
+        public static async Task F1()
+        {
+            Console.WriteLine("2, thread " + Thread.CurrentThread.ManagedThreadId);
+            await Task.Delay(2000);
+            throw new Exception("throw new Exception, thread " + Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("3, thread " + Thread.CurrentThread.ManagedThreadId);
+        }
+
+        static void Main_(string[] args)
+        {
+            try
+            {
+                Console.WriteLine("1, thread " + Thread.CurrentThread.ManagedThreadId);
+                F1().Await(); // Вызываем расширяющий метод, который перехватывает исключение,
+                              // без него код отработает без ошибок и исключение так и останется не перехваченным
+                Console.WriteLine("4, thread " + Thread.CurrentThread.ManagedThreadId);
+            }
+            catch (Exception ex) { Console.WriteLine("catch_2 " + ex); }
+            Console.WriteLine("5, thread " + Thread.CurrentThread.ManagedThreadId);
+        }
+    }
+    #endregion
+
+    #region Примеры
+    class Exapmple
+    {
+        async static Task Main()
+        {
+            await WriteA();
+            var b = WriteB();
+            var c = await WriteC();
+            var d = await WriteD();
+            var a2 = WriteA().Result;
+            //var b2 = await WriteB().Result;
+        }
+
+        public async static Task<int> WriteA()
+        {
+            return await Task<int>.Run(() =>
+            {
+                Console.WriteLine("A");
+                return 1;
+            });
+        }
+
+        public async static Task<int> WriteB()
+        {
+            return await Task<int>.Run(() =>
+            {
+                Console.WriteLine("B");
+                return 2;
+            });
+        }
+
+        public async static Task<int> WriteC()
+        {
+            return await Task<int>.Run(() =>
+            {
+                Console.WriteLine("C");
+                return 3;
+            });
+        }
+
+        public async static Task<int> WriteD()
+        {
+            Console.WriteLine("D");
+            return 4;
+        }
+    }
+    #endregion
 }
-#endregion
