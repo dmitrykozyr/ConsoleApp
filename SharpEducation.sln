@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Education", "Education\Educ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{78C8B6A8-E3EB-45E4-8C33-AE0801E14919}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DockerEdu", "DockerEdu\DockerEdu.csproj", "{F33F5DFC-6AE8-48C0-95FC-B84467BD195F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Docker_", "DockerEdu\Docker_.csproj", "{F33F5DFC-6AE8-48C0-95FC-B84467BD195F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkEdu", "EntityFrameworkEdu\EntityFrameworkEdu.csproj", "{9A1BB90F-2948-44B5-AFA9-76158E8D619C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFramework_", "EntityFrameworkEdu\EntityFramework_.csproj", "{9A1BB90F-2948-44B5-AFA9-76158E8D619C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebForms", "WebForms\WebForms.csproj", "{6343F72B-4525-47CF-B661-5AE75570300F}"
 EndProject
