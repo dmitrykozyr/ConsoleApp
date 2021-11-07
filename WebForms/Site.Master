@@ -52,6 +52,7 @@
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                         <li><a runat="server" href="~/MyForms/Education.aspx">Education</a></li>
                         <li><a runat="server" href="~/MyForms/DbConnect.aspx">DbConnect</a></li>
+                        <li><a runat="server" href="~/MyForms/CurrencyConverter.aspx">CurrencyConverter</a></li>
                     </ul>
                 </div>
             </div>

@@ -131,6 +131,7 @@
     <Content Include="MyForms\Education.aspx" />
     <Content Include="MyForms\DbConnect.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="MyForms\CurrencyConverter.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -198,6 +199,13 @@
     </Compile>
     <Compile Include="MyForms\Education.aspx.designer.cs">
       <DependentUpon>Education.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyForms\CurrencyConverter.aspx.cs">
+      <DependentUpon>CurrencyConverter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyForms\CurrencyConverter.aspx.designer.cs">
+      <DependentUpon>CurrencyConverter.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
