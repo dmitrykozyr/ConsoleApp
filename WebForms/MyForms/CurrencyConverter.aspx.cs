@@ -16,7 +16,7 @@ namespace WebForms.MyForms
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
+            double txtbx = Convert.ToDouble(TextBox1.Text);
         }
     }
 }
