@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Api.Models;
+using EntityFrameworkEdu;
+using System;
 
-namespace EntityFrameworkEdu
+namespace Api.Controllers
 {
-    
-
-    class Program
+    public class UseUserContext
     {
-        static void Main()
+        static void AddUser()
         {
             using (UserContext db = new UserContext())
             {
