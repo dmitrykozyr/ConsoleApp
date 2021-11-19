@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace WebForms.MyForms
 {
@@ -17,6 +12,8 @@ namespace WebForms.MyForms
         protected void Button1_Click(object sender, EventArgs e)
         {
             double txtbx = Convert.ToDouble(TextBox1.Text);
+
+            //throw new ApplicationException("My application exception");
         }
     }
 }

@@ -4,6 +4,11 @@
     Добавляем на форму Data -> SqlDataSource и GridView
     В настройках SqlDataSource в дизайнере выбираем нашу БД и все стандартное
     В найтройках GridView в дизайнере выбираем наш SqlDataSource
+    
+    Жизненный цикл страницы:
+    - Init Phase:   PreInit ->   Init ->              InitComplete
+    - Load Phase:   PreLoad ->   Load ->              LoadComplete
+    - Render Phase: PreRender -> PreRenderComplete -> Render
 -->
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="WebForms.WebForm1" %>
 

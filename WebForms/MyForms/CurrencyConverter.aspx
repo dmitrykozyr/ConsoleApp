@@ -1,5 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CurrencyConverter.aspx.cs" Inherits="WebForms.MyForms.WebForm1" %>
 
+<!-- Регистрируем созданный нами UserControl -->
+<%@ Register TagPrefix="uc" TagName="WebFormUserControl_Contact" Src="~/UserControls/WebFormUserControl_Contact.ascx" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,6 +19,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
+
+        <!-- Используем созданный нами UserControl -->
+        <h2>User Controller</h2>
+        <uc:WebFormUserControl_Contact runat="server" ID="cfMessage" />
+
         <table class="auto-style1">
             <tr>
                 <td colspan="2" style="text-align: center; font-weight: 700">Currency Converter</td>
