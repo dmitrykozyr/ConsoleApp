@@ -22,7 +22,11 @@
 
         <!-- Используем созданный нами UserControl -->
         <h2>User Controller</h2>
-        <uc:WebFormUserControl_Contact runat="server" ID="cfMessage" />
+        <uc:WebFormUserControl_Contact runat="server" ID="cfMessage" Name="Tibi" />
+
+                    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="UseMyUserController_Contact and save data to db" />
+                <br />
+                    <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
 
         <table class="auto-style1">
             <tr>
@@ -79,11 +83,13 @@
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="auto-style2">&nbsp;</td>
+                <td class="auto-style2">
+                    &nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td class="auto-style2">&nbsp;</td>
+                <td class="auto-style2">
+                    &nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
         </table>

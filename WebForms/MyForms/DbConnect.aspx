@@ -6,9 +6,17 @@
     В найтройках GridView в дизайнере выбираем наш SqlDataSource
     
     Жизненный цикл страницы:
-    - Init Phase:   PreInit ->   Init ->              InitComplete
-    - Load Phase:   PreLoad ->   Load ->              LoadComplete
-    - Render Phase: PreRender -> PreRenderComplete -> Render
+    - Init Phase:   PreInit -> Init -> InitComplete -> LoadState -> ProcessPostData
+    - Load Phase:   PreLoad -> Load -> ProcessPostData (Second Try) -> ChangeEvents (PostBackEvent) -> LoadComplete
+    - Render Phase: PreRender -> PreRenderComplete -> SaveState -> SaveStateComplete -> Render
+
+    БД
+    - Чтобы добавить БД, на папке App_Data жмем ПКМ -> SQL Server Database
+    - Если нужно подключиться к существующей БД за пределами проекта, переходим на вкрадку Server Explorer в VS ->
+      ПКМ на DataConnections -> Create New SQL Server Database -> указываем Server name: (localDB)\MSSQLLocalDB,
+      database name DemoDB. Новая БД появится в списке и если нажать на нее ПКМ -> Свойства, можно увидеть Connection String,
+      которую можно добавить в файл Web.config и в пути абслютный путь C:\Users\dmitr\source\repos\SharpEdu\WebForms\App_Data меняем на |DataDirectory|
+
 -->
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="WebForms.WebForm1" %>
 
