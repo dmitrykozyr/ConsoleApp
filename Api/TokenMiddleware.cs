@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Api
 {
-    // Создадим совственный компонент Middleware
+    // Создадим совственный компонент Middleware, который подключим в Startup
     public class TokenMiddleware
     {
         private readonly RequestDelegate _next;
@@ -16,7 +16,7 @@ namespace Api
         }
 
         // В классе должен быть метод Invoke или InvokeAsync, должен возвращать Task и принимать HttpContext
-        // Данный метод будет обрабатывать запрос
+        // Он будет обрабатывать запрос
         public async Task InvokeAsync(HttpContext context)
         {
             // Получаем из запроса параметр "token"

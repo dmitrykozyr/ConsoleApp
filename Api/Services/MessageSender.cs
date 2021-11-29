@@ -2,21 +2,15 @@
 {
     public class EmailMessageSender : IMessageSender
     {
-        public string Send()
-        {
-            return "Sent by Email";
-        }
+        public string Send() { return "Sent by Email"; }
     }
 
     public class SmsMessageSender
     {
-        public string Send()
-        {
-            return "Sent by SMS";
-        }
+        public string Send() { return "Sent by SMS"; }
     }
 
-    // Используем сервис через конструктор
+    // Инжектим сервис через конструктор
     public class UseService
     {
         IMessageSender _messageSender;
