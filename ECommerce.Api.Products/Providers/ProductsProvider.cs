@@ -61,5 +61,26 @@ namespace ECommerce.Api.Products.Providers
                 return (false, null, ex.Message);
             }
         }
+
+        public async Task<(bool IsSuccess, Models.Product Product, string ErrorMessage)> GetProductAsync(int id)
+        {
+            try
+            {
+                // Обращаемся к DbContext, поэтому используем try catch
+                var product = await _dbContext.Products.FirstOrDefaultAsync(z => z.Id == id);
+                if (product != null)
+                {
+                    // Смаппим тип IEnumerable <Db.Product> в IEnumerable <Models.Product>
+                    var result = _mapper.Map<Db.Product, Models.Product>(product);
+                    return (true, result, null);
+                }
+                return (false, null, "Not Found");
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.ToString());
+                return (false, null, ex.Message);
+            }
+        }
     }
 }

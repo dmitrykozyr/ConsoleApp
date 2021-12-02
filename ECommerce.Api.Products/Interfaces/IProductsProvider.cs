@@ -8,5 +8,6 @@ namespace ECommerce.Api.Products.Interfaces
     {
         // Кортеж - метод возвращает два значения
         Task<(bool IsSuccess, IEnumerable<Models.Product> Products, string ErrorMessage)> GetProductsAsync();
+        Task<(bool IsSuccess, Product Product, string ErrorMessage)> GetProductAsync(int id);
     }
 }
