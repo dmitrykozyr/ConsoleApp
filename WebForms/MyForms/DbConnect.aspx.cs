@@ -8,7 +8,7 @@ namespace WebForms
 {
     public partial class WebForm1 : Page
     {
-        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
+        SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1"].ConnectionString);
 
         protected void Page_Load(object sender, EventArgs e)
         {
