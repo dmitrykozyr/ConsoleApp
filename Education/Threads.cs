@@ -6,6 +6,8 @@ namespace SharpEdus
 {
     public class Threads
     {
+        // Нельзя использовать стандартные коллекции при работе с потоками - это не потокобезопасно(not thread safe)
+
         class Counter
         {
             public int X;
