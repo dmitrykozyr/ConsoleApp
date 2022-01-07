@@ -9,10 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-// Создание проекта: ASP.NET Core Web Application
-// Имя ECommerce.Api.Products
-// Выбираем API, убираем галочку Configure for HTTPS
-
 namespace ECommerce.Api.Products
 {
     public class Startup

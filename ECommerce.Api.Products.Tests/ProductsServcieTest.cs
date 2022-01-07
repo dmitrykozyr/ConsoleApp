@@ -8,12 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-// Этот проект создан на основе xUnit .Net Core
-// Добавляем ссылку на проект Products, т.к. будем его тестировать
-
-// Чтобы автоматизировать запуск тестов, создадим проект на https://azure.microsoft.com/en-us/services/devops/
-// https://www.linkedin.com/learning/azure-microservices-with-dot-net-core-for-developers/creating-an-azure-devops-project?autoAdvance=true&autoSkip=true&autoplay=true&resume=false&u=2113185
-
 namespace ECommerce.Api.Products.Tests
 {
     // Для запуска тестов ПКМ на названии класса -> Run Tests

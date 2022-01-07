@@ -10,9 +10,6 @@ using System;
 
 namespace ECommerce.Api.Search
 {
-    // Нажимаем на солюшене ПКМ -> Set startup project -> Выбираем четыре проекта как Startup,
-    // чтобы они все запускались при старте программы
-
     public class Startup
     {
         public Startup(IConfiguration configuration)

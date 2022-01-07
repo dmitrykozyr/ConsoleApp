@@ -14,6 +14,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenClosedPrinciple", "OpenClosedPrinciple\OpenClosedPrinciple.csproj", "{72F1FDCD-C724-4A00-8C37-24356EA519EF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure Microservices .Net Core", "Azure Microservices .Net Core", "{556798F8-875D-4E5C-9918-720F4CCF648D}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Api.Products", "ECommerce.Api.Products\ECommerce.Api.Products.csproj", "{86942840-35BE-42FB-907D-FF2DCDE047C3}"
 EndProject
@@ -25,7 +28,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Api.Search", "ECo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FD95EBE2-9C18-4E16-B98F-9025DAB9D703}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Api.Products.Tests", "ECommerce.Api.Products.Tests\ECommerce.Api.Products.Tests.csproj", "{BB4C97B7-31F7-4AE3-B8E2-93ABDFB0BA13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Api.Products.Tests", "ECommerce.Api.Products.Tests\ECommerce.Api.Products.Tests.csproj", "{BB4C97B7-31F7-4AE3-B8E2-93ABDFB0BA13}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F6C753F9-0D44-4740-9245-B848553A1650}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +78,10 @@ Global
 		{BB4C97B7-31F7-4AE3-B8E2-93ABDFB0BA13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB4C97B7-31F7-4AE3-B8E2-93ABDFB0BA13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB4C97B7-31F7-4AE3-B8E2-93ABDFB0BA13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C753F9-0D44-4740-9245-B848553A1650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C753F9-0D44-4740-9245-B848553A1650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C753F9-0D44-4740-9245-B848553A1650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C753F9-0D44-4740-9245-B848553A1650}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
