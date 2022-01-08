@@ -32,6 +32,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce.Api.Products.Test
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F6C753F9-0D44-4740-9245-B848553A1650}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REST Api .Net Core", "REST Api .Net Core", "{7C2C01FE-B239-420B-AAB7-08DEC5D0A7BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandonApi", "..\LandonApi\LandonApi.csproj", "{64787334-B5CD-4CFE-8174-22DD396EFFD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +86,10 @@ Global
 		{F6C753F9-0D44-4740-9245-B848553A1650}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C753F9-0D44-4740-9245-B848553A1650}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C753F9-0D44-4740-9245-B848553A1650}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64787334-B5CD-4CFE-8174-22DD396EFFD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64787334-B5CD-4CFE-8174-22DD396EFFD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64787334-B5CD-4CFE-8174-22DD396EFFD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64787334-B5CD-4CFE-8174-22DD396EFFD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +101,7 @@ Global
 		{FD076F21-3E97-441F-829E-75220CBE5C4B} = {556798F8-875D-4E5C-9918-720F4CCF648D}
 		{FD95EBE2-9C18-4E16-B98F-9025DAB9D703} = {556798F8-875D-4E5C-9918-720F4CCF648D}
 		{BB4C97B7-31F7-4AE3-B8E2-93ABDFB0BA13} = {FD95EBE2-9C18-4E16-B98F-9025DAB9D703}
+		{64787334-B5CD-4CFE-8174-22DD396EFFD7} = {7C2C01FE-B239-420B-AAB7-08DEC5D0A7BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5AE5567B-132F-41EB-9B19-4C88A4042D29}

@@ -22,6 +22,8 @@ https://www.linkedin.com/learning/azure-microservices-with-dot-net-core-for-deve
 Docker
 Чтобы добавить возможность контейниризации, на каждом из четырех проектов нажимаем ПКМ -> Add -> Container Orchestrator Support -> Docker Compose -> Windows
 После этого в папке с проектом создастся dockerfile, а в папке с солюшеном создастся docker-compose, где регистрируется каждый добавленный сервис
-В сервисе Cuetomers в dockerfile 1903 меняем 1803 для совместимости
+Так-же при запуске проектом по умолчанию будет docker-compose
+Во всех четырех сервисах в dockerfile 1903 меняем 1803 для совместимости
 В файле docker-compose.override.yml меняем порты для разных сервисов 600x
 В сервисе Orders -> Properties -> launchSettings.json удаляем строку "sslPort": 0
+До конца не разобрался -  при запуске docker-compose выдает ошибку
