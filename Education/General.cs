@@ -979,7 +979,7 @@ namespace SharpEdu
             }
         }
 
-        class IsAsTypeof
+        class IsAsTypeof_
         {
             class A { }
             class B : A { }
@@ -1032,6 +1032,64 @@ namespace SharpEdu
                 if (type.IsAbstract)
                     Console.WriteLine("Является абстрактным классом");
                 else                    Console.WriteLine("Является конкретным классом");
+            }
+        }
+
+        class HashTables_
+        {
+            // Хеш таблицы позволяют найти искомое значение за O(1), если у нее правильно определен ключ
+
+            // Добавляем в хеш-таблицу слова Андрей, Артур, Борис, Владимир
+            // Если мы выбрали ключем первую букву слова, то для Бориса и Владимира поиск по ключу прйдет за O(1),
+            // т.к. они единственне с таким ключем, а для Андрея и Артура поиск займет O(N)
+            // То есть если есть одинаковые ключи, то для этого ключа создается отдельный список,
+            // а в случае с Dictionary все будет одно за другим в одном списке и там всегда O(N)
+            // | А      | Б     | В         |
+            // |----------------------------|
+            // | Андрей | Борис | Владимир  |
+            // | Артур  |       |           |
+
+            public class HashTable<TKey, TValue>
+            {
+
+                private List<TValue>[] items; // Массив списков
+
+                public HashTable(int size)
+                {
+                    items = new List<TValue>[size];
+                }
+
+                public void Add(TKey key, TValue value)
+                {
+                    var k = GetHash(key);
+                    if (items[k] == null)
+                    {
+                        items[k] = new List<TValue>() { value };
+                    }
+                    else
+                    {
+                        items[k].Add(value);
+                    }
+                }
+
+                public bool Search(TKey key, TValue item)
+                {
+                    var k = GetHash(key);
+                    return items[k]?.Contains(item) ?? false;
+                }
+
+                private int GetHash(TKey key) { return Convert.ToInt32(key.ToString().Substring(0, 1)); }
+            }
+
+            static void Main()
+            {
+                var badHashTable = new HashTable<int, string>(100);
+                badHashTable.Add(5, "5");
+                badHashTable.Add(18, "18");
+                badHashTable.Add(777, "777");
+
+                Console.WriteLine(badHashTable.Search(6, "6"));
+                Console.WriteLine(badHashTable.Search(18, "18"));
             }
         }
     }
