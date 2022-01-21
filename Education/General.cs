@@ -1048,49 +1048,7 @@ namespace SharpEdu
             // |----------------------------|
             // | Андрей | Борис | Владимир  |
             // | Артур  |       |           |
-
-            public class HashTable<TKey, TValue>
-            {
-
-                private List<TValue>[] items; // Массив списков
-
-                public HashTable(int size)
-                {
-                    items = new List<TValue>[size];
-                }
-
-                public void Add(TKey key, TValue value)
-                {
-                    var k = GetHash(key);
-                    if (items[k] == null)
-                    {
-                        items[k] = new List<TValue>() { value };
-                    }
-                    else
-                    {
-                        items[k].Add(value);
-                    }
-                }
-
-                public bool Search(TKey key, TValue item)
-                {
-                    var k = GetHash(key);
-                    return items[k]?.Contains(item) ?? false;
-                }
-
-                private int GetHash(TKey key) { return Convert.ToInt32(key.ToString().Substring(0, 1)); }
-            }
-
-            static void Main()
-            {
-                var badHashTable = new HashTable<int, string>(100);
-                badHashTable.Add(5, "5");
-                badHashTable.Add(18, "18");
-                badHashTable.Add(777, "777");
-
-                Console.WriteLine(badHashTable.Search(6, "6"));
-                Console.WriteLine(badHashTable.Search(18, "18"));
-            }
+            
         }
     }
         
