@@ -36,6 +36,12 @@ namespace WebApiNetCore.Controllers
                 products = products.Where(p => p.Price >= queryParameters.MinPrice.Value && p.Price <= queryParameters.MaxPrice.Value);
             }
 
+            if (!string.IsNullOrEmpty(queryParameters.SearchTerm))
+            {
+                products = products.Where(z => z.Sku.ToLower().Contains(queryParameters.SearchTerm.ToLower()) ||
+                                               z.Name.ToLower().Contains(queryParameters.SearchTerm.ToLower()));
+            }
+
             if (!string.IsNullOrEmpty(queryParameters.Sku))
             {
                 products = products.Where(p => p.Sku == queryParameters.Sku);
