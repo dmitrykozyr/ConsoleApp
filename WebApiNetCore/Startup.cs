@@ -21,7 +21,13 @@ namespace WebApiNetCore
         {
             // Указываем имя БД
             services.AddDbContext<ShopContext>(options => options.UseInMemoryDatabase("Shop"));
-            services.AddControllers();
+            services.AddControllers()
+                    .ConfigureApiBehaviorOptions(options =>
+                    {
+                        // Если в URL запроса невалиджные данные (строка вместо числа),
+                        // то с true не будет возвращаться код 400 BadRequest
+                        options.SuppressModelStateInvalidFilter = true;
+                    });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

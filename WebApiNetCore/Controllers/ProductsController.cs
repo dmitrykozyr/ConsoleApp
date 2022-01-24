@@ -31,7 +31,7 @@ namespace WebApiNetCore.Controllers
             IQueryable<Product> products = _context.Products;
 
             // Фильтры
-            if(queryParameters.MinPrice != null && queryParameters.MaxPrice != null)
+            if (queryParameters.MinPrice != null && queryParameters.MaxPrice != null)
             {
                 products = products.Where(p => p.Price >= queryParameters.MinPrice.Value && p.Price <= queryParameters.MaxPrice.Value);
             }
@@ -76,6 +76,47 @@ namespace WebApiNetCore.Controllers
                 return NotFound();
             }
             return Ok(product);
+        }
+
+        // Можно возвращать IActionResult или ActionResult<>
+        [HttpPost]
+        public async Task<ActionResult<Product>> PostProduct([FromBody] Product product)
+        {
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                "GetProcuct",
+                new { id = product.Id },
+                product);
+        }
+
+        // Тут используем [FromRoute] и [FromBody]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutProduct([FromRoute] int id, [FromBody] Product product)
+        {
+            if (id != product.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(product).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (_context.Products.Find(id) == null)
+                {
+                    return NotFound();
+                }
+
+                throw;
+            }
+
+            return NoContent();
         }
     }
 }
