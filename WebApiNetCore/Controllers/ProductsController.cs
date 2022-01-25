@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApiNetCore.Classes;
@@ -117,6 +118,44 @@ namespace WebApiNetCore.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Product>> DeleteProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if(product == null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return product;
+        }
+
+        // HttpDelete удаляет один элемент, поэтому используем HttpPost для удаления нескольких элементов
+        [HttpPost("{id}")]
+        [Route("Delete")]
+        public async Task<IActionResult> DeleteProducts([FromQuery] int[] ids)
+        {
+            var products = new List<Product>();
+            foreach (var id in ids)
+            {
+                var product = await _context.Products.FindAsync(id);
+                
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                products.Add(product);
+            }
+
+            _context.Products.RemoveRange(products);
+            await _context.SaveChangesAsync();
+            return Ok(products);
         }
     }
 }
