@@ -8,3 +8,4 @@ https://www.linkedin.com/learning/building-web-apis-with-asp-dot-net-core-3/hell
 
 Пакеты:
 - Microsoft.AspNetCore.Mvc.ApiExplorer
+- Microsoft.AspNetCore.Authentication.JwtBearer

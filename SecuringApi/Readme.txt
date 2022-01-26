@@ -1,0 +1,1 @@
+﻿Создано на основе ASP.NET Core Web Application -> Web Application, Configure for HTTPS +

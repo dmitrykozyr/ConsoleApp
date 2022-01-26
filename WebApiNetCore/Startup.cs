@@ -29,6 +29,31 @@ namespace WebApiNetCore
                         // то с true не будет возвращаться код 400 BadRequest
                         options.SuppressModelStateInvalidFilter = true;
                     });
+
+            // Без этого кода и кода app.UseCors() внизу, проект SecuringApi
+            // будет выдывать ошибку "Something went wrong...", потому что
+            // не может обратиться к серису получения продуктов этого проекта
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    // 44359 - это SSL порт из проекта 'Securing Api'
+                    builder.WithOrigins("https://localhost:44359")
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
+
+            services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
+            {
+                options.Authority = "http://localhost:44359";
+                options.RequireHttpsMetadata = false;
+                options.Audience = "hpt-api";
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,6 +67,9 @@ namespace WebApiNetCore
 
             app.UseRouting();
 
+            app.UseCors();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
