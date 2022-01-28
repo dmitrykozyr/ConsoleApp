@@ -2,3 +2,4 @@
 
 Пакеты
 - Swashbuckle.AspNetCore - для сваггера
+- Microsoft.AspNetCore.Mvc.Versioning
