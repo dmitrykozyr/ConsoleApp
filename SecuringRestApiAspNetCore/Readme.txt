@@ -3,3 +3,5 @@
 Пакеты
 - Swashbuckle.AspNetCore - для сваггера
 - Microsoft.AspNetCore.Mvc.Versioning
+- AutoMapper
+- AutoMapper.Extensions.Microsoft.DependencyInjection

@@ -1,6 +1,6 @@
 ﻿namespace SecuringRestApiAspNetCore.Models
 {
-    public class ModelInfo : Resource
+    public class HotelInfo : Resource
     {
         public string Title { get; set; }
         public string Tagline { get; set; }

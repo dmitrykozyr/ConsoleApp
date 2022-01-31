@@ -2,10 +2,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SecuringRestApiAspNetCore.DatabaseContext;
 using SecuringRestApiAspNetCore.Filters;
+using SecuringRestApiAspNetCore.Infrastructure;
+using SecuringRestApiAspNetCore.Models;
+using SecuringRestApiAspNetCore.Services;
 
 namespace SecuringRestApiAspNetCore
 {
@@ -24,6 +29,7 @@ namespace SecuringRestApiAspNetCore
             {
                 options.Filters.Add<JsonExceptionFilter>();
                 options.Filters.Add<RequireHttpsOrCloseAttribute>();
+                options.Filters.Add<LinkRewritingFilter>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddControllers();
@@ -47,6 +53,17 @@ namespace SecuringRestApiAspNetCore
             {
                 options.AddPolicy("AllowMyApp", policy => policy.AllowAnyOrigin());
             });
+
+            // Подтянуть конфгурацию из appsettings.json
+            services.Configure<HotelInfo>(Configuration.GetSection("Info"));
+
+            // Use InMemory DB
+            services.AddDbContext<HotelApiDbContext>(options => options.UseInMemoryDatabase("kozyrdb"));
+
+            services.AddScoped<IRoomService, DefaultRoomService>();
+
+            // Подключение AutoMapper
+            services.AddAutoMapper(options => options.AddProfile<MappingProfile>());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
