@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SecuringRestApiAspNetCore.Models;
+using System;
 
 namespace SecuringRestApiAspNetCore.DatabaseContext
 {
-    public class HotelApiDbContext : DbContext
+    // Authentication and authorization - вместо DbContext используем IdentityDbContext
+    public class HotelApiDbContext : IdentityDbContext<UserEntity, UserRoleEntity, Guid>
     {
         public HotelApiDbContext(DbContextOptions options): base(options) { }
 

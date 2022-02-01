@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using SecuringRestApiAspNetCore.Filters;
 using SecuringRestApiAspNetCore.Infrastructure;
 using SecuringRestApiAspNetCore.Models;
 using SecuringRestApiAspNetCore.Services;
+using System;
 
 namespace SecuringRestApiAspNetCore
 {
@@ -64,6 +66,9 @@ namespace SecuringRestApiAspNetCore
 
             // Подключение AutoMapper
             services.AddAutoMapper(options => options.AddProfile<MappingProfile>());
+
+            // Authentication and authorization
+            AddIdentityCoreServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -99,6 +104,20 @@ namespace SecuringRestApiAspNetCore
 
             // Указываем то имя, которое определили выше
             app.UseCors("AllowMyApp");
+        }
+
+        private void AddIdentityCoreServices(IServiceCollection services)
+        {
+            var builder = services.AddIdentityCore<UserEntity>();
+            builder = new IdentityBuilder(
+                builder.UserType,
+                typeof(UserRoleEntity),
+                builder.Services);
+
+            builder.AddRoles<UserRoleEntity>()
+                .AddEntityFrameworkStores<HotelApiDbContext>()
+                .AddDefaultTokenProviders()
+                .AddSignInManager<SignInManager<UserEntity>>();
         }
     }
 }

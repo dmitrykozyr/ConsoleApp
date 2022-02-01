@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using SecuringRestApiAspNetCore.DatabaseContext;
 using SecuringRestApiAspNetCore.Models;
 using System;
@@ -11,6 +12,10 @@ namespace SecuringRestApiAspNetCore
     {
         public static async Task InitializeAsync(IServiceProvider services)
         {
+            // Authentication and authorization
+            await AddTestUser(services.GetRequiredService<RoleManager<UserRoleEntity>>(),
+                              services.GetRequiredService<UserManager<UserEntity>>());
+
             await AddTestData(services.GetRequiredService<HotelApiDbContext>());
         }
 
@@ -40,6 +45,34 @@ namespace SecuringRestApiAspNetCore
             });
 
             await context.SaveChangesAsync();
+        }
+
+        private static async Task AddTestUser(
+                                    RoleManager<UserRoleEntity> roleManager,
+                                    UserManager<UserEntity> userManager)
+        {
+            var isDataExists = roleManager.Roles.Any() || userManager.Users.Any();
+            if (isDataExists)
+                return;
+
+            // Add test role
+            await roleManager.CreateAsync(new UserRoleEntity("Admin"));
+
+            // Add test user
+            var user = new UserEntity()
+            {
+                Email = "user1@email.com",
+                UserName = "user1",
+                FirstName = "Admin",
+                LastName = "Tester",
+                CreatedAt = DateTimeOffset.UtcNow
+            };
+
+            await userManager.CreateAsync(user, "PassWord123");
+
+            // Put user into Admin role
+            await userManager.AddToRoleAsync(user, "Admin");
+            await userManager.UpdateAsync(user);
         }
     }
 }
