@@ -64,6 +64,9 @@ namespace SecuringRestApiAspNetCore
 
             services.AddScoped<IRoomService, DefaultRoomService>();
 
+            // Authentication and authorization
+            services.AddScoped<IUserService, UserService>();
+
             // Подключение AutoMapper
             services.AddAutoMapper(options => options.AddProfile<MappingProfile>());
 
