@@ -1,4 +1,12 @@
 ﻿@page
+@using TopsyTurvyCakes.Models
+
+@{
+    int id = 1;
+    var recipesService = new RecipesService();
+    var recipe = await recipesService.FindAsync(id);
+}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,7 +35,7 @@
                 </nav>
             </div>
             <div class="row">
-                <h2 class="title">Recipe Details</h2>
+                <h2 class="title">@recipe.Name</h2>
             </div>
         </header>
 
@@ -37,7 +45,7 @@
                 <div class="col-md-8">
                     <div class="col-md-12">
                         <span class="description">
-                            [ DESCRIPTION ]
+                            @recipe.Description
                         </span>
                         <hr />
                     </div>
@@ -45,19 +53,25 @@
                     <div class="ingredients col-md-4">
                         <h4>Ingredients</h4>
                         <ul>
-                            <li>[INGREDIENT]</li>
+                            @foreach(var ingredient in recipe.IngredientsList)
+                            {
+                                <li>@ingredient</li>
+                            }
                         </ul>
                     </div>
 
                     <div class="directions col-md-8">
                         <h4>Directions</h4>
                         <ol>
-                            <li>[STEP]</li>
+                            @foreach (var step in recipe.DirectionsList)
+                            {
+                                <li>@step</li>
+                            }
                         </ol>
                     </div>
                 </div>
                 <div class="col-md-4 text-right">
-                    <img class="img img-thumbnail" src="[IMAGE]" />
+                    <img class="img img-thumbnail" src="@recipe.GetInlineImageSrc()" />
                 </div>
             </div>            
         </div>
