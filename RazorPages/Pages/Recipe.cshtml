@@ -1,17 +1,18 @@
-﻿@page
+﻿@page "{id}"
 @using TopsyTurvyCakes.Models
 
 @{
-    int id = 1;
+    var id = long.Parse((string)RouteData.Values["id"]); // Взять входной параметр 'id', ожидающийся выше
     var recipesService = new RecipesService();
     var recipe = await recipesService.FindAsync(id);
 }
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Topsy Turvy Cake Design</title>
-    </head>
+<head>
+    <title>Topsy Turvy Cake Design</title>
+    <link rel="stylesheet" href="~/site.css" />
+</head>
     <body>
 
         <header class="container site-header">
