@@ -1,4 +1,5 @@
 ﻿@page "{id}"
+@inject IRecipesService RecipesService
 
 @*
     Добавил строку с Layout, чтобы использоват разметку оттуда,
@@ -7,8 +8,11 @@
 
 @{
     var id = long.Parse((string)RouteData.Values["id"]); // Взять входной параметр 'id', ожидающийся выше
-    var recipesService = new RecipesService();
-    var recipe = await recipesService.FindAsync(id);
+
+    // Эта строка не нужна, т.к. используем Dependency Injection в _ViewImports
+    //var recipesService = new RecipesService();
+
+    var recipe = await RecipesService.FindAsync(id);
 
     ViewData["Title"] = recipe.Name;
 }

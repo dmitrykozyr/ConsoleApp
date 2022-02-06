@@ -6,8 +6,10 @@
 *@
 
 @{
-    var recipesService = new RecipesService();
-    var recipes = await recipesService.GetAllAsync();
+    // Эта строка не нужна, т.к. используем Dependency Injection в _ViewImports
+    //var recipesService = new RecipesService();
+
+    var recipes = await RecipesService.GetAllAsync();
 }
 
 @section Title {
