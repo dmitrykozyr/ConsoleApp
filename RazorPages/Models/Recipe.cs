@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using static System.Environment;
 
 namespace TopsyTurvyCakes.Models
@@ -6,10 +7,21 @@ namespace TopsyTurvyCakes.Models
     public class Recipe
     {
         public long Id { get; set; }
+
+        [Required]
+        //[MinLength(5)]
+        //[MaxLength(100)]
+        [StringLength(100, MinimumLength = 5, ErrorMessage = "Name must be from 5 to 100 symbols")]
         public string Name { get; set; }
+
+        [Required]
         public string Description { get; set; }
-        public string Directions { get; set; }
+
+        [Required]
         public string Ingredients { get; set; }
+
+        [Required]
+        public string Directions { get; set; }
 
         public IEnumerable<string> DirectionsList
         {

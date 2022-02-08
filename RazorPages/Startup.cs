@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,18 @@ namespace RazorPages
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            // Включаем аутентификацию
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                    .AddRazorPagesOptions(options => // Включаем аутентификацию
+                    {
+                        options.Conventions.AuthorizeFolder("/Admin");
+                        options.Conventions.AuthorizeFolder("/Account");
+
+                        // На эту страницу можно зайти без авторизации
+                        options.Conventions.AllowAnonymousToPage("/Account/Login");
+                    });
 
             // Настраиваем Dependeny Injection
             services.AddTransient<IRecipesService, RecipesService>();
@@ -22,8 +34,10 @@ namespace RazorPages
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseAuthentication();    // Включаем аутентификацию
 
-            app.UseStaticFiles(); // Чтобы программа смотрела в папку wwwroot
+            app.UseStaticFiles();       // Чтобы программа смотрела в папку wwwroot
             app.UseMvcWithDefaultRoute();
         }
     }
