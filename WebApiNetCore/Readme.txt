@@ -5,7 +5,3 @@ https://www.linkedin.com/learning/building-web-apis-with-asp-dot-net-core-3/hell
 - Роутинг
 - Пагинация
 - Фильтрация
-
-Пакеты:
-- Microsoft.AspNetCore.Mvc.ApiExplorer
-- Microsoft.AspNetCore.Authentication.JwtBearer

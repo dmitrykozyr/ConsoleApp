@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace AspNetCoreMvc
 {
@@ -17,9 +16,18 @@ namespace AspNetCoreMvc
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<FeatureToggles>(z => new FeatureToggles
+            {
+                DeveloperExceptions = _configuration.GetValue<bool>("FeatureToggles:DeveloperExceptions")
+            });
+
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app, 
+            IWebHostEnvironment env,
+            FeatureToggles features)
         {
             app.UseExceptionHandler("/error.html");
 
@@ -30,7 +38,10 @@ namespace AspNetCoreMvc
             //if (_configuration["EnableDeveloperExceptions"] == "True")
 
             // Или можно добавить переменную в конфиг в appsettings.json
-            if (_configuration.GetValue<bool>("FeatureToggles:DeveloperExceptions"))
+            //if (_configuration.GetValue<bool>("FeatureToggles:DeveloperExceptions"))
+
+            // Или использовать класс FeatureToggles 
+            if (features.DeveloperExceptions)
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -42,6 +53,11 @@ namespace AspNetCoreMvc
                     throw new System.Exception("ERROR!");
 
                 await next();
+            });
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseFileServer();
