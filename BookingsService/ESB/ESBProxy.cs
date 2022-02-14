@@ -1,6 +1,7 @@
 ﻿using ExploreCalifornia.BookingsService.Domain;
 using ExploreCalifornia.BookingsService.ESB.Contracts;
 using RestSharp;
+using RestSharp.Serializers;
 
 namespace ExploreCalifornia.BookingsService.ESB
 {
