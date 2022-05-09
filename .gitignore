@@ -1,12 +1,6 @@
 /.vs/*
-/Build/*
-/Intermediate/*
-/Saved/*
 /bin/*
-\bin\*
+/obj/*
+/Debug/*
 
-
-*.cab
-*.msi
-*.msm
-*.msp
+*.dll
