@@ -1,7 +1,0 @@
-# ignore ALL .log files
-*.log
-
-# ignore files in directory
-obj/
-Debug/
-.vs/
