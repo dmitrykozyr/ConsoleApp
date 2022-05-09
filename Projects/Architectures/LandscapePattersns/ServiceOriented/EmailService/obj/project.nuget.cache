@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "xo2eltEYXQ98qJZa99Avqbfrb4Vj0sztnUGpaDO1AQhtVPIAR16YDsJJ3U7LK2Znfj1HxcoSvLdJV6BcnAQTcg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\ServiceOriented\\EmailService\\EmailService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\My Asus\\.nuget\\packages\\restsharp\\107.3.0\\restsharp.107.3.0.nupkg.sha512"
+  ],
+  "logs": []
+}

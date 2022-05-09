@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Layered.DataAccess/1.0.0": {
+        "dependencies": {
+          "Layered.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Layered.DataAccess.dll": {}
+        }
+      },
+      "Layered.Domain/1.0.0": {
+        "runtime": {
+          "Layered.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Layered.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Layered.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

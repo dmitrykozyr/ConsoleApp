@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@*
+    В CategoryController в TempData для ключа 'success' пишем сообщение после
+    добавления | обновления | удаления, а тут его выводим
+    Вынес код ниже в PartialView _Notification, чтобы ножно было переиспользовать этот код ..
+    .. и подключил через <partial name="_Notification" />
+*@
+
+@*
+@if (TempData["success"] != null)
+{
+    <h2>@TempData["success"]</h2>
+}
+*@
+
+<partial name="_Notification" />
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Categories list</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+                Create New Category
+            </a>
+        </div>
+    </div>
+    <br />
+
+    <table class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Category Name
+                </th>
+                <th>
+                    Display Order
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td width=50%>
+                        @i.Name
+                    </td>
+                    <td width=30%>
+                        @i.DisplayOrder
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+
+                            @* asp-route-id здесь id - это имя аргумента, который передаем в экшен *@
+                            <a asp-controller="Category" asp-action="Edit" asp-route-id=@i.Id class="btn-primary mx-2">Edit</a>
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id=@i.Id class="btn-primary mx-2">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
