@@ -55,6 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{D6A9D2
 	ProjectSection(SolutionItems) = preProject
 		README\ApiTypes.cs = README\ApiTypes.cs
 		README\Architectures.cs = README\Architectures.cs
+		README\AuthenticationAuthorization.cs = README\AuthenticationAuthorization.cs
 		README\Deploy.cs = README\Deploy.cs
 		README\Docker.cs = README\Docker.cs
 		README\GraphQL тело запросов в Postman.cs = README\GraphQL тело запросов в Postman.cs
@@ -107,7 +108,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication authorizatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWTToken", "Projects\AuthenticationAuthorization\JWTToken\JWTToken.csproj", "{BBB4C258-1D98-4725-BAE0-9B9E782120E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiAuthentication", "Projects\AuthenticationAuthorization\ApiAuthentication\ApiAuthentication.csproj", "{F66A9422-C6FF-4CE6-B54C-262152F66FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiAuthentication", "Projects\AuthenticationAuthorization\ApiAuthentication\ApiAuthentication.csproj", "{F66A9422-C6FF-4CE6-B54C-262152F66FAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
