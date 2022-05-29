@@ -30,7 +30,6 @@ C:\Users\Dmytro Kozyr1\source\repos\ConsoleApp\Projects\AuthenticationAuthorizat
 C:\Users\Dmytro Kozyr1\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\ref\JWTToken.dll
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\appsettings.json
-C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.staticwebassets.runtime.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.exe
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.deps.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.runtimeconfig.json

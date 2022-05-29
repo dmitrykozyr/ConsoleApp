@@ -1,19 +1,11 @@
 {
   "Version": 1,
-  "Hash": "5U3S671qnR1YSAwVT8HcuHte9Y0jPaZfLXY3EP6Wypg=",
+  "Hash": "oprlmG9winC+i7mLqjM7/utbRXgFp/n+7UwfSAQ6a6E=",
   "Source": "JWTToken",
   "BasePath": "_content/JWTToken",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [
-    {
-      "Name": "JWTToken\\wwwroot",
-      "Source": "JWTToken",
-      "ContentRoot": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\AuthenticationAuthorization\\JWTToken\\wwwroot\\",
-      "BasePath": "_content/JWTToken",
-      "Pattern": "**"
-    }
-  ],
+  "DiscoveryPatterns": [],
   "Assets": []
 }

@@ -110,6 +110,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWTToken", "Projects\Authen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiAuthentication", "Projects\AuthenticationAuthorization\ApiAuthentication\ApiAuthentication.csproj", "{F66A9422-C6FF-4CE6-B54C-262152F66FAA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Notes", "GitHub Notes", "{C419CC8C-DAAA-4A91-852B-BACD61432294}"
+	ProjectSection(SolutionItems) = preProject
+		README\GitHub Notes\cpp.cpp = README\GitHub Notes\cpp.cpp
+		README\GitHub Notes\GitBlender.cs = README\GitHub Notes\GitBlender.cs
+		README\GitHub Notes\JavaScript.js = README\GitHub Notes\JavaScript.js
+		README\GitHub Notes\SQL.sql = README\GitHub Notes\SQL.sql
+		README\GitHub Notes\Steam.cs = README\GitHub Notes\Steam.cs
+		README\GitHub Notes\TypeScript.ts = README\GitHub Notes\TypeScript.ts
+		README\GitHub Notes\uecpp.cpp = README\GitHub Notes\uecpp.cpp
+		README\GitHub Notes\vue.js = README\GitHub Notes\vue.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -265,6 +277,7 @@ Global
 		{B43A422B-57E3-4818-9CF6-C7A1A923E71C} = {5CBF09C7-1A70-4E85-81A7-FD41EE5D1730}
 		{BBB4C258-1D98-4725-BAE0-9B9E782120E9} = {2697FB2E-D3A1-4034-84C9-F5CAB163142D}
 		{F66A9422-C6FF-4CE6-B54C-262152F66FAA} = {2697FB2E-D3A1-4034-84C9-F5CAB163142D}
+		{C419CC8C-DAAA-4A91-852B-BACD61432294} = {D6A9D2BF-E7D7-48C7-9A54-96DF1DA52523}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C3FE8DB-917F-412C-81A3-E5F87D993B11}
