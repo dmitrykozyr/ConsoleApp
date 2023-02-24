@@ -56,7 +56,7 @@ namespace SharpEdu
         static void General_()
         {
             // Task - использует пул потоков
-            // Если false (по умолчанию), то после завершения main ожидается завершение недовыполненных task, иначе они прерываются
+            // Если false (по умолчанию), то после завершения Main ожидается завершение недовыполненных task, иначе они прерываются
             // Thread.CurrentThread.IsBackground = true;
 
             // TPL упрощает создание и применение потоков
@@ -80,11 +80,13 @@ namespace SharpEdu
             static void F1()
             {
                 Console.WriteLine("MyTask() was launched, task id " + Task.CurrentId);
+
                 for (int count = 0; count < 5; count++)
                 {
                     Thread.Sleep(500);
                     Console.WriteLine("In method MyTask calculation is equal " + count + ", task id " + Task.CurrentId);
                 }
+
                 Console.WriteLine("MyTask() was completed, task id " + Task.CurrentId);
             }
 
@@ -112,7 +114,8 @@ namespace SharpEdu
             t3.Start();
 
             // Лямбда-выражение
-            Task t4 = Task.Factory.StartNew(() => {
+            Task t4 = Task.Factory.StartNew(() => 
+            {
                 for (int count = 0; count < 10; count++)
                 {
                     Thread.Sleep(500);
@@ -148,7 +151,11 @@ namespace SharpEdu
         static void MethodsWithArguments_()
         {
             // object нужен для работы с методами с аргументам
-            static void F2_2(object obj) { Console.WriteLine("F2 " + obj.ToString()); }
+            static void F2_2(object obj) 
+            { 
+                Console.WriteLine("F2 " + obj.ToString()); 
+            }
+
             Action<object> action = new Action<object>(F2_2);
             Task task = new Task(action, "second argument");
             task.Start();
@@ -159,7 +166,9 @@ namespace SharpEdu
 
             // Организация задержки
             while (!task.IsCompleted)
+            {
                 Thread.Sleep(200);
+            }
 
             // Аналог Join
             IAsyncResult asyncResult = task as IAsyncResult;
@@ -220,7 +229,12 @@ namespace SharpEdu
             static void F8_1()
             {
                 static int Sum(int a, int b) => a + b;
-                static void F8_2(int sum) { Console.WriteLine($"Sum: {sum}"); }
+
+                static void F8_2(int sum)
+                { 
+                    Console.WriteLine($"Sum: {sum}");
+                }
+
                 Task<int> task1 = new Task<int>(() => Sum(4, 5));
                 Task task2 = task1.ContinueWith(sum => F8_2(sum.Result)); // задача продолжения
                 task1.Start();
@@ -231,13 +245,29 @@ namespace SharpEdu
             // Подобным образом можно построить целую цепочку последовательно выполняющихся задач:
             static void F8_2()
             {
-                static void F9_1(Task t) { Console.WriteLine($"Id задачи: {Task.CurrentId}"); }
-                Task task1 = new Task(() => { Console.WriteLine($"Id задачи: {Task.CurrentId}"); });
+                static void F9_1(Task t) 
+                { 
+                    Console.WriteLine($"Id задачи: {Task.CurrentId}");
+                }
+
+                Task task1 = new Task(() => 
+                { 
+                    Console.WriteLine($"Id задачи: {Task.CurrentId}"); 
+                });
 
                 // задача продолжения
                 Task task2 = task1.ContinueWith(F9_1);
-                Task task3 = task1.ContinueWith((Task t) => { Console.WriteLine($"Id задачи: {Task.CurrentId}"); });
-                Task task4 = task2.ContinueWith((Task t) => { Console.WriteLine($"Id задачи: {Task.CurrentId}"); });
+
+                Task task3 = task1.ContinueWith((Task t) => 
+                { 
+                    Console.WriteLine($"Id задачи: {Task.CurrentId}"); 
+                });
+
+                Task task4 = task2.ContinueWith((Task t) => 
+                { 
+                    Console.WriteLine($"Id задачи: {Task.CurrentId}"); 
+                });
+
                 task1.Start();
             }
         }
@@ -309,8 +339,12 @@ namespace SharpEdu
             static int Factorial(int x)
             {
                 int result = 1;
+
                 for (int i = 1; i <= x; i++)
+                {
                     result *= i;
+                }
+
                 return result;
             }
         }
@@ -333,10 +367,16 @@ namespace SharpEdu
             catch (Exception ex)
             {
                 Console.WriteLine("1: " + ex.GetType() + " " + ex.Message);
+
                 if (ex.InnerException != null)
+                {
                     Console.WriteLine("2: " + ex.InnerException);
+                }
             }
-            finally { Console.WriteLine("3: " + task.Status); }
+            finally 
+            { 
+                Console.WriteLine("3: " + task.Status); 
+            }
         }
 
         static void CancelTask_()
@@ -373,6 +413,7 @@ namespace SharpEdu
                 CancellationToken cancelTok = (CancellationToken)ct;
                 cancelTok.ThrowIfCancellationRequested();
                 Console.WriteLine("MyTask() №{0} запущен", Task.CurrentId);
+
                 for (int count = 0; count < 10; count++)
                 {
                     // Используем опрос
@@ -382,6 +423,7 @@ namespace SharpEdu
                         Console.WriteLine("В методе MyTask №{0} подсчет равен {1}", Task.CurrentId, count);
                     }
                 }
+
                 Console.WriteLine("MyTask() #{0} завершен", Task.CurrentId);
             }
             Console.WriteLine("Основной поток запущен");
@@ -393,6 +435,7 @@ namespace SharpEdu
             Task tsk = Task.Factory.StartNew(F1, cancelTokSSrc.Token, cancelTokSSrc.Token);
 
             Thread.Sleep(2000);
+
             try
             {
                 cancelTokSSrc.Cancel(); // отменить задачу
@@ -401,7 +444,9 @@ namespace SharpEdu
             catch (AggregateException exc)
             {
                 if (tsk.IsCanceled)
+                {
                     Console.WriteLine("Задача tsk отменена");
+                }
             }
             finally
             {
@@ -420,6 +465,7 @@ namespace SharpEdu
             {
                 CancellationToken token = (CancellationToken)value;
                 token.ThrowIfCancellationRequested();
+
                 for (int i = 0; i < 10; i++)
                 {
                     if (token.IsCancellationRequested) //Проверка, что задача отменена
@@ -427,6 +473,7 @@ namespace SharpEdu
                         Console.WriteLine("Stop task");
                         token.ThrowIfCancellationRequested();
                     }
+
                     Thread.Sleep(500);
                     Console.WriteLine(".");
                 }
@@ -455,6 +502,7 @@ namespace SharpEdu
             var task1 = new Task(() =>
             {
                 int result = 1;
+
                 for (int i = 1; i <= number; i++)
                 {
                     if (token.IsCancellationRequested)
@@ -472,8 +520,11 @@ namespace SharpEdu
 
             Console.WriteLine("Введите Y для отмены операции или другой символ для ее продолжения:");
             string s = Console.ReadLine();
+
             if (s == "Y")
+            {
                 cancelTokenSource.Cancel();
+            }
         }
 
         static void CancellationTokenSource_()
@@ -482,6 +533,7 @@ namespace SharpEdu
             static void F1(int x, CancellationToken token)
             {
                 int result = 1;
+
                 for (int i = 1; i <= x; i++)
                 {
                     if (token.IsCancellationRequested)
@@ -489,6 +541,7 @@ namespace SharpEdu
                         Console.WriteLine("Операция прервана токеном");
                         return;
                     }
+
                     result *= i;
                     Console.WriteLine($"Факториал числа {x} равен {result}");
                     Thread.Sleep(5000);
@@ -500,8 +553,11 @@ namespace SharpEdu
             task1.Start();
             Console.WriteLine("Введите Y для отмены операции или любой другой символ для ее продолжения:");
             string s = Console.ReadLine();
+
             if (s == "Y")
+            { 
                 cancelTokenSource.Cancel();
+            }
         }
 
         static void CancelParallelOperations_()
@@ -516,8 +572,14 @@ namespace SharpEdu
             static void F1(int x)
             {
                 int result = 1;
-                for (int i = 1; i <= x; i++) { result *= i; }
+
+                for (int i = 1; i <= x; i++) 
+                { 
+                    result *= i; 
+                }
+
                 Console.WriteLine($"Факториал числа {x} равен {result}");
+
                 Thread.Sleep(3000);
             }
 
@@ -537,8 +599,14 @@ namespace SharpEdu
                 // или так
                 //Parallel.For(1, 8, new ParallelOptions { CancellationToken = token }, Factorial);
             }
-            catch (OperationCanceledException ex) { Console.WriteLine("Операция прервана"); }
-            finally { cancelTokenSource.Dispose(); }
+            catch (OperationCanceledException ex) 
+            { 
+                Console.WriteLine("Операция прервана"); 
+            }
+            finally 
+            { 
+                cancelTokenSource.Dispose(); 
+            }
         }
 
         static void Checked_()
@@ -661,27 +729,31 @@ namespace SharpEdu
             static void F3_1() // Методы, исполняемые как задача
             {
                 Console.WriteLine("MyMeth запущен");
+
                 for (int count = 0; count < 5; count++)
                 {
                     Thread.Sleep(500);
                     Console.WriteLine("--> MyMeth Count=" + count);
                 }
+
                 Console.WriteLine("MyMeth завершен");
             }
 
             static void F3_2()
             {
                 Console.WriteLine("MyMeth2 запущен");
+
                 for (int count = 0; count < 5; count++)
                 {
                     Thread.Sleep(500);
                     Console.WriteLine("--> MyMeth2 Count=" + count);
                 }
+
                 Console.WriteLine("MyMeth2 завершен");
             }
 
             Console.WriteLine("Основной поток запущен");
-            Parallel.Invoke(F3_1, F3_2); // Выполнить параллельно оба именованных метода
+            Parallel.Invoke(F3_1, F3_2);    // Выполнить параллельно оба именованных метода
             Console.WriteLine("Основной поток завершен");
         }
 
@@ -758,10 +830,14 @@ namespace SharpEdu
                 if (data[i] > 20000) data[i] = 200;
                 if (data[i] > 30000) data[i] = 300;
             }
+
             Console.WriteLine("Основной поток запущен");
             data = new int[100000000];
+
             for (int i = 0; i < data.Length; i++)
+            {
                 data[i] = i;
+            }
 
             // Распараллелить цикл методом For()
             Parallel.For(0, data.Length, F1);
@@ -791,6 +867,7 @@ namespace SharpEdu
                 var outer = Task.Factory.StartNew(() =>      // внешняя задача
                 {
                     Console.WriteLine("Outer task starting...");
+
                     var inner = Task.Factory.StartNew(() =>  // вложенная задача
                     {
                         Console.WriteLine("Inner task starting...");
@@ -798,6 +875,7 @@ namespace SharpEdu
                         Console.WriteLine("Inner task finished.");
                     });
                 });
+
                 outer.Wait(); // ожидаем выполнения внешней задачи
                 Console.WriteLine("End of Main");
             }
@@ -809,6 +887,7 @@ namespace SharpEdu
                 var outer = Task.Factory.StartNew(() =>      // внешняя задача
                 {
                     Console.WriteLine("Outer task starting...");
+
                     var inner = Task.Factory.StartNew(() =>  // вложенная задача
                     {
                         Console.WriteLine("Inner task starting...");
@@ -816,6 +895,7 @@ namespace SharpEdu
                         Console.WriteLine("Inner task finished.");
                     }, TaskCreationOptions.AttachedToParent);
                 });
+
                 outer.Wait(); // ожидаем выполнения внешней задачи
                 Console.WriteLine("End of Main");
             }
@@ -835,7 +915,9 @@ namespace SharpEdu
                 };
 
                 foreach (var t in tasks) // Запуск задач в массиве
+                {
                     t.Start();
+                }
             }
 
             // Либо также можно использовать методы Task.Factory.StartNew или Task.Run и сразу запускать все задачи
@@ -857,13 +939,19 @@ namespace SharpEdu
                     new Task(() => Console.WriteLine("Second Task")),
                     new Task(() => Console.WriteLine("Third Task"))
                 };
+
                 foreach (var t in tasks)
+                {
                     t.Start();
+                }
 
                 var tasks2 = new Task[3];
                 int j = 1;
+
                 for (int i = 0; i < tasks2.Length; i++)
+                {
                     tasks2[i] = Task.Factory.StartNew(() => Console.WriteLine($"Task {j++}"));
+                }
 
                 Console.WriteLine("Завершение метода Main");
             }
@@ -878,8 +966,12 @@ namespace SharpEdu
                 new Task(() => Console.WriteLine("Second Task")),
                 new Task(() => Console.WriteLine("Third Task"))
             };
+
             foreach (var t in tasks)
+            {
                 t.Start();
+            }
+
             Task.WaitAll(tasks); // Ожидаем завершения задач 
             Console.WriteLine("Завершение метода Main");
         }
@@ -903,7 +995,12 @@ namespace SharpEdu
             static void F2(int x)
             {
                 int result = 1;
-                for (int i = 1; i <= x; i++) { result *= i; }
+
+                for (int i = 1; i <= x; i++) 
+                { 
+                    result *= i; 
+                }
+
                 Console.WriteLine($"Выполняется задача {Task.CurrentId}");
                 Thread.Sleep(3000);
                 Console.WriteLine($"Результат {result}");
@@ -931,7 +1028,12 @@ namespace SharpEdu
             static void F1(int x)
             {
                 int result = 1;
-                for (int i = 1; i <= x; i++) { result *= i; }
+
+                for (int i = 1; i <= x; i++) 
+                { 
+                    result *= i; 
+                }
+
                 Console.WriteLine($"Выполняется задача {Task.CurrentId}");
                 Console.WriteLine($"Факториал числа {x} равен {result}");
                 Thread.Sleep(3000);
@@ -950,7 +1052,12 @@ namespace SharpEdu
             static void F1(int x)
             {
                 int result = 1;
-                for (int i = 1; i <= x; i++) { result *= i; }
+
+                for (int i = 1; i <= x; i++) 
+                { 
+                    result *= i; 
+                }
+
                 Console.WriteLine($"Выполняется задача {Task.CurrentId}");
                 Console.WriteLine($"Факториал числа {x} равен {result}");
                 Thread.Sleep(3000);
@@ -977,16 +1084,22 @@ namespace SharpEdu
                 for (int i = 1; i <= x; i++)
                 {
                     result *= i;
+
                     if (i == 5)
+                    {
                         pls.Break();
+                    }
                 }
+
                 Console.WriteLine($"Выполняется задача {Task.CurrentId}");
                 Console.WriteLine($"Факториал числа {x} равен {result}");
             }
             ParallelLoopResult result = Parallel.For(1, 10, F1);
 
             if (!result.IsCompleted)
+            {
                 Console.WriteLine($"Выполнение цикла завершено на итерации {result.LowestBreakIteration}");
+            }
         }
     }
 }

@@ -122,6 +122,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Notes", "GitHub Note
 		README\GitHub Notes\vue.js = README\GitHub Notes\vue.js
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppEmpty", "Projects\ConsoleAppEmpty\ConsoleAppEmpty\ConsoleAppEmpty.csproj", "{51C201F6-E531-4737-A11C-2FA50909E013}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -228,6 +230,10 @@ Global
 		{F66A9422-C6FF-4CE6-B54C-262152F66FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F66A9422-C6FF-4CE6-B54C-262152F66FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F66A9422-C6FF-4CE6-B54C-262152F66FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51C201F6-E531-4737-A11C-2FA50909E013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51C201F6-E531-4737-A11C-2FA50909E013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51C201F6-E531-4737-A11C-2FA50909E013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51C201F6-E531-4737-A11C-2FA50909E013}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,7 +20,7 @@ namespace SharpEdu
             // Если sealed применить к override-методу - запрещаем переопределение
             // override можно применять к виртуальным и абстрактным методам
             // Стек ограничен по размеру, но он быстрее, а куча медленнее, но это почти вся оперативная память
-            // Дебаг F5 - до следующей дочки останова, F10 - на следующий шаг    
+            // Дебаг F5 - до следующей дочки останова, F10 - на следующий шаг, F11 - зайти внутрь метода
             // using SCG = System.Collections.Generic; псевдоним
             // TCP - отправляет сообщение, пока не получит подтверждение об доставке или не будет превышено число попыток
             // UDP - не гарантирует доставку, но более быстрый и подходит для широковещательной передачи
@@ -70,7 +70,7 @@ namespace SharpEdu
             // Val: byte, short, int, long, float, double, decimal, bool, char, enum, struct
             // Ref: object, string, class, interface, delegate
             // Когда программа запускается, в конце блока памяти, зарезервированного для стека, устанавливается указатель
-            // При вызове каждого метода, в стеке будет выделяться область память, где будут храниться значения переменных
+            // При вызове каждого метода, в стеке будет выделяться область памяти, где будут храниться значения переменных
             // В стеке определяются фреймы под каждый метод
             // Если параметр или переменная метода представляет значимый тип, то в стеке будет храниться непосредсвенное значение
             // Ссылочные типы хранятся в куче, при создании объекта ссылочного типа в стек помещается ссылка на адрес в куче
@@ -106,12 +106,12 @@ namespace SharpEdu
                 set { _name = value; }
             }
         }
-
+        
         class BigO_
         {
-            // Big O(N) описывает скорость роста времени выполнения бесконечного алгоритма
+            // Big O(N)     описывает скорость роста времени выполнения бесконечного алгоритма
             // O(N^2 + B)   'B' не учитывается, мы ничего об этом значении не знаем
-            // O(A + B)     Если выполняется одна ф-я, а затем другая, то общая сложность равна сумме сложностей, т.к. они не влияют друг на друга
+            // O(A + B)     Если выполняется одна ф-я, а затем другая, то общая сложность равна сумме - они не влияют друг на друга
             // O(A * B)     Если внутри одной ф-ии выполняется другая или есть вложенные циклы, то общая сложность равна произведению
             //              При увеличении времении выполнения вложенной ф-ии, увеличивается время родительской
             // O(0)         На вход не передаются данные, либо алгоритм их не обрабатывает
@@ -158,20 +158,20 @@ namespace SharpEdu
                 // что увеличивает расход памяти, но поддерживается многопоточное чтение
                 var hashtable = new Hashtable()
                 {
-                    { 0, "0" },
-                    { 1, "1" },
-                    { 2, "2" },
+                    { 0, "00" },
+                    { 1, "11" },
+                    { 2, "22" },
                 };
                 var count = hashtable.Count;
-                hashtable.Add(3, "3");
+                hashtable.Add(3, "33");
                 hashtable.Remove(2);
 
                 // Позволяет хранить разнотипные объекты
                 var arrayList = new ArrayList { Capacity = 50 };
                 arrayList.Add(1);
+                Console.WriteLine(arrayList[0]);
                 arrayList.RemoveAt(0);
                 arrayList.Reverse();
-                Console.WriteLine(arrayList[0]);
                 arrayList.Remove(4);
                 arrayList.Sort();
                 arrayList.Clear();
@@ -238,14 +238,14 @@ namespace SharpEdu
 
         class OperatorOverload_
         {
-            // Класс Counter представляет счетчик, значение которого хранится в свойстве Value
+            // Класс представляет счетчик, значение которого хранится в свойстве Value
             // Есть два объекта класса - два счетчика, которые хотим сравнивать
-            // На данный момент операция == и + для объектов Counter недоступны
+            // На данный момент операция == и + для объектов класса недоступны
             // Это операции для примитивных типов, но не для классов и структур
             // Для перегрузки оператора определеним в классе, для объектов которого хотим определить оператор, специальный метод
             // Он должен иметь модификаторы public static, так как будет использоваться для всех объектов класса
             // Далее идет название возвращаемого типа
-            // В результате сложения ожидаем получить новый объект Counter, сравнения - bool
+            // В результате сложения ожидаем получить новый объект класса, сравнения - bool
             // Вместо названия метода идет слово operator и сам оператор
             // Далее в скобках перечисляются параметры - один из них должен представлять класс или структуру, в котором определяется оператор
             // В примере перегруженные операторы проводятся над двумя объектами, поэтому для каждой перегрузки будет по два параметра
@@ -280,8 +280,8 @@ namespace SharpEdu
 
             static void Main_()
             {
-                var obj = new A();
-                IMyInterface inter = obj;
+                var objA = new A();
+                IMyInterface inter = objA;
                 inter.F1();
                 //inter.F2(); // Ошибка
             }
@@ -333,9 +333,8 @@ namespace SharpEdu
             }
 
             // Абстрактный класс может иметь переменные, абстрактные | методы, конструкторы, абстрактные | свойства, индексаторы, события
-            // Абстрактные методы могут быть лишь в абстрактных классах, не могут иметь тело и должны быть переопределены наследником
+            // Абстрактные методы И св-ва могут быть лишь в абстрактных классах, не могут иметь тело и должны быть переопределены наследником
             // Абстрактные члены не должны иметь модификатор private
-            // Производный класс обязан переопределить все абстрактные методы и свойства, которые имеются в базовом абстрактном классе
             // Исключение - если дочерний класс тоже абстрактный
             abstract class B
             {
@@ -426,7 +425,7 @@ namespace SharpEdu
 
                 Console.WriteLine("==");
 
-                B downcast = upcast as B;  // B obj2 = new A() as B;
+                B downcast = upcast as B;   // B obj2 = new A() as B;
                 upcast.F1();                // B1
                 upcast.F2();                // A2
                 upcast.F3();                // A3
@@ -471,8 +470,8 @@ namespace SharpEdu
                 // Чтобы обратиться к функционалу Employee через переменную типа Person,
                 // нужно явное преобразование
                 var emp2 = new Employee("Tom", "Microsoft");
-                Person per2 = emp2;             // преобразование от Employee к Person
-                var emp3 = (Employee)per2; // преобразование от Person к Employee
+                Person per2 = emp2;                     // преобразование от Employee к Person
+                var emp3 = (Employee)per2;              // преобразование от Person к Employee
                 Console.WriteLine(emp3.Company);
 
                 // obj присвоена ссылка на Employee, поэтому можем преобразовать obj к любому типу,
@@ -890,7 +889,7 @@ namespace SharpEdu
                 Del4 del4 = F1;
                 del4();     // F1
                 del4 += F2;
-                del4();     // F1 F1 F2
+                del4();     // F1 F2
                 del4 += F1;
                 del4 -= F1; // удалить последний добавленный метод
             }
@@ -904,8 +903,8 @@ namespace SharpEdu
             // тогда как делегат может быть случайно обнулен, если использовать '=' вместо '+='
             // Событие можно использовать лишь внутри класса, в котором оно определено
             delegate void MyDel();
-            event MyDel TankIsEmpty;     // Объявляем событие для нашего типа делегата
-            void F1() { TankIsEmpty(); } // Метод вызывает событие
+            event MyDel TankIsEmpty;                        // Объявляем событие для нашего типа делегата
+            void F1() { TankIsEmpty(); }                    // Метод вызывает событие
             static void F2() { Console.WriteLine("1"); }
             static void F3() { Console.WriteLine("0"); }
 
@@ -931,23 +930,23 @@ namespace SharpEdu
             static void Main_()
             {
                 var events = new Events_();
-                events.TankIsEmpty += F2; // Подписка на событие
+                events.TankIsEmpty += F2;   // Подписка на событие
                 events.TankIsEmpty += F3;
                 events.F1();
 
                 var objA = new A();
-                // присваиваем событию делегат, на который подписываем метод
-                objA.ev += new del(F3); // смысл ..
-                objA.ev += F2;          // .. одинаковый
-                objA.InvokeEvent();     // напрямую запрещено вызывать события через objA.ev.Invoke()
+                                            // присваиваем событию делегат, на который подписываем метод
+                objA.ev += new del(F3);     // смысл ..
+                objA.ev += F2;              // .. одинаковый
+                objA.InvokeEvent();         // напрямую запрещено вызывать события через objA.ev.Invoke()
 
                 var objB = new B();
                 objB.Event += F2;
                 objB.Event += F3;
-                objB.Event += delegate { Console.WriteLine("Anonimnuy method"); };
+                objB.Event += delegate { Console.WriteLine("Anonimnyi method"); };
 
                 // Отписать анонимный метод нельзя, код ниже не сработает
-                objB.Event -= delegate { Console.WriteLine("Anonimnuy method"); };
+                objB.Event -= delegate { Console.WriteLine("Anonimnyi method"); };
                 objB.InvokeEvent();
             }
         }
@@ -960,16 +959,19 @@ namespace SharpEdu
                 var oneTimeKey = new byte[32];
                 var tokenHandler = new JwtSecurityTokenHandler();
                 randomNumber.NextBytes(oneTimeKey);
+
                 var signingCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(oneTimeKey),
                     SecurityAlgorithms.HmacSha256Signature);
+
                 var token = tokenHandler.CreateJwtSecurityToken(
-                    issuer: "wx_api",
-                    audience: "wx_b2c_subscription",
-                    subject: new ClaimsIdentity(),
-                    notBefore: DateTime.UtcNow,
-                    expires: DateTime.UtcNow.AddDays(1),
+                    issuer:             "wx_api",
+                    audience:           "wx_b2c_subscription",
+                    subject:            new ClaimsIdentity(),
+                    notBefore:          DateTime.UtcNow,
+                    expires:            DateTime.UtcNow.AddDays(1),
                     signingCredentials: signingCredentials);
+
                 token.Payload["OwnerId"] = new Guid("FCD2EFC9-518E-419F-A1AA-61E220932A98");
                 var bearerToker = "Bearer " + tokenHandler.WriteToken(token);
             }
@@ -1004,6 +1006,7 @@ namespace SharpEdu
                 // Если удалось - возвращается ссылка на тип
                 A objA = new A();
                 B objB = new B();
+
                 if (objA is B)
                     objB = (B)objA;
                 else
@@ -1012,6 +1015,7 @@ namespace SharpEdu
                 // В примере выше выполняем проверку и в случае успеха делаем присвоение,
                 // as делает это в один шаг
                 objB = objA as B;
+
                 if (objB != null)
                     Console.WriteLine("Success");
                 else
@@ -1023,30 +1027,105 @@ namespace SharpEdu
                 // Type содержит свойства и методы, для получения информации о типе
                 Type type = typeof(StreamReader);
                 Console.WriteLine(type.FullName);
-                if (type.IsClass)
-                    Console.WriteLine("Является классом");
-                if (type.IsAbstract)
-                    Console.WriteLine("Является абстрактным классом");
-                else
-                    Console.WriteLine("Является конкретным классом");
 
+                if (type.IsClass)
+                    Console.WriteLine("Is class");
+                if (type.IsAbstract)
+                    Console.WriteLine("Is abstract class");
+                else
+                    Console.WriteLine("Is concrete class");
             }
         }
 
         class HashTables_
         {
-            // Хеш таблицы позволяют найти искомое значение за O(1), если у нее правильно определен ключ
-
             // Добавляем в хеш-таблицу слова Андрей, Артур, Борис, Владимир
             // Если мы выбрали ключем первую букву слова, то для Бориса и Владимира поиск по ключу прйдет за O(1),
             // т.к. они единственне с таким ключем, а для Андрея и Артура поиск займет O(N)
             // То есть если есть одинаковые ключи, то для этого ключа создается отдельный список,
             // а в случае с Dictionary все будет одно за другим в одном списке и там всегда O(N)
-            // | А      | Б     | В         |
-            // |----------------------------|
-            // | Андрей | Борис | Владимир  |
-            // | Артур  |       |           |
 
+            //  А      | Б     | В         
+            // ----------------------------
+            //  Андрей | Борис | Владимир  
+            //  Артур  |       |           
+        }
+
+        class Equals_
+        {
+            class A
+            {
+                int x = 2;
+            }
+
+            // Переопределение Equals
+            // Если переопределяем Equals, то нужно переопределить и GetHashCode
+            class B
+            {
+                public int x;
+                public B(int _x)
+                {
+                    x = _x;
+                }
+
+                public override bool Equals(object obj)
+                {
+                    if (obj == null || GetType() != obj.GetType())
+                    {
+                        return false;
+                    }
+
+                    B b = (B)obj;
+                    return (x == b.x);
+                }
+
+                public override int GetHashCode()
+                {
+                    return x;
+                }
+            }
+
+            static void Main_()
+            {
+                // Слева у нас ссылка, а справа значение, на которое ссылается ссылка
+                // == отвечает за сравнениие ссылок
+                // Equals отвечает за сравнение значений
+                object a = "1";
+                object b = a;
+                Console.WriteLine(a == b);                      // true
+                Console.WriteLine(a.Equals(b));                 // true
+
+                object c = "1";
+                object d = "1";
+                Console.WriteLine(c == d);                      // true
+                Console.WriteLine(c.Equals(d));                 // true
+
+                string str1 = "1";
+                string str2 = "1";
+                Console.WriteLine(string.Equals(str1, str2));   // true
+                Console.WriteLine(str1.Equals(str2));           // true
+
+                string str3 = "1";
+                string str4 = "2";
+                Console.WriteLine(string.Equals(str3, str4));   // false
+                Console.WriteLine(str3.Equals(str4));           // false
+
+                // Здесь false, потому что у объектов разные хеш-коды
+                var objA_1 = new A();
+                var objA_2 = new A();
+                Console.WriteLine(objA_1 == objA_2);            // false
+                Console.WriteLine(objA_1.Equals(objA_2));       // false
+                Console.WriteLine(objA_1.GetHashCode());
+                Console.WriteLine(objA_2.GetHashCode());
+
+                // Здесь true, потому что переопределили метод Equals
+                // и у обоих объектов в конструктор передается одинаковое значение
+                // Оператор == мы не переопределяли, поэтому false
+                var objB_1 = new B(1);
+                var objB_2 = new B(1);
+                Console.WriteLine(objB_1 == objB_2);            // false
+                Console.WriteLine(objB_1.Equals(objB_2));       // true
+            }
         }
     }
 

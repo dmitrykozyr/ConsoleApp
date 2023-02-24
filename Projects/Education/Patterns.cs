@@ -9,8 +9,8 @@ namespace FactoryMethod
     // Есть фабрика по постройке деревянных домов
     // Мы расширяемся и создаем фабрику по постройке панельных домов
     // Мы не привязаны к типу домов, поэтому можем легко добавить это расширение
-    // Создаем новые объекты не напрямую через new, а через фабричный метод, благодаря этому
-    // можем его переопределить, чтобы он возвращал нужный тип объектов
+    // Создаем новые объекты не напрямую через new, а через фабричный метод,
+    // благодаря этому можем его переопределить, чтобы он возвращал нужный тип объектов
     interface IHouse { }
     class WoodHouse : IHouse { public WoodHouse() { Console.WriteLine("Wood house was build"); } }
     class PanelHouse : IHouse { public PanelHouse() { Console.WriteLine("Panel house was build"); } }
@@ -34,7 +34,7 @@ namespace FactoryMethod
 
 namespace AbstractFactory
 {
-    // Задает интерфейс создания продуктов
+    // Задает интерфейс для создания продуктов
     // Каждая реализация фабрики порождает продукты одной из вариаций
     // Клиент вызывает методы фабрики для получения продуктов,
     // вместо самостоятельного создания через new
@@ -150,7 +150,7 @@ namespace Builder
         }
     }
 }
-
+//+
 namespace Prototype
 {
     // Создаем прототип и на его онове клоны
@@ -201,7 +201,7 @@ namespace Prototype
         }
     }
 }
-
+//+
 namespace Singleton
 {
     class Singleton
@@ -213,7 +213,7 @@ namespace Singleton
 }
 
 // Структурные
-
+//+
 namespace Adapter
 {
     class EuropeanRozetka { public string GetElectricity() { return "European rozetka"; } }
@@ -399,7 +399,7 @@ namespace Decorator
         }
     }
 }
-
+//+
 namespace Facade
 {
     // Если бы для управления авто нужно было подать питание с аккумулятора на инжектор
@@ -493,18 +493,38 @@ namespace Flyweight
         }
     }
 }
-
+//+
 namespace Proxy
 {
     // Сначала отрабатывает прокси, потом основной объект и опять прокси
     // Прокси может замещать или дополнять объект
     interface ISubject { void Request(); }
-    class Client { public void ClientCode(ISubject subject) { subject.Request(); } }
-    class RealObject : ISubject { public void Request() { Console.WriteLine("Real subject"); } }
+
+    class Client 
+    { 
+        public void ClientCode(ISubject subject) 
+        { 
+            subject.Request(); 
+        } 
+    }
+
+    class RealObject : ISubject 
+    {
+        public void Request() 
+        {
+            Console.WriteLine("Real subject"); 
+        } 
+    }
+
     class Proxy : ISubject
     {
         private RealObject _realSubject;
-        public Proxy(RealObject realSubject) { _realSubject = realSubject; }
+
+        public Proxy(RealObject realSubject) 
+        { 
+            _realSubject = realSubject; 
+        }
+
         public void Request()
         {
             ProxyBegin();
@@ -725,7 +745,7 @@ namespace Iterator
         }
     }
 }
-
+//+
 namespace Mediator
 {
     // Самолеты не общаются друг с другом напрямую, их координирует диспетчер (медиатор)
@@ -811,7 +831,7 @@ namespace Mediator
         }
     }
 }
-
+//+
 namespace Memento
 {
     // Просим друга запомнить номер, что диктуют нам по телефону, он запоминает,
@@ -936,21 +956,43 @@ namespace State
 
     class StateBuyFood : IState
     {
-        public StateBuyFood() { Console.WriteLine("Buy food"); }
-        public void Handle(Context context) { context.State = new StateBuyFood(); }
+        public StateBuyFood() 
+        { 
+            Console.WriteLine("Buy food"); 
+        }
+
+        public void Handle(Context context) 
+        { 
+            context.State = new StateBuyFood(); 
+        }
     }
 
     class StateBuyBeer : IState
     {
-        public StateBuyBeer() { Console.WriteLine("Buy beer"); }
-        public void Handle(Context context) { context.State = new StateBuyBeer(); }
+        public StateBuyBeer() 
+        { 
+            Console.WriteLine("Buy beer"); 
+        }
+
+        public void Handle(Context context) 
+        { 
+            context.State = new StateBuyBeer(); 
+        }
     }
 
     class Context
     {
         public IState State { get; set; }
-        public Context(IState state) { State = state; }
-        public void Request() { State.Handle(this); }
+
+        public Context(IState state) 
+        { 
+            State = state; 
+        }
+
+        public void Request() 
+        { 
+            State.Handle(this); 
+        }
     }
 
     class Program
@@ -978,8 +1020,16 @@ namespace Strategy
     class Context
     {
         IStrategy _strategy;
-        public Context(IStrategy strategy) { _strategy = strategy; }
-        public void ContextInterface() { _strategy.AlgorithmInterface(); }
+
+        public Context(IStrategy strategy) 
+        { 
+            _strategy = strategy; 
+        }
+
+        public void ContextInterface() 
+        { 
+            _strategy.AlgorithmInterface(); 
+        }
     }
 
     class Program
@@ -994,7 +1044,7 @@ namespace Strategy
         }
     }
 }
-
+//+
 namespace TemplateMethod
 {
     // Определяет основу алгоритма и позволяет подклассам переопределить шаги, не меняя структуру
@@ -1027,7 +1077,7 @@ namespace TemplateMethod
 
 namespace Visitor
 {
-    // Есть студенты - сначала их посещает доктор, а потом продавец
+    // Есть студенты - сначала их посещает доктор, а потом продавец книг
     // Каждый выполняет с каждый студентом определенные действия (проверяет здоровье | дает книгу)
     interface IElement { void Accept(IVisitor visitor); }
 

@@ -1,0 +1,15 @@
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\bin\Debug\net6.0\ConsoleAppEmpty.exe
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\bin\Debug\net6.0\ConsoleAppEmpty.deps.json
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\bin\Debug\net6.0\ConsoleAppEmpty.runtimeconfig.json
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\bin\Debug\net6.0\ConsoleAppEmpty.dll
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\bin\Debug\net6.0\ConsoleAppEmpty.pdb
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.csproj.AssemblyReference.cache
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.AssemblyInfoInputs.cache
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.AssemblyInfo.cs
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.csproj.CoreCompileInputs.cache
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.dll
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\refint\ConsoleAppEmpty.dll
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.pdb
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.genruntimeconfig.cache
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ref\ConsoleAppEmpty.dll

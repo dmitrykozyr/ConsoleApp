@@ -6,7 +6,7 @@ namespace SharpEdus
 {
     public class Threads
     {
-        // Нельзя использовать стандартные коллекции при работе с потоками - это не потокобезопасно (not thread safe)
+        // Нельзя использовать стандартные коллекции при работе с потоками - это не потокобезопасно
 
         class Counter
         {
@@ -18,7 +18,7 @@ namespace SharpEdus
             {
                 for (int i = 1; i < 9; i++)
                 {
-                    Console.WriteLine("Второй поток:");
+                    Console.WriteLine("Вторичный поток:");
                     Console.WriteLine(i * X * Y);
                     Thread.Sleep(400);
                 }
@@ -68,7 +68,10 @@ namespace SharpEdus
             object lockCompleted = new object();
             void F1()
             {
-                lock (lockCompleted) { Console.WriteLine("F1"); }
+                lock (lockCompleted) 
+                { 
+                    Console.WriteLine("F1"); 
+                }
             }
 
             var thread = new Thread(F1);
@@ -126,15 +129,21 @@ namespace SharpEdus
             static void F1()
             {
                 Console.WriteLine("Start " + Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Priority);
+
                 for (int i = 0; i < 3; i++)
+                {
                     Console.WriteLine("-- Loop " + Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Priority);
+                }
+
                 Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Priority);
             }
 
             var thread = new Thread[5];
 
             for (int i = 0; i < 5; i++)
+            {
                 thread[i] = new Thread(F1);
+            }
 
             thread[0].Priority = ThreadPriority.Lowest;
             thread[1].Priority = ThreadPriority.Normal;
@@ -143,7 +152,9 @@ namespace SharpEdus
             thread[4].Priority = ThreadPriority.AboveNormal;
 
             for (int i = 0; i < 5; i++)
+            {
                 thread[i].Start();
+            }
         }
 
         static void ThreadPool_()
@@ -264,11 +275,13 @@ namespace SharpEdus
 
             Task.Factory.StartNew(F1);
             Console.WriteLine("Main thread is waiting");
+
             lock (locker)
             {
                 value = "Updating value in main thread";
                 Console.WriteLine("Value: " + value);
             }
+
             Thread.Sleep(1000);
             Console.WriteLine("Released worker thread");
         }
@@ -279,6 +292,7 @@ namespace SharpEdus
             // После освобождения продолжит работу
             // Нет межпроцессорной синхронизации
             var mutex = new Mutex(false, "Mutex");
+
             void F1()
             {
                 mutex.WaitOne();
@@ -303,6 +317,7 @@ namespace SharpEdus
                 {
                     Name = i.ToString()
                 };
+
                 thread[i].Start();
             }
         }
@@ -312,6 +327,7 @@ namespace SharpEdus
             // Похож на mutex, но дает одновременный доступ к общему ресурсу не одному, а нескольким потокам
             // SemaphoreSlim меньше нагружает процессор и работает в рамках одного процесса
             Semaphore semaphore;
+
             void F1(object number)
             {
                 semaphore.WaitOne(); // Ожидание получения семафора
@@ -326,8 +342,11 @@ namespace SharpEdus
             // 3й аргумент - имя семафора
             semaphore = new Semaphore(2, 4, "Semaphore");
             semaphore.Release(2); // Убираем 2 из предыдущей строки, теперь семафор могут использовать максимальное число потоков - 4
+            
             for (int i = 0; i < 5; i++)
+            {
                 new Thread(F1).Start(i);
+            }
         }
 
         // Обработка событий
@@ -340,14 +359,15 @@ namespace SharpEdus
             // Поскольку все потоки блокируются методом waitHandler.WaitOne() до ожидания сигнала,
             // то произойдет блокировка программы, и программа не будет выполнять никаких действий
             var autoResetEvent = new AutoResetEvent(false);
+            
             void F1()
             {
                 Console.WriteLine("1");
                 // Переводим поток в состояние ожидания, пока объект waitHandler не будет переведен в сигнальное состояние
                 // Так все потоки переводятся в состояние ожидания
-                autoResetEvent.WaitOne(); // Остановка вторичного потока
+                autoResetEvent.WaitOne();   // Остановка вторичного потока
                 Console.WriteLine("2");
-                autoResetEvent.WaitOne(); // Остановка вторичного потока
+                autoResetEvent.WaitOne();   // Остановка вторичного потока
                 Console.WriteLine("3");
             }
 
@@ -408,7 +428,7 @@ namespace SharpEdus
 
             new Thread(F1).Start();
             new Thread(F2).Start();
-            manualResetEvent.Set(); // Сигнал всем потокам
+            manualResetEvent.Set();     // Сигнал всем потокам
 
             //Task.Factory.StartNew(F10_1);
             //Task.Factory.StartNew(F10_2);
@@ -418,7 +438,11 @@ namespace SharpEdus
         static void CountdownEvent_()
         {
             var countdown = new CountdownEvent(5);
-            void F1() { Console.WriteLine("F1"); }
+
+            void F1() 
+            { 
+                Console.WriteLine("F1"); 
+            }
 
             Task.Factory.StartNew(F1);
             Task.Factory.StartNew(F1);
@@ -429,7 +453,10 @@ namespace SharpEdus
 
         static void RegisteredWaitHandle_()
         {
-            void F1(object state, bool istTmeOut) { Console.WriteLine("Signal"); }
+            void F1(object state, bool istTmeOut) 
+            { 
+                Console.WriteLine("Signal"); 
+            }
 
             var auto = new AutoResetEvent(false);
             var callback = new WaitOrTimerCallback(F1);
@@ -450,6 +477,7 @@ namespace SharpEdus
             void F1()
             {
                 handle.WaitOne(); // Приостановка потока
+
                 while (true)
                 {
                     Console.WriteLine("1");
@@ -463,7 +491,11 @@ namespace SharpEdus
                 "GlobalEvent::GUID");       // имя объекта синхронизации в ОС. Если объект с таким
                                             // именем существует, будет получена ссылка на него
 
-            var thread = new Thread(F1) { IsBackground = true };
+            var thread = new Thread(F1) 
+            { 
+                IsBackground = true 
+            };
+
             thread.Start();
         }
 
@@ -486,6 +518,7 @@ namespace SharpEdus
             // Передача в метод F16_1 аргумента типа int
             var thread = new Thread(new ParameterizedThreadStart(F1));
             thread.Start(5);
+
             for (int i = 1; i < 9; i++)
             {
                 Console.WriteLine("Main thread: ");
