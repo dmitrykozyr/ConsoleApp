@@ -284,12 +284,12 @@ C:\Users\Dmytro Kozyr1\source\repos\ConsoleApp\Projects\Architectures\UI Pattern
 C:\Users\Dmytro Kozyr1\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\obj\Debug\net6.0-windows\MVVM.pdb
 C:\Users\Dmytro Kozyr1\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\obj\Debug\net6.0-windows\MVVM.genruntimeconfig.cache
 C:\Users\Dmytro Kozyr1\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\obj\Debug\net6.0-windows\ref\MVVM.dll
-C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\appsettings.Development.json
-C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\appsettings.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\MVC.deps.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\MVC.runtimeconfig.json
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\appsettings.Development.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\MVC.staticwebassets.runtime.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\MVC.exe
+C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\appsettings.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\MVVM.exe
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\MVVM.deps.json
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVVM\bin\Debug\net6.0-windows\MVVM.runtimeconfig.json
