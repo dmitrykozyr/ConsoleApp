@@ -348,7 +348,7 @@ namespace Composite
         }
     }
 }
-
+//+
 namespace Decorator
 {
     // Пиццерия готовит разные пиццы с разными добавками

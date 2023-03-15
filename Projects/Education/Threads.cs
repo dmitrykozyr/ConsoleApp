@@ -55,16 +55,17 @@ namespace SharpEdus
             // Каждому потоку выделяется квант времени
 
             // Статусы потока содержатся в перечислении ThreadState:
-            // Unstarted - еще не был запущен
-            // Running - запущен и работает
-            // Background - выполняется в фоновом режиме
-            // StopRequested - получил запрос на остановку
-            // Stopped - завершен
+            // Unstarted        - еще не был запущен
+            // Running          - запущен и работает
+            // Background       - выполняется в фоновом режиме
+            // StopRequested    - получил запрос на остановку
+            // Stopped          - завершен
             // SuspendRequested - получил запрос на приостановку
-            // Suspended - приостановлен
-            // WaitSleepJoin - заблокирован методами Sleep или Join
-            // AbortRequested - для потока вызван метод Abort, но остановка еще не произошла
-            // Aborted - остановлен, но еще окончательно не завершен
+            // Suspended        - приостановлен
+            // WaitSleepJoin    - заблокирован методами Sleep или Join
+            // AbortRequested   - для потока вызван метод Abort, но остановка еще не произошла
+            // Aborted          - остановлен, но еще окончательно не завершен
+
             object lockCompleted = new object();
             void F1()
             {
@@ -124,8 +125,14 @@ namespace SharpEdus
         static void ThreadPriorities_()
         {
             // Приоритеты потоков, располагаются в перечислении ThreadPriority
-            // Приоритет влияет на время, выделяемое потоку процессором
-            // Lowest, BelowNormal, Normal - по умолчанию, AboveNormal, Highest
+            // Влияет на время, выделяемое потоку процессором
+
+            // - Lowest
+            // - BelowNormal
+            // - Normal - по умолчанию
+            // - AboveNormal
+            // - Highest
+
             static void F1()
             {
                 Console.WriteLine("Start " + Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Priority);
@@ -200,9 +207,10 @@ namespace SharpEdus
 
         static void SecondaryThreads_()
         {
-            // Есть два варианта работы вторичных потоков
-            // Foreground - будет работать после завршения первичного потока (по умолчанию)
-            // Background - завершает работу вместе с первичным потоком
+            // Есть два варианта работы вторичных потоков:
+            // - Foreground - будет работать после завршения первичного потока (по умолчанию)
+            // - Background - завершает работу вместе с первичным потоком
+
             object lockCompleted = new object();
             void F1()
             {
