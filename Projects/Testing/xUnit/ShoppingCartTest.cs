@@ -8,12 +8,11 @@ namespace xUnit_
     // Используем InMemory БД
     public class ShoppingCartTest
     {
-        // Если класс использует DependencyInjection,
-        // то для его тестирования используем Mock
+        // Если класс использует DependencyInjection, то для его тестирования используем Mock
         // Пространство имен Moq, а класс Mock
-        // Указываем интерфейс IDbService,
-        // который инжектим в тестируемом классе
+        // Указываем интерфейс IDbService, который инжектим в тестируемом классе
         // Теперь через Mock имеем доступ к функционалу этого класса
+
         public readonly Mock<IDbService> _dbServiceMock = new();
 
         [Fact]

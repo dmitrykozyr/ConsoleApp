@@ -1,8 +1,5 @@
 ﻿public class A
 {
-	Типы архитектур приложения:
-	https://www.linkedin.com/learning/software-architecture-patterns-for-developers/best-practices-and-blueprints?autoAdvance=true&autoSkip=false&autoplay=true&resume=false&u=2113185
-
 	#region LANDSCAPE PATTERNS, физическая архитектура
 			
 	Monolith - подходит для небольших приложений
@@ -68,7 +65,6 @@
 	#region UI PATTERNS
 
 	MVC
-		https://www.youtube.com/watch?v=hZ1DASYd9rk
 		Для подключения к БД нужно
 		- в appsettings.json указать ConnectionString
 		- создать модель
@@ -77,12 +73,12 @@
 		- в Program.cs добавить AddDbContext
 		- для создания миграций установить пакет Microsoft.EntityFrameworkCore.Tools
 		- в Package Console Manager создать миграцию:
-		-- add-migration[Migration name]
-		-- update-database
-		- после этого в SSMS увидим новую таблицу
+		- add-migration [Migration name]
+		- update-database
+		- после этого в БД увидим новую таблицу
 
 		Папка wwwroot нужнa для статичных файлов (картинок, js кода, css)
-		Если есть HomeController, то в папке Views должна быть папка Home и ней лежать нужные Views,
+		Если есть HomeController, то в папке Views должна быть папка Home и в ней лежать нужные Views,
 		а их имя должно совпадать с action-методами в HomeController
 		В папке Views есть папка Shared, в ней находятся View, которые могут быть вызваны из других View
 

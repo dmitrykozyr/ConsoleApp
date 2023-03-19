@@ -10,7 +10,7 @@ namespace NTier.DataAccess.DataContext
             string pathToAppsettings = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
             configurationBuilder.AddJsonFile(pathToAppsettings, false);
             IConfigurationRoot root = configurationBuilder.Build();
-            IConfigurationSection appSettings= root.GetSection("ConnectionStrings:DefaultConnection");
+            IConfigurationSection appSettings = root.GetSection("ConnectionStrings:DefaultConnection");
             SqlConnectionString = appSettings.Value;
         }
 
