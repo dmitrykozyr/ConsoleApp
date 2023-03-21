@@ -68,7 +68,7 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] // Защита от злоумышленников
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(Category category)
         {
             if (category.Name == category.DisplayOrder.ToString())

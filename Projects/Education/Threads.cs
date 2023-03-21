@@ -6,7 +6,10 @@ namespace SharpEdus
 {
     public class Threads
     {
-        // Нельзя использовать стандартные коллекции при работе с потоками - это не потокобезопасно
+        // Потокобезопасные коллекци:
+        // - ImmutableDictionary
+        // - ChannelWriter
+        // - ChannelReader
 
         class Counter
         {

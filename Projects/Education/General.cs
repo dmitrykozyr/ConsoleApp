@@ -182,6 +182,15 @@ namespace SharpEdu
                 hashtable.Add(3, "33");
                 hashtable.Remove(2);
 
+                // Хранит уникальную коллекцию в неотсортированном виде
+                // Последняя еденица не добавится, т.к. она уже есть в коллекции
+                // Будет 2 3 1
+                var hashSet = new HashSet<int>();
+                hashSet.Add(2);
+                hashSet.Add(3);
+                hashSet.Add(1);
+                hashSet.Add(1);
+
                 // Позволяет хранить разнотипные объекты
                 var arrayList = new ArrayList { Capacity = 50 };
                 arrayList.Add(1);
