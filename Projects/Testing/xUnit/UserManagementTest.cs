@@ -4,8 +4,7 @@ using xUnit_.FunctionalityToTest.User_;
 
 namespace xUnit_
 {
-    // Имя класса соответствует имени класса в проекте AppToTest,
-    // который будем тестировать
+    // Имя класса соответствует имени класса в проекте AppToTest, который будем тестировать
     public class UserManagementTest
     {
         [Fact]

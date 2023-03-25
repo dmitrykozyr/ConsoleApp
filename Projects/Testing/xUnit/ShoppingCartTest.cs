@@ -9,7 +9,6 @@ namespace xUnit_
     public class ShoppingCartTest
     {
         // Если класс использует DependencyInjection, то для его тестирования используем Mock
-        // Пространство имен Moq, а класс Mock
         // Указываем интерфейс IDbService, который инжектим в тестируемом классе
         // Теперь через Mock имеем доступ к функционалу этого класса
 

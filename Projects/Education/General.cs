@@ -1154,6 +1154,69 @@ namespace SharpEdu
                 Console.WriteLine(objB_1.Equals(objB_2));       // true
             }
         }
+
+        class WeakReference_
+        {
+            /*
+            Слабые ссылки (weak references) - это ссылки на объекты, которые не увеличивают
+            счетчик ссылок на объект и не предотвращают его удаление из памяти сборщиком мусора
+            Используются, когда нужно ссылаться на объект, но не нужно сохранять его в памяти,
+            если он не используется
+            Например, СС могут использоваться в кэше для автоматического удаления неиспользуемых
+            объектов или в реализации обработчиков событий, чтобы избежать утечек памяти
+    
+            В этом примере создаем объект класса `MyObject` и сохраняем его в слабой ссылке `weakRef`
+            Затем проверяем, что объект еще существует, используя метод `TryGetTarget`
+            После этого удаляем ссылку на объект, вызываем сборщик мусора и снова проверяем,что объект удален
+            В конструкторе и деструкторе класса `MyObject` выводятся сообщения о создании и удалении объекта,
+            чтобы мы могли убедиться, что объект действительно был удален из памяти
+
+            Результат работы программы:
+            A: Object Created
+            Main 1: Object Exists
+            Main 2: Object Exists
+
+            При завершении программы сборщик мусора вызывает финализатор объекта,
+            который выводит сообщение 'A: Object Deleted'
+            */
+            class A
+            {
+                public A()
+                {
+                    Console.WriteLine("A: Object Created");
+                }
+
+                ~A()
+                {
+                    Console.WriteLine("A: Object Deleted");
+                }
+            }
+
+            static void Main()
+            {
+                // Создаем объект и сохраняем его в слабой ссылке
+                var weakRef = new WeakReference<A>(new A());
+
+                // Проверяем, что объект еще существует
+                A obj;
+                if (weakRef.TryGetTarget(out obj))
+                    Console.WriteLine("Main 1: Object Exists");
+                else
+                    Console.WriteLine("Main 1: Object Deleted");
+
+                // Удаляем ссылку на объект
+                obj = null;
+
+                // Вызываем сборщик мусора для удаления объекта из памяти
+                GC.Collect();
+
+                // Проверяем, что объект был удален
+                if (weakRef.TryGetTarget(out obj))
+                    Console.WriteLine("Main 2: Object Exists");
+                else
+                    Console.WriteLine("Main 2: Object Deleted");
+            }
+        }
     }
 
     static class ExtensionMethods_
