@@ -1192,7 +1192,7 @@ namespace SharpEdu
                 }
             }
 
-            static void Main()
+            static void Main_()
             {
                 // Создаем объект и сохраняем его в слабой ссылке
                 var weakRef = new WeakReference<A>(new A());
