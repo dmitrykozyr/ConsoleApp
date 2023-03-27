@@ -1006,24 +1006,30 @@ namespace SharpEdu
 
         class IsAsTypeof_
         {
+            // is используется для проверки, является ли объект экземпляром указанного типа или его производным
+            // Возвращает true или false
+
+            // as используется для преобразования объекта к указанному типу или его производному типу
+            // Если объект может быть преобразован к указанному типу,
+            // то оператор возвращает ссылку на преобразованный объект, иначе возвращает null
+
             class A { }
             class B : A { }
-            static void Main_()
-            {
-                UseIs();
-                UseAs();
-                UseTypeof();
-            }
+            class C { }
 
             static void UseIs()
             {
                 // is проверяет совместимость типов
                 A objA = new A();
                 B objB = new B();
-                if (objA is A) Console.WriteLine("a is A");
+                C objC = new C();
+
+                // Если true - в переменную tmp запишется objA, приведенный к типу A
+                if (objA is A tmp) Console.WriteLine($"a is A, {tmp}");
                 if (objB is A) Console.WriteLine("b is A");
                 if (objA is B) Console.WriteLine("Error");
                 if (objA is object) Console.WriteLine("a is object");
+                if (objC is A) { Console.WriteLine("Error"); }
             }
 
             static void UseAs()
@@ -1061,6 +1067,13 @@ namespace SharpEdu
                     Console.WriteLine("Is abstract class");
                 else
                     Console.WriteLine("Is concrete class");
+            }
+
+            static void Main_()
+            {
+                UseIs();
+                UseAs();
+                UseTypeof();
             }
         }
 

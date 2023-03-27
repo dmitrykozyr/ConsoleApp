@@ -386,11 +386,11 @@
 	#region Предаставления, процедуры
 
 		// Представления используют для отображения данных
-		create view ShowProducts
-		as
-		select FName + ' ' + LName FullName from Customers where ID > 2
-		go
-		select * from ShowProducts
+		CREATE VIEW ShowProducts
+		AS
+		SELECT FName + ' ' + LName FullName FROM Customers WHERE ID > 2
+		GO
+		SELECT * FROM ShowProducts
 
 		// Процедуры используют для добавления/изменения данных
 		create or alter proc spSearchProducts

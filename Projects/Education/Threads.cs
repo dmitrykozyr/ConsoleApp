@@ -364,21 +364,15 @@ namespace SharpEdus
 
         static void AutoResetEvent_()
         {
-            // Уведомляет ожидающий поток, что произошло событие
-
             // false - установка в несигнальное состояние
-            // Поскольку все потоки блокируются методом waitHandler.WaitOne() до ожидания сигнала,
-            // то произойдет блокировка программы, и программа не будет выполнять никаких действий
             var autoResetEvent = new AutoResetEvent(false);
             
             void F1()
             {
                 Console.WriteLine("1");
-                // Переводим поток в состояние ожидания, пока объект waitHandler не будет переведен в сигнальное состояние
-                // Так все потоки переводятся в состояние ожидания
-                autoResetEvent.WaitOne();   // Остановка вторичного потока
+                autoResetEvent.WaitOne();   // Один поток продолжает работу, остальные ждут вызова Set()
                 Console.WriteLine("2");
-                autoResetEvent.WaitOne();   // Остановка вторичного потока
+                autoResetEvent.WaitOne();
                 Console.WriteLine("3");
             }
 
@@ -398,16 +392,15 @@ namespace SharpEdus
 
             var thread = new Thread(F1);
             thread.Start();
-            autoResetEvent.Set();   // Метод уведомляет все ожидающие потоки, что объект waitHandler
-                                    // снова находится в сигнальном состоянии, и один из потоков захватывает
-                                    // данный объект, переводит в несигнальное состояние,
-                                    // а остальные потоки снова ожидают
-            autoResetEvent.Set();   // Продолжение выполнения вторичного потока
+            autoResetEvent.Set();   // Уведомляем ожидающие потоки, что объект
+                                    // снова находится в сигнальном состоянии и следующий
+                                    // поток может начать работу, а остальные снова ждут
+            autoResetEvent.Set();
 
             new Thread(F2).Start();
             new Thread(F3).Start();
-            autoResetEvent.Set();   // Сигнал одному потоку
-            autoResetEvent.Set();   // Сигнал другому потоку
+            autoResetEvent.Set();
+            autoResetEvent.Set();
 
             // Если в программе несколько объектов AutoResetEvent, можем использовать для отслеживания
             // состояния этих объектов методы WaitAll и WaitAny, которые в качестве параметра принимают
