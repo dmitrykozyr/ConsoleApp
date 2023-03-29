@@ -272,6 +272,33 @@ namespace SharpEdus
             Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId);
         }
 
+        static void Interlocked_()
+        {
+            var count_1 = 0;
+            var count_2 = 0;
+
+            // Результат каждый раз будет разный
+            Task.WaitAll
+            (
+                Task.Run(() => { for (int i = 0; i < 10000; i++) count_1++; }),
+                Task.Run(() => { for (int i = 0; i < 10000; i++) count_1++; }),
+                Task.Run(() => { for (int i = 0; i < 10000; i++) count_1++; }),
+                Task.Run(() => { for (int i = 0; i < 10000; i++) count_1++; })
+            );
+
+            // Результат каждый раз будет одинаковый - делать так при работе с потоками
+            Task.WaitAll
+            (
+                Task.Run(() => { for (int i = 0; i < 10000; i++) Interlocked.Increment(ref count_2); }),
+                Task.Run(() => { for (int i = 0; i < 10000; i++) Interlocked.Increment(ref count_2); }),
+                Task.Run(() => { for (int i = 0; i < 10000; i++) Interlocked.Increment(ref count_2); }),
+                Task.Run(() => { for (int i = 0; i < 10000; i++) Interlocked.Increment(ref count_2); })
+            );
+
+            Console.WriteLine(count_1);
+            Console.WriteLine(count_2);
+        }
+
         static void Lock_()
         {
             // Внутри lock может одновременно работать один поток
