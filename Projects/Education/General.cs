@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Collections;
+using System.Collections.Immutable;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -222,7 +223,26 @@ namespace SharpEdu
                 var queue = new Queue();
                 queue.Enqueue("string");
                 queue.Enqueue(5);
-                queue.Dequeue();   // Возвращает элемент из начала очереди
+                queue.Dequeue(); // Возвращает элемент из начала очереди
+
+                // Конкурентные коллекции могут быть безопасно использованы из нескольких потоков одновременно:
+                // - ConcurrentBag<T> - неупорядоченная коллекция
+                // - ConcurrentDictionary<TKey, TValue>
+                // - ConcurrentQueue<T>
+                // - ConcurrentStack<T>
+
+                // Неизменяемые коллекции не могут быть изменены после создания
+                // Операции добавления удаления и изменения элементов создают новую коллекцию
+                // Используются в многопоточных приложениях, где несколько потоков могут пытаться изменить
+                // одну и ту же коллекцию одновременно
+                // Также используются, для сохранения состояния коллекции на определенный момент времени,
+                // например, для реализации отмены операции или для сохранения состояния приложения
+                // - ImmutableList<T>
+                // - ImmutableArray<T>
+                // - ImmutableDictionary<TKey, TValue>
+                // - ImmutableHashSet<T>
+                // - ImmutableQueue<T>
+                // - ImmutableStack<T>
             }
         }
 

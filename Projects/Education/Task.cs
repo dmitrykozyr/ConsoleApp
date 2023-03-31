@@ -1037,5 +1037,33 @@ namespace SharpEdu
                 Console.WriteLine($"Выполнение цикла завершено на итерации {result.LowestBreakIteration}");
             }
         }
+
+        static void TaskCompletionSource_()
+        {
+            // Используется для создания и управления асинхронными операциями
+
+            // Может быть использован, когда:
+            // - необходимо выполнить асинхронную операцию
+            // - необходимо преобразовать существующую синхронную операцию в асинхронную
+            // - необходимо объединить результаты нескольких асинхронных операций в одну
+
+            // Создаем объект TaskCompletionSource и запускаем асинхронную операцию в отдельном потоке
+            // После завершения операции устанавливаем результат в "Hello, world!"
+            // Возвращаем объект Task
+
+            async Task<string> F1()
+            {
+                var tcs = new TaskCompletionSource<string>();
+
+                Task.Run(async () =>
+                {
+                    await Task.Delay(5000);
+                    
+                    tcs.SetResult("Hello, world!");
+                });
+
+                return await tcs.Task;
+            }
+        }
     }
 }
