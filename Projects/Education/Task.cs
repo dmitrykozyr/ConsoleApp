@@ -1065,5 +1065,85 @@ namespace SharpEdu
                 return await tcs.Task;
             }
         }
+
+        static void AsyncCombinators_()
+        {
+            // Асинхронные комбинаторы позволяют комбинировать асинхронные операции и
+            // совместно использовать результаты нескольких асинхронных операций,
+            // что упрощает код и повышает производительность
+
+            static void F1() { }
+            static void F2() { }
+            static void F3() { }
+
+            static async Task WhenAll()
+            {
+                // Запускаем три асинхронные операции и ждем, пока все они завершатся
+
+                var task1 = Task.Run(() => F1());
+                var task2 = Task.Run(() => F2());
+                var task3 = Task.Run(() => F3());
+
+                await Task.WhenAll(task1, task2, task3);
+            }
+
+            static async Task WhenAny()
+            {
+                // Запускаем три асинхронные операции и ждем, пока хотя бы одна завершится
+                // Затем определяем, какая из операций завершилась, и выполняем соответствующие действия
+
+                var task1 = Task.Run(() => F1());
+                var task2 = Task.Run(() => F2());
+                var task3 = Task.Run(() => F3());
+
+                var completedTask = await Task.WhenAny(task1, task2, task3);
+
+                if (completedTask == task1) { /* .. */ }
+                else if (completedTask == task2) { /* .. */ }
+                else if (completedTask == task3) { /* .. */ }
+            }
+
+            static async Task ContinueWith()
+            {
+                // Запускаем асинхронную операцию и задаем продолжение, которое будет выполнено после ее завершения
+                // Продолжение может выполнять любые действия, включая обработку результатов операции
+
+                var task1 = Task.Run(() => F1());
+
+                var continuationTask = task1.ContinueWith((t) =>
+                {
+                    // ..
+                });
+
+                await continuationTask;
+            }
+
+        }
+
+        static void AsyncEnumerable_()
+        {
+            // Асинхронный итератор
+
+            // Метод возвращает асинхронный итератор, который использует оператор yield return
+            // для возврата элементов коллекции по мере их готовности
+            async IAsyncEnumerable<int> GetNumbersAsync()
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    await Task.Delay(100);
+                    yield return i;
+                }
+            }
+
+            // Метод использует оператор await foreach для эффективного перебора
+            // элементов коллекции в асинхронном коде
+            async Task PrintNumbersAsync()
+            {
+                await foreach (var number in GetNumbersAsync())
+                {
+                    Console.WriteLine(number);
+                }
+            }
+        }
     }
 }

@@ -6,11 +6,6 @@ namespace SharpEdus
 {
     public class Threads
     {
-        // Потокобезопасные коллекци:
-        // - ImmutableDictionary
-        // - ChannelWriter
-        // - ChannelReader
-
         class Counter
         {
             public int X;

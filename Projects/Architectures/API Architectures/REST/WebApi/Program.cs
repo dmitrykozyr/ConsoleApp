@@ -4,6 +4,8 @@ using WebApi.Models;
 using WebApi.Services;
 using WebApi.Services.Interfaces;
 
+#region Регистрация сервисов, время жизни объектов
+
 /*
     После регистрации сервиса, вместо объектов интерфейса IMessageSender
     будут передаваться экземпляры класса EmailMessageSender
@@ -34,6 +36,40 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Amazing Swagger", Version = "v1" });
 });
+
+#endregion
+
+#region Настройка конфигурации
+/*
+    static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        Host.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((appConfiguration) =>
+            {
+                // Подключение файла конфигурации JSON
+                appConfiguration.AddJsonFile("settings.json", false, true);
+
+                // Подключение файла конфигурации XML
+                appConfiguration.AddXmlFile("settings.xml", false, true);
+            })
+            .ConfigureDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+            .UseNLog();
+    }
+
+    // Примеры, как получить данные из конфигурации в другом месте программы
+    public string GetConfigJSON()
+    {
+        return _confuguration["settings:SomeConfiguration"];
+    }
+
+    public string GetConfigXML()
+    {
+        return _confuguration["SomeConfiguration1"];
+    }
+*/
+#endregion
+
+#region Middleware
 
 /*
     Конвейер обработки Middleware конфигурируется методами Use, Run, Map, важен порядок:
@@ -92,3 +128,5 @@ app.UseEndpoints(endpoints =>           // Устанавливаем адрес
 app.MapControllers();
 
 app.Run();
+
+#endregion
