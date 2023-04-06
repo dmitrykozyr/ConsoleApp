@@ -35,16 +35,6 @@ namespace SharpEdu
             Немедленное выполнение - операция выполняется в точке, где объявлен запрос
             Отложенное выполнение - результаты запроса завися от источника данных в момент выполнения запроса, а не при его определении
 
-            IEnumerable преобразуется в SQL без where - отбирается вся коллекция, а потом фильтруется на клиенте
-            - IEnumerable<Phone> phoneIEnum = db.Phones;
-            - var phones = phoneIEnum.Where(p => p.Id > id).ToList();
-            - SELECT Id, Name FROM dbo.Phones
-
-            IQueryable преобразуется в SQL с where - сразу отфильтровывает на сервере
-            - IQueryable<Phone> phoneIQuer = db.Phones;
-            - var phones = phoneIQuer.Where(p => p.Id > id).ToList();
-            - SELECT Id, Name FROM dbo.Phones WHERE Id > 3
-
             Статические классы могут содержать только статические поля, свойства и методы    
             Статические св-ва/методы хранят состояние/поведение всего класса, а не отдельного объекта, обращение по имени класса
             Статические методы могут обращаться только к статическим членам класса
@@ -339,6 +329,48 @@ namespace SharpEdu
                 inter.F1();
                 //inter.F2(); // Ошибка
             }
+        }
+
+        class IEnumerableIQueryable_
+        {
+            /*
+                IEnumerable представляет коллекцию, которую можно перебирать поочередно
+                IQueryable представляет коллекцию, которую можно запросить у БД и получить только нужные данные
+
+                IEnumerable работает с коллекциями, которые находятся в памяти, и выполняет запросы на месте,
+                что означает, что он вытаскивает все данные из коллекции в память и затем выполняет запрос на них
+                Это может привести к проблемам производительности при работе с большими коллекциями
+
+                List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+                IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0);
+                foreach (int number in evenNumbers)
+                {
+                    Console.WriteLine(number);
+                }
+
+                IQueryable работает с коллекциями, которые хранятся в БД
+                Cтроит запросы, которые будут выполнены на стороне БД и вернут только нужные данные
+                Это улучшает производительность при работе с большими коллекциями
+
+                using (var context = new MyDbContext())
+                {
+                    IQueryable<Product> products = context.Products.Where(p => p.Price > 10);
+                    foreach (Product product in products)
+                    {
+                        Console.WriteLine(product.Name);
+                    }
+                }
+
+                IEnumerable преобразуется в SQL без where - отбирается вся коллекция, а потом фильтруется на клиенте
+                    IEnumerable<Phone> phoneIEnum = db.Phones;
+                    var phones = phoneIEnum.Where(p => p.Id > id).ToList();
+                    SELECT Id, Name FROM dbo.Phones
+
+                IQueryable преобразуется в SQL с where - сразу отфильтровывает на сервере
+                    IQueryable<Phone> phoneIQuer = db.Phones;
+                    var phones = phoneIQuer.Where(p => p.Id > id).ToList();
+                    SELECT Id, Name FROM dbo.Phones WHERE Id > 3
+            */
         }
 
         class SOLID_
@@ -1259,6 +1291,56 @@ namespace SharpEdu
                     Console.WriteLine("Main 2: Object Exists");
                 else
                     Console.WriteLine("Main 2: Object Deleted");
+            }
+        }
+
+        class LazyLoading_
+        {
+            /*
+                Lazy loading - это когда данные загружаются в тот момент, когда они нужны
+                Это позволяет уменьшить нагрузку на приложение и ускорить его работу
+
+                Например, если есть класс с коллекцией объектов, то при использовании lazy loading
+                объекты из этой коллекции будут загружаться только при первом обращении к ним,
+                а не сразу при загрузке класса
+                
+                Это позволяет избежать загрузки большого количества данных,
+                которые могут не понадобиться в конечном итоге
+
+                При обращении к свойству, которое содержит отложенно загружаемые данные,
+                происходит проверка наличия данных и их загрузка при необходимости
+                
+                В примере ниже свойство Posts помечено модификатором virtual,
+                что позволяет его переопределить в производных классах
+            
+                В методе get проверяем, были ли посты уже загружены из базы данных, и если нет - загружаем
+            */
+
+            public class B { }
+
+            public class A
+            {
+                private List<B> _listB;
+
+                public virtual List<B> ListB
+                {
+                    get
+                    {
+                        if (_listB == null)
+                        {
+                            _listB = LoadPostsFromDatabase();
+                        }
+
+                        return _listB;
+                    }
+                }
+
+                private List<B> LoadPostsFromDatabase()
+                {
+                    // Загружаем посты из базы данных
+                    // var reault = _dbContext.Post.GetAll();
+                    return null;
+                }
             }
         }
     }

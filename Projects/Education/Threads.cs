@@ -84,26 +84,6 @@ namespace SharpEdus
             Console.WriteLine("ThreadState " + Thread.CurrentThread.ThreadState);
         }
 
-        static void Join_()
-        {
-            // Заставляет первичный поток ждать завершения вторичного
-            // С Join будет: 1 2 3
-            // Без Join:     1 3 2
-            void F1()
-            {
-                Thread.Sleep(500);
-                Console.WriteLine("F1: " + Thread.CurrentThread.ManagedThreadId);
-            }
-
-            Console.WriteLine("Start: " + Thread.CurrentThread.ManagedThreadId);
-
-            var thread = new Thread(F1);
-            thread.Start();
-            thread.Join();
-
-            Console.WriteLine("End: " + Thread.CurrentThread.ManagedThreadId);
-        }
-
         static void BreakThread_()
         {
             void F1()
@@ -203,7 +183,7 @@ namespace SharpEdus
             Console.WriteLine("End");
         }
 
-        static void SecondaryThreads_()
+        static void ForegroundBackground_()
         {
             // Есть два варианта работы вторичных потоков:
             // - Foreground - будет работать после завршения первичного потока (по умолчанию)
@@ -220,32 +200,33 @@ namespace SharpEdus
             thread.Start();
         }
 
-        static void Volatile_()
-        {
-            // Компилятор увидит, что stop не изменяется, поэтому для переменной
-            // с модификатором volatile сгенерируется условие выхода из цицкла
-            void F1()
-            {
-                int x = 0;
-                while (!stop)
-                {
-                    Console.WriteLine("Loop");
-                    x++;
-                }
-            }
-
-            var thread = new Thread(F1);
-            thread.Start();
-            Thread.Sleep(1000);
-            stop = true;
-            thread.Join();
-        }
-
         // Синхронизация
 
         // Атрибут означает, что каждый поток работает со своей статической переменной, а не с общей для всех
         [ThreadStatic]
         static int counter = 0;
+
+        static void Join_()
+        {
+            // Заставляет первичный поток ждать завершения вторичного
+            // С Join будет: 1 2 3
+            // Без Join:     1 3 2
+            
+            void F1()
+            {
+                Thread.Sleep(500);
+                Console.WriteLine("F1: " + Thread.CurrentThread.ManagedThreadId);
+            }
+
+            Console.WriteLine("Start: " + Thread.CurrentThread.ManagedThreadId);
+
+            var thread = new Thread(F1);
+            thread.Start();
+            thread.Join();
+
+            Console.WriteLine("End: " + Thread.CurrentThread.ManagedThreadId);
+        }
+
         static void AccessStaticVariables_()
         {
             static void F1()
@@ -298,6 +279,12 @@ namespace SharpEdus
         {
             // Внутри lock может одновременно работать один поток
             // locker - Это пустой объект-заглушка типа object
+            
+            // Внутри lock нельзя вызывать await, т.к. возможна ситуация, что объект синхронизации
+            // берется одним потоком, а отпускается другим, а это нарушает логику
+
+            // Может привести к deadlock
+
             object locker = new object();
             string value = string.Empty;
             void F1()
@@ -319,11 +306,95 @@ namespace SharpEdus
             Console.WriteLine("Released worker thread");
         }
 
+        static void Deadlock_()
+        {
+            /*
+            
+            Возможен дедлок, если сначала будет вызван Method1(),
+            а затем в другом потоке будет вызван Method3()
+            Оба метода используют блокировку lock1, а Method2() использует блокировку lock2,
+            что может привести к блокировке обоих потоков
+
+            public class DeadlockExample
+            {
+                private object lock1 = new object();
+                private object lock2 = new object();
+
+                public void Method1()
+                {
+                    lock (lock1)
+                    {
+                        Method2();
+                    }
+                }
+
+                public void Method2()
+                {
+                    lock (lock2)
+                    {
+                        Method3();
+                    }
+                }
+
+                public void Method3()
+                {
+                    lock (lock1)
+                    {
+                        // do something
+                    }
+                }
+            }
+
+            */
+        }
+
+        static void Semaphore_()
+        {
+            // Позволяет ограничить количество потоков, имеющих доступ к определенному ресурсу
+            // Достигается путем создания счетчика, который уменьшается, когда поток получает доступ к ресурсу,
+            // и увеличивается, когда поток освобождает ресурс
+            // Если счетчик равен нулю - другие потоки должны ждать, пока ресурс освободится
+
+            // Может быть полезным, например, для ограничения количества запросов к БД
+            // SemaphoreSlim меньше нагружает процессор и работает в рамках одного процесса
+
+            Semaphore semaphore;
+
+            void F1(object number)
+            {
+                semaphore.WaitOne(); // Ожидание получения семафора
+                Console.WriteLine("Begin " + Thread.CurrentThread.ManagedThreadId);
+                Thread.Sleep(2000);
+                Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId);
+                semaphore.Release(); // Освобождаем семафор
+            }
+
+            // 1й аргумент - начальное количество слотов
+            // 2й аргумент - максимальное количество слотов
+            // 3й аргумент - имя семафора
+            semaphore = new Semaphore(2, 4, "Semaphore");
+            semaphore.Release(2); // Убираем 2 из предыдущей строки, теперь семафор могут использовать максимальное число потоков - 4
+            
+            for (int i = 0; i < 5; i++)
+            {
+                new Thread(F1).Start(i);
+            }
+        }
+        
         static void Mutex_()
         {
+            // Позволяет блокировать доступ к ресурсу не только в пределах одного процесса, но и между процессами
+            // Работает путем создания объекта блокировки, который может быть захвачен только одним потоком
+            // в любой момент времени
+            // Если другой поток попытается захватить блокировку, пока она уже занята,
+            // он будет заблокирован и будет ждать, пока блокировка не будет освобождена первым потоком
+            // Блокировка может быть освобождена явным вызовом функции или автоматически при завершении
+            // выполнения кода, который ее захватил
+
             // Когда выполнение дойдет до mutex.WaitOne(), поток будет ожидать, пока не освободится мьютекс
             // После освобождения продолжит работу
             // Нет межпроцессорной синхронизации
+
             var mutex = new Mutex(false, "Mutex");
 
             void F1()
@@ -355,37 +426,15 @@ namespace SharpEdus
             }
         }
 
-        static void Semaphore_()
-        {
-            // Похож на mutex, но дает одновременный доступ к общему ресурсу не одному, а нескольким потокам
-            // SemaphoreSlim меньше нагружает процессор и работает в рамках одного процесса
-            Semaphore semaphore;
-
-            void F1(object number)
-            {
-                semaphore.WaitOne(); // Ожидание получения семафора
-                Console.WriteLine("Begin " + Thread.CurrentThread.ManagedThreadId);
-                Thread.Sleep(2000);
-                Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId);
-                semaphore.Release(); // Освобождаем семафор
-            }
-
-            // 1й аргумент - начальное количество слотов
-            // 2й аргумент - максимальное количество слотов
-            // 3й аргумент - имя семафора
-            semaphore = new Semaphore(2, 4, "Semaphore");
-            semaphore.Release(2); // Убираем 2 из предыдущей строки, теперь семафор могут использовать максимальное число потоков - 4
-            
-            for (int i = 0; i < 5; i++)
-            {
-                new Thread(F1).Start(i);
-            }
-        }
-
         // Обработка событий
 
         static void AutoResetEvent_()
         {
+            // Если в программе несколько объектов AutoResetEvent, можем использовать для отслеживания
+            // состояния этих объектов методы WaitAll и WaitAny, которые в качестве параметра принимают
+            // массив объектов класса WaitHandle - базового класса для AutoResetEvent
+            // AutoResetEvent.WaitAll(new WaitHandle[] { waitHandler });
+
             // false - установка в несигнальное состояние
             var autoResetEvent = new AutoResetEvent(false);
             
@@ -423,11 +472,6 @@ namespace SharpEdus
             new Thread(F3).Start();
             autoResetEvent.Set();
             autoResetEvent.Set();
-
-            // Если в программе несколько объектов AutoResetEvent, можем использовать для отслеживания
-            // состояния этих объектов методы WaitAll и WaitAny, которые в качестве параметра принимают
-            // массив объектов класса WaitHandle - базового класса для AutoResetEvent
-            // AutoResetEvent.WaitAll(new WaitHandle[] { waitHandler });
         }
 
         static void ManualResetEvent_()
@@ -565,6 +609,7 @@ namespace SharpEdus
             // Для передачи в поток нескльких аргументов нужен класс
             // Метод Thread.Start не является типобезопасным и мы можем передать в него любой тип,
             // а потом придется приводить переданный объект к нужному типу
+            
             void F1(object obj)
             {
                 for (int i = 1; i < 9; i++)
@@ -587,6 +632,7 @@ namespace SharpEdus
         {
             // Рекомендуется объявлять все используемые методы и переменные в специальном классе,
             // а в основной программе запускать поток через ThreadStart
+            
             var counter = new Counter(5, 4);
             var thread = new Thread(new ThreadStart(counter.Count));
             thread.Start();
