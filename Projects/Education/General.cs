@@ -734,6 +734,7 @@ namespace SharpEdu
                     new A { Id = 1, Name = "Developer" },
                 };
 
+                // Запрос не выполнится, пока не будет вызвана ф-я FirstOrDefault(), ToList() и т.п.
                 var query1 = collA.Where(z => z.Name.StartsWith("D")).OrderBy(z => z.Id);
 
                 var query2 = from i in collA
