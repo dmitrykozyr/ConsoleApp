@@ -44,6 +44,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CQRS", "CQRS", "{C70FEA3E-C589-4F13-93A2-CF31526D0233}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Event-sourcing", "Event-sourcing", "{71E45AE7-2C67-4BF9-BB2F-B383E17CE477}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Architectures\Structure patterns\Event-sourcing\README.cs = Projects\Architectures\Structure patterns\Event-sourcing\README.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CQRS-ES", "CQRS-ES", "{D90D753F-7E1C-4ECF-AFA9-21F9B793664B}"
 EndProject
@@ -116,6 +119,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Notes", "GitHub Note
 		README\GitHub Notes\cpp.cpp = README\GitHub Notes\cpp.cpp
 		README\GitHub Notes\GitBlender.cs = README\GitHub Notes\GitBlender.cs
 		README\GitHub Notes\JavaScript.js = README\GitHub Notes\JavaScript.js
+		README\Python.py = README\Python.py
 		README\GitHub Notes\SQL.cs = README\GitHub Notes\SQL.cs
 		README\GitHub Notes\Steam.cs = README\GitHub Notes\Steam.cs
 		README\GitHub Notes\TypeScript.ts = README\GitHub Notes\TypeScript.ts
@@ -124,6 +128,35 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Notes", "GitHub Note
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppEmpty", "Projects\ConsoleAppEmpty\ConsoleAppEmpty\ConsoleAppEmpty.csproj", "{51C201F6-E531-4737-A11C-2FA50909E013}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enum", "Enum", "{7C1507E5-E17D-4225-B9E5-4D63BC33DC61}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Architectures\Structure patterns\Event-sourcing\Emum\OrderStatus.cs = Projects\Architectures\Structure patterns\Event-sourcing\Emum\OrderStatus.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Events", "Events", "{39A58E64-EF6F-45AF-9834-74410F74DD17}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCreatedEvent.cs = Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCreatedEvent.cs
+		Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCancelledEvent.cs = Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCancelledEvent.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventModel", "EventModel", "{9F751525-114B-43E5-83EC-58CCB9DF5DE7}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Architectures\Structure patterns\Event-sourcing\EventModel\Order.cs = Projects\Architectures\Structure patterns\Event-sourcing\EventModel\Order.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventStore", "EventStore", "{91947B61-D1FE-4FF9-AF86-EEE32379334F}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Architectures\Structure patterns\Event-sourcing\EventStore\IEventStore.cs = Projects\Architectures\Structure patterns\Event-sourcing\EventStore\IEventStore.cs
+		Projects\Architectures\Structure patterns\Event-sourcing\EventStore\InMemoryEventStore.cs = Projects\Architectures\Structure patterns\Event-sourcing\EventStore\InMemoryEventStore.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BB6B729D-6888-4111-A1AF-FB50FB5182D2}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Architectures\Structure patterns\Event-sourcing\Services\Order.cs = Projects\Architectures\Structure patterns\Event-sourcing\Services\Order.cs
+		Projects\Architectures\Structure patterns\Event-sourcing\Services\OrderQueryService.cs = Projects\Architectures\Structure patterns\Event-sourcing\Services\OrderQueryService.cs
+		Projects\Architectures\Structure patterns\Event-sourcing\Services\OrderService.cs = Projects\Architectures\Structure patterns\Event-sourcing\Services\OrderService.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -285,6 +318,11 @@ Global
 		{BBB4C258-1D98-4725-BAE0-9B9E782120E9} = {2697FB2E-D3A1-4034-84C9-F5CAB163142D}
 		{F66A9422-C6FF-4CE6-B54C-262152F66FAA} = {2697FB2E-D3A1-4034-84C9-F5CAB163142D}
 		{C419CC8C-DAAA-4A91-852B-BACD61432294} = {D6A9D2BF-E7D7-48C7-9A54-96DF1DA52523}
+		{7C1507E5-E17D-4225-B9E5-4D63BC33DC61} = {71E45AE7-2C67-4BF9-BB2F-B383E17CE477}
+		{39A58E64-EF6F-45AF-9834-74410F74DD17} = {71E45AE7-2C67-4BF9-BB2F-B383E17CE477}
+		{9F751525-114B-43E5-83EC-58CCB9DF5DE7} = {71E45AE7-2C67-4BF9-BB2F-B383E17CE477}
+		{91947B61-D1FE-4FF9-AF86-EEE32379334F} = {71E45AE7-2C67-4BF9-BB2F-B383E17CE477}
+		{BB6B729D-6888-4111-A1AF-FB50FB5182D2} = {71E45AE7-2C67-4BF9-BB2F-B383E17CE477}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C3FE8DB-917F-412C-81A3-E5F87D993B11}
