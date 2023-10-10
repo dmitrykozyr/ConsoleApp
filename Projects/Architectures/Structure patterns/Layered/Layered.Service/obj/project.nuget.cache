@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tuHAqjmYomnyO0nzJ2enWFDe+VlGKBRSCYuKwqb4hTPBaC2Y8yvJKpq0wiv7plz7T5M1S2JG4rH1PU4X/VR9GQ==",
+  "dgSpecHash": "fh+TN7JTpGSPsr4LrL/+BNUpA+MGyBbrr3DXBwxVrq1lKKTouOtrKfEaWc8Q/hAK8Y753DWFkUeoevAJo1M+Iw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Service\\Layered.Service.csproj",
+  "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Service\\Layered.Service.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Od0WDj019+aSErqKZ6M5wN7ET+RwJUHrYbXfQI5t3hg8P3Gjx2wWZp3gFO0mSu7wTL1IGOoYyFdJDYwYyyy5aA==",
+  "dgSpecHash": "fFCR9aR8IN4gurzgses0WjYxe261t8eqgbrVIc0h7uJxaHj1qsxdFgBzG1CYIVwSdZiOlvzJrfJ+6eAlP3F/NA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\ServiceOriented\\EmailService\\EmailService.csproj",
+  "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\ServiceOriented\\EmailService\\EmailService.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\My Asus\\.nuget\\packages\\restsharp\\107.3.0\\restsharp.107.3.0.nupkg.sha512"
+    "C:\\Users\\dmitr\\.nuget\\packages\\restsharp\\107.3.0\\restsharp.107.3.0.nupkg.sha512"
   ],
   "logs": []
 }

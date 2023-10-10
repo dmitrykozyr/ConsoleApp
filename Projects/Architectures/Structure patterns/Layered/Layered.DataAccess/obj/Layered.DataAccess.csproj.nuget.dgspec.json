@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\Layered.DataAccess.csproj": {}
+    "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\Layered.DataAccess.csproj": {}
   },
   "projects": {
-    "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\Layered.DataAccess.csproj": {
+    "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\Layered.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\Layered.DataAccess.csproj",
+        "projectUniqueName": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\Layered.DataAccess.csproj",
         "projectName": "Layered.DataAccess",
-        "projectPath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\Layered.DataAccess.csproj",
-        "packagesPath": "C:\\Users\\My Asus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\obj\\",
+        "projectPath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\Layered.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\dmitr\\.nuget\\packages\\",
+        "outputPath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\My Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dmitr\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj": {
-                "projectPath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj"
+              "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj": {
+                "projectPath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj"
               }
             }
           }
@@ -63,24 +64,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj": {
+    "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj",
+        "projectUniqueName": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj",
         "projectName": "Layered.Domain",
-        "projectPath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj",
-        "packagesPath": "C:\\Users\\My Asus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\obj\\",
+        "projectPath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj",
+        "packagesPath": "C:\\Users\\dmitr\\.nuget\\packages\\",
+        "outputPath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\My Asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dmitr\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -89,6 +90,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -122,7 +124,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

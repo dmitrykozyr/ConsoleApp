@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "tbBTFfngLPQR1K5k7+H2UIDMM8x335ONzaRSY2VBEJpKmmHNxb8kwYDYVMPlqp4qiLVWlrceiIzDYsFGI+sQCg==",
+  "dgSpecHash": "5z6iHsYn3cWCMq0LssctiOx0cSvuRegn0DaQ2bJnVk/zPIZC9VoEbliPU5UYLqYcZ1ymjmEHA0bsa5D5YjyIsA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\Monolith\\Monolith.csproj",
+  "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\Monolith\\Monolith.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\My Asus\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
-    "C:\\Users\\My Asus\\.nuget\\packages\\microsoft.data.sqlite\\6.0.3\\microsoft.data.sqlite.6.0.3.nupkg.sha512",
-    "C:\\Users\\My Asus\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.3\\microsoft.data.sqlite.core.6.0.3.nupkg.sha512",
-    "C:\\Users\\My Asus\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.6\\sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
-    "C:\\Users\\My Asus\\.nuget\\packages\\sqlitepclraw.core\\2.0.6\\sqlitepclraw.core.2.0.6.nupkg.sha512",
-    "C:\\Users\\My Asus\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.6\\sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
-    "C:\\Users\\My Asus\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.6\\sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512",
-    "C:\\Users\\My Asus\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+    "C:\\Users\\dmitr\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.data.sqlite\\6.0.3\\microsoft.data.sqlite.6.0.3.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.3\\microsoft.data.sqlite.core.6.0.3.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.6\\sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\sqlitepclraw.core\\2.0.6\\sqlitepclraw.core.2.0.6.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.6\\sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.6\\sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
   ],
   "logs": []
 }

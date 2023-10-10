@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+n/uCLsoWsJx5+KxfWqj66XisSzdcxmbUY9ivIAiwZfOXuo/mRwmcQj0v8K+Es1kQH5CNiLPVTi9hHaXCeJD/Q==",
+  "dgSpecHash": "RSLB9sr4/d4b35WtZjv987hKxlP4lZdGyGQIU6EmkpqCiw6p7n7nNMFx9eIJRYK0oUxOn1W4oeeXq1ZnmiQcrQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj",
+  "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

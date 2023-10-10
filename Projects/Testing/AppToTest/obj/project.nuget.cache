@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VpHz9Mi0mdmUgFc5X1GT3MeyDjf70JAyKwh3jAFVf1+dKaM6ZumlS12RYdDBOfHhlot1C/JTBwLfgz89HNUyow==",
+  "dgSpecHash": "1UHlrqlPZc55B6rNjyupKaw0MHtVK03Gmqvq4Cdzb7AQJznhbE6PDDwX6YSn+wZW7UlsvZSaREnzCJDWsQFbeg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\My Asus\\source\\repos\\ConsoleApp\\Projects\\Testing\\AppToTest\\AppToTest.csproj",
+  "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Testing\\AppToTest\\AppToTest.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
