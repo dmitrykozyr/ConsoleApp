@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ewGGHw/ckBTUh7C/4kl47H7B0DRa243Fh/9do+Kli+Pk7MSoNHDVntiFzaCXKUOgab04hJk4nRRftUpiUwVYWw==",
+  "dgSpecHash": "X2tvnmQXpBZ7If746nqra8g/nemfkOxZwddFkQHga351HhMV8694GqZaUAWvmuazwRj54LCSH9SpbJlCGDzMQg==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\ConsoleAppEmpty\\ConsoleAppEmpty\\ConsoleAppEmpty.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\dmitr\\.nuget\\packages\\nunit\\4.0.1\\nunit.4.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

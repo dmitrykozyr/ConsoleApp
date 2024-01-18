@@ -27,3 +27,7 @@ C:\Repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\re
 C:\Repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.pdb
 C:\Repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.genruntimeconfig.cache
 C:\Repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ref\ConsoleAppEmpty.dll
+C:\Repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\bin\Debug\net6.0\nunit.framework.dll
+C:\Repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\bin\Debug\net6.0\nunit.framework.legacy.dll
+C:\Repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\ConsoleAppEmpty\ConsoleAppEmpty\obj\Debug\net6.0\ConsoleAppEmpty.csproj.CopyComplete
