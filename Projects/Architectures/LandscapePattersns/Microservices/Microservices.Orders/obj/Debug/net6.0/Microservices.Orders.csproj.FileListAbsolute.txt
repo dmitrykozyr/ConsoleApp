@@ -54,3 +54,37 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePatters
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.genruntimeconfig.cache
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\ref\Microservices.Orders.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\appsettings.Development.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\appsettings.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microservices.Orders.exe
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microservices.Orders.deps.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microservices.Orders.runtimeconfig.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microservices.Orders.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microservices.Orders.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\AutoMapper.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.MvcApplicationPartsAssemblyInfo.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.sourcelink.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\staticwebassets.build.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\staticwebassets.development.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\staticwebassets\msbuild.Microservices.Orders.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\staticwebassets\msbuild.build.Microservices.Orders.props
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Microservices.Orders.props
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Microservices.Orders.props
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\scopedcss\bundle\Microservices.Orders.styles.css
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.csproj.CopyComplete
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\refint\Microservices.Orders.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\Microservices.Orders.genruntimeconfig.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\Microservices\Microservices.Orders\obj\Debug\net6.0\ref\Microservices.Orders.dll

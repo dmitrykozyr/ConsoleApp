@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "N7XDsEEzYfs563nvAEM12IOpKQGHHVdgQdB+qMkptHVnWWy3jIekytHnpuQRmsAROGxsoK0o5GmD/tsiWTo5iA==",
+  "dgSpecHash": "9SZpKNUL3SIS5d32dJuiGnD1NfwLdIm8TVsC1cADuBXHQgRDLH81P+Qb2bwE7w9g/5VeU4wcVHk4CiAvUzUsqA==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\Microservices\\Microservices.Tests\\Microservices.Tests.csproj",
   "expectedPackageFiles": [

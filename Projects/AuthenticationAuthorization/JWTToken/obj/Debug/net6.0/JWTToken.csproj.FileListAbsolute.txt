@@ -57,3 +57,38 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JW
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.genruntimeconfig.cache
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\ref\JWTToken.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\appsettings.Development.json
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\appsettings.json
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.exe
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.deps.json
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.runtimeconfig.json
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\JWTToken.pdb
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.MvcApplicationPartsAssemblyInfo.cache
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.sourcelink.json
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\staticwebassets.build.json
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\staticwebassets.development.json
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\staticwebassets\msbuild.JWTToken.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\staticwebassets\msbuild.build.JWTToken.props
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.JWTToken.props
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.JWTToken.props
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\scopedcss\bundle\JWTToken.styles.css
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.csproj.CopyComplete
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\refint\JWTToken.dll
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.pdb
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\JWTToken.genruntimeconfig.cache
+C:\Repos\ConsoleApp\Projects\AuthenticationAuthorization\JWTToken\obj\Debug\net6.0\ref\JWTToken.dll

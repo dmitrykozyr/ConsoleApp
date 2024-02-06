@@ -128,3 +128,18 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\ne
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.genruntimeconfig.cache
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\ref\AppToTest.dll
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\bin\Debug\net6.0\AppToTest.exe
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\bin\Debug\net6.0\AppToTest.deps.json
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\bin\Debug\net6.0\AppToTest.runtimeconfig.json
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\bin\Debug\net6.0\AppToTest.dll
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\bin\Debug\net6.0\AppToTest.pdb
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.sourcelink.json
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.dll
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\refint\AppToTest.dll
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.pdb
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\AppToTest.genruntimeconfig.cache
+C:\Repos\ConsoleApp\Projects\Testing\AppToTest\obj\Debug\net6.0\ref\AppToTest.dll

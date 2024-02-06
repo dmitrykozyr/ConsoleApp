@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DhZ9uJxcG5Axc1/JIOuEfi5JZpmGiQ4g/Y8vbuxFgfi8LrEFrbA4d2QbUiDGLIoNo0LM1NSYZZy4X06QvfYPSA==",
+  "dgSpecHash": "GZXu3ODbmG8S43iTnrO67lI7BhzcH4BgRSghWl0e9Lb+hJQVsMmyeIQr7offWANyfCh2Rf7ecTJK9Lg9zWo4JA==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\Microservices\\Microservices.Customers\\Microservices.Customers.csproj",
   "expectedPackageFiles": [
@@ -21,7 +21,11 @@
     "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    "C:\\Users\\dmitr\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.26\\microsoft.netcore.app.host.win-x64.6.0.26.nupkg.sha512"
   ],
   "logs": []
 }

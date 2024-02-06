@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5z6iHsYn3cWCMq0LssctiOx0cSvuRegn0DaQ2bJnVk/zPIZC9VoEbliPU5UYLqYcZ1ymjmEHA0bsa5D5YjyIsA==",
+  "dgSpecHash": "XdBQqMrzj4EBOiIn3eSh1C3jxjaJr4MZ80gefBvlK7/88zMK8/8N7D34hto3vqJOGu0spyA4A1gdIav2yEXRAg==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\Monolith\\Monolith.csproj",
   "expectedPackageFiles": [
@@ -11,7 +11,11 @@
     "C:\\Users\\dmitr\\.nuget\\packages\\sqlitepclraw.core\\2.0.6\\sqlitepclraw.core.2.0.6.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.6\\sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.6\\sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+    "C:\\Users\\dmitr\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.26\\microsoft.netcore.app.host.win-x64.6.0.26.nupkg.sha512"
   ],
   "logs": []
 }

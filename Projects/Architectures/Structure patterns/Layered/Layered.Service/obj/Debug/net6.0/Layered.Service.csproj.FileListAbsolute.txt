@@ -28,3 +28,19 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patter
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\refint\Layered.Service.dll
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\ref\Layered.Service.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\bin\Debug\net6.0\Layered.Service.deps.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\bin\Debug\net6.0\Layered.Service.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\bin\Debug\net6.0\Layered.Service.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\bin\Debug\net6.0\Layered.Domain.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\bin\Debug\net6.0\Layered.Domain.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.sourcelink.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.csproj.CopyComplete
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\refint\Layered.Service.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\Layered.Service.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Service\obj\Debug\net6.0\ref\Layered.Service.dll

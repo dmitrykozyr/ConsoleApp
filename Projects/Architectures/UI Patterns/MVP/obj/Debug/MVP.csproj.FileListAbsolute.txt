@@ -20,3 +20,13 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.csproj.CoreCompileInputs.cache
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.exe
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\bin\Debug\MVP.exe.config
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\bin\Debug\MVP.exe
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\bin\Debug\MVP.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.FormCalculator.resources
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.Properties.Resources.resources
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.csproj.GenerateResource.cache
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.exe
+C:\Repos\ConsoleApp\Projects\Architectures\UI Patterns\MVP\obj\Debug\MVP.pdb

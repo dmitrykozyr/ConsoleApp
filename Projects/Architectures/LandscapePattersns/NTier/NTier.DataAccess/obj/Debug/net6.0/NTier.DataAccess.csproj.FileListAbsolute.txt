@@ -26,3 +26,18 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePatters
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.genruntimeconfig.cache
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\ref\NTier.DataAccess.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\bin\Debug\net6.0\NTier.DataAccess.deps.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\bin\Debug\net6.0\NTier.DataAccess.runtimeconfig.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\bin\Debug\net6.0\NTier.DataAccess.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\bin\Debug\net6.0\NTier.DataAccess.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.sourcelink.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\refint\NTier.DataAccess.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\NTier.DataAccess.genruntimeconfig.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.DataAccess\obj\Debug\net6.0\ref\NTier.DataAccess.dll

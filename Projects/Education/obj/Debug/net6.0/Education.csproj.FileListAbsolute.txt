@@ -38,3 +38,9 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\ref
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\Education.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\Education.genruntimeconfig.cache
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\ref\Education.dll
+C:\Repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\Education.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\Education.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\Education.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\Education.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\Education.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Education\obj\Debug\net6.0\Education.sourcelink.json

@@ -64,3 +64,42 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patter
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.genruntimeconfig.cache
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\ref\Layered.Api.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\appsettings.Development.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\appsettings.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Api.exe
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Api.deps.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Api.runtimeconfig.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Api.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Api.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.DataAccess.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Domain.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Service.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.DataAccess.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Domain.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\bin\Debug\net6.0\Layered.Service.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.sourcelink.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\staticwebassets.build.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\staticwebassets.development.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\staticwebassets\msbuild.Layered.Api.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\staticwebassets\msbuild.build.Layered.Api.props
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Layered.Api.props
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Layered.Api.props
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\scopedcss\bundle\Layered.Api.styles.css
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.csproj.CopyComplete
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\refint\Layered.Api.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\Layered.Api.genruntimeconfig.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Api\obj\Debug\net6.0\ref\Layered.Api.dll

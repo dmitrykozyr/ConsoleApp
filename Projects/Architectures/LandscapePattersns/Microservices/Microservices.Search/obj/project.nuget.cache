@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "q3BhCfM0oyR/5ATAYJKoY/IdTMNmsqUlbOOS2nQddWThTWqv8/bMT8AbQnK30ccBNDjUtFDzZUwFtOq8bfWuLA==",
+  "dgSpecHash": "MkR4p9e+G792+u1hJ9RdNzxTo2V6gdPZQiRWmHJIWcd3G9tcNMe+x+Lj0DePO5il4c0Zhl0zdBaBqrUWFhv1mQ==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\Microservices\\Microservices.Search\\Microservices.Search.csproj",
   "expectedPackageFiles": [
@@ -15,7 +15,11 @@
     "C:\\Users\\dmitr\\.nuget\\packages\\polly\\7.2.2\\polly.7.2.2.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\polly.extensions.http\\3.0.0\\polly.extensions.http.3.0.0.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+    "C:\\Users\\dmitr\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.26\\microsoft.netcore.app.host.win-x64.6.0.26.nupkg.sha512"
   ],
   "logs": []
 }

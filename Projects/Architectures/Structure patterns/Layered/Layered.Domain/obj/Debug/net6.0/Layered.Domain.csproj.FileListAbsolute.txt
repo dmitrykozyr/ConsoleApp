@@ -22,3 +22,15 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patter
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\refint\Layered.Domain.dll
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\Layered.Domain.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\ref\Layered.Domain.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\bin\Debug\net6.0\Layered.Domain.deps.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\bin\Debug\net6.0\Layered.Domain.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\bin\Debug\net6.0\Layered.Domain.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\Layered.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\Layered.Domain.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\Layered.Domain.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\Layered.Domain.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\Layered.Domain.sourcelink.json
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\Layered.Domain.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\refint\Layered.Domain.dll
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\Layered.Domain.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\Structure patterns\Layered\Layered.Domain\obj\Debug\net6.0\ref\Layered.Domain.dll

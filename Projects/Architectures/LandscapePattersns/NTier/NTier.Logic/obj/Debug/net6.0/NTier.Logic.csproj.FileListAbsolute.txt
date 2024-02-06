@@ -28,3 +28,19 @@ C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePatters
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\refint\NTier.Logic.dll
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.pdb
 C:\Users\My Asus\source\repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\ref\NTier.Logic.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\bin\Debug\net6.0\NTier.Logic.deps.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\bin\Debug\net6.0\NTier.Logic.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\bin\Debug\net6.0\NTier.Logic.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\bin\Debug\net6.0\NTier.DataAccess.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\bin\Debug\net6.0\NTier.DataAccess.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.csproj.AssemblyReference.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.AssemblyInfoInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.AssemblyInfo.cs
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.csproj.CoreCompileInputs.cache
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.sourcelink.json
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.csproj.CopyComplete
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\refint\NTier.Logic.dll
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\NTier.Logic.pdb
+C:\Repos\ConsoleApp\Projects\Architectures\LandscapePattersns\NTier\NTier.Logic\obj\Debug\net6.0\ref\NTier.Logic.dll
