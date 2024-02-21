@@ -1352,6 +1352,24 @@ namespace SharpEdu
                 }
             }
         }
+
+        class Net_8
+        {
+            /*
+                
+                
+                
+            */
+        }
+
+        class CSharp_11
+        {
+            /*
+                
+                
+                
+            */
+        }
     }
 
     static class ExtensionMethods_

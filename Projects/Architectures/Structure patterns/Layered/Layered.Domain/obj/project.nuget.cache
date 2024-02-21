@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "RSLB9sr4/d4b35WtZjv987hKxlP4lZdGyGQIU6EmkpqCiw6p7n7nNMFx9eIJRYK0oUxOn1W4oeeXq1ZnmiQcrQ==",
+  "dgSpecHash": "8yVSQrqTmTDku/Ztp3TIiDqZApzU0wm3+YF7ptV7TpjQD4YnqT1GS04wjm6fGS6oMu8/XxWSV0SMK/Br9bXE+A==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\Structure patterns\\Layered\\Layered.Domain\\Layered.Domain.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512"
+  ],
   "logs": []
 }

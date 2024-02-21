@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uIf8DequxVhpUnjEBMAeFAuYK+kxuDNif4bw5DoGrKvZaM1Mn/NVyxgVX9+rvUYFaogUcPS3/hJGTFZzuWoKKA==",
+  "dgSpecHash": "a2U4De+pmJfhM2D52c3xfASKHuVV2OgEW0QGenj0fZbc2HQRyA7HLbPtVegcP4hKvAZxU5pcV+SmITBB9FUnEQ==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\NTier\\NTier.Logic\\NTier.Logic.csproj",
   "expectedPackageFiles": [
@@ -123,7 +123,10 @@
     "C:\\Users\\dmitr\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
+    "C:\\Users\\dmitr\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512"
   ],
   "logs": []
 }

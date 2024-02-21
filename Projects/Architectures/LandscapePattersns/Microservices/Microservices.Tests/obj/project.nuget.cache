@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "9SZpKNUL3SIS5d32dJuiGnD1NfwLdIm8TVsC1cADuBXHQgRDLH81P+Qb2bwE7w9g/5VeU4wcVHk4CiAvUzUsqA==",
+  "dgSpecHash": "rWluNPcIchuhv9ZPVe+ApfYmDfa9tYn51+sIMR/aGgyoP/BL6MuqAFTCvP9ZfjiNonEHnDH/Cn53YY96OnvRiQ==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\LandscapePattersns\\Microservices\\Microservices.Tests\\Microservices.Tests.csproj",
   "expectedPackageFiles": [
@@ -111,7 +111,10 @@
     "C:\\Users\\dmitr\\.nuget\\packages\\xunit.core\\2.4.1\\xunit.core.2.4.1.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\xunit.extensibility.core\\2.4.1\\xunit.extensibility.core.2.4.1.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\xunit.extensibility.execution\\2.4.1\\xunit.extensibility.execution.2.4.1.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.3\\xunit.runner.visualstudio.2.4.3.nupkg.sha512"
+    "C:\\Users\\dmitr\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.3\\xunit.runner.visualstudio.2.4.3.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
+    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512"
   ],
   "logs": []
 }
