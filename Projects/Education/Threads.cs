@@ -96,7 +96,8 @@ namespace SharpEdus
             var thread = new Thread(F1);
             thread.Start();
             Thread.Sleep(2000);
-            thread.Abort(); // Через 2 секунды метод прервется
+            thread.Interrupt(); // Через 2 секунды метод прервется
+                                // Abort устарел
             Console.WriteLine("End" + Thread.CurrentThread.ManagedThreadId);
         }
 
@@ -144,19 +145,12 @@ namespace SharpEdus
 
         static void ThreadPool_()
         {
-            void F1() // Метод выводит, сколько потоков доступно в пуле
+            void F1() // Cколько потоков доступно в пуле
             {
-                Thread.Sleep(1000);
-                int availableThreads, availableIOThreads, maxThreads, maxIOThreads;
-
-                // Сколько потоков доступно в начале программы
+                int availableThreads, availableIOThreads;
                 ThreadPool.GetAvailableThreads(out availableThreads, out availableIOThreads);
-
-                // Сколько потоков доступно во время выполнения
-                ThreadPool.GetMaxThreads(out maxThreads, out maxIOThreads);
-
-                Console.WriteLine("Threads in pool {0}, max threads {1}", availableThreads, maxThreads);
-                Console.WriteLine("Free threads in pool {0}, max threads {1}", availableIOThreads, maxIOThreads);
+                Console.WriteLine("Threads in pool " + availableThreads);
+                Console.WriteLine("Free threads in pool " + availableIOThreads);
             }
 
             void F2(object state)
@@ -192,7 +186,8 @@ namespace SharpEdus
             object lockCompleted = new object();
             void F1()
             {
-                lock (lockCompleted) { Console.WriteLine("F1"); }
+                lock (lockCompleted) 
+                    Console.WriteLine("F1"); 
             }
 
             var thread = new Thread(F1);

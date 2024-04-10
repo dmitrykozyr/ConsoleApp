@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PBctZ6nbZlmbKqzzONi50bVViR2qNqwBx5vT2slaI05vnbSVTIDysxKb6oWhbT2akuqOjjVf1Jk//b5CAY/sig==",
+  "dgSpecHash": "MpG4dEp4Hj3dKjlme4VCJ746HJehulKgmKyoLYLLNHxJXbXh6dYSZBbP1Kbu8Sz2O16UCz7Zxkaym0waW38uJA==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Architectures\\API Architectures\\REST\\GraphQL\\GraphQL.csproj",
   "expectedPackageFiles": [
@@ -63,11 +63,7 @@
     "C:\\Users\\dmitr\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
     "C:\\Users\\dmitr\\.nuget\\packages\\system.threading.channels\\4.7.0\\system.threading.channels.4.7.0.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.27\\microsoft.netcore.app.host.win-x64.6.0.27.nupkg.sha512"
+    "C:\\Users\\dmitr\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
   ],
   "logs": []
 }

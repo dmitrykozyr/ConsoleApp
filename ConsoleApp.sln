@@ -63,6 +63,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{D6A9D2
 		README\Docker.cs = README\Docker.cs
 		README\GraphQL тело запросов в Postman.cs = README\GraphQL тело запросов в Postman.cs
 		README\Kafka.cs = README\Kafka.cs
+		README\MongoDB.cs = README\MongoDB.cs
+		README\Redis.cs = README\Redis.cs
 		README\Тестирование.cs = README\Тестирование.cs
 	EndProjectSection
 EndProject
@@ -136,8 +138,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Enum", "Enum", "{7C1507E5-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Events", "Events", "{39A58E64-EF6F-45AF-9834-74410F74DD17}"
 	ProjectSection(SolutionItems) = preProject
-		Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCreatedEvent.cs = Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCreatedEvent.cs
 		Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCancelledEvent.cs = Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCancelledEvent.cs
+		Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCreatedEvent.cs = Projects\Architectures\Structure patterns\Event-sourcing\Events\OrderCreatedEvent.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventModel", "EventModel", "{9F751525-114B-43E5-83EC-58CCB9DF5DE7}"

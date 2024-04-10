@@ -1012,10 +1012,27 @@ namespace Strategy
 {
     // Говорим "Хочу права, денег мало" - получим права через месяц
     // Говорим "Хочу права, денег много" - получим права завтра
-    // Что делал человек, мы не знаем, но задаем начальные условия, а он решает, как себя вести
-    interface IStrategy { public abstract void AlgorithmInterface(); }
-    class SlowLicense : IStrategy { public void AlgorithmInterface() { Console.WriteLine("Make driver's license slow"); } }
-    class FastLicence : IStrategy { public void AlgorithmInterface() { Console.WriteLine("Make driver's license fast"); } }
+    // Что делал человек - мы не знаем, но задаем начальные условия, а он решает, как себя вести
+    interface IStrategy 
+    { 
+        public abstract void AlgorithmInterface(); 
+    }
+    
+    class SlowLicense : IStrategy 
+    { 
+        public void AlgorithmInterface() 
+        { 
+            Console.WriteLine("Make driver's license slow"); 
+        } 
+    }
+    
+    class FastLicence : IStrategy 
+    { 
+        public void AlgorithmInterface() 
+        { 
+            Console.WriteLine("Make driver's license fast"); 
+        } 
+    }
 
     class Context
     {

@@ -314,9 +314,9 @@ C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.AssemblyInfoI
 C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.AssemblyInfo.cs
 C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.csproj.CoreCompileInputs.cache
 C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.sourcelink.json
-C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.csproj.CopyComplete
 C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.dll
 C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\refint\xUnit_.dll
 C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.pdb
 C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.genruntimeconfig.cache
 C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\ref\xUnit_.dll
+C:\Repos\ConsoleApp\Projects\Testing\xUnit\obj\Debug\net6.0\xUnit_.csproj.Up2Date

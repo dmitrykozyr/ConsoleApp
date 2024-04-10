@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "I0abJSlTKlHqeeSdvvCj5a2kzSQYoDmUqE4Qg7XjNrxzESOhs0iik0lALKKUKFzTvt7dSNo7d3itTA6kBk2PZQ==",
+  "dgSpecHash": "Me7zna6hEtXbHR0uwyuIaSCHsHqiUFqGgrCE8zfx8/ReXQFqT/CQShaalTDvO1fGKt90snPhNay6A4DggEynLg==",
   "success": true,
   "projectFilePath": "C:\\Repos\\ConsoleApp\\Projects\\Testing\\AppToTest\\AppToTest.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\dmitr\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.27\\microsoft.netcore.app.host.win-x64.6.0.27.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
