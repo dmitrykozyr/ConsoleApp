@@ -483,42 +483,50 @@ namespace SharpEdu
 
         class Polymorphism_
         {
-            class A
+            class BaseClass
             {
-                public A()                  { Console.WriteLine("ctor A"); }
-                public virtual void F1()    { Console.WriteLine("A1"); }
-                public void F2()            { Console.WriteLine("A2"); }
-                public virtual void F3()    { Console.WriteLine("A3"); }
-                public void F4()            { F1(); }
-                public void F5()            { Console.WriteLine("A5"); }
+                public virtual void F()
+                {
+                    Console.WriteLine("BaseClass");
+                }
             }
 
-            class B : A
+            class DerivedClass_Override : BaseClass
             {
-                public B()                   { Console.WriteLine("ctor B"); }
-                public override void F1()    { Console.WriteLine("B1"); }
-                void F2()                    { Console.WriteLine("B2"); }
-                new void F3()                { Console.WriteLine("B3"); }
-                public new virtual void F5() { Console.WriteLine("B5"); }
+                public override void F()
+                {
+                    Console.WriteLine("DerivedClass");
+                }
+            }
+
+            class DerivedClass_New : BaseClass
+            {
+                public new void F()
+                {
+                    Console.WriteLine("DerivedClass");
+                }
             }
 
             static void Main_()
             {
-                A upcast = new B();    // ctorA ctorB
-                upcast.F1();           // B1
-                upcast.F2();           // A2
-                upcast.F3();           // A3
-                upcast.F4();           // B1
-                upcast.F5();           // A5
+                BaseClass obj1 = new BaseClass();
+                obj1.F(); // BaseClass
 
-                Console.WriteLine("==");
 
-                B downcast = upcast as B;   // B obj2 = new A() as B;
-                upcast.F1();                // B1
-                upcast.F2();                // A2
-                upcast.F3();                // A3
-                upcast.F4();                // B1
-                upcast.F5();                // A5
+
+                DerivedClass_Override obj2 = new DerivedClass_Override();
+                obj2.F(); // DerivedClass
+
+                BaseClass obj3 = new DerivedClass_Override();
+                obj3.F(); // DeriverClass
+
+
+
+                DerivedClass_New obj4 = new DerivedClass_New();
+                obj4.F(); // DerivedClass
+
+                BaseClass obj5 = new DerivedClass_New();
+                obj5.F(); // BaseClass
             }
         }
 

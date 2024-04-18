@@ -1,13 +1,10 @@
-﻿using System;
+﻿using NUnit.Framework.Constraints;
+using NUnit.Framework.Internal;
 
-class Program
+public class Program
 {
-
-
     static void Main()
     {
         
-
-        Console.ReadKey();
     }
 }
