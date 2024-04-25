@@ -243,6 +243,66 @@ namespace SharpEdu
                     - ImmutableStack<T>
                 */
             }
+
+            // Дерево, возврат всех листьев
+            public class Tree
+            {
+                public class TreeData
+                {
+                    public int Id { get; set; }
+                    public TreeData[] Child { get; set; }
+                }
+
+                static void ShowLeafIds(TreeData root)
+                {
+                    if (root == null)
+                        return;
+
+                    if (root.Child == null || root.Child.Length == 0)
+                        Console.WriteLine(root.Id);
+                    else
+                        foreach (var child in root.Child)
+                            ShowLeafIds(child);
+                }
+
+                static void Main()
+                {
+                    // Инициализация дерева
+                    /*
+                                1
+                            2       3
+                          4   5   6
+                    */
+
+                    TreeData data = new TreeData
+                    {
+                        Id = 1,
+                        Child = new TreeData[]
+                        {
+                            new TreeData
+                            {
+                                Id = 2,
+                                Child = new TreeData[]
+                                {
+                                    new TreeData { Id = 4 },
+                                    new TreeData { Id = 5 }
+                                }
+                            },
+                            new TreeData
+                            {
+                                Id = 3,
+                                Child = new TreeData[]
+                                {
+                                    new TreeData { Id = 6 }
+                                }
+                            }
+                        }
+                    };
+
+                    ShowLeafIds(data); // 4 5 6
+                }
+            }
+
         }
 
         class Struct_
@@ -1382,7 +1442,7 @@ namespace SharpEdu
         class CQRS
         {
             /*
-                Паттерн позвоняет
+                Паттерн позволяет:
                 - разделять операции чтения (query) и записи (command)
                 - улучшает масшабируемость и простоту
                 - новые фичи легко добавляются путем добавления новых запросов и команд               

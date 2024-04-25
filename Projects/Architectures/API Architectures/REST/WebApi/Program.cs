@@ -29,7 +29,7 @@ builder.Services.AddTransient<IMessageSender, EmailMessageSender>();
 builder.Services.AddTransient<SmsMessageSender>();
 
 builder.Services.AddDbContext<DbContextSetUp>(options => options.UseInMemoryDatabase("DatabaseName"));
-builder.Services.AddTransient<WebApi.Models.DbContextSetUp>();
+builder.Services.AddTransient<DbContextSetUp>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

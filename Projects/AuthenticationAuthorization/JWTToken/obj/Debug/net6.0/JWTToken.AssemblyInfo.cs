@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JWTToken")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37c17bcd81614a9c0dc5ef2b0a1977f64ef3f64f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+58824991ea30915b357ea5d82c97318aa52e7f0d")]
 [assembly: System.Reflection.AssemblyProductAttribute("JWTToken")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JWTToken")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
