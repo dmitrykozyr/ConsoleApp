@@ -1,6 +1,6 @@
-/.vs/*
-/bin/*
-/obj/*
-/Debug/*
+**/.vs/*
+**/bin/*
+**/obj/*
+**/Debug/*
 
 *.dll
