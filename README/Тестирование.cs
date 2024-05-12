@@ -128,3 +128,32 @@ xUnit
 
 #endregion
 
+#region Fake
+
+    public class Calculator
+    {
+        public int Add(int a, int b)
+        {
+            return a + b;
+        }
+    }
+
+    public class CalculatorFake
+    {
+        public int Add(int a, int b)
+        {
+            return 100;                              // Фейковая реализация метода Add
+        }
+    }
+
+    static void Main_()
+    {
+        var calculator = new Calculator();
+        Console.WriteLine(calculator.Add(2, 3));     // Выведет 5
+
+        var fakeCalculator = new CalculatorFake();
+        Console.WriteLine(fakeCalculator.Add(2, 3)); // Выведет 100
+    }
+
+#endregion
+

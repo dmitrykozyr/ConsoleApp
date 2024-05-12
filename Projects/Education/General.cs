@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections;
 using System.Collections.Immutable;
 using System.IdentityModel.Tokens.Jwt;
@@ -337,6 +338,91 @@ namespace SharpEdu
                 var bob = new Structure_();  // Можем использовать конструктор без параметров, при вызове
                                              // которого полям будет присвоено значение по умолчанию
                 bob.DisplayInfo();
+            }
+        }
+
+        class Record_
+        {
+            // Сылочный тип, могут представлять неизменяемый immutable тип
+            // Такие типы более безопасны, когда надо гарантировать, что данные объекта не будут изменяться
+            // В .NET в принципе уже есть неизменяемые типы, например, String.
+
+            // Есть
+            // - record-классы
+            // - record-структуры
+
+            // При определении record-класса слово class можно не писать
+            public record class MyRecordClass_
+            {
+                public string Name { get; init; } // init делает св-во неизменяемым
+                                                  // set тоже можно использовать, но тогда св-во будет изменяемым
+                public int Age { get; init; }
+
+                public MyRecordClass_(string name, int age)
+                {
+                    Name = name;
+                    Age = age;
+                }
+
+                // Деконструктор позволяет разложить объект на кортеж значений
+                public void Deconstruct(out string name, out int age) => (name, age) = (Name, Age);
+            }
+
+            public record struct MyRecordStruct_
+            {
+                public string Name { get; init; }
+                public MyRecordStruct_(string name) => Name = name;
+            }
+
+            public class UserClass
+            {
+                public string Name { get; init; }
+                public UserClass(string name) => Name = name;
+            }
+
+            public record UserRecord
+            {
+                public string Name { get; init; }
+
+                public UserRecord(string name) => Name = name;
+            }
+
+            // Как и обыччные классы, record-классы могут наследоваться
+            public record Person(string Name, int Age);
+            public record Employee(string Name, int Age, string Company) : Person(Name, Age);
+
+            static void Main_()
+            {
+                // 1
+                // В record св-во с init нельзя изменять
+                var myRecordClass_ = new MyRecordClass_("Tom", 37);
+                //myRecordClass_.Name = "Bob"; // ошибка
+
+                // 2
+                // В отличие от классов, в record идет сравнение по значению
+                var class1 = new UserClass("Tom");
+                var class2 = new UserClass("Tom");
+                Console.WriteLine(class1.Equals(class2));   // false
+
+                var record1 = new UserRecord("Tom");
+                var record2 = new UserRecord("Tom");
+                Console.WriteLine(record1.Equals(record2)); // true
+
+                // 3
+                // records поддерживают инициализацию с помощью оператора with
+                // Он позволяет создать одну record на основе другой
+                var tom = new MyRecordClass_("Tom", 37);
+                var sam = tom with { Name = "Sam" };
+                var joe = tom with { };                     // Если хотим скопировать все св-ва - оставляем пустые скобки
+                Console.WriteLine($"{sam.Name} - {sam.Age}"); // Sam - 37
+
+                // 4
+                // Использование премуществ кортжей и деконструктора, определенного выше
+                var person = new MyRecordClass_("Tom", 37);
+                Console.WriteLine(person.Name);         // Tom
+                var (personName, personAge) = person;
+                Console.WriteLine(personAge);           // 37
+                Console.WriteLine(personName);          // Tom
             }
         }
 
