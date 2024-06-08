@@ -119,11 +119,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiAuthentication", "Projec
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Notes", "GitHub Notes", "{C419CC8C-DAAA-4A91-852B-BACD61432294}"
 	ProjectSection(SolutionItems) = preProject
-		README\GitHub Notes\cpp.cpp = README\GitHub Notes\cpp.cpp
 		README\GitHub Notes\Blender.cs = README\GitHub Notes\Blender.cs
+		README\GitHub Notes\cpp.cpp = README\GitHub Notes\cpp.cpp
 		README\GitHub Notes\Git.cs = README\GitHub Notes\Git.cs
 		README\GitHub Notes\JavaScript.js = README\GitHub Notes\JavaScript.js
 		README\Python.py = README\Python.py
+		README\GitHub Notes\RESTClient.http = README\GitHub Notes\RESTClient.http
 		README\GitHub Notes\SQL.cs = README\GitHub Notes\SQL.cs
 		README\GitHub Notes\Steam.cs = README\GitHub Notes\Steam.cs
 		README\GitHub Notes\TypeScript.ts = README\GitHub Notes\TypeScript.ts

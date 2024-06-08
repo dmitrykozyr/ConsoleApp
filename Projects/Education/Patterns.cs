@@ -102,7 +102,11 @@ namespace Builder
     class Product
     {
         public List<object> parts = new List<object>();
-        public void Add(string part) { parts.Add(part); }
+
+        public void Add(string part)
+        {
+            parts.Add(part);
+        }
     }
 
     interface IBuilder

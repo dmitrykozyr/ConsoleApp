@@ -77,3 +77,7 @@ git cherry-pick 54debc8
 git fetch
 git merge origin/develop
 // Разрешаем конфликты в VisualStudio
+
+// Не отслеживать изменения в файле, даже если он был закоммичен и запушен
+git update−index −−skip−worktree [имя файла]
+git update-index --no-skip-worktree [имя файла] -- снова отслеживать

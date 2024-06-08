@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Immutable;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Transactions;
 
 namespace SharpEdu
 {
@@ -1504,6 +1505,58 @@ namespace SharpEdu
                     // var reault = _dbContext.Post.GetAll();
                     return null;
                 }
+            }
+        }
+
+        class Transaction_
+        {
+            public void F1()
+            {
+                /*using (var transaction = _dbContext.GetDatabase().BeginTransaction())
+                {
+                    try
+                    {
+                        //...
+
+                        bool result = _dbContext.SaveChanges() > 0;
+                        transaction.Commit();
+                        return result;
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError($"Категория id={id} не была : {e}");
+                        transaction.Rollback();
+                        throw;
+                    }
+                }*/
+            }
+        }
+
+        class FluentValidation_
+        {
+            public void F1()
+            {
+                /*
+                RuleFor(ps => ps.IncludePosMonth).InclusiveBetween(1, 12)
+                    .WithMessage("Количество месяцев больще должно быть пустым или в диапазоне 1-12");
+
+                RuleFor(step => step)
+                    .Must(step => !string.IsNullOrWhiteSpace(step.Header))
+                    .WithMessage("Поле обязательное для заполнения: \"Заголовок\"");
+
+                RuleFor(category => category)
+                    .Must(category => category?.Id != 0)
+                    .WithMessage("Поле обязательное для заполнения: \"Id\"");
+
+                RuleFor(category => category)
+                    .Must(category => category?.CategoryForAdd?.LoyaltyId != 0)
+                    .WithMessage("Поле обязательное для заполнения: \"ID\"");
+
+                RuleFor(promotion => promotion)
+                    .Must(promotion => promotion.ClientsFile is not null && promotion.Id.HasValue)
+                    .When(promotion => promotion.ClientSegmentations is not null)
+                    .WithMessage("Необходимо прикрепить файл с клиентами");
+                */
             }
         }
 

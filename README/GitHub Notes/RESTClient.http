@@ -1,0 +1,54 @@
+﻿# У файла должно быть расширение HTTP
+# Открываем его в VS Code и запускаем эндпоинты
+# Нужно расширение REST Client
+
+# Локально
+@ConfigurationHelper_HostAddress = http://localhost:8080
+
+# Контур 2
+#@ConfigurationHelper_HostAddress = https://loyalty-app-test.mcb.ru:8243
+
+#####################################
+### DirectoryBankDetailController ###
+#####################################
+@bankDetailId = 1325
+
+# Получить детали
+GET {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail/{{bankDetailId}}
+Accept: application/json
+###
+
+# Получить список BankDetails
+GET {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetails
+Accept: application/json
+###
+
+# Добавить деталь: {...}
+POST {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail
+Accept: application/json
+content-type: application/json
+
+{
+"id": 0,
+"nameDetail": "string",
+"detail": "string"
+}
+
+###
+
+# Обновить деталь: {...}
+PUT {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail
+Accept: application/json
+content-type: application/json
+
+{
+"id": 0,
+"nameDetail": "string",
+"detail": "string"
+}
+
+###
+
+# Удалить деталь: {bankDetailId}
+DELETE {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail/{{bankDetailId}}
+###
