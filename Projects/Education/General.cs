@@ -1,10 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Collections;
-using System.Collections.Immutable;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Transactions;
 
 namespace SharpEdu
 {
@@ -344,15 +341,15 @@ namespace SharpEdu
 
         class Record_
         {
-            // Сылочный тип, могут представлять неизменяемый immutable тип
+            // Ссылочный тип, могут представлять неизменяемый immutable тип
             // Такие типы более безопасны, когда надо гарантировать, что данные объекта не будут изменяться
-            // В .NET в принципе уже есть неизменяемые типы, например, String.
+            // В .NET уже есть неизменяемые типы, например, String
 
             // Есть
-            // - record-классы
-            // - record-структуры
+            // - record классы
+            // - record структуры
 
-            // При определении record-класса слово class можно не писать
+            // При определении record класса слово class можно не писать
             public record class MyRecordClass_
             {
                 public string Name { get; init; } // init делает св-во неизменяемым

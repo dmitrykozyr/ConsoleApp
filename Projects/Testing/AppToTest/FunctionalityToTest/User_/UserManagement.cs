@@ -6,6 +6,12 @@
         private int idCounter = 1;
         public IEnumerable<User> AllUsers => _users;
 
+        public List<User> GetUsers()
+        {
+            var users = _users.ToList();
+            return users;
+        }
+
         public void AddUser(User user)
         {
             _users.Add(user with { Id = idCounter++ });

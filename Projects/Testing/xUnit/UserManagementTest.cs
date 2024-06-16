@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using FakeItEasy;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using xUnit_.FunctionalityToTest.User_;
 
@@ -14,7 +17,7 @@ namespace xUnit_
             var userManagement = new UserManagement();
 
             // Act
-            userManagement.AddUser(new("Amazing", "User"));
+            userManagement.AddUser(new ("Amazing", "User"));
 
             // Assert
             var savedUser = Assert.Single(userManagement.AllUsers);
@@ -29,7 +32,7 @@ namespace xUnit_
         {
             var userManagement = new UserManagement();
             
-            userManagement.AddUser(new("Amazing", "User"));
+            userManagement.AddUser(new ("Amazing", "User"));
             var firstUser = userManagement.AllUsers.First();
             firstUser.Phone = "+123334445577";
             userManagement.UpdatePhone(firstUser);

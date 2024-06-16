@@ -109,6 +109,32 @@
 	#endregion
 
 	#region Уровни изоляции транзакций
+
+		// Начало транзакции с уровнем изоляции READ COMMITTED
+		BEGIN TRANSACTION;
+		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+		UPDATE Employees SET Salary = Salary * 1.1 WHERE Department = 'IT';
+
+		COMMIT; // Фиксация транзакции
+
+
+		// Начало новой транзакции с уровнем изоляции SERIALIZABLE
+		BEGIN TRANSACTION;
+		SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+		INSERT INTO Orders(OrderDate, ProductID, Quantity) VALUES('2023-01-15', 101, 5);
+
+		// Фиксация или откат транзакции в зависимости от условий
+		IF(SELECT COUNT(*) FROM Orders WHERE OrderDate = '2023-01-15') > 0
+			BEGIN
+				COMMIT;
+			END
+		ELSE
+			BEGIN
+				ROLLBACK;
+			END;
+
 	/*
 		Уровни изоляции транзакций:
 		Настраиваются отдельно для каждого соединения с БД
