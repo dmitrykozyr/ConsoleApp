@@ -41,5 +41,40 @@ namespace xUnit_
             Assert.NotNull(savedUser);
             Assert.Equal(savedUser.Phone, "+123334445577");
         }
+
+        // FakeItEasy
+        [Fact]
+        public void FakeItEasy()
+        {
+            // Arrange
+            var fakeDependency = A.Fake<IDependency>();
+            var myService = new MyService(fakeDependency);
+
+            // Act
+            myService.ProcessData();
+
+            // Assert
+            A.CallTo(() => fakeDependency.SomeMethod()).MustHaveHappened();
+        }
+    }
+
+    public interface IDependency
+    {
+        void SomeMethod();
+    }
+
+    public class MyService
+    {
+        private readonly IDependency _dependency;
+
+        public MyService(IDependency dependency)
+        {
+            _dependency = dependency;
+        }
+
+        public void ProcessData()
+        {
+            _dependency.SomeMethod();
+        }
     }
 }
