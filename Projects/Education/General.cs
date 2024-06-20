@@ -80,7 +80,12 @@ namespace SharpEdu
             General_(string data) : this() { }  // this вызывает конструктор по умолчанию,
                                                 // base вызывает конструктор родительского класса
 
-            enum MyEnum : int { a = 0, b = 5, c, }
+            enum MyEnum : int 
+            { 
+                a = 0, 
+                b = 5, 
+                c, 
+            }
             //Console.WriteLine((int)MyEnum.c);
 
             Double[,]  myDoubles = new Double[10, 20];
