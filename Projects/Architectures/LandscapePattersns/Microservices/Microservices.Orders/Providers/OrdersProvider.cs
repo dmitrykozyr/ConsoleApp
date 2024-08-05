@@ -79,7 +79,7 @@ namespace Microservices.Orders.Providers
             {
                 _logger?.LogInformation("Queryng customers");
                 var orders = await _DBContext.Orders.Where(z => z.CustomerId == customerId).ToListAsync();
-                if (orders != null && orders.Any())
+                if (orders is not null && orders.Any())
                 {
                     _logger?.LogInformation($"{orders.Count} order(s) found");
                     var result = _mapper.Map<IEnumerable<DB.Order>, IEnumerable<Models.Order>>(orders);

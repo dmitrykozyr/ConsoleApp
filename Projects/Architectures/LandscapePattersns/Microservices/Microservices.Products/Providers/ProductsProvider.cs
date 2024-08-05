@@ -42,7 +42,7 @@ namespace Microservices.Products.Providers
             {
                 // Обращаемся к DbContext, поэтому используем try catch
                 var products = await _dbContext.Products.ToListAsync();
-                if (products != null && products.Any())
+                if (products is not null && products.Any())
                 {
                     // Смаппим тип IEnumerable <Db.Product> в IEnumerable <Models.Product>
                     var result = _mapper.Map<IEnumerable<DB.Product>, IEnumerable<Models.Product>>(products);
@@ -63,7 +63,7 @@ namespace Microservices.Products.Providers
             {
                 // Обращаемся к DbContext, поэтому используем try catch
                 var product = await _dbContext.Products.FirstOrDefaultAsync(z => z.Id == id);
-                if (product != null)
+                if (product is not null)
                 {
                     // Смаппим тип IEnumerable <Db.Product> в IEnumerable <Models.Product>
                     var result = _mapper.Map<DB.Product, Models.Product>(product);

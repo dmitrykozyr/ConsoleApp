@@ -509,7 +509,7 @@ Redis(Remote Dictionary Service) — опенсорсный сервер БД т
  app.MapGet("/user/{id}", async (int id, UserService userService) =>
  {
      User? user = await userService.GetUser(id);
-     if (user != null) return $"User {user.Name}  Id={user.Id}  Age={user.Age}";
+     if (user is not null) return $"User {user.Name}  Id={user.Id}  Age={user.Age}";
      return "User not found";
  });
 

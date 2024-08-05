@@ -112,7 +112,7 @@ https://metanit.com/sharp/aspnet6/2.10.php
             {
                 // пытаемся получить данные JSON
                 var person = await request.ReadFromJsonAsync<Person>();
-                if (person != null) // если данные сконвертированы в Person
+                if (person is not null) // если данные сконвертированы в Person
                     message = $"Name: {person.Name}  Age: {person.Age}";
             }
             catch { }
@@ -137,7 +137,7 @@ https://metanit.com/sharp/aspnet6/2.10.php
 В данном случае типа 'Person':
 
     var person = await request.ReadFromJsonAsync<Person>();
-    if (person != null) // если данные сконвертированы в Person
+    if (person is not null) // если данные сконвертированы в Person
         message = $"Name: {person.Name}  Age: {person.Age}";
 
 Результат вызова этого метода - значение переменной 'person' будет представлять объект 'Person'
@@ -159,7 +159,7 @@ https://metanit.com/sharp/aspnet6/2.10.php
     if (request.HasJsonContentType())
     {
         var person = await request.ReadFromJsonAsync<Person>();
-        if (person != null)
+        if (person is not null)
             responseText = $"Name: {person.Name}  Age: {person.Age}";
     }
 
@@ -230,7 +230,7 @@ https://metanit.com/sharp/aspnet6/2.10.php
                 jsonoptions.Converters.Add(new PersonConverter());
                 // десериализуем данные с помощью конвертера PersonConverter
                 var person = await request.ReadFromJsonAsync<Person>(jsonoptions);
-                if (person != null)
+                if (person is not null)
                     responseText = $"Name: {person.Name}  Age: {person.Age}";
             }
             await response.WriteAsJsonAsync(new { text = responseText });
@@ -274,7 +274,7 @@ https://metanit.com/sharp/aspnet6/2.10.php
                             break;
                         case "name":    // если свойство Name/name
                             string? name = reader.GetString();
-                            if (name != null)
+                            if (name is not null)
                                 personName = name;
                             break;
                     }
@@ -390,7 +390,7 @@ https://metanit.com/sharp/aspnet6/2.10.php
 
     case "name":
         string? name = reader.GetString();
-        if (name != null)
+        if (name is not null)
             personName = name;
 
 Полученными данными инициализируем объект 'Person' и возвращаем его из метода:

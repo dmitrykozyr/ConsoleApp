@@ -368,7 +368,7 @@ namespace SharpEdu
             {
                 Console.WriteLine("1: " + ex.GetType() + " " + ex.Message);
 
-                if (ex.InnerException != null)
+                if (ex.InnerException is not null)
                 {
                     Console.WriteLine("2: " + ex.InnerException);
                 }

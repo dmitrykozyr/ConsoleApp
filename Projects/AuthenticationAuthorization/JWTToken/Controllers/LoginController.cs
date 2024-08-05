@@ -27,7 +27,7 @@ namespace JWTToken.Controllers
         {
             var user = Authenticate(userLogin);
 
-            if (user != null)
+            if (user is not null)
             {
                 var token = GenerateToken(user);
                 return Ok(token);

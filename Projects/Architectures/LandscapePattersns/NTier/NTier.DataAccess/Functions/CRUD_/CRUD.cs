@@ -62,7 +62,7 @@ namespace NTier.DataAccess.Functions.CRUD_
                 using (var context = new DatabaseContext(DatabaseContext.Options.DatabaseOptions))
                 {
                     var objectFound = await context.FindAsync<T>(entityId);
-                    if (objectFound != null)
+                    if (objectFound is not null)
                     {
                         context.Entry(objectFound).CurrentValues.SetValues(objectToUpdate);
                         await context.SaveChangesAsync();
@@ -84,7 +84,7 @@ namespace NTier.DataAccess.Functions.CRUD_
                 using (var context = new DatabaseContext(DatabaseContext.Options.DatabaseOptions))
                 {
                     T recordToDelete = await context.FindAsync<T>(entityId);
-                    if (recordToDelete != null)
+                    if (recordToDelete is not null)
                     {
                         context.Remove(recordToDelete);
                         await context.SaveChangesAsync();

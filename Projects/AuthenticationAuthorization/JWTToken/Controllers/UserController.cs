@@ -40,7 +40,7 @@ namespace JWTToken.Controllers
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
 
-            if (identity != null)
+            if (identity is not null)
             {
                 var userClaims = identity.Claims;
 

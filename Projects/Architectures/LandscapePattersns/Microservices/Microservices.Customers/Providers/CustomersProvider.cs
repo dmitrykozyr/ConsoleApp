@@ -39,7 +39,7 @@ namespace Microservices.Customers.Providers
             {
                 _logger?.LogInformation("Queryng customers");
                 var customers = await _dbContext.Customers.ToListAsync();
-                if (customers != null && customers.Any())
+                if (customers is not null && customers.Any())
                 {
                     _logger?.LogInformation($"{customers.Count} customer(s) found");
                     var result = _mapper.Map<IEnumerable<DB.Customer>, IEnumerable<Models.Customer>>(customers);
@@ -60,7 +60,7 @@ namespace Microservices.Customers.Providers
             {
                 _logger?.LogInformation("Queryng customers");
                 var customer = await _dbContext.Customers.FirstOrDefaultAsync(z => z.Id == id);
-                if (customer != null)
+                if (customer is not null)
                 {
                     _logger?.LogInformation("Customer found");
                     var result = _mapper.Map<DB.Customer, Models.Customer>(customer);

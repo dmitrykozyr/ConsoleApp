@@ -93,7 +93,7 @@ namespace SharpEdu
 
             /*
                 int? x = null;          Переменная может принмать null
-                int y = x ?? 5;         Если левый операнд != null, то вернется он, иначе - правый
+                int y = x ?? 5;         Если левый операнд is not null, то вернется он, иначе - правый
 
                 int i = 5;              Упаковка нужна, чтобы работать со значимым типом, как с ссылочным,
                 object obj = (object)i; чтобы при передаче в метод не создавался дубликат, а передавался адрес
@@ -315,8 +315,11 @@ namespace SharpEdu
             {
                 // Могут наследоваться только от интерфейса, а их нельзя наследовать
                 // Могут быть readonly, но все поля тоже должны быть readonly
+
                 public string name;
+
                 public int age;
+
                 //public string gender = "Male";        // Ошибка - нельзя инициализировать поля при объявлении
                 public Structure_(string name, int age) // Если определяем конструктор - он должен инициализировать все поля
                 {
@@ -445,9 +448,23 @@ namespace SharpEdu
                 В примере перегруженные операторы проводятся над двумя объектами, поэтому для каждой перегрузки будет по два параметра
             */
             int Value { get; set; }
-            public static OperatorOverload_ operator +(OperatorOverload_ c1, OperatorOverload_ c2) { return new OperatorOverload_ { Value = c1.Value + c2.Value }; }
-            public static bool              operator >(OperatorOverload_ c1, OperatorOverload_ c2) { return c1.Value > c2.Value; }
-            public static bool              operator <(OperatorOverload_ c1, OperatorOverload_ c2) { return c1.Value < c2.Value; }
+            public static OperatorOverload_ operator +(OperatorOverload_ c1, OperatorOverload_ c2) 
+            {
+                return new OperatorOverload_
+                {
+                    Value = c1.Value + c2.Value
+                };
+            }
+
+            public static bool operator >(OperatorOverload_ c1, OperatorOverload_ c2)
+            { 
+                return c1.Value > c2.Value; 
+            }
+
+            public static bool operator <(OperatorOverload_ c1, OperatorOverload_ c2)
+            { 
+                return c1.Value < c2.Value; 
+            }
 
             static void Main_()
             {
@@ -980,15 +997,27 @@ namespace SharpEdu
 
                 var cars = new List<Car>()
                 {
-                    new Car() { Name = "Lada", Number = "12132EA" },
-                    new Car() { Name = "Hyundai", Number = "2225EN" },
+                    new Car() 
+                    {
+                        Name = "Lada", Number = "12132EA"
+                    },
+                    new Car() 
+                    {
+                        Name = "Hyundai", Number = "2225EN"
+                    },
                 };
 
                 var parking = new Parking();
                 foreach (var item in cars) { parking.Add(item); }
 
                 Console.WriteLine(parking["12132EA"].Name);                     // Выведет Lada
-                parking[1] = new Car() { Name = "BMW", Number = "156742XN" };   // Устанавливаем значение через индексатор 
+
+                parking[1] = new Car() 
+                {
+                    Name = "BMW",
+                    Number = "156742XN"
+                };   // Устанавливаем значение через индексатор 
+
                 Console.WriteLine(parking[1]);
             }
         }
@@ -1033,7 +1062,7 @@ namespace SharpEdu
                 }
                 finally
                 {
-                    if (objB != null)
+                    if (objB is not null)
                         objB.Dispose();
                 }
             }
@@ -1077,19 +1106,34 @@ namespace SharpEdu
                                 // throw без аргументов можно вызвать только из блока catch
                     }
                     // Вызовется в любом случае
-                    finally { Console.WriteLine("3"); }
+                    finally
+                    {
+                        Console.WriteLine("3");
+                    }
                 }
                 // Если в try произошло исключение, то вызовется соответствующий блок catch
-                catch (NullReferenceException ex) { Console.WriteLine("4"); }
-                catch (Exception ex) { Console.WriteLine("5"); }
+                catch (NullReferenceException ex)
+                {
+                    Console.WriteLine("4");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("5");
+                }
                 finally // Вызовется в любом случае
                 {
                     Console.WriteLine("6");
                     throw new NullReferenceException(); // Необработанное исключение
                 }
 
-                try { ExceptionThrower.TriggerException(true); }
-                catch (Exception e) { ExceptionHandler.Handle(e); }
+                try
+                {
+                    ExceptionThrower.TriggerException(true);
+                }
+                catch (Exception e)
+                {
+                    ExceptionHandler.Handle(e);
+                }
             }
         }
 
@@ -1135,8 +1179,19 @@ namespace SharpEdu
                 Console.WriteLine(del2(1, 2));
 
                 Del3 del3; // 3 варианта одного и того-же:
-                del3 = delegate (int val) { Console.WriteLine("0"); return val * 2; };
-                del3 = (val) => { Console.WriteLine("0"); return val * 2; };
+                del3 = delegate (int val)
+                {
+                    Console.WriteLine("0");
+                    return val * 2;
+                
+                };
+
+                del3 = (val) =>
+                {
+                    Console.WriteLine("0");
+                    return val * 2;
+                };
+
                 del3 = val => val * 2;
                 Console.WriteLine(del3(5));
 
@@ -1175,10 +1230,20 @@ namespace SharpEdu
                 // Как в свойствах, здесь можно включить дополнительные проверки
                 public event del Event
                 {
-                    add { ev += value; }
-                    remove { ev -= value; }
+                    add 
+                    {
+                        ev += value;
+                    }
+                    remove
+                    {
+                        ev -= value;
+                    }
                 }
-                public void InvokeEvent() { ev.Invoke(); }
+
+                public void InvokeEvent()
+                {
+                    ev.Invoke();
+                }
             }
 
             static void Main_()
@@ -1276,7 +1341,7 @@ namespace SharpEdu
                 // as делает это в один шаг
                 objB = objA as B;
 
-                if (objB != null)
+                if (objB is not null)
                     Console.WriteLine("Success");
                 else
                     Console.WriteLine("Error");

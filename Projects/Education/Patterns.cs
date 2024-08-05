@@ -569,22 +569,29 @@ namespace ChainOfResponsibility
     interface IHandler
     {
         IHandler SetNext(IHandler handler);
+
         object Handle(object request);
     }
 
     abstract class AbstractHandler : IHandler
     {
         private IHandler _nextHandler;
+
         public IHandler SetNext(IHandler handler)
         {
             _nextHandler = handler;
+
             return handler; // Возврат обработчика позволит связать обработчики так: monkey.SetNext(squirrel)
         }
 
         public virtual object Handle(object request)
         {
-            if (_nextHandler != null) return _nextHandler.Handle(request);
-            else return null;
+            if (_nextHandler is not null)
+            { 
+                return _nextHandler.Handle(request);
+            }
+            
+            return null;
         }
     }
 
@@ -592,8 +599,12 @@ namespace ChainOfResponsibility
     {
         public override object Handle(object request)
         {
-            if ((request as string) == "Banana") return $"Monkey: I love {request}";
-            else return base.Handle(request);
+            if ((request as string) == "Banana")
+            {
+                return $"Monkey: I love {request}";
+            }
+
+            return base.Handle(request);
         }
     }
 
@@ -601,8 +612,12 @@ namespace ChainOfResponsibility
     {
         public override object Handle(object request)
         {
-            if ((request as string) == "Nut") return $"Sqiurrel: I love {request}";
-            else return base.Handle(request);
+            if ((request as string) == "Nut")
+            {
+                return $"Sqiurrel: I love {request}";
+            }
+
+            return base.Handle(request);
         }
     }
 
@@ -610,8 +625,12 @@ namespace ChainOfResponsibility
     {
         public override object Handle(object request)
         {
-            if ((request as string) == "Meat") return $"Dog: I love {request}";
-            else return base.Handle(request);
+            if ((request as string) == "Meat")
+            {
+                return $"Dog: I love {request}";
+            }
+
+            return base.Handle(request);
         }
     }
 
@@ -624,7 +643,11 @@ namespace ChainOfResponsibility
                 Console.Write($"Who wants {food}?");
                 var result = handler.Handle(food);
 
-                if (result != null) Console.WriteLine($"    {result}");
+                if (result is not null)
+                {
+                    Console.WriteLine($" {result}");
+                }
+
                 else Console.WriteLine($" {food} left untouched");
             }
         }
