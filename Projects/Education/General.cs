@@ -509,12 +509,12 @@ namespace SharpEdu
                 т.е. вытаскивает данные из коллекции в память и затем выполняет запрос на них
                 Это может привести к проблемам производительности при работе с большими коллекциями
 
-                    List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
-                    IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0);
-                    foreach (int number in evenNumbers)
-                    {
-                        Console.WriteLine(number);
-                    }
+                List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+                IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0);
+                foreach (int number in evenNumbers)
+                {
+                    Console.WriteLine(number);
+                }
 
                 IQueryable работает с коллекциями, которые хранятся в БД
                 Cтроит запросы, которые будут выполнены на стороне БД и вернут только нужные данные
@@ -708,13 +708,19 @@ namespace SharpEdu
             class Employee : Person
             {
                 public string Company { get; set; }
-                public Employee(string name, string company) : base(name) { Company = company; }
+                public Employee(string name, string company) : base(name)
+                {
+                    Company = company;
+                }
             }
 
             class Client : Person
             {
                 public string Bank { get; set; }
-                public Client(string name, string bank) : base(name) { Bank = bank; }
+                public Client(string name, string bank) : base(name)
+                {
+                    Bank = bank;
+                }
             }
 
             static void Main_()
@@ -772,17 +778,24 @@ namespace SharpEdu
             class A<T>
             {
                 public T x;
+
                 public T param { get; set; }
+
                 public A() { }
+
                 public A(T _x) { x = _x; }
             }
 
             class B<T, Z>
             {
                 public T x;
+
                 public Z y;
+
                 public T param1 { get; set; }
+
                 public Z param2 { get; set; }
+
                 public B(T _x, Z _y) { x = _x; y = _y; }
             }
 
@@ -794,15 +807,23 @@ namespace SharpEdu
 
             // where означает, что тип T может быть только типа C, либо быть любым его наследником
             // where T : new() - у класса должен быть публичный конструктор без параметров
-            class D<T, Z>
-                where T : A<int>
-                where Z : new()
+            class D<T, Z> where T : A<int>
+                          where Z : new()
             {
                 public T x;
+
                 public Z y;
+
                 public T param1 { get; set; }
+
                 public Z param2 { get; set; }
-                public D(T _x, Z _y) { x = _x; y = _y; }
+
+                public D(T _x, Z _y)
+                {
+                    x = _x;
+                    y = _y;
+                }
+
                 public T F1() { return x; } // шаблонный тип можно возвращать
             }
 
@@ -835,7 +856,9 @@ namespace SharpEdu
                 public IEnumerator GetEnumerator()
                 {
                     foreach (var i in arr)
+                    {
                         yield return arr[i];
+                    }
                 }
             }
 
@@ -845,7 +868,9 @@ namespace SharpEdu
 
                 // Цикл автоматически вызовет метод GetEnumerator
                 foreach (var i in objA)
+                {
                     Console.WriteLine(i);
+                }
             }
         }
 
@@ -898,6 +923,7 @@ namespace SharpEdu
             class A
             {
                 public int Id { get; set; }
+
                 public string Name { get; set; }
             }
 
@@ -911,7 +937,7 @@ namespace SharpEdu
                 };
 
                 // Запрос не выполнится, пока не будет вызвана ф-я FirstOrDefault(), ToList() и т.п.
-                var query1 = collA.Where(z => z.Name.StartsWith("D")).OrderBy(z => z.Id);
+                var query1 = collA.Where(z => z.Name.StartsWith('D')).OrderBy(z => z.Id);
 
                 var query2 = from i in collA
                              where i.Id > 1
@@ -919,7 +945,9 @@ namespace SharpEdu
                              select i;
 
                 foreach (var i in query2)
+                {
                     Console.WriteLine(i.Id + " " + i.Name);
+                }
             }
         }
 
@@ -930,6 +958,7 @@ namespace SharpEdu
             class A
             {
                 int[] arr = new int[5];
+
                 public int this[int i]
                 {
                     get { return arr[i]; }
@@ -940,8 +969,13 @@ namespace SharpEdu
             class Car
             {
                 public string Name { get; set; }
+
                 public string Number { get; set; }
-                public override string ToString() { return Name + " " + Number; }
+
+                public override string ToString()
+                {
+                    return Name + " " + Number;
+                }
             }
 
             class Parking
@@ -962,20 +996,27 @@ namespace SharpEdu
                     get
                     {
                         if (indexPosition < _cars.Count)
+                        {
                             return _cars[indexPosition];
+                        }
+
                         return null;
                     }
                     set
                     {
                         if (indexPosition < _cars.Count)
+                        {
                             _cars[indexPosition] = value;
+                        }
                     }
                 }
 
                 public int Add(Car car)
                 {
                     if (car == null)
+                    {
                         throw new ArgumentException(nameof(car), "Car is null");
+                    }
 
                     if (_cars.Count < 100)
                     {
@@ -999,18 +1040,23 @@ namespace SharpEdu
                 {
                     new Car() 
                     {
-                        Name = "Lada", Number = "12132EA"
+                        Name = "Lada",
+                        Number = "12132EA"
                     },
                     new Car() 
                     {
-                        Name = "Hyundai", Number = "2225EN"
+                        Name = "Hyundai",
+                        Number = "2225EN"
                     },
                 };
 
                 var parking = new Parking();
-                foreach (var item in cars) { parking.Add(item); }
+                foreach (var item in cars)
+                {
+                    parking.Add(item);
+                }
 
-                Console.WriteLine(parking["12132EA"].Name);                     // Выведет Lada
+                Console.WriteLine(parking["12132EA"].Name); // Выведет Lada
 
                 parking[1] = new Car() 
                 {
@@ -1183,7 +1229,6 @@ namespace SharpEdu
                 {
                     Console.WriteLine("0");
                     return val * 2;
-                
                 };
 
                 del3 = (val) =>
@@ -1630,18 +1675,12 @@ namespace SharpEdu
         class Net_8
         {
             /*
-                
-                
-                
             */
         }
 
         class CSharp_11
         {
             /*
-                
-                
-                
             */
         }
 
@@ -1651,7 +1690,7 @@ namespace SharpEdu
                 Паттерн позволяет:
                 - разделять операции чтения (query) и записи (command)
                 - улучшает масшабируемость и простоту
-                - новые фичи легко добавляются путем добавления новых запросов и команд               
+                - новые фичи легко добавляются путем добавления новых запросов и команд
             */
         }
     }

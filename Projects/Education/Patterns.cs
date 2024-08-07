@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-// Порождающие
+﻿// Порождающие
 
 namespace FactoryMethod
 {
@@ -12,12 +8,43 @@ namespace FactoryMethod
     // Создаем новые объекты не напрямую через new, а через фабричный метод,
     // благодаря этому можем его переопределить, чтобы он возвращал нужный тип объектов
     interface IHouse { }
-    class WoodHouse : IHouse { public WoodHouse() { Console.WriteLine("Wood house was build"); } }
-    class PanelHouse : IHouse { public PanelHouse() { Console.WriteLine("Panel house was build"); } }
 
-    interface IDeveloper { IHouse FactoryMethod(); }
-    class WoodDeveloper : IDeveloper { public IHouse FactoryMethod() { return new WoodHouse(); } }
-    class PanelDeveloper : IDeveloper { public IHouse FactoryMethod() { return new PanelHouse(); } }
+    class WoodHouse : IHouse 
+    {
+        public WoodHouse()
+        {
+            Console.WriteLine("Wood house was build");
+        }
+    }
+
+    class PanelHouse : IHouse 
+    { 
+        public PanelHouse()
+        {
+            Console.WriteLine("Panel house was build");
+        }
+    }
+
+    interface IDeveloper
+    {
+        IHouse FactoryMethod();
+    }
+
+    class WoodDeveloper : IDeveloper
+    {
+        public IHouse FactoryMethod()
+        {
+            return new WoodHouse();
+        }
+    }
+
+    class PanelDeveloper : IDeveloper
+    {
+        public IHouse FactoryMethod()
+        {
+            return new PanelHouse();
+        }
+    }
 
     class Program
     {
@@ -38,45 +65,112 @@ namespace AbstractFactory
     // Каждая реализация фабрики порождает продукты одной из вариаций
     // Клиент вызывает методы фабрики для получения продуктов,
     // вместо самостоятельного создания через new
-    interface IWeapon { public void Hit(); }
-    class Arbalet : IWeapon { public void Hit() { Console.WriteLine("Shoot from arbalet"); } }
-    class Sword : IWeapon { public void Hit() { Console.WriteLine("Hit by sword"); } }
+    interface IWeapon 
+    { 
+        public void Hit();
+    }
 
-    interface IMovement { public void Move(); }
-    class Fly : IMovement { public void Move() { Console.WriteLine("Fly"); } }
-    class Run : IMovement { public void Move() { Console.WriteLine("Run"); } }
+    class Arbalet : IWeapon 
+    { 
+        public void Hit() 
+        { 
+            Console.WriteLine("Shoot from arbalet"); 
+        } 
+    }
+
+    class Sword : IWeapon
+    { 
+        public void Hit() 
+        { 
+            Console.WriteLine("Hit by sword"); 
+        } 
+    }
+
+    interface IMovement 
+    { 
+        public void Move(); 
+    }
+
+    class Fly : IMovement 
+    { 
+        public void Move() 
+        { 
+            Console.WriteLine("Fly"); 
+        } 
+    }
+
+    class Run : IMovement 
+    { 
+        public void Move() 
+        { 
+            Console.WriteLine("Run"); 
+        }
+    }
 
     interface IHeroesFactory
     {
         IWeapon CreateWeapon();
+
         IMovement CreateMovement();
     }
 
     class ElfFactory : IHeroesFactory
     {
-        public ElfFactory() { Console.WriteLine("Elf was created"); }
-        public IMovement CreateMovement() { return new Fly(); }
-        public IWeapon CreateWeapon() { return new Arbalet(); }
+        public ElfFactory()
+        { 
+            Console.WriteLine("Elf was created"); 
+        }
+
+        public IMovement CreateMovement() 
+        { 
+            return new Fly(); 
+        }
+
+        public IWeapon CreateWeapon() 
+        { 
+            return new Arbalet();
+        }
     }
 
     class WarriorFactory : IHeroesFactory
     {
-        public WarriorFactory() { Console.WriteLine("Warrior was created"); }
-        public IMovement CreateMovement() { return new Run(); }
-        public IWeapon CreateWeapon() { return new Sword(); }
+        public WarriorFactory() 
+        { 
+            Console.WriteLine("Warrior was created");
+        }
+
+        public IMovement CreateMovement() 
+        { 
+            return new Run(); 
+        }
+
+        public IWeapon CreateWeapon() 
+        { 
+            return new Sword(); 
+        }
     }
 
     class Hero
     {
         private IWeapon _weapon;
+
         private IMovement _movement;
+
         public Hero(IHeroesFactory factory)
         {
             _weapon = factory.CreateWeapon();
             _movement = factory.CreateMovement();
         }
-        public void Run() { _movement.Move(); }
-        public void Hit() { _weapon.Hit(); }
+
+        public void Run() 
+        { 
+            _movement.Move(); 
+        }
+
+        public void Hit() 
+        { 
+            _weapon.Hit(); 
+        }
     }
 
     class Program
@@ -112,7 +206,9 @@ namespace Builder
     interface IBuilder
     {
         abstract void BuildPartA();
+
         abstract void BuildPartB();
+
         abstract void GetResult();
     }
 
@@ -121,8 +217,16 @@ namespace Builder
     {
         Product product = new Product();
 
-        public void BuildPartA() { product.Add("Part A"); }
-        public void BuildPartB() { product.Add("Part B"); }
+        public void BuildPartA() 
+        { 
+            product.Add("Part A"); 
+        }
+
+        public void BuildPartB() 
+        { 
+            product.Add("Part B"); 
+        }
+
         public void GetResult()
         {
             foreach (var part in product.parts)
@@ -135,7 +239,12 @@ namespace Builder
     class Director
     {
         IBuilder _builder;
-        public Director(IBuilder builder) { _builder = builder; }
+
+        public Director(IBuilder builder) 
+        { 
+            _builder = builder; 
+        }
+
         public void Construnt()
         {
             _builder.BuildPartA();
@@ -158,11 +267,15 @@ namespace Builder
 namespace Prototype
 {
     // Создаем прототип и на его онове клоны
-    interface IClone { IClone Clone(); }
+    interface IClone 
+    {
+        IClone Clone();
+    }
 
     class Box : IClone
     {
         int _width;
+
         int _height;
 
         public Box(int width, int height)
@@ -174,6 +287,7 @@ namespace Prototype
         public IClone Clone()
         {
             Console.WriteLine("Box was cloned");
+
             return new Box(_width, _height);
         }
     }
@@ -181,7 +295,12 @@ namespace Prototype
     class Sphere : IClone
     {
         int _radius;
-        public Sphere(int radius) { _radius = radius; }
+
+        public Sphere(int radius)
+        {
+            _radius = radius;
+        }
+
         public IClone Clone()
         {
             Console.WriteLine("Sphere was cloned");
@@ -211,8 +330,13 @@ namespace Singleton
     class Singleton
     {
         private Singleton() { }
+
         private static Singleton singleton = new Singleton();
-        public static Singleton GetSingleton() { return singleton; }
+
+        public static Singleton GetSingleton() 
+        {
+            return singleton;
+        }
     }
 }
 
@@ -220,15 +344,41 @@ namespace Singleton
 //+
 namespace Adapter
 {
-    class EuropeanRozetka { public string GetElectricity() { return "European rozetka"; } }
-    class JapaneseRozetka { public string GetElectricity() { return "Japanese rozetka"; } }
+    class EuropeanRozetka
+    {
+        public string GetElectricity()
+        {
+            return "European rozetka";
+        }
+    }
 
-    interface IEuropeanRozetka { string GetElectricity(); }
+    class JapaneseRozetka
+    {
+        public string GetElectricity()
+        {
+            return "Japanese rozetka";
+        }
+    }
+
+    interface IEuropeanRozetka
+    {
+        string GetElectricity();
+    }
+
     class Adapter : IEuropeanRozetka
+
     {
         private readonly JapaneseRozetka _japaneseRozetka;
-        public Adapter(JapaneseRozetka japaneseRozetka) { _japaneseRozetka = japaneseRozetka; }
-        public string GetElectricity() { return _japaneseRozetka.GetElectricity(); }
+
+        public Adapter(JapaneseRozetka japaneseRozetka)
+        {
+            _japaneseRozetka = japaneseRozetka;
+        }
+
+        public string GetElectricity()
+        {
+            return _japaneseRozetka.GetElectricity();
+        }
     }
 
     class Program
@@ -254,21 +404,50 @@ namespace Bridge
     // Разделяет абстракцию и реализацию, позволяя изменять их независимо друг от друга
     // Храним информацию об цвете геометрической фигуры в отдельном классе
     // При добавлении новых цветов не нужно расширять классы фигур
-    interface IColor { string Color(); }
-    class RedColor : IColor { public string Color() { return "RedColor"; } }
-    class BlueColor : IColor { public string Color() { return "BlueColor"; } }
+    interface IColor
+    {
+        string Color();
+    }
+
+    class RedColor : IColor
+    {
+        public string Color()
+        {
+            return "RedColor";
+        }
+    }
+
+    class BlueColor : IColor
+    {
+        public string Color()
+        {
+            return "BlueColor";
+        }
+    }
 
     class Figure
     {
         protected IColor _color;
-        public Figure(IColor color) { _color = color; }
-        public virtual string Paint() { return "Paint all figures with " + _color.Color(); }
+
+        public Figure(IColor color)
+        {
+            _color = color;
+        }
+
+        public virtual string Paint()
+        {
+            return "Paint all figures with " + _color.Color();
+        }
     }
 
     class Sphere : Figure
     {
         public Sphere(IColor color) : base(color) { }
-        public override string Paint() { return "Paint sphere with " + _color.Color(); }
+
+        public override string Paint()
+        {
+            return "Paint sphere with " + _color.Color();
+        }
     }
 
     class Program
@@ -291,25 +470,45 @@ namespace Composite
     abstract class Gift
     {
         public string Name { get; }
+
         public int Price { get; set; }
-        public Gift(string name, int price) { Name = name; Price = price; }
+
+        protected Gift(string name, int price)
+        {
+            Name = name;
+            Price = price;
+        }
+
         public abstract int TotalPrice();
     }
 
-    interface IGiftOperations { void Add(Gift gift); }
+    interface IGiftOperations
+    {
+        void Add(Gift gift);
+    }
 
     class Box : Gift, IGiftOperations
     {
         private List<Gift> _gifts = new List<Gift>();
+
         public Box(string name, int price) : base(name, price) { }
-        public void Add(Gift gift) { _gifts.Add(gift); }
+
+        public void Add(Gift gift)
+        {
+            _gifts.Add(gift);
+        }
+
         public override int TotalPrice()
         {
             int totalPrice = 0;
             Console.WriteLine();
             Console.WriteLine($"{Name} contains: ");
+
             foreach (var gift in _gifts)
+            {
                 totalPrice += gift.TotalPrice();
+            }
+
             return totalPrice;
         }
     }
@@ -317,6 +516,7 @@ namespace Composite
     class ConcreteGift : Gift
     {
         public ConcreteGift(string name, int price) : base(name, price) { }
+
         public override int TotalPrice()
         {
             Console.WriteLine($"{Name}, price {Price}");

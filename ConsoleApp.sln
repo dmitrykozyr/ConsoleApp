@@ -59,7 +59,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{D6A9D2
 		README\ApiTypes.cs = README\ApiTypes.cs
 		README\Architectures.cs = README\Architectures.cs
 		README\AuthenticationAuthorization.cs = README\AuthenticationAuthorization.cs
-		README\Deploy.cs = README\Deploy.cs
 		README\Docker.cs = README\Docker.cs
 		README\GraphQL тело запросов в Postman.cs = README\GraphQL тело запросов в Postman.cs
 		README\JSON.cs = README\JSON.cs

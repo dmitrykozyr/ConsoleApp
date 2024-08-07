@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace SharpEdu
+﻿namespace SharpEdu
 {
     public class AsyncAwait
     {
@@ -168,7 +163,7 @@ namespace SharpEdu
         // То есть метод должен вернуть 10 чисел от 0 до 10 с промежутком в 100 миллисекунд
         // Для получения данных из стрима используется foreach, он предваряется оператором await
         // В этом случае метод F16 должен быть определен с оператором async
-        public static async void F16()
+        public static async Task F16()
         {
             static async IAsyncEnumerable<int> F16_1()
             {
@@ -225,7 +220,7 @@ namespace SharpEdu
         // - метод является event handler
         // - метод - это команда, которая является имплементацией интерфейса ICommand.Execute
         // - метод - это callback, то есть вызывается после завершения асинхронной операции
-        public static async void F5()
+        public static async Task F5()
         {
             static void Factorial(int n)
             {
@@ -278,7 +273,7 @@ namespace SharpEdu
         // F7_1 возвращает int, в асинхронном методе F7_2Async мы получаем и возвращаем это число
         // Поэтому возвращаемым типом является тип Task<int>
         // Если бы метод F7_1 возвращал строку, то возвращаемым типом был бы Task<string>        
-        public static async void F7()
+        public static async Task F7()
         {
             static int F7_1(int n)
             {
@@ -308,7 +303,7 @@ namespace SharpEdu
         // ValueTask - структура, а Task - класс
         // По умолчанию тип ValueTask недоступен, надо установить через NuGet пакет
         // System.Threading.Tasks.Extensions
-        public static async void F8()
+        public static async Task F8()
         {
             static int F8_1(int n)
             {
@@ -478,7 +473,7 @@ namespace SharpEdu
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(task.Exception.InnerException.Message);
+                    Console.WriteLine(task.Exception?.InnerException?.Message);
                     Console.WriteLine($"IsFaulted: {task.IsFaulted}");
                 }
             }
