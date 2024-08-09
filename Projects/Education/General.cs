@@ -1087,14 +1087,20 @@ namespace SharpEdu
             */
             class A
             {
-                ~A() { Console.WriteLine("Destructor"); }
+                ~A()
+                {
+                    Console.WriteLine("Destructor");
+                }
             }
 
             // IDisposable объявляет единственный метод Dispose,
             // освобождающий неуправляемые ресурсы - вызывает финализатор немедленно
             public class B : IDisposable
             {
-                public void Dispose() { Console.WriteLine("Dispose"); }
+                public void Dispose()
+                {
+                    Console.WriteLine("Dispose");
+                }
             }
 
             // try finally гарантирует, что в случае исключения Dispose освободит ресурсы
@@ -1102,6 +1108,7 @@ namespace SharpEdu
             static void Main_()
             {
                 B objB = null;
+
                 try
                 {
                     objB = new B();
@@ -1109,7 +1116,9 @@ namespace SharpEdu
                 finally
                 {
                     if (objB is not null)
+                    {
                         objB.Dispose();
+                    }
                 }
             }
         }
@@ -1123,15 +1132,22 @@ namespace SharpEdu
                 public static void Handle(Exception e)
                 {
                     if (e.GetBaseException().GetType() == typeof(ArgumentException))
+                    {
                         Console.WriteLine("You caught ArgumentException");
+                    }
                     else
+                    {
                         throw e;
+                    }
                 }
             }
 
             static class ExceptionThrower
             {
-                public static void TriggerException(bool isTrigger) { throw new ArgumentException(); }
+                public static void TriggerException(bool isTrigger)
+                {
+                    throw new ArgumentException();
+                }
             }
 
             static void Main_()
@@ -1206,12 +1222,26 @@ namespace SharpEdu
 
             static class A
             {
-                public static void Display1() { Console.WriteLine("1"); }
-                public static void Display2() { Console.WriteLine("2"); }
+                public static void Display1()
+                {
+                    Console.WriteLine("1");
+                }
+
+                public static void Display2()
+                {
+                    Console.WriteLine("2");
+                }
             }
 
-            static void F1() { Console.WriteLine("F1"); }
-            static void F2() { Console.WriteLine("F2"); }
+            static void F1()
+            {
+                Console.WriteLine("F1");
+            }
+
+            static void F2()
+            {
+                Console.WriteLine("F2");
+            }
 
             static void Main_()
             {
@@ -1221,7 +1251,11 @@ namespace SharpEdu
                 del_3(); // 1 2
 
                 // Создаем экземпляр делегата и сообщаем ему анонимный метод
-                Del2 del2 = delegate (int a, int b) { return a + b; };
+                Del2 del2 = delegate (int a, int b)
+                {
+                    return a + b;
+                };
+
                 Console.WriteLine(del2(1, 2));
 
                 Del3 del3; // 3 варианта одного и того-же:
@@ -1257,15 +1291,34 @@ namespace SharpEdu
             // тогда как делегат может быть случайно обнулен, если использовать '=' вместо '+='
             // Событие можно использовать лишь внутри класса, в котором оно определено
             delegate void MyDel();
-            event MyDel TankIsEmpty;                        // Объявляем событие для нашего типа делегата
-            void F1() { TankIsEmpty(); }                    // Метод вызывает событие
-            static void F2() { Console.WriteLine("1"); }
-            static void F3() { Console.WriteLine("0"); }
+
+            event MyDel TankIsEmpty; // Объявляем событие для нашего типа делегата
+
+            // Метод вызывает событие
+            void F1()
+            {
+                TankIsEmpty();
+            }
+
+            static void F2()
+            {
+                Console.WriteLine("1");
+            }
+
+            static void F3()
+            {
+                Console.WriteLine("0");
+            }
 
             class A
             {
-                public event del ev = null;                 // Создаем событие
-                public void InvokeEvent() { ev.Invoke(); }  // Здесь можно проверять, кто вызывает событие
+                public event del ev = null; // Создаем событие
+
+                // Здесь можно проверять, кто вызывает событие
+                public void InvokeEvent()
+                {
+                    ev.Invoke();
+                }
             }
 
             class B
@@ -1307,10 +1360,17 @@ namespace SharpEdu
                 var objB = new B();
                 objB.Event += F2;
                 objB.Event += F3;
-                objB.Event += delegate { Console.WriteLine("Anonimnyi method"); };
+                objB.Event += delegate
+                {
+                    Console.WriteLine("Anonimnyi method");
+                };
 
                 // Отписать анонимный метод нельзя, код ниже не сработает
-                objB.Event -= delegate { Console.WriteLine("Anonimnyi method"); };
+                objB.Event -= delegate
+                {
+                    Console.WriteLine("Anonimnyi method");
+                };
+
                 objB.InvokeEvent();
             }
         }
@@ -1362,11 +1422,30 @@ namespace SharpEdu
                 C objC = new C();
 
                 // Если true - в переменную tmp запишется objA, приведенный к типу A
-                if (objA is A tmp) Console.WriteLine($"a is A, {tmp}");
-                if (objB is A) Console.WriteLine("b is A");
-                if (objA is B) Console.WriteLine("Error");
-                if (objA is object) Console.WriteLine("a is object");
-                if (objC is A) { Console.WriteLine("Error"); }
+                if (objA is A tmp)
+                {
+                    Console.WriteLine($"a is A, {tmp}");
+                }
+
+                if (objB is A)
+                {
+                    Console.WriteLine("b is A");
+                }
+
+                if (objA is B)
+                {
+                    Console.WriteLine("Error");
+                }
+
+                if (objA is object)
+                {
+                    Console.WriteLine("a is object");
+                }
+
+                if (objC is A)
+                {
+                    Console.WriteLine("Error");
+                }
             }
 
             static void UseAs()
@@ -1375,21 +1454,30 @@ namespace SharpEdu
                 // генерирует исключение, если преобразование не удалось
                 // Если удалось - возвращается ссылка на тип
                 A objA = new A();
+
                 B objB = new B();
 
                 if (objA is B)
+                {
                     objB = (B)objA;
+                }
                 else
+                {
                     Console.WriteLine("Error");
+                }
 
                 // В примере выше выполняем проверку и в случае успеха делаем присвоение,
                 // as делает это в один шаг
                 objB = objA as B;
 
                 if (objB is not null)
+                {
                     Console.WriteLine("Success");
+                }
                 else
+                {
                     Console.WriteLine("Error");
+                }
             }
 
             static void UseTypeof()
@@ -1399,11 +1487,17 @@ namespace SharpEdu
                 Console.WriteLine(type.FullName);
 
                 if (type.IsClass)
+                {
                     Console.WriteLine("Is class");
+                }
                 if (type.IsAbstract)
+                {
                     Console.WriteLine("Is abstract class");
+                }
                 else
+                {
                     Console.WriteLine("Is concrete class");
+                }
             }
 
             static void Main_()
@@ -1455,6 +1549,7 @@ namespace SharpEdu
                     }
 
                     B b = (B)obj;
+
                     return (x == b.x);
                 }
 
@@ -1552,9 +1647,13 @@ namespace SharpEdu
                 // Проверяем, что объект еще существует
                 A obj;
                 if (weakRef.TryGetTarget(out obj))
+                {
                     Console.WriteLine("Main 1: Object Exists");
+                }
                 else
+                {
                     Console.WriteLine("Main 1: Object Deleted");
+                }
 
                 // Удаляем ссылку на объект
                 obj = null;
@@ -1564,9 +1663,13 @@ namespace SharpEdu
 
                 // Проверяем, что объект был удален
                 if (weakRef.TryGetTarget(out obj))
+                {
                     Console.WriteLine("Main 2: Object Exists");
+                }
                 else
+                {
                     Console.WriteLine("Main 2: Object Deleted");
+                }
             }
         }
 
@@ -1670,6 +1773,31 @@ namespace SharpEdu
                     .WithMessage("Необходимо прикрепить файл с клиентами");
                 */
             }
+        }
+
+        class WeakReferences_
+        {
+            // Сильные и слабые ссылки
+            public class A
+            {
+                public void F1() { }
+            }
+
+            public void Main_()
+            {
+                // Сильная ссылка
+                // Здесь присваиваем эеземпляр переменной и он не будет удален сборщиком мусора,
+                // пока существует сильная ссылка
+                WeakReferences_.A obj = new A();
+                obj.F1();
+
+                // Слабая ссылка
+                // Создаем экземпляр, но ничему его не присваиваем,
+                // а только вызываем метод через него,
+                // поэтому будет сразу удален сборщиком мусора
+                new A().F1();
+            }
+            
         }
 
         class Net_8
