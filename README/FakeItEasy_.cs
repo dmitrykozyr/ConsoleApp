@@ -56,10 +56,20 @@ var foo = A.Fake<FooClass>(x => x.Implements<IFoo>());
 
 //################################ A.Call ################################
 
+//########## A.CallTo
+
+// Когда в следующий раз будет вызван метод GetTopSellingCandy(), он вернет значение lollipop
 A.CallTo(() => fakeShop.GetTopSellingCandy()).Returns(lollipop);
+
+// Когда в следующий раз обратимся к свойству Address, вернется указанное значение
 A.CallTo(() => fakeShop.Address).Returns("123 Fake Street");
 
+//########## A.CallToSet
 
+// Когда значение св-ва будет равно указанному, будет вызван метод CallsBaseMethod()
+A.CallToSet(() => fakeShop.Address).To("123 Fake Street").CallsBaseMethod();
+A.CallToSet(() => fakeShop.Address).To(() => A<string>.That.StartsWith("123")).DoesNothing();
+A.CallToSet(() => fakeShop.Address).DoesNothing();
 
 
 
