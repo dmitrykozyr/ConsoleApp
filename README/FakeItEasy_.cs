@@ -58,11 +58,42 @@ var foo = A.Fake<FooClass>(x => x.Implements<IFoo>());
 
 //########## A.CallTo
 
-// Когда в следующий раз будет вызван метод GetTopSellingCandy(), он вернет значение lollipop
-A.CallTo(() => fakeShop.GetTopSellingCandy()).Returns(lollipop);
+// Когда в следующий раз будет вызван метод GetTopSellingCandy(), он вернет значение result
+A.CallTo(() => fakeShop.GetTopSellingCandy()).Returns(result);
 
 // Когда в следующий раз обратимся к свойству Address, вернется указанное значение
 A.CallTo(() => fakeShop.Address).Returns("123 Fake Street");
+
+// Делегаты, вызов Invoke здесь опционален
+var deepThought = A.Fake<Func<string, int>>();
+A.CallTo(() => deepThought.Invoke("String 1")).Returns(1);
+A.CallTo(() => deepThought("String 2")).Returns(2);
+
+// Создаем фейковый объект, через который можем вызывать методы интерфейса ICandyShop
+// Затем настаиваем, что при вызове метода GetTopSellingCandy() вернется result
+var fakeShop = A.Fake<CandyShop>(options => options.Implements<ICandyShop>());
+A.CallTo(() => ((ICandyShop)fakeShop).GetTopSellingCandy()).Returns(result);
+
+// При вызове любого метода через объект fakeShop, вызовется исключение
+A.CallTo(fakeShop).Throws(new Exception());
+
+// При вызове метода с возвращаемым типом void через объект fakeShop, вызовется исключение
+A.CallTo(fakeShop).WithVoidReturnType().Throws("some message");
+
+// При вызове метода с возвращаемым типом string через объект fakeShop, вернется сообщение
+A.CallTo(fakeShop).WithReturnType<string>().Returns("some message");
+
+// При вызове метода с возвращаемым типом НЕ void через объект fakeShop, вернется сообщение
+A.CallTo(fakeShop).WithNonVoidReturnType().Returns("some message");
+
+// При вызове любого метода с более чем 4 аргументами через объект fakeShop, вызовется исключение
+A.CallTo(fakeShop).Where(call => call.Arguments.Count > 4).Throws(new Exception("some message");
+
+// При вызове метода с именем MethodName и типом возвращаемого значения double через объект fakeShop, вернется '4741.71'
+A.CallTo(fakeShop).Where(call => call.Method.Name == "MethodName").WithReturnType<double>().Returns(4741.71);
+
+// При вызове метода с именем MethodName через объект fakeShop, вызовется исключение
+A.CallTo(fakeShop).Where(call => call.Method.Name == "MethodName").Throws(new Exception("some message"));
 
 //########## A.CallToSet
 
@@ -70,6 +101,53 @@ A.CallTo(() => fakeShop.Address).Returns("123 Fake Street");
 A.CallToSet(() => fakeShop.Address).To("123 Fake Street").CallsBaseMethod();
 A.CallToSet(() => fakeShop.Address).To(() => A<string>.That.StartsWith("123")).DoesNothing();
 A.CallToSet(() => fakeShop.Address).DoesNothing();
+
+//########## События и делегаты
+
+// При добавлении обработчика события "MyEvent" будет выполнен указанный делегат
+A.CallTo(fake, EventAction.Add("MyEvent")).Invokes((EventHandler h) => ...);
+
+// При вызове удаления обработчика события "MyEvent" будет выполнен указанный делегат
+A.CallTo(fake, EventAction.Remove("MyEvent")).Invokes((EventHandler h) => ...);
+
+// При вызове добавления обработчика события без конкретного имени будет выполнен указанный делегат
+A.CallTo(fake, EventAction.Add()).Invokes(...);
+
+// При вызове удаления любого обработчика события будет выполнен указанный делегат
+A.CallTo(fake, EventAction.Remove()).Invokes(...);
+
+//########## Возвращаемые значения
+A.CallTo(() => fakeShop.GetTopSellingCandy()).Returns(result);
+A.CallTo(() => fakeShop.Address).Returns("some message");
+A.CallTo(() => fakeShop.SellSweetFromShelf()).ReturnsNextFromSequence(result, smarties, wineGums);
+
+// При вызове метода NumberOfSweetsSoldToday() будет возвращено текущее значение sweetsSold, увеличенное на 1
+// ReturnsLazily означает, что значение будет вычисляться каждый раз при вызове метода
+int sweetsSold = 0;
+A.CallTo(() => fakeShop.NumberOfSweetsSoldToday()).ReturnsLazily(() => ++sweetsSold);
+
+// Если переданная дата — воскресенье, метод вернет 0 (то есть, в это время сладости не продаются), иначе вернет 200
+// ReturnsLazily позволяет динамически определять возвращаемое значение в зависимости от переданной даты
+A.CallTo(() => fakeShop.NumberOfSweetsSoldOn(A<DateTime>.Ignored))
+    .ReturnsLazily((DateTime theDate) => theDate.DayOfWeek == DayOfWeek.Sunday ? 0 : 200);
+
+// Возвращаемое значение определяется с помощью функции calculateReturnFrom, которая принимает objectCall
+// Это позволяет выполнять произвольные вычисления на основе входных данных при каждом вызове
+A.CallTo(() => fakeShop.SomeCall(…)).ReturnsLazily(objectCall => calculateReturnFrom(objectCall));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
