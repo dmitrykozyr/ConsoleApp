@@ -1,4 +1,5 @@
-﻿/*
+﻿// Юнит тесты
+/*
     Хороший юнит тест должен быть:
     - быстрым
     - изолированным от файловой системы и БД
@@ -27,6 +28,15 @@
 
     Не тестировать private - методы, т.к. это внутренняя реализация
     Лучше протестировать public - метод, который вызывает этот private - метод
+*/
+
+// Интеграционные тесты
+/*
+    - задействуют БД
+    - задействуют файловую систему
+    - задействуют сеть
+    - задействуют реальные компоненты системы, используемые в продакшене, не фейки
+    - проверяют, что два и более компонента системы работают вместе корректно
 */
 
 //###################### СОЗДАНИЕ ФЕЙКОВЫХ ОБЪЕКТОВ ######################
@@ -135,23 +145,40 @@ A.CallTo(() => fakeShop.NumberOfSweetsSoldOn(A<DateTime>.Ignored))
 // Это позволяет выполнять произвольные вычисления на основе входных данных при каждом вызове
 A.CallTo(() => fakeShop.SomeCall(…)).ReturnsLazily(objectCall => calculateReturnFrom(objectCall));
 
+//########################## Throwing Exceptions #########################
 
+// Генерация исключения
 
+// Для конструктора с параметрами
+A.CallTo(() => fakeShop.NumberOfSweetsSoldOn(DateTime.MaxValue))
+ .Throws(new InvalidDateException("the date is in the future"));
 
+// Для конструктора без параметров 
+A.CallTo(() => fakeShop.NumberOfSweetsSoldOn(DateTime.MaxValue))
+ .Throws<InvalidDateException>();
 
+// Для асинхронного метода
+A.CallTo(() => fakeShop.OrderSweetsAsync("cheeseburger"))
+ .ThrowsAsync(new ArgumentException("'cheeseburger' isn't a valid sweet category"));
 
+//############################# Doing Nothing ############################
 
+// Если нужно, чтобы вызов метода был проигнорирован
+A.CallTo(() => aFake.SomeVoidMethodThatShouldDoNothing())
+ .DoesNothing();
 
+//#################### Присвоение ref и out параметров ###################
 
+A.CallTo(() => aFake.AMethod(anInt, ref aRef, out anOut))
+ .Returns(true)
+ .AssignsOutAndRefParameters("new aRef value", "new anOut value");
 
-
-
-
-
-
-
-
-
+// Если значения параметров ref и out неизвестны до вызова метода
+string theValue;
+A.CallTo(() => aFake.AMethod(anInt, ref aRef, out anOut))
+ .Returns(true)
+ .AssignsOutAndRefParametersLazily((int someInt, string someRef, string someOut) =>
+     new[] { "new aRef value: " + someInt, "new anOut value" });
 
 
 
