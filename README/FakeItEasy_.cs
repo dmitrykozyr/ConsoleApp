@@ -180,6 +180,77 @@ A.CallTo(() => aFake.AMethod(anInt, ref aRef, out anOut))
  .AssignsOutAndRefParametersLazily((int someInt, string someRef, string someOut) =>
      new[] { "new aRef value: " + someInt, "new anOut value" });
 
+//########################## Invoking Custom Code ########################
+
+// Иногда недостаточно стандартного поведения фейков в виде
+// - определения возвращаемного значения
+// - генерации исключения
+// - назвачении параметров ref и out
+// - ничего не делания
+
+// После вызова метода SellSmarties() вызовется метод OrderMoreSmarties()
+A.CallTo(() => fakeShop.SellSmarties())
+ .Invokes(() => OrderMoreSmarties()) // simulate Smarties stock falling too low
+ .Returns(20);
+
+A.CallToSet(() => fakeShop.OpeningHours).Invokes(TimeRange newTimes) =>
+{
+    // have the getter return the new times when called
+    A.CallTo(() => fakeShop.OpeningHours).Returns(newTimes);
+
+    // custom action - notify listeners of the change
+    fakeShop.OpeningHoursChanged += Raise.With(new HoursChangedEvent(newTimes));
+}
+
+//########################## Calling base methods ########################
+
+// Для одного метода
+A.CallTo(() => fakeShop.SellSmarties())
+ .CallsBaseMethod();
+
+// Для нескольких методов
+var fakeShop = A.Fake<CandyShop>(options => options.CallsBaseMethods());
+
+//##################### Changing behavior between calls ##################
+
+A.CallTo(() => fakeShop.Address).Returns("123 Fake Street").Once();
+A.CallTo(() => fakeShop.Address).Returns("123 Fake Street").Twice();
+A.CallTo(() => fakeShop.Address).Returns("123 Fake Street").NumberOfTimes(17);
+
+// Configure the method to throw an exception once, then succeed forever
+A.CallTo(() => fakeService.DoSomething())
+    .Throws<Exception>().Once()
+    .Then
+    .Returns("SUCCESS");
+
+// set up an action that can run forever, unless superseded
+A.CallTo(() => fakeService.DoSomething()).Returns("SUCCESS");
+
+// set up a one-time exception which will be used for the first call
+A.CallTo(() => fakeService.DoSomething()).Throws<Exception>().Once();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
