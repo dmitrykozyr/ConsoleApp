@@ -555,6 +555,45 @@
             }
         }
 
+        static async Task CancellationTokenTimeout_(TimeSpan timeout)
+        {
+            // Входящий аргумент TimeSpan.FromSeconds(5)
+
+            // Создаем CancellationTokenSource с заданным таймаутом
+            using (var cancellationTokenSource = new CancellationTokenSource(timeout))
+            {
+                CancellationToken token = cancellationTokenSource.Token;
+
+                try
+                {
+                    // Запускаем задачу, которая может быть отменена
+                    await Task.Run(() => LongRunningOperation(token), token);
+                    Console.WriteLine("Операция завершена успешно.");
+                }
+                catch (OperationCanceledException)
+                {
+                    Console.WriteLine("Операция была отменена по таймауту.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                }
+            }
+
+            static void LongRunningOperation(CancellationToken token)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    // Проверяем, отменен ли токен
+                    token.ThrowIfCancellationRequested();
+
+                    // Имитация длительной работы
+                    Console.WriteLine($"Работа {i + 1}/10...");
+                    Thread.Sleep(1000);
+                }
+            }
+        }
+
         static void CancelParallelOperations_()
         {
             // Для отмены выполнения параллельных операций, запущенных с методами Parallel.For() и Parallel.ForEach(),
