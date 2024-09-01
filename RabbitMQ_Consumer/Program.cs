@@ -8,33 +8,29 @@ using System.Text;
 var factory = new ConnectionFactory() { HostName = "localhost" };
 
 string queueName = "B";
-int messageNumber = 0;
 
 using (var connection = factory.CreateConnection())
 using (var channel = connection.CreateModel())
 {
-    //do
-    {
-        channel.QueueDeclare(queue: queueName,
+    channel.QueueDeclare(queue: queueName,
                          durable: true,
                          exclusive: false,
                          autoDelete: false,
                          arguments: null);
 
-        var consumer = new EventingBasicConsumer(channel);
+    var consumer = new EventingBasicConsumer(channel);
 
-        consumer.Received += (sender, e) =>
-        {
-            var body = e.Body;
-            var message = Encoding.UTF8.GetString(body.ToArray());
-            Console.WriteLine("Received message: {0}", message);
-        };
+    consumer.Received += (sender, e) =>
+    {
+        var body = e.Body;
+        var message = Encoding.UTF8.GetString(body.ToArray());
+        Console.WriteLine("Received message: {0}", message);
+    };
 
-        channel.BasicConsume(queue: queueName,
-                             autoAck: true,
-                             consumer: consumer);
+    channel.BasicConsume(queue: queueName,
+                         autoAck: true,
+                         consumer: consumer);
 
-        Console.WriteLine("Subscribed to the queue");
-    }
-    //while (true);
+    Console.WriteLine("Subscribed to the queue {0}", queueName);
+    Console.ReadLine();
 }

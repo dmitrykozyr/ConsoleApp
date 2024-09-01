@@ -21,11 +21,11 @@ using (var channel = connection.CreateModel())
 
         // Создаем очередь, куда будем отправлять сообщения
         channel.QueueDeclare(queue: queueName,
-                         durable: true,
-                         exclusive: false,
-                         autoDelete: false,
-                         arguments: null);
-
+                             durable: true,
+                             exclusive: false,
+                             autoDelete: false,
+                             arguments: null);
+        
         string message = "Some message " + messageNumber;
         var messageBytes = Encoding.UTF8.GetBytes(message);
 
