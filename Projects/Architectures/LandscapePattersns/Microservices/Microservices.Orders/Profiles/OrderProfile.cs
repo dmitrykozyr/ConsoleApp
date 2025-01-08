@@ -1,11 +1,10 @@
-﻿namespace Microservices.Orders.Profiles
+﻿namespace Microservices.Orders.Profiles;
+
+public class OrderProfile : AutoMapper.Profile
 {
-    public class OrderProfile : AutoMapper.Profile
+    public OrderProfile()
     {
-        public OrderProfile()
-        {
-            CreateMap<DB.Order, Models.Order>();
-            CreateMap<DB.OrderItem, Models.OrderItem>();
-        }
+        CreateMap<DB.Order, Models.Order>();
+        CreateMap<DB.OrderItem, Models.OrderItem>();
     }
 }

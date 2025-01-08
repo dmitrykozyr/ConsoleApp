@@ -1,10 +1,9 @@
 ﻿using MVVM.Models;
 using System.Threading.Tasks;
 
-namespace MVVM.Services.ReservationCreators
+namespace MVVM.Services.ReservationCreators;
+
+public interface IReservationCreator
 {
-    public interface IReservationCreator
-    {
-        Task CreateReservation(Reservation reservation);
-    }
+    Task CreateReservation(Reservation reservation);
 }

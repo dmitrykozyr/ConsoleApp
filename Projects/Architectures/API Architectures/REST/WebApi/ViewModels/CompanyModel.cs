@@ -1,8 +1,7 @@
-﻿namespace WebApi.ViewModels
+﻿namespace WebApi.ViewModels;
+
+public class CompanyModel
 {
-    public class CompanyModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; }
 }

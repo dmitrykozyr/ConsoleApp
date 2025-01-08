@@ -5,106 +5,105 @@ using NTier.Logic.Services.Interfaces;
 using NTier.Logic.Services.Models;
 using NTier.Logic.Services.Models.ApplicationStatus;
 
-namespace NTier.Logic.Services.Implementation
+namespace NTier.Logic.Services.Implementation;
+
+public class ApplicationStatus_Service : IApplicationStatus_Service
 {
-    public class ApplicationStatus_Service : IApplicationStatus_Service
+    private ICRUD _crud = new CRUD();
+
+    public async Task<Generic_ResultSet<ApplicationStatus_ResultSet>> AddApplicationStatus(string name)
     {
-        private ICRUD _crud = new CRUD();
-
-        public async Task<Generic_ResultSet<ApplicationStatus_ResultSet>> AddApplicationStatus(string name)
+        var result = new Generic_ResultSet<ApplicationStatus_ResultSet>();
+        try
         {
-            var result = new Generic_ResultSet<ApplicationStatus_ResultSet>();
-            try
+            var ApplicationStatus = new ApplicationStatus
             {
-                var ApplicationStatus = new ApplicationStatus
-                {
-                    ApplicationStatus_Name = name
-                };
+                ApplicationStatus_Name = name
+            };
 
-                ApplicationStatus = await _crud.Create<ApplicationStatus>(ApplicationStatus);
-                var statusAdded = new ApplicationStatus_ResultSet
-                {
-                    name = ApplicationStatus.ApplicationStatus_Name,
-                    status_id = ApplicationStatus.ApplicationStatus_ID
-                };
-
-                result.userMessage = string.Format("Status {0} was added successfully", name);
-                result.internalMessage = "LOGIC.Services.Implementation.ApplicationStatus_Service: AddApplicationStatus() method executed successfully";
-                result.result_set = statusAdded;
-                result.success = true;
-            }
-            catch (Exception ex)
+            ApplicationStatus = await _crud.Create<ApplicationStatus>(ApplicationStatus);
+            var statusAdded = new ApplicationStatus_ResultSet
             {
-                result.exception = ex;
-                result.userMessage = string.Format("Failed to register information");
-                result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.ApplicationStatus_Service: AddApplicationStatus(): {0}", ex.Message);
-            }
+                name = ApplicationStatus.ApplicationStatus_Name,
+                status_id = ApplicationStatus.ApplicationStatus_ID
+            };
 
-            return result;
+            result.userMessage = string.Format("Status {0} was added successfully", name);
+            result.internalMessage = "LOGIC.Services.Implementation.ApplicationStatus_Service: AddApplicationStatus() method executed successfully";
+            result.result_set = statusAdded;
+            result.success = true;
+        }
+        catch (Exception ex)
+        {
+            result.exception = ex;
+            result.userMessage = string.Format("Failed to register information");
+            result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.ApplicationStatus_Service: AddApplicationStatus(): {0}", ex.Message);
         }
 
-        public async Task<Generic_ResultSet<List<ApplicationStatus_ResultSet>>> GetAllApplicationStatuses()
+        return result;
+    }
+
+    public async Task<Generic_ResultSet<List<ApplicationStatus_ResultSet>>> GetAllApplicationStatuses()
+    {
+        var result = new Generic_ResultSet<List<ApplicationStatus_ResultSet>>();
+        try
         {
-            var result = new Generic_ResultSet<List<ApplicationStatus_ResultSet>>();
-            try
+            List<ApplicationStatus> ApplicationStatuses = await _crud.ReadAll<ApplicationStatus>();
+            result.result_set = new List<ApplicationStatus_ResultSet>();
+            ApplicationStatuses.ForEach(z =>
             {
-                List<ApplicationStatus> ApplicationStatuses = await _crud.ReadAll<ApplicationStatus>();
-                result.result_set = new List<ApplicationStatus_ResultSet>();
-                ApplicationStatuses.ForEach(z =>
+                result.result_set.Add(new ApplicationStatus_ResultSet
                 {
-                    result.result_set.Add(new ApplicationStatus_ResultSet
-                    {
-                        status_id = z.ApplicationStatus_ID,
-                        name = z.ApplicationStatus_Name
-                    });
+                    status_id = z.ApplicationStatus_ID,
+                    name = z.ApplicationStatus_Name
                 });
+            });
 
-                result.userMessage = string.Format("All application statuses obtained successfully");
-                result.internalMessage = "LOGIC.Services.Implementation.ApplicationStatus_Service: GetAllApplicationStatuses() method executed successfully";
-                result.success = true;
-            }
-            catch (Exception ex)
-            {
-                result.exception = ex;
-                result.userMessage = string.Format("Failed to fetch statuses from the DB");
-                result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.ApplicationStatus_Service: GetAllApplicationStatuses(): {0}", ex.Message);
-            }
-
-            return result;
+            result.userMessage = string.Format("All application statuses obtained successfully");
+            result.internalMessage = "LOGIC.Services.Implementation.ApplicationStatus_Service: GetAllApplicationStatuses() method executed successfully";
+            result.success = true;
         }
-
-        public async Task<Generic_ResultSet<ApplicationStatus_ResultSet>> UpdateApplicationStatus(Int64 status_id, string name)
+        catch (Exception ex)
         {
-            var result = new Generic_ResultSet<ApplicationStatus_ResultSet>();
-            try
-            {
-                var ApplicationStatus = new ApplicationStatus
-                {
-                    ApplicationStatus_ID = status_id,
-                    ApplicationStatus_Name = name,
-                    ApplicationStatus_ModifiedDate = DateTime.UtcNow
-                };
-
-                ApplicationStatus = await _crud.Update<ApplicationStatus>(ApplicationStatus, status_id);
-                var statusUpdated = new ApplicationStatus_ResultSet
-                {
-                    name = ApplicationStatus.ApplicationStatus_Name,
-                    status_id = ApplicationStatus.ApplicationStatus_ID
-                };
-
-                result.userMessage = string.Format("Status {0} was updated successfully", name);
-                result.internalMessage = "LOGIC.Services.Implementation.ApplicationStatus_Service: UpdateApplicationStatus() method executed successfully";
-                result.result_set = statusUpdated;
-                result.success = true;
-            }
-            catch (Exception ex)
-            {
-                result.exception = ex;
-                result.userMessage = string.Format("Failed to update status");
-                result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.ApplicationStatus_Service: UpdateApplicationStatus(): {0}", ex.Message);
-            }
-
-            return result;
+            result.exception = ex;
+            result.userMessage = string.Format("Failed to fetch statuses from the DB");
+            result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.ApplicationStatus_Service: GetAllApplicationStatuses(): {0}", ex.Message);
         }
+
+        return result;
+    }
+
+    public async Task<Generic_ResultSet<ApplicationStatus_ResultSet>> UpdateApplicationStatus(Int64 status_id, string name)
+    {
+        var result = new Generic_ResultSet<ApplicationStatus_ResultSet>();
+        try
+        {
+            var ApplicationStatus = new ApplicationStatus
+            {
+                ApplicationStatus_ID = status_id,
+                ApplicationStatus_Name = name,
+                ApplicationStatus_ModifiedDate = DateTime.UtcNow
+            };
+
+            ApplicationStatus = await _crud.Update<ApplicationStatus>(ApplicationStatus, status_id);
+            var statusUpdated = new ApplicationStatus_ResultSet
+            {
+                name = ApplicationStatus.ApplicationStatus_Name,
+                status_id = ApplicationStatus.ApplicationStatus_ID
+            };
+
+            result.userMessage = string.Format("Status {0} was updated successfully", name);
+            result.internalMessage = "LOGIC.Services.Implementation.ApplicationStatus_Service: UpdateApplicationStatus() method executed successfully";
+            result.result_set = statusUpdated;
+            result.success = true;
+        }
+        catch (Exception ex)
+        {
+            result.exception = ex;
+            result.userMessage = string.Format("Failed to update status");
+            result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.ApplicationStatus_Service: UpdateApplicationStatus(): {0}", ex.Message);
+        }
+
+        return result;
     }
 }

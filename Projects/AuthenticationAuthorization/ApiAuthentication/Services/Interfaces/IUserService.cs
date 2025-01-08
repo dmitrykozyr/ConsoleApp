@@ -1,9 +1,8 @@
 ﻿using ApiAuthentication.Models;
 
-namespace ApiAuthentication.Services.Interfaces
+namespace ApiAuthentication.Services.Interfaces;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        public User Get(UserLogin userLogin);
-    }
+    public User Get(UserLogin userLogin);
 }

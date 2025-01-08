@@ -1,10 +1,9 @@
-﻿namespace Microservices.Customers.Profiles
+﻿namespace Microservices.Customers.Profiles;
+
+public class CustomerProfile : AutoMapper.Profile
 {
-    public class CustomerProfile : AutoMapper.Profile
+    public CustomerProfile()
     {
-        public CustomerProfile()
-        {
-            CreateMap<DB.Customer, Models.Customer>();
-        }
+        CreateMap<DB.Customer, Models.Customer>();
     }
 }

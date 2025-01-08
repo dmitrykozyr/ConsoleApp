@@ -1,9 +1,8 @@
 ﻿using Microservices.Search.Models;
 
-namespace Microservices.Search.Interfaces
+namespace Microservices.Search.Interfaces;
+
+public interface IProductsService
 {
-    public interface IProductsService
-    {
-        Task<(bool IsSuccess, IEnumerable<Product> Products, string ErrorMessage)> GetProductsAsync();
-    }
+    Task<(bool IsSuccess, IEnumerable<Product> Products, string ErrorMessage)> GetProductsAsync();
 }

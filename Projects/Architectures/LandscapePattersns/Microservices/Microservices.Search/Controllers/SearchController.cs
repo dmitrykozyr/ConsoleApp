@@ -2,28 +2,27 @@
 using Microservices.Search.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Microservices.Search.Controllers
+namespace Microservices.Search.Controllers;
+
+[ApiController]
+[Route("api/search")]
+public class SearchController : ControllerBase
 {
-    [ApiController]
-    [Route("api/search")]
-    public class SearchController : ControllerBase
+    private readonly ISearchService _searchService;
+
+    public SearchController(ISearchService searchService)
     {
-        private readonly ISearchService _searchService;
+        _searchService = searchService;
+    }
 
-        public SearchController(ISearchService searchService)
+    [HttpPost]
+    public async Task<IActionResult> SearchAsync(SearchTerm term)
+    {
+        var result = await _searchService.SearchAsync(term.CustomerId);
+        if (result.IsSuccess)
         {
-            _searchService = searchService;
+            return Ok(result.SearchResults);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> SearchAsync(SearchTerm term)
-        {
-            var result = await _searchService.SearchAsync(term.CustomerId);
-            if (result.IsSuccess)
-            {
-                return Ok(result.SearchResults);
-            }
-            return NotFound();
-        }
+        return NotFound();
     }
 }

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MVVM.Services.ReservationProviders
+namespace MVVM.Services.ReservationProviders;
+
+public interface IReservationProvider
 {
-    public interface IReservationProvider
-    {
-        Task<IEnumerable<Reservation>> GetAllReservations();
-    }
+    Task<IEnumerable<Reservation>> GetAllReservations();
 }

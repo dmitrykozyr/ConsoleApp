@@ -3,38 +3,37 @@ using MVVM.DTOs;
 using MVVM.Models;
 using System.Threading.Tasks;
 
-namespace MVVM.Services.ReservationCreators
+namespace MVVM.Services.ReservationCreators;
+
+public class DatabaseReservationCreator : IReservationCreator
 {
-    public class DatabaseReservationCreator : IReservationCreator
+    private readonly ReservoomDbContextFactory _dbContextFactory;
+
+    public DatabaseReservationCreator(ReservoomDbContextFactory dbContextFactory)
     {
-        private readonly ReservoomDbContextFactory _dbContextFactory;
+        _dbContextFactory = dbContextFactory;
+    }
 
-        public DatabaseReservationCreator(ReservoomDbContextFactory dbContextFactory)
+    public async Task CreateReservation(Reservation reservation)
+    {
+        using (ReservoomDbContext context = _dbContextFactory.CreateDbContext())
         {
-            _dbContextFactory = dbContextFactory;
-        }
+            ReservationDTO reservationDTO = ToReservationDTO(reservation);
 
-        public async Task CreateReservation(Reservation reservation)
+            context.Reservations.Add(reservationDTO);
+            await context.SaveChangesAsync();
+        }
+    }
+
+    private ReservationDTO ToReservationDTO(Reservation reservation)
+    {
+        return new ReservationDTO()
         {
-            using (ReservoomDbContext context = _dbContextFactory.CreateDbContext())
-            {
-                ReservationDTO reservationDTO = ToReservationDTO(reservation);
-
-                context.Reservations.Add(reservationDTO);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        private ReservationDTO ToReservationDTO(Reservation reservation)
-        {
-            return new ReservationDTO()
-            {
-                FloorNumber = reservation.RoomID?.FloorNumber ?? 0,
-                RoomNumber = reservation.RoomID?.RoomNumber ?? 0,
-                Username = reservation.Username,
-                StartTime = reservation.StartTime,
-                EndTime = reservation.EndTime
-            };
-        }
+            FloorNumber = reservation.RoomID?.FloorNumber ?? 0,
+            RoomNumber = reservation.RoomID?.RoomNumber ?? 0,
+            Username = reservation.Username,
+            StartTime = reservation.StartTime,
+            EndTime = reservation.EndTime
+        };
     }
 }

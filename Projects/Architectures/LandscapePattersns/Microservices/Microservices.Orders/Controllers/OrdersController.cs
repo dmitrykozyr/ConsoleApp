@@ -1,28 +1,27 @@
 ﻿using Microservices.Orders.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Microservices.Orders.Controllers
+namespace Microservices.Orders.Controllers;
+
+[ApiController]
+[Route("api/orders")]
+public class OrdersController : ControllerBase
 {
-    [ApiController]
-    [Route("api/orders")]
-    public class OrdersController : ControllerBase
+    public readonly IOrdersProvider _ordersProvider;
+
+    public OrdersController(IOrdersProvider ordersProvider)
     {
-        public readonly IOrdersProvider _ordersProvider;
+        _ordersProvider = ordersProvider;
+    }
 
-        public OrdersController(IOrdersProvider ordersProvider)
+    [HttpGet("{customerId}")]
+    public async Task<IActionResult> GetOrdersAsync(int customerId)
+    {
+        var result = await _ordersProvider.GetOrdersAsync(customerId);
+        if (result.IsSuccess)
         {
-            _ordersProvider = ordersProvider;
+            return Ok(result.Orders);
         }
-
-        [HttpGet("{customerId}")]
-        public async Task<IActionResult> GetOrdersAsync(int customerId)
-        {
-            var result = await _ordersProvider.GetOrdersAsync(customerId);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Orders);
-            }
-            return NotFound();
-        }
+        return NotFound();
     }
 }

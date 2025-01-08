@@ -2,31 +2,30 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace MVVM.Exceptions
+namespace MVVM.Exceptions;
+
+public class ReservationConflictException : Exception
 {
-    public class ReservationConflictException : Exception
+    public Reservation ExistingReservation { get; }
+    public Reservation IncomingReservation { get; }
+
+    public ReservationConflictException(
+        Reservation existingReservation,
+        Reservation incomingReservation)
     {
-        public Reservation ExistingReservation { get; }
-        public Reservation IncomingReservation { get; }
+        ExistingReservation = existingReservation;
+        IncomingReservation = incomingReservation;
+    }
 
-        public ReservationConflictException(
-            Reservation existingReservation,
-            Reservation incomingReservation)
-        {
-            ExistingReservation = existingReservation;
-            IncomingReservation = incomingReservation;
-        }
+    public ReservationConflictException(string? message) : base(message)
+    {
+    }
 
-        public ReservationConflictException(string? message) : base(message)
-        {
-        }
+    public ReservationConflictException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
 
-        public ReservationConflictException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected ReservationConflictException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+    protected ReservationConflictException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
     }
 }

@@ -3,51 +3,50 @@ using AppToTest.FunctionalityToTest.Shopping_.Interfaces;
 using Moq;
 using Xunit;
 
-namespace xUnit_
+namespace xUnit_;
+
+// Используем InMemory БД
+public class ShoppingCartTest
 {
-    // Используем InMemory БД
-    public class ShoppingCartTest
+    // Если класс использует DependencyInjection, то для его тестирования используем Mock
+    // Указываем интерфейс IDbService, который инжектим в тестируемом классе
+    // Теперь через Mock имеем доступ к функционалу этого класса
+
+    public readonly Mock<IDbService> _dbServiceMock = new();
+
+    [Fact]
+    public void AddProduct_Success()
     {
-        // Если класс использует DependencyInjection, то для его тестирования используем Mock
-        // Указываем интерфейс IDbService, который инжектим в тестируемом классе
-        // Теперь через Mock имеем доступ к функционалу этого класса
+        var shoppingCart = new ShoppingCart(_dbServiceMock.Object);
 
-        public readonly Mock<IDbService> _dbServiceMock = new();
+        var product = new Product(1, "shoes", 150);
+        var result = shoppingCart.AddProduct(product);
 
-        [Fact]
-        public void AddProduct_Success()
-        {
-            var shoppingCart = new ShoppingCart(_dbServiceMock.Object);
+        Assert.True(result);
+        _dbServiceMock.Verify(z => z.SaveItemToShoppingCart(It.IsAny<Product>()), Times.Once);
+    }
 
-            var product = new Product(1, "shoes", 150);
-            var result = shoppingCart.AddProduct(product);
+    [Fact]
+    public void AddProduct_FailBecauseOfInvalidPayload()
+    {
+        var shoppingCart = new ShoppingCart(_dbServiceMock.Object);
 
-            Assert.True(result);
-            _dbServiceMock.Verify(z => z.SaveItemToShoppingCart(It.IsAny<Product>()), Times.Once);
-        }
+        var result = shoppingCart.AddProduct(null);
 
-        [Fact]
-        public void AddProduct_FailBecauseOfInvalidPayload()
-        {
-            var shoppingCart = new ShoppingCart(_dbServiceMock.Object);
+        Assert.False(result);
+        _dbServiceMock.Verify(z => z.SaveItemToShoppingCart(It.IsAny<Product>()), Times.Never);
+    }
 
-            var result = shoppingCart.AddProduct(null);
+    [Fact]
+    public void RemoveProduct_Success()
+    {
+        var shoppingCart = new ShoppingCart(_dbServiceMock.Object);
 
-            Assert.False(result);
-            _dbServiceMock.Verify(z => z.SaveItemToShoppingCart(It.IsAny<Product>()), Times.Never);
-        }
+        var product = new Product(1, "shoes", 150);
+        shoppingCart.AddProduct(product);
+        var deleteResul = shoppingCart.DeleteProduct(product.Id);
 
-        [Fact]
-        public void RemoveProduct_Success()
-        {
-            var shoppingCart = new ShoppingCart(_dbServiceMock.Object);
-
-            var product = new Product(1, "shoes", 150);
-            shoppingCart.AddProduct(product);
-            var deleteResul = shoppingCart.DeleteProduct(product.Id);
-
-            Assert.True(deleteResul);
-            _dbServiceMock.Verify(z => z.SaveItemToShoppingCart(It.IsAny<Product>()), Times.Once);
-        }
+        Assert.True(deleteResul);
+        _dbServiceMock.Verify(z => z.SaveItemToShoppingCart(It.IsAny<Product>()), Times.Once);
     }
 }

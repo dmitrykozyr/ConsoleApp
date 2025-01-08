@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Microservices.Products.DB
-{
-    public class ProductsDbContext : DbContext
-    {
-        public DbSet<Product> Products { get; set; }
+namespace Microservices.Products.DB;
 
-        public ProductsDbContext(DbContextOptions options) : base(options)
-        {
-        }
+public class ProductsDbContext : DbContext
+{
+    public DbSet<Product> Products { get; set; }
+
+    public ProductsDbContext(DbContextOptions options) : base(options)
+    {
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace Microservices.Orders.Interfaces
+﻿namespace Microservices.Orders.Interfaces;
+
+public interface IOrdersProvider
 {
-    public interface IOrdersProvider
-    {
-        Task<(bool IsSuccess, IEnumerable<Models.Order> Orders, string ErrorMessage)> GetOrdersAsync(int customerId);
-    }
+    Task<(bool IsSuccess, IEnumerable<Models.Order> Orders, string ErrorMessage)> GetOrdersAsync(int customerId);
 }

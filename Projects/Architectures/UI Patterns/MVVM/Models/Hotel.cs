@@ -1,28 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MVVM.Models
+namespace MVVM.Models;
+
+public class Hotel
 {
-    public class Hotel
+    private readonly ReservationBook _reservationBook;
+    public string Name { get; }
+
+
+    public Hotel(string name, ReservationBook reservationBook)
     {
-        private readonly ReservationBook _reservationBook;
-        public string Name { get; }
+        Name = name;
+        _reservationBook = reservationBook;
+    }
 
+    public async Task<IEnumerable<Reservation>> GetAllReservations()
+    {
+        return await _reservationBook.GetAllReservations();
+    }
 
-        public Hotel(string name, ReservationBook reservationBook)
-        {
-            Name = name;
-            _reservationBook = reservationBook;
-        }
-
-        public async Task<IEnumerable<Reservation>> GetAllReservations()
-        {
-            return await _reservationBook.GetAllReservations();
-        }
-
-        public async Task MakeReservation(Reservation reservation)
-        {
-            await _reservationBook.AddReservation(reservation);
-        }
+    public async Task MakeReservation(Reservation reservation)
+    {
+        await _reservationBook.AddReservation(reservation);
     }
 }

@@ -3,36 +3,35 @@ using MVVM.ViewModels;
 using System;
 using System.Threading.Tasks;
 
-namespace MVVM.Commands
+namespace MVVM.Commands;
+
+public class LoadReservationsCommand : AsyncCommandBase
 {
-    public class LoadReservationsCommand : AsyncCommandBase
+    private readonly ReservationListingViewModel _viewModel;
+    private readonly HotelStore _hotelStore;
+
+    public LoadReservationsCommand(ReservationListingViewModel viewModel, HotelStore hotelStore)
     {
-        private readonly ReservationListingViewModel _viewModel;
-        private readonly HotelStore _hotelStore;
+        _viewModel = viewModel;
+        _hotelStore = hotelStore;
+    }
+    
+    public override async Task ExecuteAsync(object parameter)
+    {
+        _viewModel.ErrorMessage = String.Empty;
+        _viewModel.IsLoading = true;
 
-        public LoadReservationsCommand(ReservationListingViewModel viewModel, HotelStore hotelStore)
+        try
         {
-            _viewModel = viewModel;
-            _hotelStore = hotelStore;
+            await _hotelStore.Load();
+            
+            _viewModel.UpdateReservations(_hotelStore.Reservations);
         }
-        
-        public override async Task ExecuteAsync(object parameter)
+        catch (Exception)
         {
-            _viewModel.ErrorMessage = String.Empty;
-            _viewModel.IsLoading = true;
-
-            try
-            {
-                await _hotelStore.Load();
-                
-                _viewModel.UpdateReservations(_hotelStore.Reservations);
-            }
-            catch (Exception)
-            {
-                _viewModel.ErrorMessage = "Failed to load reservations";
-            }
-
-            _viewModel.IsLoading = false;
+            _viewModel.ErrorMessage = "Failed to load reservations";
         }
+
+        _viewModel.IsLoading = false;
     }
 }

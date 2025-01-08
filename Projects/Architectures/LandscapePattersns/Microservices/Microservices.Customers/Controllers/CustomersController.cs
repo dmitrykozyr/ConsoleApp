@@ -1,39 +1,38 @@
 ﻿using Microservices.Customers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Microservices.Customers.Controllers
+namespace Microservices.Customers.Controllers;
+
+[ApiController]
+[Route("api/customers")]
+public class CustomersController : ControllerBase
 {
-    [ApiController]
-    [Route("api/customers")]
-    public class CustomersController : ControllerBase
+    private readonly ICustomersProvider _customersProvider;
+
+    public CustomersController(ICustomersProvider customersProvider)
     {
-        private readonly ICustomersProvider _customersProvider;
+        _customersProvider = customersProvider;
+    }
 
-        public CustomersController(ICustomersProvider customersProvider)
+    [HttpGet]
+    public async Task<IActionResult> GetCustomersAsync()
+    {
+        var result = await _customersProvider.GetCustomersAsync();
+        if (result.IsSuccess)
         {
-            _customersProvider = customersProvider;
+            return Ok(result.Customers);
         }
+        return NotFound();
+    }
 
-        [HttpGet]
-        public async Task<IActionResult> GetCustomersAsync()
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCustomerAsync(int id)
+    {
+        var result = await _customersProvider.GetCustomerAsync(id);
+        if (result.IsSuccess)
         {
-            var result = await _customersProvider.GetCustomersAsync();
-            if (result.IsSuccess)
-            {
-                return Ok(result.Customers);
-            }
-            return NotFound();
+            return Ok(result.Customer);
         }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomerAsync(int id)
-        {
-            var result = await _customersProvider.GetCustomerAsync(id);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Customer);
-            }
-            return NotFound();
-        }
+        return NotFound();
     }
 }

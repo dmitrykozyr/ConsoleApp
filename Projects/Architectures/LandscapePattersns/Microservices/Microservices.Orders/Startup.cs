@@ -3,40 +3,39 @@ using Microservices.Orders.Interfaces;
 using Microservices.Orders.Providers;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microservices.Orders
+namespace Microservices.Orders;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        Configuration = configuration;
+    }
 
-        public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContext<OrdersDbContext>(options =>
         {
-            services.AddDbContext<OrdersDbContext>(options =>
-            {
-                options.UseInMemoryDatabase("Customers");
-            });
-            services.AddScoped<IOrdersProvider, OrdersProvider>();
-            services.AddAutoMapper(typeof(Startup));
-            services.AddControllers();
-        }
+            options.UseInMemoryDatabase("Customers");
+        });
+        services.AddScoped<IOrdersProvider, OrdersProvider>();
+        services.AddAutoMapper(typeof(Startup));
+        services.AddControllers();
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            app.UseRouting();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseDeveloperExceptionPage();
         }
+        app.UseRouting();
+        app.UseAuthorization();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
     }
 }

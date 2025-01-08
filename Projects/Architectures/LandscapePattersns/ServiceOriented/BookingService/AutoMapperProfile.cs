@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 
-namespace BookingService
+namespace BookingService;
+
+public class AutoMapperProfile : Profile
 {
-    public class AutoMapperProfile : Profile
+    public AutoMapperProfile()
     {
-        public AutoMapperProfile()
-        {
-            CreateMap<Contracts.Booking, Domain.Booking>();
-        }
+        CreateMap<Contracts.Booking, Domain.Booking>();
     }
 }

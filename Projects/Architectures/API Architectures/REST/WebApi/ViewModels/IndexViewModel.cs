@@ -1,12 +1,11 @@
 ﻿using WebApi.Models;
 
-namespace WebApi.ViewModels
+namespace WebApi.ViewModels;
+
+public class IndexViewModel
 {
-    public class IndexViewModel
-    {
-        // ViewModel объединяет данные из разных моделей или содержит в себе несколько полей большой модели
-        // С помощью этой ViewModel можем передать в представление список компаний и список смартфонов
-        public IEnumerable<Phone> Phones { get; set; }
-        public IEnumerable<CompanyModel> Companies { get; set; }
-    }
+    // ViewModel объединяет данные из разных моделей или содержит в себе несколько полей большой модели
+    // С помощью этой ViewModel можем передать в представление список компаний и список смартфонов
+    public IEnumerable<Phone> Phones { get; set; }
+    public IEnumerable<CompanyModel> Companies { get; set; }
 }

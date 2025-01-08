@@ -1,7 +1,6 @@
-﻿namespace EmailService.ESB.Interfaces
+﻿namespace EmailService.ESB.Interfaces;
+
+public interface IToursProxy
 {
-    public interface IToursProxy
-    {
-        Tour GetTour(int id);
-    }
+    Tour GetTour(int id);
 }

@@ -1,46 +1,45 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace MVVM.Commands
+namespace MVVM.Commands;
+
+public abstract class AsyncCommandBase : CommandBase
 {
-    public abstract class AsyncCommandBase : CommandBase
+    private bool _isExecuting;
+    private bool IsExecuting 
     {
-        private bool _isExecuting;
-        private bool IsExecuting 
+        get
         {
-            get
-            {
-                return _isExecuting;
-            }
-            set
-            {
-                _isExecuting = value;
-                OnCanExecuteChanged();
-            }
+            return _isExecuting;
         }
-
-        public override bool CanExecute(object parameter)
+        set
         {
-            return !IsExecuting && base.CanExecute(parameter);
+            _isExecuting = value;
+            OnCanExecuteChanged();
         }
+    }
 
-        public override async void Execute(object? parameter)
+    public override bool CanExecute(object parameter)
+    {
+        return !IsExecuting && base.CanExecute(parameter);
+    }
+
+    public override async void Execute(object? parameter)
+    {
+        IsExecuting = true;
+
+        try
         {
-            IsExecuting = true;
-
-            try
-            {
-                await ExecuteAsync(parameter);
-            }
-            finally
-            {
-                IsExecuting = false;
-            }
+            await ExecuteAsync(parameter);
         }
-
-        public virtual Task ExecuteAsync(object? parameter)
+        finally
         {
-            throw new NotImplementedException();
+            IsExecuting = false;
         }
+    }
+
+    public virtual Task ExecuteAsync(object? parameter)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace EmailService.ESB
+﻿namespace EmailService.ESB;
+
+public class TourRequest
 {
-    public class TourRequest
-    {
-        public int TourId { get; set; }
-    }
+    public int TourId { get; set; }
 }

@@ -1,7 +1,6 @@
-﻿namespace NTier.UI.Models.Grade
+﻿namespace NTier.UI.Models.Grade;
+
+public class GradeUpdate_Pass_Object : Grade_Pass_Object
 {
-    public class GradeUpdate_Pass_Object : Grade_Pass_Object
-    {
-        public int id { get; set; }
-    }
+    public int id { get; set; }
 }

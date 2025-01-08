@@ -1,10 +1,9 @@
 ﻿using Monolith.Domain;
 
-namespace Monolith.DataAccess.Interfaces
+namespace Monolith.DataAccess.Interfaces;
+
+public interface IToursRepository
 {
-    public interface IToursRepository
-    {
-        IList<Tour> GetTours();
-        Tour GetTour(int id);
-    }
+    IList<Tour> GetTours();
+    Tour GetTour(int id);
 }

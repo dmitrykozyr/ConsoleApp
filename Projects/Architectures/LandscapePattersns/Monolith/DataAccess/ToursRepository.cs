@@ -3,36 +3,35 @@ using Microsoft.Data.Sqlite;
 using Monolith.DataAccess.Interfaces;
 using Monolith.Domain;
 
-namespace Monolith.DataAccess
+namespace Monolith.DataAccess;
+
+public class ToursRepository : IToursRepository
 {
-    public class ToursRepository : IToursRepository
+    private readonly string _connectionString;
+
+    public ToursRepository()
     {
-        private readonly string _connectionString;
+        _connectionString =
+            "Data Source=AppData/monolith-database.db;";
+    }
 
-        public ToursRepository()
+    public IList<Tour> GetTours()
+    {
+        using (var connection = new SqliteConnection(
+            _connectionString))
         {
-            _connectionString =
-                "Data Source=AppData/monolith-database.db;";
+            var tours = connection.Query<Tour>(
+                "SELECT Id, Name, Description, Image FROM Tour");
+            return tours.ToList();
         }
+    }
 
-        public IList<Tour> GetTours()
+    public Tour GetTour(int id)
+    {
+        using (var connection = new SqliteConnection(_connectionString))
         {
-            using (var connection = new SqliteConnection(
-                _connectionString))
-            {
-                var tours = connection.Query<Tour>(
-                    "SELECT Id, Name, Description, Image FROM Tour");
-                return tours.ToList();
-            }
-        }
-
-        public Tour GetTour(int id)
-        {
-            using (var connection = new SqliteConnection(_connectionString))
-            {
-                var tours = connection.Query<Tour>("SELECT Id, Name, Description, Image FROM Tour WHERE Id = @Id", new { Id = id });
-                return tours.FirstOrDefault();
-            }
+            var tours = connection.Query<Tour>("SELECT Id, Name, Description, Image FROM Tour WHERE Id = @Id", new { Id = id });
+            return tours.FirstOrDefault();
         }
     }
 }

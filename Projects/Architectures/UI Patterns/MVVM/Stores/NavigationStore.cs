@@ -1,29 +1,28 @@
 ﻿using MVVM.ViewModels;
 using System;
 
-namespace MVVM.Stores
+namespace MVVM.Stores;
+
+public class NavigationStore
 {
-    public class NavigationStore
+    private ViewModelBase _currentViewModel;
+    public ViewModelBase CurrentViewModel
     {
-        private ViewModelBase _currentViewModel;
-        public ViewModelBase CurrentViewModel
+        get => _currentViewModel;
+        set
         {
-            get => _currentViewModel;
-            set
-            {
-                // Если ViewModel существует, освобождаем занимаемые ею ресурсы
-                _currentViewModel?.Dispose();
+            // Если ViewModel существует, освобождаем занимаемые ею ресурсы
+            _currentViewModel?.Dispose();
 
-                _currentViewModel = value;
-                OnCurrentViewModelChanged();
-            }
+            _currentViewModel = value;
+            OnCurrentViewModelChanged();
         }
+    }
 
-        public event Action CurrentViewModelChanged;
+    public event Action CurrentViewModelChanged;
 
-        private void OnCurrentViewModelChanged()
-        {
-            CurrentViewModelChanged?.Invoke();
-        }
+    private void OnCurrentViewModelChanged()
+    {
+        CurrentViewModelChanged?.Invoke();
     }
 }

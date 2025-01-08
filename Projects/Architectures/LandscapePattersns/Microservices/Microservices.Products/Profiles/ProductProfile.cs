@@ -1,11 +1,10 @@
-﻿namespace Microservices.Products.Profiles
+﻿namespace Microservices.Products.Profiles;
+
+// Настроим маппинг между Product Model и Product Entity
+public class ProductProfile : AutoMapper.Profile
 {
-    // Настроим маппинг между Product Model и Product Entity
-    public class ProductProfile : AutoMapper.Profile
+    public ProductProfile()
     {
-        public ProductProfile()
-        {
-            CreateMap<DB.Product, Models.Product>();
-        }
+        CreateMap<DB.Product, Models.Product>();
     }
 }

@@ -1,26 +1,25 @@
-﻿namespace BookingService.ESB
+﻿namespace BookingService.ESB;
+
+public class Message : Message<string>
 {
-    public class Message : Message<string>
+    public Message() : base("")
     {
-        public Message() : base("")
-        {
-            MessageId = Guid.NewGuid();
-        }
+        MessageId = Guid.NewGuid();
+    }
+}
+
+public class Message<T>
+{
+    public Message()
+    {
     }
 
-    public class Message<T>
+    public Message(T data)
     {
-        public Message()
-        {
-        }
-
-        public Message(T data)
-        {
-            MessageId = Guid.NewGuid();
-            Data = data;
-        }
-
-        public Guid MessageId { get; set; }
-        public T Data { get; set; }
+        MessageId = Guid.NewGuid();
+        Data = data;
     }
+
+    public Guid MessageId { get; set; }
+    public T Data { get; set; }
 }

@@ -1,21 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace MVVM.DbContexts
+namespace MVVM.DbContexts;
+
+public class ReservoomDbContextFactory
 {
-    public class ReservoomDbContextFactory
+    private readonly string _connectionString;
+
+    public ReservoomDbContextFactory(string connectionString)
     {
-        private readonly string _connectionString;
+        _connectionString = connectionString;
+    }
 
-        public ReservoomDbContextFactory(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
+    public ReservoomDbContext CreateDbContext()
+    {
+        DbContextOptions options = new DbContextOptionsBuilder().UseSqlite(_connectionString).Options;
 
-        public ReservoomDbContext CreateDbContext()
-        {
-            DbContextOptions options = new DbContextOptionsBuilder().UseSqlite(_connectionString).Options;
-
-            return new ReservoomDbContext(options);
-        }
+        return new ReservoomDbContext(options);
     }
 }

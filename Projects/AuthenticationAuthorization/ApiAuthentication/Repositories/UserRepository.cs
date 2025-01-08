@@ -1,30 +1,29 @@
 ﻿using ApiAuthentication.Models;
 
-namespace ApiAuthentication.Repositories
+namespace ApiAuthentication.Repositories;
+
+// Класс для эмуляции БД
+public class UserRepository
 {
-    // Класс для эмуляции БД
-    public class UserRepository
+    public static List<User> Users = new()
     {
-        public static List<User> Users = new()
+        new() 
+        { 
+            UserName = "name1", 
+            EmailAddress = "email1@email.com", 
+            Password = "password1",
+            GivenName = "gname1",
+            Surname = "sname1",
+            Role = "Administrator"
+        },
+        new()
         {
-            new() 
-            { 
-                UserName = "name1", 
-                EmailAddress = "email1@email.com", 
-                Password = "password1",
-                GivenName = "gname1",
-                Surname = "sname1",
-                Role = "Administrator"
-            },
-            new()
-            {
-                UserName = "name2",
-                EmailAddress = "email2@email.com",
-                Password = "password2",
-                GivenName = "gname2",
-                Surname = "sname2",
-                Role = "Standard"
-            },
-        };
-    }
+            UserName = "name2",
+            EmailAddress = "email2@email.com",
+            Password = "password2",
+            GivenName = "gname2",
+            Surname = "sname2",
+            Role = "Standard"
+        },
+    };
 }

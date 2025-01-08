@@ -3,25 +3,24 @@ using BookingService.Domain;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
-namespace BookingService.DataAccess
+namespace BookingService.DataAccess;
+
+public class BookingsRepository : IBookingsRepository
 {
-    public class BookingsRepository : IBookingsRepository
+    private readonly string _connectionString;
+
+    public BookingsRepository()
     {
-        private readonly string _connectionString;
+        _connectionString = "Data Source=AppData/soa-bookings-database.db;";
+    }
 
-        public BookingsRepository()
+    public void Save(Booking booking)
+    {
+        using (var connection = new SqliteConnection(_connectionString))
         {
-            _connectionString = "Data Source=AppData/soa-bookings-database.db;";
-        }
-
-        public void Save(Booking booking)
-        {
-            using (var connection = new SqliteConnection(_connectionString))
-            {
-                connection.Execute(
-                    "INSERT INTO Booking (TourId, Name, Email, Transport) VALUES (@TourId, @Name, @Email, @Transport)",
-                    new { TourId = booking.TourId, Name = booking.Name, Email = booking.Email, Transport = booking.Transport });
-            }
+            connection.Execute(
+                "INSERT INTO Booking (TourId, Name, Email, Transport) VALUES (@TourId, @Name, @Email, @Transport)",
+                new { TourId = booking.TourId, Name = booking.Name, Email = booking.Email, Transport = booking.Transport });
         }
     }
 }

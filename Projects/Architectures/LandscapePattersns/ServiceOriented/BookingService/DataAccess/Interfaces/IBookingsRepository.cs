@@ -1,9 +1,8 @@
 ﻿using BookingService.Domain;
 
-namespace BookingService.DataAccess.Interfaces
+namespace BookingService.DataAccess.Interfaces;
+
+public interface IBookingsRepository
 {
-    public interface IBookingsRepository
-    {
-        void Save(Booking booking);
-    }
+    void Save(Booking booking);
 }

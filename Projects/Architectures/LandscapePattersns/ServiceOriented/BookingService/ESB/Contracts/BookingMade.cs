@@ -1,10 +1,9 @@
-﻿namespace BookingService.ESB.Contracts
+﻿namespace BookingService.ESB.Contracts;
+
+public class BookingMade
 {
-    public class BookingMade
-    {
-        public int TourId { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public bool Transport { get; set; }
-    }
+    public int TourId { get; set; }
+    public string Email { get; set; }
+    public string Name { get; set; }
+    public bool Transport { get; set; }
 }

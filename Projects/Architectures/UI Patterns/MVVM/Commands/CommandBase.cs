@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace MVVM.Commands
+namespace MVVM.Commands;
+
+public abstract class CommandBase : ICommand
 {
-    public abstract class CommandBase : ICommand
+    public event EventHandler? CanExecuteChanged;
+
+    // Если false - кнопка отключена
+    public virtual bool CanExecute(object? parameter)
     {
-        public event EventHandler? CanExecuteChanged;
+        return true;
+    }
 
-        // Если false - кнопка отключена
-        public virtual bool CanExecute(object? parameter)
-        {
-            return true;
-        }
+    public abstract void Execute(object? parameter);
 
-        public abstract void Execute(object? parameter);
-
-        protected void OnCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
+    protected void OnCanExecuteChanged()
+    {
+        CanExecuteChanged?.Invoke(this, new EventArgs());
     }
 }

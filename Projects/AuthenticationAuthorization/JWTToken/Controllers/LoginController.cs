@@ -6,68 +6,67 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace JWTToken.Controllers
+namespace JWTToken.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class LoginController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LoginController : ControllerBase
+    private IConfiguration _config;
+
+    public LoginController(IConfiguration config)
     {
-        private IConfiguration _config;
+        _config = config;
+    }
 
-        public LoginController(IConfiguration config)
+    // Генерация JWT-токена
+    // https://localhost:7269/api/login
+    [AllowAnonymous]
+    [HttpPost]
+    public IActionResult Login([FromBody] UserLogin userLogin)
+    {
+        var user = Authenticate(userLogin);
+
+        if (user is not null)
         {
-            _config = config;
+            var token = GenerateToken(user);
+            return Ok(token);
         }
 
-        // Генерация JWT-токена
-        // https://localhost:7269/api/login
-        [AllowAnonymous]
-        [HttpPost]
-        public IActionResult Login([FromBody] UserLogin userLogin)
+        return NotFound("User not found");
+    }
+
+    private string GenerateToken(UserModel user)
+    {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        var claims = new []
         {
-            var user = Authenticate(userLogin);
+            new Claim(ClaimTypes.NameIdentifier, user.UserName),
+            new Claim(ClaimTypes.Email, user.EmailAddress),
+            new Claim(ClaimTypes.GivenName, user.GivenName),
+            new Claim(ClaimTypes.Surname, user.Surname),
+            new Claim(ClaimTypes.Role, user.Role)
+        };
 
-            if (user is not null)
-            {
-                var token = GenerateToken(user);
-                return Ok(token);
-            }
+        var token = new JwtSecurityToken(
+                            _config["Jwt:Issuer"],
+                            _config["Jwt:Audience"],
+                            claims,
+                            expires: DateTime.Now.AddMinutes(15),
+                            signingCredentials: credentials);
 
-            return NotFound("User not found");
-        }
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
 
-        private string GenerateToken(UserModel user)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+    private UserModel Authenticate(UserLogin userLogin)
+    {
+        var currentUser = UserConstants.Users.FirstOrDefault(z => 
+                            z.UserName.ToLower() == userLogin.UserName.ToLower() &&
+                            z.Password == userLogin.Password);
 
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var claims = new []
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.UserName),
-                new Claim(ClaimTypes.Email, user.EmailAddress),
-                new Claim(ClaimTypes.GivenName, user.GivenName),
-                new Claim(ClaimTypes.Surname, user.Surname),
-                new Claim(ClaimTypes.Role, user.Role)
-            };
-
-            var token = new JwtSecurityToken(
-                                _config["Jwt:Issuer"],
-                                _config["Jwt:Audience"],
-                                claims,
-                                expires: DateTime.Now.AddMinutes(15),
-                                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private UserModel Authenticate(UserLogin userLogin)
-        {
-            var currentUser = UserConstants.Users.FirstOrDefault(z => 
-                                z.UserName.ToLower() == userLogin.UserName.ToLower() &&
-                                z.Password == userLogin.Password);
-
-            return currentUser;
-        }
+        return currentUser;
     }
 }

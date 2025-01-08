@@ -1,7 +1,6 @@
-﻿namespace Microservices.Search.Models
+﻿namespace Microservices.Search.Models;
+
+public class SearchTerm
 {
-    public class SearchTerm
-    {
-        public int CustomerId { get; set; }
-    }
+    public int CustomerId { get; set; }
 }

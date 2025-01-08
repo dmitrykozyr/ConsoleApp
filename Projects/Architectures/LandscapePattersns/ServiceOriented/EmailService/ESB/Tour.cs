@@ -1,7 +1,6 @@
-﻿namespace EmailService.ESB
+﻿namespace EmailService.ESB;
+
+public class Tour
 {
-    public class Tour
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

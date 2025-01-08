@@ -1,7 +1,6 @@
-﻿namespace NTier.UI.Models.ApplicationStatus
+﻿namespace NTier.UI.Models.ApplicationStatus;
+
+public class ApplicationStatus_Pass_Object
 {
-    public class ApplicationStatus_Pass_Object
-    {
-        public string name { get; set; }
-    }
+    public string name { get; set; }
 }

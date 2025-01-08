@@ -1,7 +1,6 @@
-﻿namespace WebApi.Services.Interfaces
+﻿namespace WebApi.Services.Interfaces;
+
+public interface IMessageSender
 {
-    public interface IMessageSender
-    {
-        string Send();
-    }
+    string Send();
 }

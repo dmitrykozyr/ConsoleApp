@@ -6,36 +6,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MVVM.Services.ReservationProviders
+namespace MVVM.Services.ReservationProviders;
+
+public class DatabaseReservationProvider : IReservationProvider
 {
-    public class DatabaseReservationProvider : IReservationProvider
+    private readonly ReservoomDbContextFactory _dbContextFactory;
+
+    public DatabaseReservationProvider(ReservoomDbContextFactory dbContextFactory)
     {
-        private readonly ReservoomDbContextFactory _dbContextFactory;
+        _dbContextFactory = dbContextFactory;
+    }
 
-        public DatabaseReservationProvider(ReservoomDbContextFactory dbContextFactory)
+    public async Task<IEnumerable<Reservation>> GetAllReservations()
+    {
+        using (ReservoomDbContext context = _dbContextFactory.CreateDbContext())
         {
-            _dbContextFactory = dbContextFactory;
+            IEnumerable<ReservationDTO> reservationDTOs = await context.Reservations.ToListAsync();
+
+            await Task.Delay(2000);
+
+            return reservationDTOs.Select(z => ToReservation(z));
         }
+    }
 
-        public async Task<IEnumerable<Reservation>> GetAllReservations()
-        {
-            using (ReservoomDbContext context = _dbContextFactory.CreateDbContext())
-            {
-                IEnumerable<ReservationDTO> reservationDTOs = await context.Reservations.ToListAsync();
-
-                await Task.Delay(2000);
-
-                return reservationDTOs.Select(z => ToReservation(z));
-            }
-        }
-
-        private static Reservation ToReservation(ReservationDTO dto)
-        {
-            return new Reservation(
-                            new RoomID(dto.FloorNumber, dto.RoomNumber),
-                            dto.Username,
-                            dto.StartTime,
-                            dto.EndTime);
-        }
+    private static Reservation ToReservation(ReservationDTO dto)
+    {
+        return new Reservation(
+                        new RoomID(dto.FloorNumber, dto.RoomNumber),
+                        dto.Username,
+                        dto.StartTime,
+                        dto.EndTime);
     }
 }

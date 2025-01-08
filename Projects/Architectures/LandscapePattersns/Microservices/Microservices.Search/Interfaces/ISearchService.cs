@@ -1,7 +1,6 @@
-﻿namespace Microservices.Search.Interfaces
+﻿namespace Microservices.Search.Interfaces;
+
+public interface ISearchService
 {
-    public interface ISearchService
-    {
-        Task<(bool IsSuccess, dynamic SearchResults)> SearchAsync(int customerId);
-    }
+    Task<(bool IsSuccess, dynamic SearchResults)> SearchAsync(int customerId);
 }

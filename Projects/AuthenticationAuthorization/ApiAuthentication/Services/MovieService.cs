@@ -2,52 +2,51 @@
 using ApiAuthentication.Repositories;
 using ApiAuthentication.Services.Interfaces;
 
-namespace ApiAuthentication.Services
+namespace ApiAuthentication.Services;
+
+public class MovieService : IMovieService
 {
-    public class MovieService : IMovieService
+    public Movie Get(int id)
     {
-        public Movie Get(int id)
-        {
-            var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
-            return movie;
-        }
+        var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
+        return movie;
+    }
 
-        public List<Movie> GetAll()
-        {
-            var movie = MovieRepository.Movies;
-            return movie;
-        }
+    public List<Movie> GetAll()
+    {
+        var movie = MovieRepository.Movies;
+        return movie;
+    }
 
-        public Movie Create(Movie movie)
-        {
-            movie.Id = MovieRepository.Movies.Count + 1;
-            MovieRepository.Movies.Add(movie);
-            return movie;
-        }
+    public Movie Create(Movie movie)
+    {
+        movie.Id = MovieRepository.Movies.Count + 1;
+        MovieRepository.Movies.Add(movie);
+        return movie;
+    }
 
-        public Movie Update(Movie updatedMovie)
-        {
-            var oldMovie = MovieRepository.Movies.FirstOrDefault(x => x.Id == updatedMovie.Id);
+    public Movie Update(Movie updatedMovie)
+    {
+        var oldMovie = MovieRepository.Movies.FirstOrDefault(x => x.Id == updatedMovie.Id);
 
-            if (oldMovie == null)
-                return null;
+        if (oldMovie == null)
+            return null;
 
-            oldMovie.Title = updatedMovie.Title;
-            oldMovie.Description = updatedMovie.Description;
-            oldMovie.Rating = updatedMovie.Rating;
+        oldMovie.Title = updatedMovie.Title;
+        oldMovie.Description = updatedMovie.Description;
+        oldMovie.Rating = updatedMovie.Rating;
 
-            return updatedMovie;
-        }
+        return updatedMovie;
+    }
 
-        public bool Delete(int id)
-        {
-            var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
+    public bool Delete(int id)
+    {
+        var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
 
-            if (movie == null)
-                return false;
+        if (movie == null)
+            return false;
 
-            MovieRepository.Movies.Remove(movie);
-            return true;
-        }
+        MovieRepository.Movies.Remove(movie);
+        return true;
     }
 }

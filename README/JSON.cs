@@ -1,5 +1,4 @@
-﻿Amazing User, [10.04.2024 12:12]
-ASP.NET Core Web API
+﻿ASP.NET Core Web API
 
 - в "launchSettings.json" описаны настройки запуска проекта (адреса, по которым будет запускаться приложение)
 - "appsettings.json" файл конфигурации приложения в формате json

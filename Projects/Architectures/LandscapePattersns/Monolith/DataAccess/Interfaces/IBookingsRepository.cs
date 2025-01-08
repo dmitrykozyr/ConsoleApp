@@ -1,9 +1,8 @@
 ﻿using Monolith.Domain;
 
-namespace Monolith.DataAccess.Interfaces
+namespace Monolith.DataAccess.Interfaces;
+
+public interface IBookingsRepository
 {
-    public interface IBookingsRepository
-    {
-        void Save(Booking booking);
-    }
+    void Save(Booking booking);
 }

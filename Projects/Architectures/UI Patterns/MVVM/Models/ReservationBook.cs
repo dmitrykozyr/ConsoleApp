@@ -5,40 +5,39 @@ using MVVM.Services.ReservationProviders;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MVVM.Models
+namespace MVVM.Models;
+
+public class ReservationBook
 {
-    public class ReservationBook
+    private readonly IReservationProvider _reservationProvider;
+    private readonly IReservationCreator _reservationCreator;
+    private readonly IReservationConflictValidator _reservationConflictValidator;
+
+    public ReservationBook(
+        IReservationProvider reservationProvider,
+        IReservationCreator reservationCreator,
+        IReservationConflictValidator reservationConflictValidator)
     {
-        private readonly IReservationProvider _reservationProvider;
-        private readonly IReservationCreator _reservationCreator;
-        private readonly IReservationConflictValidator _reservationConflictValidator;
+        _reservationProvider = reservationProvider;
+        _reservationCreator = reservationCreator;
+        _reservationConflictValidator = reservationConflictValidator;
+    }
 
-        public ReservationBook(
-            IReservationProvider reservationProvider,
-            IReservationCreator reservationCreator,
-            IReservationConflictValidator reservationConflictValidator)
+    public async Task<IEnumerable<Reservation>> GetAllReservations()
+    {
+        return await _reservationProvider.GetAllReservations();
+    }
+
+    public async Task AddReservation(Reservation reservation)
+    {
+        Reservation conflictingReservation =
+            await _reservationConflictValidator.GetConflictingReservation(reservation);
+
+        if (conflictingReservation is not null)
         {
-            _reservationProvider = reservationProvider;
-            _reservationCreator = reservationCreator;
-            _reservationConflictValidator = reservationConflictValidator;
+            throw new ReservationConflictException(conflictingReservation, reservation);
         }
 
-        public async Task<IEnumerable<Reservation>> GetAllReservations()
-        {
-            return await _reservationProvider.GetAllReservations();
-        }
-
-        public async Task AddReservation(Reservation reservation)
-        {
-            Reservation conflictingReservation =
-                await _reservationConflictValidator.GetConflictingReservation(reservation);
-
-            if (conflictingReservation is not null)
-            {
-                throw new ReservationConflictException(conflictingReservation, reservation);
-            }
-
-            await _reservationCreator.CreateReservation(reservation);
-        }
+        await _reservationCreator.CreateReservation(reservation);
     }
 }
