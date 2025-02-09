@@ -52,3 +52,23 @@ content-type: application/json
 # Удалить деталь: {bankDetailId}
 DELETE {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail/{{bankDetailId}}
 ###
+
+
+
+
+
+
+
+
+
+
+
+POST https://fm1-test.4-money.ru:444/moby-dev2-44/clientprivilegesservice
+Content-Type: application/json
+
+{
+    "type": "GetTravelPrivileges",
+    "rid": "111",
+    "sid": "IJKiz4U4gpLs0vQ6s2J9W5Nd",
+    "uid": "Z5tdPekynuQlvIoCos8AGVafX62vmf2kgrZa2Rwn8k4"
+}
