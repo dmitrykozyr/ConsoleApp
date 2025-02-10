@@ -834,9 +834,14 @@ class Program
 
             public T param { get; set; }
 
-            public A() { }
+            public A()
+            {
+            }
 
-            public A(T _x) { x = _x; }
+            public A(T _x)
+            {
+                x = _x;
+            }
         }
 
         class B<T, Z>
@@ -849,13 +854,20 @@ class Program
 
             public Z param2 { get; set; }
 
-            public B(T _x, Z _y) { x = _x; y = _y; }
+            public B(T _x, Z _y)
+            {
+                x = _x;
+                y = _y;
+            }
         }
 
         class C<T> : A<T>
         {
             T x;
-            public C(T _x) : base(_x) { x = _x; }
+            public C(T _x) : base(_x)
+            {
+                x = _x;
+            }
         }
 
         // where означает, что тип T может быть только типа C, либо быть любым его наследником
