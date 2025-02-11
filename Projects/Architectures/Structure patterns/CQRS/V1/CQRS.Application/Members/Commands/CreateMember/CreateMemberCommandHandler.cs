@@ -18,7 +18,7 @@ public class CreateMemberCommandHandler : ICommandHandler<CreateMemberCommand>
         _unitOfWorkv = unitOfWork;
     }
 
-    // Сюда попадем из контроллера в слое Presentation через метод Sender.Send() библиотеки MediatR
+    // Сюда попадем из контроллера в слое Presentation (класс MembersController) через метод Sender.Send() библиотеки MediatR
     public async Task<Result> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
     {
         var emailResult = FirstName.Create(request.Email);
