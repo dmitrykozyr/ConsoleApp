@@ -1,5 +1,7 @@
 ﻿// Порождающие
 
+using Microsoft.EntityFrameworkCore;
+
 namespace FactoryMethod
 {
     // Есть фабрика по постройке деревянных домов
@@ -1385,4 +1387,103 @@ namespace Visitor
             school.PerformOperation(salesman);
         }
     }
+}
+
+// Другие паттерны
+
+namespace UnitOfWork
+{
+    /*     
+        Объединяет несколько операций над данными в одну единицу работы,
+        чтобы выполнить несколько изменений (добавление, обновление, удаление) и затем сохранить все в БД одновременно
+        
+        Управляет транзакциями, обеспечивая, чтобы все изменения были применены только при успешном завершения всех операций
+        Если одна из операций не удалась, все изменения могут быть отменены
+    */
+
+    public interface IRepository<TEntity>
+    {
+        public void Add(TEntity entity);
+    }
+
+    public class MyDbContext : DbContext { }
+
+    public class User
+    {
+        public string Name { get; set; }
+    }
+
+    public interface IUnitOfWork : IDisposable
+    {
+        IRepository<TEntity> Repository<TEntity>()
+            where TEntity : class;
+
+        void Save();
+    }
+
+    public class UnitOfWork : IUnitOfWork
+    {
+        private readonly DbContext _context;
+
+        public UnitOfWork(DbContext context)
+        {
+            _context = context;
+        }
+
+        public IRepository<TEntity> Repository<TEntity>() where TEntity : class
+        {
+            return new Repository<TEntity>(_context);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+    }
+
+    // Создаем экземпляр UnitOfWork
+    // Выполняем операции с репозиториями
+    // Сохраняем все изменения методом Save
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    {
+        private readonly DbContext _context;
+        private readonly DbSet<TEntity> _dbSet;
+
+        public Repository(DbContext context)
+        {
+            _context = context;
+            _dbSet = context.Set<TEntity>();
+        }
+
+        public void Add(TEntity entity)
+        {
+            _dbSet.Add(entity);
+        }
+
+        public void Remove(TEntity entity)
+        {
+            _dbSet.Remove(entity);
+        }
+    }
+
+    class Program
+    {
+        static void Main_()
+        {
+            using (var unitOfWork = new UnitOfWork(new MyDbContext()))
+            {
+                var userRepository = unitOfWork.Repository<User>();
+
+                var newUser = new User { Name = "John Doe" };
+                userRepository.Add(newUser);
+
+                unitOfWork.Save();
+            }
+        }
+    }    
 }
