@@ -49,16 +49,16 @@ public class Threads
         // Каждому потоку выделяется квант времени
 
         // Статусы потока содержатся в перечислении ThreadState:
-        // Unstarted        - еще не был запущен
-        // Running          - запущен и работает
-        // Background       - выполняется в фоновом режиме
-        // StopRequested    - получил запрос на остановку
-        // Stopped          - завершен
-        // SuspendRequested - получил запрос на приостановку
-        // Suspended        - приостановлен
-        // WaitSleepJoin    - заблокирован методами Sleep или Join
-        // AbortRequested   - для потока вызван метод Abort, но остановка еще не произошла
-        // Aborted          - остановлен, но еще окончательно не завершен
+        // Unstarted        еще не был запущен
+        // Running          запущен и работает
+        // Background       выполняется в фоновом режиме
+        // StopRequested    получил запрос на остановку
+        // Stopped          завершен
+        // SuspendRequested получил запрос на приостановку
+        // Suspended        приостановлен
+        // WaitSleepJoin    заблокирован методами Sleep или Join
+        // AbortRequested   для потока вызван метод Abort, но остановка еще не произошла
+        // Aborted          остановлен, но еще окончательно не завершен
 
         object lockCompleted = new object();
         void F1()
@@ -80,33 +80,40 @@ public class Threads
         Console.WriteLine("ThreadState " + Thread.CurrentThread.ThreadState);
     }
 
-    static void BreakThread_()
+    static void Interrupt_()
     {
         void F1()
         {
             for (; ; )
+            {
                 Console.WriteLine("for");
+            }
         }
 
         Console.WriteLine("Start" + Thread.CurrentThread.ManagedThreadId);
+
         var thread = new Thread(F1);
+
         thread.Start();
+
         Thread.Sleep(2000);
+
         thread.Interrupt(); // Через 2 секунды метод прервется
                             // Abort устарел
+
         Console.WriteLine("End" + Thread.CurrentThread.ManagedThreadId);
     }
 
-    static void ThreadPriorities_()
+    static void Priorities_()
     {
         // Приоритеты потоков, располагаются в перечислении ThreadPriority
         // Влияет на время, выделяемое потоку процессором
 
-        // - Lowest
-        // - BelowNormal
-        // - Normal - по умолчанию
-        // - AboveNormal
-        // - Highest
+        // Lowest
+        // BelowNormal
+        // Normal - по умолчанию
+        // AboveNormal
+        // Highest
 
         static void F1()
         {
@@ -139,55 +146,75 @@ public class Threads
         }
     }
 
-    static void ThreadPool_()
+    static void Pool_()
     {
         void F1() // Cколько потоков доступно в пуле
         {
-            int availableThreads, availableIOThreads;
+            int availableThreads;
+            int availableIOThreads;
+
             ThreadPool.GetAvailableThreads(out availableThreads, out availableIOThreads);
+
             Console.WriteLine("Threads in pool " + availableThreads);
+
             Console.WriteLine("Free threads in pool " + availableIOThreads);
         }
 
         void F2(object state)
         {
             Thread.CurrentThread.Name = "1";
+
             Console.WriteLine("Start thread " + Thread.CurrentThread.Name);
+
             Thread.Sleep(1000);
+
             Console.WriteLine("End thread " + Thread.CurrentThread.Name);
         }
 
         void F3(object state)
         {
             Thread.CurrentThread.Name = "2";
+
             Console.WriteLine("Start thread " + Thread.CurrentThread.Name);
+
             Thread.Sleep(1000);
+
             Console.WriteLine("End thread " + Thread.CurrentThread.Name);
         }
 
         Console.WriteLine("Start");
+
         ThreadPool.QueueUserWorkItem(new WaitCallback(F2));
+
         F1();
+
         ThreadPool.QueueUserWorkItem(F3); // Помещаем F3 в очередь пула потоков
+
         Thread.Sleep(1000);
+
         Console.WriteLine("End");
     }
 
     static void ForegroundBackground_()
     {
         // Есть два варианта работы вторичных потоков:
-        // - Foreground - будет работать после завршения первичного потока (по умолчанию)
+        // - Foreground - будет работать после завершения первичного потока (по умолчанию)
         // - Background - завершает работу вместе с первичным потоком
 
         object lockCompleted = new object();
+
         void F1()
         {
-            lock (lockCompleted) 
+            lock (lockCompleted)
+            {
                 Console.WriteLine("F1"); 
+            }
         }
 
         var thread = new Thread(F1);
+
         thread.IsBackground = true;
+
         thread.Start();
     }
 
@@ -206,13 +233,16 @@ public class Threads
         void F1()
         {
             Thread.Sleep(500);
+
             Console.WriteLine("F1: " + Thread.CurrentThread.ManagedThreadId);
         }
 
         Console.WriteLine("Start: " + Thread.CurrentThread.ManagedThreadId);
 
         var thread = new Thread(F1);
+
         thread.Start();
+
         thread.Join();
 
         Console.WriteLine("End: " + Thread.CurrentThread.ManagedThreadId);
@@ -225,17 +255,25 @@ public class Threads
             if (counter < 10)
             {
                 counter++;
+
                 Console.WriteLine("Start " + Thread.CurrentThread.ManagedThreadId + ", counter " + counter);
+
                 var thread = new Thread(F1); // Плохо - каждый раз создаем новый поток
+
                 thread.Start();
+
                 thread.Join();
             }
         }
 
         Console.WriteLine("Start " + Thread.CurrentThread.ManagedThreadId);
+
         var thread = new Thread(F1);
+
         thread.Start();
+
         thread.Join();
+
         Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId);
     }
 
@@ -269,31 +307,40 @@ public class Threads
     static void Lock_()
     {
         // Внутри lock может одновременно работать один поток
-        // locker - Это пустой объект-заглушка типа object
+        // locker - это пустой объект-заглушка типа object
         
         // Внутри lock нельзя вызывать await, т.к. возможна ситуация, что объект синхронизации
-        // берется одним потоком, а отпускается другим, а это нарушает логику
+        // берется одним потоком, а отпускается другим
 
         // Может привести к deadlock
 
         object locker = new object();
+
         string value = string.Empty;
+
         void F1()
         {
             Thread.Sleep(1000);
-            lock (locker) { value = "Updating value"; }
+
+            lock (locker)
+            {
+                value = "Updating value";
+            }
         }
 
         Task.Factory.StartNew(F1);
+
         Console.WriteLine("Main thread is waiting");
 
         lock (locker)
         {
             value = "Updating value in main thread";
+
             Console.WriteLine("Value: " + value);
         }
 
         Thread.Sleep(1000);
+
         Console.WriteLine("Released worker thread");
     }
 
