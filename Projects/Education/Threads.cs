@@ -324,86 +324,87 @@ public class Threads
 
             lock (locker)
             {
-                value = "Updating value";
+                value = "Обновляем значение";
             }
         }
 
         Task.Factory.StartNew(F1);
 
-        Console.WriteLine("Main thread is waiting");
+        Console.WriteLine("Первичный потом ждет");
 
         lock (locker)
         {
-            value = "Updating value in main thread";
+            value = "Обновляем значение в первичном потоке";
 
-            Console.WriteLine("Value: " + value);
+            Console.WriteLine("Значение: " + value);
         }
 
         Thread.Sleep(1000);
 
-        Console.WriteLine("Released worker thread");
+        Console.WriteLine("Отпускаем рабочий поток");
     }
 
     static void Deadlock_()
     {
-        /*
-        
-        Возможен дедлок, если сначала будет вызван Method1(),
-        а затем в другом потоке будет вызван Method3()
-        Оба метода используют блокировку lock1, а Method2() использует блокировку lock2,
-        что может привести к блокировке обоих потоков
+        // Дедлок произойдет, если
+        // - сначала вызовем Method1()
+        // - затем в другом потоке Method3()
+        // - оба метода используют блокировку lock1, а Method2() использует блокировку lock2, что может привести к блокировке обоих потоков
 
-        public class DeadlockExample
+        object lock1 = new object();
+        object lock2 = new object();
+
+        void Method1()
         {
-            private object lock1 = new object();
-            private object lock2 = new object();
-
-            public void Method1()
+            lock (lock1)
             {
-                lock (lock1)
-                {
-                    Method2();
-                }
-            }
-
-            public void Method2()
-            {
-                lock (lock2)
-                {
-                    Method3();
-                }
-            }
-
-            public void Method3()
-            {
-                lock (lock1)
-                {
-                    // do something
-                }
+                Method2();
             }
         }
 
-        */
+        void Method2()
+        {
+            lock (lock2)
+            {
+                Method3();
+            }
+        }
+
+        void Method3()
+        {
+            lock (lock1)
+            {
+                // ...
+            }
+        }
     }
 
     static void Semaphore_()
     {
-        // Позволяет ограничить количество потоков, имеющих доступ к определенному ресурсу
-        // Достигается путем создания счетчика, который уменьшается, когда поток получает доступ к ресурсу,
-        // и увеличивается, когда поток освобождает ресурс
+        // Позволяет ограничить количество потоков, имеющих доступ к ресурсу
+        // путем создания счетчика, который:
+        // - уменьшается, когда поток получает доступ к ресурсу
+        // - увеличивается, когда поток освобождает ресурс
+
         // Если счетчик равен нулю - другие потоки должны ждать, пока ресурс освободится
 
-        // Может быть полезным, например, для ограничения количества запросов к БД
-        // SemaphoreSlim меньше нагружает процессор и работает в рамках одного процесса
+        // Может быть полезным для ограничения количества запросов к БД
+
+        // SemaphoreSlim
+        // меньше нагружает процессор и работает в рамках одного процесса
 
         Semaphore semaphore;
 
         void F1(object number)
         {
             semaphore.WaitOne(); // Ожидание получения семафора
+
             Console.WriteLine("Begin " + Thread.CurrentThread.ManagedThreadId);
+
             Thread.Sleep(2000);
+
             Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId);
+
             semaphore.Release(); // Освобождаем семафор
         }
 
@@ -411,7 +412,9 @@ public class Threads
         // 2й аргумент - максимальное количество слотов
         // 3й аргумент - имя семафора
         semaphore = new Semaphore(2, 4, "Semaphore");
-        semaphore.Release(2); // Убираем 2 из предыдущей строки, теперь семафор могут использовать максимальное число потоков - 4
+
+        // Убираем 2 из предыдущей строки, теперь семафор могут использовать максимальное число потоков - 4
+        semaphore.Release(2);
         
         for (int i = 0; i < 5; i++)
         {
@@ -423,14 +426,16 @@ public class Threads
     {
         // Позволяет блокировать доступ к ресурсу не только в пределах одного процесса, но и между процессами
         // Работает путем создания объекта блокировки, который может быть захвачен только одним потоком
-        // в любой момент времени
+
         // Если другой поток попытается захватить блокировку, пока она уже занята,
         // он будет заблокирован и будет ждать, пока блокировка не будет освобождена первым потоком
-        // Блокировка может быть освобождена явным вызовом функции или автоматически при завершении
-        // выполнения кода, который ее захватил
+
+        // Блокировка может быть освобождена явным вызовом функции
+        // или автоматически при завершении выполнения кода, который ее захватил
 
         // Когда выполнение дойдет до mutex.WaitOne(), поток будет ожидать, пока не освободится мьютекс
         // После освобождения продолжит работу
+
         // Нет межпроцессорной синхронизации
 
         var mutex = new Mutex(false, "Mutex");
@@ -438,21 +443,31 @@ public class Threads
         void F1()
         {
             mutex.WaitOne();
+
             Console.WriteLine("F1");
-            F2();                   // Запускаем метод, который тоже использует данный конкретный mutex
-                                    // Пока F6_2() не отработает, F6_2 будет ждать
+
+            // Запускаем метод, который тоже использует данный конкретный mutex
+            // Пока F6_2() не отработает, F6_2 будет ждать
+            F2();
+
             mutex.ReleaseMutex();
         }
 
         void F2()
         {
-            mutex.WaitOne();        // Приостанавливаем выполнение потока, пока не будет получен mutex
+            // Приостанавливаем выполнение потока, пока не будет получен mutex
+            mutex.WaitOne();
+
             Console.WriteLine("F2");
-            mutex.ReleaseMutex();   // После выполнения всех действий, когда мьютекс не нужен,
-                                    // поток освобождает
+
+            // После выполнения всех действий, когда мьютекс не нужен,
+            // поток освобождает
+            mutex.ReleaseMutex();
+
         }
 
         var thread = new Thread[5];
+
         for (int i = 0; i < 5; i++)
         {
             thread[i] = new Thread(F1)
@@ -462,217 +477,5 @@ public class Threads
 
             thread[i].Start();
         }
-    }
-
-    // Обработка событий
-
-    static void AutoResetEvent_()
-    {
-        // Если в программе несколько объектов AutoResetEvent, можем использовать для отслеживания
-        // состояния этих объектов методы WaitAll и WaitAny, которые в качестве параметра принимают
-        // массив объектов класса WaitHandle - базового класса для AutoResetEvent
-        // AutoResetEvent.WaitAll(new WaitHandle[] { waitHandler });
-
-        // false - установка в несигнальное состояние
-        var autoResetEvent = new AutoResetEvent(false);
-        
-        void F1()
-        {
-            Console.WriteLine("1");
-            autoResetEvent.WaitOne();   // Один поток продолжает работу, остальные ждут вызова Set()
-            Console.WriteLine("2");
-            autoResetEvent.WaitOne();
-            Console.WriteLine("3");
-        }
-
-        void F2()
-        {
-            Console.WriteLine("1 Begin");
-            autoResetEvent.WaitOne();
-            Console.WriteLine("1 End");
-        }
-
-        void F3()
-        {
-            Console.WriteLine("2 Begin");
-            autoResetEvent.WaitOne();
-            Console.WriteLine("2 End");
-        }
-
-        var thread = new Thread(F1);
-        thread.Start();
-        autoResetEvent.Set();   // Уведомляем ожидающие потоки, что объект
-                                // снова находится в сигнальном состоянии и следующий
-                                // поток может начать работу, а остальные снова ждут
-        autoResetEvent.Set();
-
-        new Thread(F2).Start();
-        new Thread(F3).Start();
-        autoResetEvent.Set();
-        autoResetEvent.Set();
-    }
-
-    static void ManualResetEvent_()
-    {
-        // ManualResetEventSlim работает на уровне потоков, а не процессов
-
-        // false - установка в несигнальное состояние
-        var manualResetEvent = new ManualResetEvent(false);
-
-        void F1()
-        {
-            Console.WriteLine("1 Begin");
-            manualResetEvent.WaitOne();
-            //resetEvent.WaitOne();
-            Console.WriteLine("1 End");
-        }
-
-        void F2()
-        {
-            Console.WriteLine("2 BEGIN");
-            manualResetEvent.WaitOne();
-            Console.WriteLine("2 END");
-        }
-
-        new Thread(F1).Start();
-        new Thread(F2).Start();
-        manualResetEvent.Set();     // Сигнал всем потокам
-
-        //Task.Factory.StartNew(F10_1);
-        //Task.Factory.StartNew(F10_2);
-        //resetEvent.Set();
-    }
-
-    static void CountdownEvent_()
-    {
-        var countdown = new CountdownEvent(5);
-
-        void F1() 
-        { 
-            Console.WriteLine("F1"); 
-        }
-
-        Task.Factory.StartNew(F1);
-        Task.Factory.StartNew(F1);
-        Task.Factory.StartNew(F1);
-
-        countdown.Wait();
-    }
-
-    static void RegisteredWaitHandle_()
-    {
-        void F1(object state, bool istTmeOut) 
-        { 
-            Console.WriteLine("Signal"); 
-        }
-
-        var auto = new AutoResetEvent(false);
-        var callback = new WaitOrTimerCallback(F1);
-        RegisteredWaitHandle registeredWaitHandle = ThreadPool.RegisterWaitForSingleObject(
-            auto,       // от кого ждать сигнал
-            callback,   // что выполнять
-            null,       // 1й аргумент callback метода
-            2000,       // интервал между вызовами callback метода
-            true);      // true - вызвать callback метод 1 раз,
-                        // false - вызвать с интервалом
-        auto.Set();
-        registeredWaitHandle.Unregister(auto);
-    }
-
-    static void EventWaitHandle_()
-    {
-        EventWaitHandle handle = null;
-        void F1()
-        {
-            handle.WaitOne(); // Приостановка потока
-
-            while (true)
-            {
-                Console.WriteLine("1");
-                Thread.Sleep(300);
-            }
-        }
-
-        handle = new EventWaitHandle(
-            false,                      // несигнальное состояние
-            EventResetMode.ManualReset, // тип события
-            "GlobalEvent::GUID");       // имя объекта синхронизации в ОС. Если объект с таким
-                                        // именем существует, будет получена ссылка на него
-
-        var thread = new Thread(F1) 
-        { 
-            IsBackground = true 
-        };
-
-        thread.Start();
-    }
-
-    // Передача аргументов
-
-    static void SendArgumentToThread_()
-    {
-        void F1(object x)
-        {
-            for (int i = 1; i < 9; i++)
-            {
-                int n = (int)x;
-
-                Console.WriteLine("Второй поток:");
-                Console.WriteLine(i * n);
-                Thread.Sleep(400);
-            }
-        }
-
-        // Передача в метод F16_1 аргумента типа int
-        var thread = new Thread(new ParameterizedThreadStart(F1));
-        thread.Start(5);
-
-        for (int i = 1; i < 9; i++)
-        {
-            Console.WriteLine("Main thread: ");
-            Console.WriteLine(i * i);
-            Thread.Sleep(300);
-        }
-
-        // Альтернативный способ запуска
-        //new Thread(() =>
-        //{
-        //    Thread.Sleep(1000);
-        //    Console.WriteLine("thread1");
-        //}).Start();
-    }
-
-    static void SendSeveralArgumentsToThreadNotSequre_()
-    {
-        // Для передачи в поток нескльких аргументов нужен класс
-        // Метод Thread.Start не является типобезопасным и мы можем передать в него любой тип,
-        // а потом придется приводить переданный объект к нужному типу
-        
-        void F1(object obj)
-        {
-            for (int i = 1; i < 9; i++)
-            {
-                Counter c = (Counter)obj;
-                Console.WriteLine("Второй поток:");
-                Console.WriteLine(i * c.X * c.Y);
-            }
-        }
-
-        Counter counter = new Counter();
-        counter.X = 4;
-        counter.Y = 5;
-
-        var thread = new Thread(new ParameterizedThreadStart(F1));
-        thread.Start(counter);
-    }
-
-    static void SendSeveralArgumentsToThreadSequre_()
-    {
-        // Рекомендуется объявлять все используемые методы и переменные в специальном классе,
-        // а в основной программе запускать поток через ThreadStart
-        
-        var counter = new Counter(5, 4);
-        var thread = new Thread(new ThreadStart(counter.Count));
-        thread.Start();
     }
 }
