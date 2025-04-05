@@ -23,19 +23,52 @@ using WebApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Регистрация сервисов
-// Интерфейс необязателен, но служит для Dependency Inversion
-builder.Services.AddTransient<IMessageSender, EmailMessageSender>();
-builder.Services.AddTransient<SmsMessageSender>();
+    // Регистрация сервисов
+    // Интерфейс необязателен, но служит для Dependency Inversion
+    builder.Services.AddTransient<IMessageSender, EmailMessageSender>();
+    builder.Services.AddTransient<SmsMessageSender>();
 
-builder.Services.AddDbContext<DbContextSetUp>(options => options.UseInMemoryDatabase("DatabaseName"));
-builder.Services.AddTransient<DbContextSetUp>();
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Amazing Swagger", Version = "v1" });
-});
+    builder.Services.AddDbContext<DbContextSetUp>(options => options.UseInMemoryDatabase("DatabaseName"));
+    builder.Services.AddTransient<DbContextSetUp>();
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo { Title = "Amazing Swagger", Version = "v1" });
+    });
+
+#endregion
+
+#region AsNoTracking
+/*
+
+    Используется в Entity Framework для оптимизации работы с данными
+    Позволяет указать, что загружаемые сущности не будут отслеживаться контекстом БД
+
+    Это может быть полезно в следующих случаях:
+
+    - Улучшение производительности
+      Когда вы загружаете данные, которые не собираетесь изменять, использование AsNoTracking() может значительно улучшить производительность,
+      т.к. контекст не будет хранить информацию об этих сущностях
+
+    - Снижение использования памяти
+      Поскольку Entity Framework не будет отслеживать изменения для этих сущностей, это может снизить потребление памяти,
+      особенно при работе с большими объемами данных
+
+    - Чтение данных
+      Если вы просто хотите прочитать данные и не планируете их изменять,
+      использование AsNoTracking() является хорошей практикой
+    
+    В примере все загруженные продукты не будут отслеживаться контекстом,
+    что делает запрос более эффективным,
+    если вы просто хотите получить данные для отображения
+
+    using (var context = new MyDbContext())
+    {
+        var products = context.Products.AsNoTracking().ToList();
+    }
+
+ */
 
 #endregion
 

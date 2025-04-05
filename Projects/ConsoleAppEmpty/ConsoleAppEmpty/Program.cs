@@ -1,6 +1,6 @@
 ﻿public class Program
 {
-    // ################## Вопрос 1. Что будет выведено в консоль
+    #region Что будет выведено в консоль 1
 
     public record A(int Value, string Value2);
 
@@ -23,7 +23,9 @@
         bool d = new A(1, "TEST").Equals(new A(1, "TEST"));
     }
 
-    // ################## Вопрос 2. Что будет выведено в консоль: 
+    #endregion
+
+    #region Что будет выведено в консоль 2
 
     public static int Increment(int a)
     {
@@ -77,7 +79,9 @@
 
     */
 
-    // ################## Вопрос 3. Что будет выведено в консоль: 
+    #endregion
+
+    # region Что будет выведено в консоль 3
 
     static void Main__()
     {
@@ -128,7 +132,9 @@
      
     */
 
-    // ################## Вопрос 4. При вызове throw ex: 
+    #endregion
+
+    #region При вызове throw ex
 
     public static void Test()
     {
@@ -166,7 +172,9 @@
 
     */
 
-    // ################## Вопрос 5. Когда будет выведено сообщение "Clean up"? 
+    #endregion
+
+    #region Когда будет выведено сообщение "Clean up"
 
     class TestGC : IDisposable
     {
@@ -216,7 +224,9 @@
      
     */
 
-    // ################## Вопрос 6. В консоль будет выведено: 
+    #endregion
+
+    # region Что будет выведено в консоль 4
 
     static async Task TestThread1()
     {
@@ -257,7 +267,9 @@
      
     */
 
-    // ################## Вопрос 7. В консоль будет выведено:
+    #endregion
+
+    # region В консоль будет выведено
 
     static async Task TestThread2()
     {
@@ -298,7 +310,9 @@
 
     */
 
-    // ################## Вопрос 8. Что верно для Task.WaitAll(): 
+    # endregion
+
+    # region Что верно для Task.WaitAll(): 
 
     // А) Асинхронно ожидает завершения всех задач
     // B) Синхронно блокирует поток до завершения всех задач
@@ -315,7 +329,9 @@
      
     */
 
-    // ################## Вопрос 9. Какие из этих утверждений верны для System.String:
+    # endregion
+
+    # region Какие из этих утверждений верны для System.String
 
     // A) Это ссылочный тип
     // B) Это значимый тип
@@ -331,11 +347,28 @@
 
     */
 
-    // ################## Вопрос 10. В данном примере фильтрация товаров будет выполнена: 
+    # endregion
 
-    static void Main()
+    # region В данном примере фильтрация товаров будет выполнена:
+
+    class DbContextConfiguration { }
+    
+    class DbContext
     {
-        var dbContext = new DbContext(_dbConfiguration);
+        public List<Product> Products { get; set; }
+
+        public DbContext(DbContextConfiguration conf) { }
+    }
+
+    class Product
+    {
+        public double Cost { get; set; }
+    }
+
+    static void Main_1()
+    {
+        var _dbConfiguration = new DbContextConfiguration();
+        var _dbContext = new DbContext(_dbConfiguration);
 
         IEnumerable<Product> products = _dbContext.Products.Where(p => p.Cost >= 25.00);
     }
@@ -360,22 +393,24 @@
      
     */
 
-    // ################## Вопрос 11. Насколько безопасно использовать эту функцию:
+    # endregion
 
-    private async Task<Client> FindClientByDealIdAsync(string dealId)
-    {
-        using var connection = _connectionFactory.Create();
+    # region Насколько безопасно использовать эту функцию
 
-        var selectCommandText = $@"SELECT c.FirstName, c.SecondName, c.*
-                                   FROM clients as c   
-                                   INNER JOIN client_deal as cd on cd.ClientId = c.Id   
-                                   WHERE cd.DealId = {dealId}";
+    //private async Task<Client> FindClientByDealIdAsync(string dealId)
+    //{
+    //    using var connection = _connectionFactory.Create();
 
-        var selectSqlCommand = new SqlCommand(selectCommandText, connection);
+    //    var selectCommandText = $@"SELECT c.FirstName, c.SecondName, c.*
+    //                               FROM clients as c   
+    //                               INNER JOIN client_deal as cd on cd.ClientId = c.Id   
+    //                               WHERE cd.DealId = {dealId}";
 
-        var result = await connection.ExecuteAsync(readQuery);
-        return result;
-    }
+    //    var selectSqlCommand = new SqlCommand(selectCommandText, connection);
+
+    //    var result = await connection.ExecuteAsync(readQuery);
+    //    return result;
+    //}
 
     // А) Проблем нет
     // В) Данный код имеет уязвимость
@@ -409,7 +444,9 @@
      
     */
 
-    // ################## Вопрос 12. Интерфейс IQueryable включает в себя:
+    #endregion
+
+    #region Интерфейс IQueryable включает в себя:
 
     // А) Type ElementType
     // В) Expression Expression
@@ -435,7 +472,9 @@
      
     */
 
-    // ################## Вопрос 13. Можно ли внутри SQL функции выполнить транзакцию?
+    #endregion
+
+    #region Можно ли внутри SQL функции выполнить транзакцию?
 
     // А) Да
     // В) Нет
@@ -455,7 +494,9 @@
 
     */
 
-    // ################## Вопрос 14. Сколько можно создать кластеризованных индексов для таблицы:
+    #endregion
+
+    #region Сколько можно создать кластеризованных индексов для таблицы:
 
     // A) Количество не ограничено
     // B) Для MS SQL Server ограничение 256
@@ -471,7 +512,9 @@
      
     */
 
-    // ################## Вопрос 15. Запрос вернет: 
+    # endregion
+
+    # region Запрос вернет: 
 
     /*
         create table authors(
@@ -515,7 +558,9 @@
      
     */
 
-    // ################## Вопрос 16. В таблице authors 10 строк. Запрос вернет:
+    # endregion
+
+    # region В таблице authors 10 строк. Запрос вернет:
 
     /*
         select first_name, last_name, index
@@ -541,7 +586,9 @@
 
     */
 
-    // ################## Вопрос 17
+    # endregion
+
+    # region SQL
     // В таблице authors есть 100 строк, есть индекс по колонке first_name (селективность 10%),
     // все колонки таблицы определены как не уникальные
     // Сколько строк просканирует СУБД при обработке запроса?
@@ -603,11 +650,10 @@
      
     */
 
-    // ################## Вопрос 18. В OrderBy без указания параметров по-умолчанию сортировка:
+    # endregion
 
-    // По возрастанию
+    # region SQL 2
 
-    // ################## Вопрос 19
     // В БД порядка 100000 записей
     // Как оптимизировать скорость выполнения этого кода, чтобы выполнение занимало не более 2 секунд: 
 
@@ -620,14 +666,14 @@
             _context = context;
         }
 
-        public async Task UpdateAsync()
-        {
-            var requests = await _context.Requests.ToListAsync();   // 300 sec
+        //public async Task UpdateAsync()
+        //{
+        //    var requests = await _context.Requests.ToListAsync();   // 300 sec
 
-            requests.ForEach(_ => _.status = "New");                // 0.02 sec
+        //    requests.ForEach(_ => _.status = "New");                // 0.02 sec
 
-            await _context.SaveChangesAsync();                      // 400 sec
-        }
+        //    await _context.SaveChangesAsync();                      // 400 sec
+        //}
     }
 
     // А) Разбить Requests на блоки по 1000 элементов и обрабатывать их параллельно
@@ -651,7 +697,9 @@
      
     */
 
-    // ################## Вопрос 22. Какие методы REST неидемпотентны?
+    # endregion
+
+    # region Какие методы REST неидемпотентны?
 
     // А) Post
     // В) Delete
@@ -683,7 +731,9 @@
      
     */
 
-    // ################## Вопрос 23. Внешний сервис работает нестабильно и периодически возвращает HttpCode 500. Какой паттерн поможет решить проблему?
+    # endregion
+
+    # region Внешний сервис работает нестабильно и периодически возвращает HttpCode 500. Какой паттерн поможет решить проблему?
 
     // А) Saga
     // В) Circuit breaker
@@ -708,7 +758,9 @@
      
     */
 
-    // ################## Вопрос 24. В данном примере FrozenDeposit:
+    # endregion
+
+    # region В данном примере FrozenDeposit:
 
     public abstract class Deposit
     {
@@ -724,7 +776,7 @@
     {
         public override void Credit(decimal amount)
         {
-            throw new DomainException("This deposit does not support filling up");
+            //throw new DomainException("This deposit does not support filling up");
         }
     }
 
@@ -746,7 +798,9 @@
      
     */
 
-    // ################## Вопрос 25. Какой шаблон проектирования используется для динамического добавления новых функций к объекту без изменения его структуры?
+    #endregion
+
+    #region Какой шаблон проектирования используется для динамического добавления новых функций к объекту без изменения его структуры?
 
     // А) Абстрактная фабрика
     // В) Шаблонный метод
@@ -884,13 +938,125 @@
      
     */
 
+    #endregion
+
+    //########################### Новые примеры ###########################
+
+    #region
+
+        static void Main_3()
+        {
+            // 1. Первый блок
+            var i = 0;
+            var baselist = new List<int> { 1, 2, 3, 4, 5 };
+
+            var test1 = baselist.Where(t => t > 2);
+
+            var test2 = test1.Select(_ => i++);
+
+            Console.WriteLine($"i = {i}");
+
+            // 2. Второй блок
+            var number = test2.First();
+
+            Console.WriteLine($"i = {i}, number = {number}");
 
 
+            // 3. Третий блок
+            var result = test2.ToList();
 
-    /*
+            Console.WriteLine($"i = {i}");
+        }
+
+    #endregion
+
+    #region
+
+        static async Task Main_4(string[] args)
+        {
+            var items = Enumerable.Range(0, 10);
+
+            // CustomSelect определен ниже
+            foreach (var item in items.CustomSelect(p => p * p))
+            {
+                Console.WriteLine("item = {0}", item);
+            }
+        }
+
+    #endregion
+
+    #region
+
+        static void Main_5()
+        {
+            var cancellationToken = CancellationToken.None;
+            var first = GetFirstAsync(cancellationToken);     // 
+            var second = GetSecondAsync(cancellationToken);   // 
+            var third = GetThirdAsync(cancellationToken);     // 
+
+            Console.WriteLine($"first={first.Result}, second={second.Result}, third={third.Result}");
+        }
+
+        static async Task<string> GetFirstAsync(CancellationToken cancellationToken)
+        {
+            Console.WriteLine("1");
+            var result = await Task.Run(
+                () => {
+                    Task.Delay(1000).Wait();
+                    return "First";
+                }, cancellationToken);
+            Console.WriteLine("2");
+            return result;
+        }
+
+        static async Task<string> GetSecondAsync(CancellationToken cancellationToken)
+        {
+            Console.WriteLine("3");
+            var result = await Task.Run(
+                () => {
+                    Task.Delay(2000).Wait();
+                    return "Second";
+                }, cancellationToken);
+            Console.WriteLine("4");
+            return result;
+        }
+
+        static async Task<string> GetThirdAsync(CancellationToken cancellationToken)
+        {
+            Console.WriteLine("5");
+            var result = await Task.Run(
+                () => {
+                    Task.Delay(3000).Wait();
+                    return "Third";
+                }, cancellationToken);
+            Console.WriteLine("6");
+            return result;
+        }
+
+    #endregion
+
     static void Main()
     {
         
     }
-    */
 }
+
+public static class Extensions
+{
+    //Реализовать метод-расширение CustomSelect для IEnumerable<T>,
+    //который будет выполнять проекцию элементов коллекции с использованием переданной функции-селектора.
+    //Метод должен работать аналогично стандартному LINQ-методу Select, но с собственной реализацией.
+    public static IEnumerable<TResult> CustomSelect<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+    {
+        // Проверка входных параметров
+        if (source == null) throw new ArgumentNullException(nameof(source));
+        if (selector == null) throw new ArgumentNullException(nameof(selector));
+
+        // Ленивое выполнение с помощью yield
+        foreach (var item in source)
+        {
+            yield return selector(item);
+        }
+    }
+}
+

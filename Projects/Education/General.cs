@@ -348,28 +348,91 @@ class Program
             queue.Enqueue("string");
             queue.Enqueue(5);
             queue.Dequeue(); // Возвращает элемент из начала очереди
-            
+
+            // Конкурентные коллекции
             /*
-                Конкурентные коллекции могут быть безопасно использованы из нескольких потоков одновременно:
+                Могут быть безопасно использованы из нескольких потоков одновременно:
                 - ConcurrentBag<T> - неупорядоченная коллекция
                 - ConcurrentDictionary<TKey, TValue>
                 - ConcurrentQueue<T>
                 - ConcurrentStack<T>
             
-                Неизменяемые коллекции не могут быть изменены после создания
+                
+            */
+
+            // Неизменяемые коллекции
+            /*
+                Не могут быть изменены после создания
                 Операции добавления удаления и изменения элементов создают новую коллекцию
                 Используются в многопоточных приложениях, где несколько потоков могут пытаться изменить
                 одну и ту же коллекцию одновременно
                 Также используются, для сохранения состояния коллекции на определенный момент времени,
                 например, для реализации отмены операции или для сохранения состояния приложения
-                - ImmutableList<T>
-                - ImmutableArray<T>
-                - ImmutableDictionary<TKey, TValue>
-                - ImmutableHashSet<T>
-                - ImmutableQueue<T>
-                - ImmutableStack<T>
+                - ImmutableList < T >
+                -ImmutableArray < T >
+                -ImmutableDictionary < TKey, TValue >
+                -ImmutableHashSet < T >
+                -ImmutableQueue < T >
+                -ImmutableStack<T>
             */
         }
+
+        #region IList и List
+
+        /*
+         
+            IList
+                Это интерфейс, определяющий стандартные операции для работы с коллекциями:
+                - добавление
+                - удаление
+                - доступ к элементам по индексу
+
+                Определяет только базовые методы,
+                - Add
+                - Remove
+                - Insert
+                - IndexOf
+                - и свойства Count, Item[index]
+
+                Используется, вы хотим создать метод или класс, который может работать с различными типами коллекций
+
+            List
+                Это конкретная реализация интерфейса IList
+                Представляет собой изменяемый массив, предоставляющий возможность хранить элементы и управлять ими
+            
+                Включает в себя дополнительные методы
+                - Sort
+                - Reverse
+                - и другие
+
+                Используется, если нужно работать с конкретной реализацией коллекции и использовать ее специфические методы
+        */
+
+        // Пример
+        // Метод ProcessItems может принимать любой объект, реализующий IList<string>, что делает его более универсальным
+        public void F1()
+        {
+            void ProcessItems(IList<string> items)
+            {
+                foreach (var item in items)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+
+            void AddItem(List<string> items, string newItem)
+            {
+                items.Add(newItem);
+            }
+
+            List<string> myItems = new List<string> { "Item1", "Item2" };
+
+            ProcessItems(myItems); // Можно передать List в метод, принимающий IList
+
+            AddItem(myItems, "Item3");
+        }
+
+        #endregion
 
         // Дерево, возврат всех листьев
         public class Tree
@@ -1353,7 +1416,7 @@ class Program
 
         Action action = F1;         // ничего не возвращает
         Predicate<int> predicate;   // принимает минимум один аргумент
-        Func<int, string> func;     // принимает от 1 до 16 аргументов и возвращает значение
+        Func<int, string> func;     // принимает от 1 до 16 аргументов и возвращает bool значение
 
         static class A
         {

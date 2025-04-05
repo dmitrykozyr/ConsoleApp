@@ -234,7 +234,7 @@
 	select * from Books
 
 	// join
-	select Name, Title from Authors a		// Возвращает записи с совпадениями в обеиз таблицах
+	select Name, Title from Authors a		// Возвращает записи с совпадениями в обеих таблицах
 		join Books b
 		on a.Id = b.AuthorId
 
