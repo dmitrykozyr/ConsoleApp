@@ -940,8 +940,6 @@
 
     #endregion
 
-    //########################### Новые примеры ###########################
-
     #region
 
         static void Main_3()
@@ -1035,9 +1033,531 @@
 
     #endregion
 
-    static void Main()
+    #region Получение данных с веб-сайта через HttpClient
+
+    static async Task Main_4()
     {
-        
+        HttpClient httpClient = new HttpClient();
+
+        HttpRequestMessage message = new HttpRequestMessage()
+        {
+            RequestUri = new Uri("https://skillaz.ru/")
+        };
+
+        HttpResponseMessage result = httpClient.Send(message);
+
+        var data = await result.Content.ReadAsStringAsync();
+    }
+
+    #endregion
+
+    #region Иерархия
+
+    /*
+    
+        Есть иерархия
+        public class TransportVehicle  { }
+        public class Car : TransportVehicle  { }
+        public class PublicTransport  :  TransportVehicle { }
+        public class Bus : PublicTransport  { }
+         public class Tram  :  PublicTransport { }
+
+        Какие из следующих примеров кода при запуске приведут к выбросу исключения?
+
+        // 1
+        object transport = new Car();
+        var vehicle = (TransportVehicle)transport;
+
+        // 2
+        object transport = new Bus();
+        var publicTransport = (PublicTransport)transport;
+
+        // 3
+        object transport = new Tram();
+        var transportVehicle = (TransportVehicle)transport;
+
+        // 4
+        object transport = new Car();
+        var bus = (Bus)transport;
+
+        // 5
+        object transport = new PublicTransport();
+        var tram = (Tram)transport;
+
+        // 6
+        object transport = new TransportVehicle();
+        var car = (Car)transport;
+     
+    */
+
+    /*
+     
+        Давайте проанализируем каждый из приведенных примеров кода, чтобы определить, приведут ли они к выбросу исключения при выполнении.
+
+        1. 
+        object transport = new Car();
+        var vehicle = (TransportVehicle)transport;
+
+        Результат: Не приведет к исключению. Car является подклассом TransportVehicle, и приведение к базовому типу безопасно.
+
+        2. 
+        object transport = new Bus();
+        var publicTransport = (PublicTransport)transport;
+
+        Результат: Не приведет к исключению. Bus является подклассом PublicTransport, и приведение к базовому типу безопасно.
+
+        3. 
+        object transport = new Tram();
+        var transportVehicle = (TransportVehicle)transport;
+
+        Результат: Не приведет к исключению. Tram является подклассом PublicTransport, который в свою очередь является подклассом TransportVehicle, так что приведение к базовому типу безопасно.
+
+        4. 
+        object transport = new Car();
+        var bus = (Bus)transport;
+
+        Результат: Приведет к исключению. Car не является подклассом Bus, поэтому попытка привести объект типа Car к типу Bus вызовет InvalidCastException.
+
+        5. 
+        object transport = new PublicTransport();
+        var tram = (Tram)transport;
+
+        Результат: Приведет к исключению. PublicTransport не является подклассом Tram, поэтому попытка привести объект типа PublicTransport к типу Tram вызовет InvalidCastException.
+
+        6. 
+        object transport = new TransportVehicle();
+        var car = (Car)transport;
+
+        Результат: Приведет к исключению. TransportVehicle не является подклассом Car, поэтому попытка привести объект типа TransportVehicle к типу Car вызовет InvalidCastException.
+
+        ▎Вывод:
+
+        Исключения будут выброшены в следующих случаях:
+
+        • Пример 4
+
+        • Пример 5
+
+        • Пример 6
+
+        Таким образом, исключения произойдут в примерах 4, 5 и 6. 
+     
+    */
+
+    #endregion
+
+    #region Выберите все верные утверждения
+
+    class A2
+    {
+
+        public static IList<int> F1(int n, List<int> list = null)
+        {
+            if (list == null)
+                list = new List<int>();
+
+            if (n <= 0)
+                return list;
+
+            list.Add(n);
+
+            return F1(n - 2, list);
+        }
+
+        public static void Main()
+        {
+            var result = F1(5);
+            Console.WriteLine(string.Join(", ", result));
+        }
+    }
+
+    //Выберите все верные утверждения
+
+    //1 RecursiveCollect будет вызвана 4 раза
+    //2 За время работы приложения будет создан 1 экземпляр класса List<int>
+    //3    Программа завершится с ошибкой StackOverflowException
+    //4    Программа выведет на экран 5, 3, 1
+    //5    Программа выведет на экран 5, 3, 1, -1
+    //6    Программа выведет на экран 1, 3, 5
+    //7    Программа выведет на экран -1, 1, 3, 5
+
+    /*
+     
+        Давайте проанализируем представленный код и каждое из утверждений.
+
+        ▎Код:
+
+        class A
+        {
+            public static IList<int> F1(int n, List<int> list = null)
+            {
+                if (list == null)
+                    list = new List<int>();
+
+                if (n <= 0)
+                    return list;
+
+                list.Add(n);
+
+                return F1(n - 2, list);
+            }
+
+            public static void Main()
+            {
+                var result = F1(5);
+                Console.WriteLine(string.Join(", ", result));
+            }
+        }
+
+
+        ▎Анализ работы функции F1:
+
+        • При первом вызове F1(5):
+
+          • list будет инициализирован новым экземпляром List<int>.
+
+          • 5 добавляется в list.
+
+          • Рекурсивный вызов F1(3, list).
+
+        • При втором вызове F1(3):
+
+          • 3 добавляется в list.
+
+          • Рекурсивный вызов F1(1, list).
+
+        • При третьем вызове F1(1):
+
+          • 1 добавляется в list.
+
+          • Рекурсивный вызов F1(-1, list).
+
+        • При четвертом вызове F1(-1):
+
+          • Поскольку n <= 0, функция вернет текущий list.
+
+        ▎Содержимое списка после выполнения:
+
+        После завершения всех вызовов, содержимое списка будет: [5, 3, 1].
+
+        ▎Проверка утверждений:
+
+        1. RecursiveCollect будет вызвана 4 раза
+
+           • Верно. Функция F1 вызывается 4 раза (для 5, 3, 1 и -1).
+
+        2. За время работы приложения будет создан 1 экземпляр класса List<int>
+
+           • Верно. Новый экземпляр List<int> создается только один раз при первом вызове функции.
+
+        3. Программа завершится с ошибкой StackOverflowException
+
+           • Неверно. Программа корректно завершится, так как рекурсия имеет базовый случай.
+
+        4. Программа выведет на экран 5, 3, 1
+
+           • Верно. Это именно те значения, которые будут в списке, и они будут выведены в указанном порядке.
+
+        5. Программа выведет на экран 5, 3, 1, -1
+
+           • Неверно. Значение -1 не добавляется в список и не будет выведено.
+
+        6. Программа выведет на экран 1, 3, 5
+
+           • Неверно. Порядок вывода будет именно 5, 3, 1.
+
+        7. Программа выведет на экран -1, 1, 3, 5
+
+           • Неверно. Значение -1 не будет выведено, и порядок также неверен.
+
+        ▎Итог:
+
+        Верные утверждения:
+
+        • 1
+
+        • 2
+
+        • 4 
+     
+    */
+
+    #endregion
+
+    #region Иерархия
+
+        public class Animal
+        {
+            public virtual void Speak()
+            {
+                Console.WriteLine("Speak from Animal");
+            }
+        }
+
+        public class Mammal : Animal
+        {
+            public override void Speak()
+            {
+                Console.WriteLine("Speak from Mammal");
+            }
+        }
+
+        public class Dog : Mammal
+        {
+            public override void Speak()
+            {
+                base.Speak();
+                Console.WriteLine("Speak from Dog");
+            }
+        }
+
+        public class Cat : Mammal
+        {
+        }
+
+        public class Fish : Animal
+        {
+            public override void Speak()
+            {
+                base.Speak();
+                Console.WriteLine("Speak from Fish");
+            }
+        }
+
+        public class B
+        {
+            public static void Main()
+            {
+                var animals = new Animal[]
+                {
+                new Dog(),
+                new Cat(),
+                new Fish()
+                };
+
+                foreach (var animal in animals)
+                {
+                    animal.Speak();
+                }
+            }
+        }
+
+        //Какие утверждения правильные
+
+        //1 На экран будет выведено 3 строки
+        //2 Все строковые литералы, определенные в коде, будут выведены на экран
+        //3 Одна и та же строка будет выведена на экран несколько раз
+        //4 Возможно внести изменение в класс Cat, чтобы вывод на экран изменился
+        //5 Возможно внести изменение в класс Animal, чтобы вывод на экран изменился
+        //6 Если класс Animal и метод Speak в классе Animal сделать абстрактными, код продолжит компилироваться, а вывод не изменится
+        //7 Метод Speak в классе Fish можно пометить sealed, код продолжит компилироваться, а вывод не изменится
+        //8 Метод Speak в классе Mammal можно пометить sealed, код продолжит компилироваться, а вывод не изменится
+
+    /*
+    
+        При выполнении программы, будет создан массив animals, содержащий три объекта: Dog, Cat и Fish. В цикле каждый объект вызовет метод Speak():
+
+        1. Dog:
+
+           • Выведет "Speak from Mammal" (из метода Mammal.Speak(), который переопределен в Dog) и затем "Speak from Dog".
+
+   
+        2. Cat:
+
+           • Поскольку метод Speak() не переопределен в классе Cat, будет вызван метод из класса Mammal, который выведет "Speak from Mammal".
+
+        3. Fish:
+
+           • Вызовет метод Speak() из класса Fish, который сначала вызовет метод из класса Animal и выведет "Speak from Animal", а затем "Speak from Fish".
+
+        Таким образом, вывод будет следующим:
+        Speak from Mammal
+        Speak from Dog
+        Speak from Mammal
+        Speak from Animal
+        Speak from Fish
+
+
+        ▎Проверка утверждений:
+
+        1. На экран будет выведено 3 строки
+
+           • Неверно. Будет выведено 5 строк.
+
+        2. Все строковые литералы, определенные в коде, будут выведены на экран
+
+           • Верно. Все строки ("Speak from Animal", "Speak from Mammal", "Speak from Dog", "Speak from Fish") будут выведены.
+
+        3. Одна и та же строка будет выведена на экран несколько раз
+
+           • Верно. Строка "Speak from Mammal" будет выведена дважды (для Dog и Cat).
+
+        4. Возможно внести изменение в класс Cat, чтобы вывод на экран изменился
+
+           • Верно. Можно переопределить метод Speak() в классе Cat, чтобы изменить вывод.
+
+        5. Возможно внести изменение в класс Animal, чтобы вывод на экран изменился
+
+           • Верно. Если изменить реализацию метода Speak() в классе Animal, это повлияет на все производные классы, которые не переопределили его.
+
+        6. Если класс Animal и метод Speak в классе Animal сделать абстрактными, код продолжит компилироваться, а вывод не изменится
+
+           • Неверно. Код не будет компилироваться, так как класс Animal станет абстрактным, и его нельзя будет инстанцировать без реализации метода Speak() в производных классах.
+
+        7. Метод Speak в классе Fish можно пометить sealed, код продолжит компилироваться, а вывод не изменится
+
+           • Верно. Пометив метод как sealed, мы запрещаем его переопределение в производных классах, но это не повлияет на текущий вывод программы.
+
+        8. Метод Speak в классе Mammal можно пометить sealed, код продолжит компилироваться, а вывод не изменится
+
+           • Неверно. Если пометить метод Speak() в классе Mammal как sealed, это предотвратит его переопределение в классе Dog, что изменит поведение и вывод программы.
+
+        ▎Итог:
+
+        Верные утверждения:
+
+        • 2
+
+        • 3
+
+        • 4
+
+        • 5
+
+        • 7
+     
+    */
+
+    #endregion
+
+    #region Задача про магов
+
+    /*
+    
+        Вам предстоит реализовать функцию нанесения урона для игры
+        Есть два типа персонажей с определенными значениями характеристик.
+        - Воин: сила 5, магия 0, здоровье: 100
+        - Маг: сила 1, магия 2, здоровье: 50
+
+        Есть 3 типа оружия. У оружия есть формула урона, которая может зависеть от характеристик атакующего персонажа.
+        - Меч: сила, урон = сила * 3
+        - Волшебный посох: урон = магия * 2 + 2
+        - Жезл дурака: наносит случайный урон противнику от 0 до 10 (все включительно). Если жезлом владеет маг, то характеристики мага (сила, магия) меняются местами случайным образом.
+
+        Нужно написать функцию InflictDamage, которая будет наносить урон персонажу-противнику в зависимости от оружия и атакующего персонажа.
+        Минимальный уровень здоровья = 0. API этой функции можно придумать на свой вкус. Но при написании кода и выборе контракта этой функции нужно учитывать следующие требования:
+        - типы персонажей и оружия в будущем будут сильно расширяться
+        - над проектом работают несколько разработчиков параллельно
+        - API  классов должен быть удобным для использования
+
+        Нужно реализовать описанные выше требования. Для этого вы можете создавать любые дополнительные методы или классы, а так же как угодно изменять существующий код.
+     
+    */
+
+    public abstract class Character
+        {
+            public int Strength { get; set; }
+            public int Magic { get; set; }
+            public int Health { get; set; }
+
+            public Character(int strength, int magic, int health)
+            {
+                Strength = strength;
+                Magic = magic;
+                Health = health;
+            }
+
+            public void TakeDamage(int damage)
+            {
+                Health -= damage;
+                if (Health < 0) Health = 0; // Минимальное здоровье = 0
+            }
+        }
+
+        public class Warrior : Character
+        {
+            public Warrior() : base(5, 0, 100) { }
+        }
+
+        public class Mage : Character
+        {
+            public Mage() : base(1, 2, 50) { }
+        }
+
+        public interface IWeapon
+        {
+            int CalculateDamage(Character attacker);
+        }
+
+        public class Sword : IWeapon
+        {
+            public int CalculateDamage(Character attacker)
+            {
+                return attacker.Strength * 3;
+            }
+        }
+
+        public class MagicStaff : IWeapon
+        {
+            public int CalculateDamage(Character attacker)
+            {
+                return attacker.Magic * 2 + 2;
+            }
+        }
+
+        public class FoolStaff : IWeapon
+        {
+            private Random _random = new Random();
+
+            public int CalculateDamage(Character attacker)
+            {
+                if (attacker is Mage)
+                {
+                    // Меняем местами силу и магию случайным образом
+                    var tempStrength = attacker.Strength;
+                    attacker.Strength = attacker.Magic;
+                    attacker.Magic = tempStrength;
+                }
+
+                return _random.Next(0, 11); // Случайный урон от 0 до 10
+            }
+        }
+
+        public class GameEngine
+        {
+            public void InflictDamage(Character attacker, IWeapon weapon, Character defender)
+            {
+                int damage = weapon.CalculateDamage(attacker);
+                defender.TakeDamage(damage);
+                Console.WriteLine($"{attacker.GetType().Name} атакует {defender.GetType().Name} на {damage} урона. Осталось здоровья: {defender.Health}");
+            }
+        }
+
+        // Пример использования
+        class Program2
+        {
+            static void Main(string[] args)
+            {
+                Character warrior = new Warrior();
+                Character mage = new Mage();
+                IWeapon sword = new Sword();
+                IWeapon magicStaff = new MagicStaff();
+                IWeapon foolStaff = new FoolStaff();
+
+                GameEngine gameEngine = new GameEngine();
+
+                gameEngine.InflictDamage(warrior, sword, mage);
+                gameEngine.InflictDamage(mage, magicStaff, warrior);
+                gameEngine.InflictDamage(mage, foolStaff, warrior);
+            }
+        }
+
+    #endregion
+
+
+    static async Task Main()
+    {
+
     }
 }
 
