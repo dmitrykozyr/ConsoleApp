@@ -13,66 +13,24 @@ class Program
         
             Жизненный цикл .Net Core приложения
 
-            1. Создание приложения:
-
-                - Инициализация проекта
-                  Создание нового проекта с помощью шаблонов .NET Core (например, через команду dotnet new)
-
-                - Конфигурация
-                  Настройка зависимостей, конфигураций и служб в файле Startup.cs и других конфигурационных файлах
-
-            2. Запуск приложения
-
-                - Загрузка
-                  Приложение загружает необходимые сборки и зависимости
-
-                - Создание хоста
-                  Создается экземпляр IHost, который управляет жизненным циклом приложения
-                  Это может быть WebHost для веб-приложений или Host для консольных приложений
-
-            3. Настройка
-
-                - Конфигурация
-                  Приложение считывает конфигурации из различных источников (файлы, переменные окружения, секреты) и настраивает службы
-
-                - Регистрация служб
-                  Все необходимые службы (например, контроллеры, сервисы, репозитории) регистрируются в контейнере зависимостей
-
-            4. Запуск сервера
-
-                - Запуск приложения
-                  При запуске веб-приложения сервер (например, Kestrel) начинает прослушивать входящие HTTP-запросы
-
-                - Обработка запросов
-                  Сервер обрабатывает входящие запросы, создавая экземпляры контроллеров и вызывая соответствующие методы для обработки запросов
-
-            5. Обработка запросов
-
-                - Middleware
-                  Запрос проходит через middleware, которое может выполнять
-                  - аутентификация
-                  - логирование
-                  - обработку ошибок
-
-                - Контроллеры и действия
-                  Запрос направляется к соответствующему контроллеру и его методу, который обрабатывает бизнес-логику
-
-            6. Формирование ответа
-
-                - Создание ответа
-                  Контроллер формирует ответ (например, HTML, JSON или другой формат) и возвращает его обратно через middleware
-
-                - Отправка ответа
-                  Ответ отправляется клиенту через сервер
-
-            7. Завершение работы
-
-                - Очистка ресурсов
-                  Когда приложение завершается (например, при получении сигнала остановки), оно очищает ресурсы,
-                  такие как закрытие соединений с БД, освобождение памяти
-
-                - Завершение хоста
-                  Хост завершает работу, вызывая соответствующие методы для завершения всех зарегистрированных служб
+            - Создание нового проекта с помощью шаблонов .NET Core (например, через команду dotnet new)
+            - Настройка зависимостей, конфигураций и служб в файле Startup.cs и других конфигурационных файлах
+            - Запуск приложения
+            - Приложение загружает необходимые сборки и зависимости
+            - Создание хоста
+              Создается экземпляр IHost, который управляет жизненным циклом приложения
+              Это может быть WebHost для веб-приложений или Host для консольных приложений
+            - Приложение считывает конфигурации из различных источников (файлы, переменные окружения, секреты) и настраивает службы
+            - Все необходимые службы (например, контроллеры, сервисы, репозитории) регистрируются в контейнере зависимостей
+            - При запуске веб-приложения сервер (например, Kestrel) начинает прослушивать входящие HTTP-запросы
+            - Сервер обрабатывает входящие запросы, создавая экземпляры контроллеров и вызывая соответствующие методы для обработки запросов
+            - Запрос проходит через middleware, которое может выполнять аутентификацию, логирование, обработку ошибок
+            - Запрос направляется к соответствующему контроллеру и его методу, который обрабатывает бизнес-логику
+            - Контроллер формирует ответ (например, HTML, JSON или другой формат) и возвращает его обратно через middleware
+            - Ответ отправляется клиенту через сервер
+            - Когда приложение завершается (например, при получении сигнала остановки), оно очищает ресурсы,
+              такие как закрытие соединений с БД, освобождение памяти
+            - Хост завершает работу, вызывая соответствующие методы для завершения всех зарегистрированных служб
 
         */
     }
@@ -84,8 +42,9 @@ class Program
         const                   инициализация при обьявлении,                    неявно статические, нельзя помечать как static
         readonly                инициализация в конструкторе или при объявлении, неявно статические, можно  помечать как static
         partial                 позволяет разбить класс на несколько частей
+        
         ref                     передача аргумента по ссылке, инициализировать до вызова метода
-        out                     можно не инициализировать до вызова метода
+        out                                                   можно не инициализировать до вызова метода
         
         TCP                     отправляет сообщение, пока не получит подтверждение о доставке или не будет превышено число попыток
         UDP                     не гарантирует доставку, но более быстрый и подходит для широковещательной передачи
@@ -95,21 +54,30 @@ class Program
         protected internal      доступ в текущей сборке и из производных классов
         private protected       доступ в текущем и производных классах в той же сборке
         
-        Если в базовом классе есть вирт метод, то в дочернем его можно переопределить через override,
-        либо через new сказать, что нужно использовать метод дочернего класса
-        Если sealed применить к классу              - запрещаем наследоваться от класса
-        Если sealed применить к override-методу     - запрещаем переопределение
+        Если sealed применить к:
+        - классу - запрещаем наследоваться от класса
+        - override-методу - запрещаем переопределение
+
         override можно применять к виртуальным и абстрактным методам
-        Стек ограничен по размеру, но быстрее, а куча медленнее, но это почти вся оперативная память
-        Дебаг F5 - до следующей точки останова, F10 - на следующий шаг, F11 - зайти внутрь метода
-        using SCG = System.Collections.Generic; псевдоним
+
+        Стек ограничен по размеру (2 Гб), но быстрее
+        Куча медленнее, но это почти вся оперативная память
+
+        Дебаг:
+        - F5 - до следующей точки останова
+        - F10 - на следующий шаг
+        - F11 - зайти внутрь метода
+
+        Псевдоним:
+        using SCG = System.Collections.Generic;
 
         Немедленное выполнение - операция выполнися в точке, где объявлен запрос
         Отложенное выполнение  - результат запроса зависит от источника данных в момент выполнения запроса, а не при его определении
 
-        Статические классы могут содержать только статические поля, свойства и методы    
-        Статические св-ва/методы хранят состояние/поведение всего класса, а не отдельного объекта, обращение по имени класса
+        Статические классы могут содержать статические поля, св-ва и методы    
+        Статические св-ва/методы хранят состояние всего класса, а не отдельного объекта, обращение по имени класса
         Статические методы могут обращаться только к статическим членам класса
+        
         Статические конструкторы:
         - не имеют модификаторов доступа и не принимают параметры
         - нельзя использовать слово this для ссылки на текущий объект класса
@@ -117,7 +85,7 @@ class Program
         - нужны для инициализации статических данных
         - выполняются один раз
 
-                                                         Разрядность в битах  Диапазон представления чисел
+        Значимые типы:                                   Разрядность в битах  Диапазон представления чисел
         bool     логический
         byte     8-разрядный целочисленный без знака     8   ---------------  0 - 255
         char     символьный                              16  ---------------  0 - 65.535
@@ -132,16 +100,16 @@ class Program
         ulong    длинный целочисленный без знака         64  ---------------  0 - 18.446.744.073.709.551.615
         ushort   короткий целочисленный без знака        16  ---------------  0 - 65.535
 
-        Val: byte, short, int, long, float, double, decimal, bool, char, enum, struct
-        Ref: object, string, class, interface, delegate
+        Ссылочные типы:
+        - object
+        - string
+        - class
+        - interface
+        - delegate
 
-        Стек имеет размер 2 Мб
-
-        Если переменная представляет значимый тип,
-        то в стеке будет храниться непосредсвенное значение
+        Если переменная представляет значимый тип, то в стеке будет храниться непосредсвенное значение
         
-        Ссылочные типы хранятся в куче, при создании объекта ссылочного типа
-        в стек помещается ссылка на адрес в куче
+        Ссылочные типы хранятся в куче, а при создании объекта ссылочного типа в стек помещается ссылка на адрес в куче
         
         KISS - Keep It Simple, Stupid
         DRY  - Don’t Repeat Yourself
@@ -195,24 +163,33 @@ class Program
         Big O(N)    Описывает скорость роста времени выполнения бесконечного алгоритма
 
         O(N^2 + B)  'B' не учитывается, мы ничего не знаем об этом значении
+        
         O(A + B)    Если выполняется одна ф-я, а затем другая, то общая сложность равна сумме - они не влияют друг на друга
+        
         O(A * B)    Если внутри одной ф-ии выполняется другая или есть вложенные циклы, то общая сложность равна произведению
                     При увеличении времении выполнения вложенной ф-ии, увеличивается время родительской
        
         O(0)        На вход не передаются данные, либо алгоритм их не обрабатывает
+        
         O(1)        Время обработки не меняется с изменением входного объема данных
                     В ф-ии нет циклов и рекурсии, всегда выполняется фиксированное число шагов
+        
         O(logN)     На каждой итерации берется половина элементов, как при бинарном поиске в отсортированном массиве
+        
         O(N)        На скольлько возрастает объем входных данных, на столько возрастает время обработки
                     Входной аргумент определяет число шагов цикла/рекурсии
                     Алгоритм, описываемый как O(2N), нужно описывать без констант как O(N)
                     O(N + logN) = O(N), т.к. N > logN
         O(NlogN)
+        
         O(N^A)      Есть вложенные циклы, каждый выполняет от 0 до N шагов
                     Алгоритм O(N^2 + N) описывать O(N^2)
                     O(N^2) - сложность пузырьковой сортировки
+        
         O(A^N)      O(5 * 2^N + 10 * N^1000) = (2^N), т.к. степень растет быстрее всего
+        
         O(N!)
+        
         O(N^N)
 
         */
@@ -230,11 +207,11 @@ class Program
             switch (a)
             {
                 case string s: // Преобразование object в string
-                    // ...
+                        // ...
                     break;
                 case Switch_ sw when sw.MyProperty == "1":
-                    // Если на вход передается объект класса Switch_
-                    // со значением переменной MyProperty == "1"
+                        // Если на вход передается объект класса Switch_
+                        // со значением переменной MyProperty == "1"
                     break;
             }
 
@@ -253,9 +230,9 @@ class Program
                 (1, "11") => "Вернуть результат 1",
                 (2, "11") or (2, "22") => "Вернуть результат 2",
                 (3, "33") => "Вернуть результат 3",
-                (_, "44") => "Вернуть результат 4", // первое значение пропущено
-                (5, not "55") => "Вернуть результат 5", // второе значение не равно 5
-                _ => throw new NotImplementedException() // default
+                (_, "44") => "Вернуть результат 4",         // первое значение пропущено
+                (5, not "55") => "Вернуть результат 5",     // второе значение не равно 5
+                _ => throw new NotImplementedException()    // default
             };
 
             // v4
@@ -273,108 +250,90 @@ class Program
     {
         static void Main_()
         {
-            // Хранит однотипные объекты
-            // Внутри это массив, можно обращаться к элементам по индексу
-            var list = new List<int>();
-            list.Add(0);
-            list.Add(1);
+            // List
+                // Хранит однотипные объекты
+                // Внутри это массив, можно обращаться к элементам по индексу
+                var list = new List<int>();
+                list.Add(0);
+                list.Add(1);
 
-            // Эквивалентно предыдущей записи
-            var list2 = new List<int>() { 0, 1 };
-            list2[0] = 1;
+                // Эквивалентно предыдущей записи
+                var list2 = new List<int>() { 0, 1 };
+                list2[0] = 1;
 
-            // Двусвязный список, где каждый элемент хранит ссылку на следующий и предыдущий элемент
-            var numbers = new LinkedList<int>();
-            numbers.AddLast(1);
-            numbers.AddFirst(2);
-            numbers.AddAfter(numbers.Last, 3);
+            // LinkedList - двусвязный список
+                // Каждый элемент хранит ссылку на следующий и предыдущий элемент
+                var numbers = new LinkedList<int>();
+                    numbers.AddLast(1);
+                    numbers.AddFirst(2);
+                    numbers.AddAfter(numbers.Last, 3);
 
-            // В словаре нельзя создать два поля с одинаковым ключем
-            // Ключ преобразуется в хеш, по которому поиск идет за O(1)
-            var dictionary = new Dictionary<int, string>();
-            dictionary.Add(0, "0");
-            dictionary.Add(1, "1");
+            // Dictionary
+                // В словаре нельзя создать два поля с одинаковым ключем
+                // Ключ преобразуется в хеш, по которому поиск идет за O(1)
+                var dictionary = new Dictionary<int, string>();
+                dictionary.Add(0, "0");
+                dictionary.Add(1, "1");
 
-            // Похоже на словарь, но ключи и значения приводятся к object,
-            // что увеличивает расход памяти, но поддерживается многопоточное чтение
-            var hashtable = new Hashtable()
-            {
-                { 0, "00" },
-                { 1, "11" },
-                { 2, "22" },
-            };
-            var count = hashtable.Count;
-            hashtable.Add(3, "33");
-            hashtable.Remove(2);
+            // Hashtable
+                // Похоже на словарь, но ключи и значения приводятся к object,
+                // что увеличивает расход памяти, но поддерживается многопоточное чтение
+                var hashtable = new Hashtable()
+                {
+                    { 0, "00" },
+                    { 1, "11" },
+                    { 2, "22" },
+                };
+                var count = hashtable.Count;
+                hashtable.Add(3, "33");
+                hashtable.Remove(2);
 
-            // Хранит уникальную коллекцию в неотсортированном виде
-            // Последняя еденица не добавится, т.к. она уже есть в коллекции
-            // Будет 2 3 1
-            var hashSet = new HashSet<int>();
-            hashSet.Add(2);
-            hashSet.Add(3);
-            hashSet.Add(1);
-            hashSet.Add(1);
+            // HashSet
+                // Хранит уникальную коллекцию в неотсортированном виде
+                // Последняя еденица не добавится, т.к. она уже есть в коллекции
+                // Будет 2 3 1
+                var hashSet = new HashSet<int>();
+                hashSet.Add(2);
+                hashSet.Add(3);
+                hashSet.Add(1);
+                hashSet.Add(1);
 
-            // Позволяет хранить разнотипные объекты
-            var arrayList = new ArrayList { Capacity = 50 };
-            arrayList.Add(1);
-            Console.WriteLine(arrayList[0]);
-            arrayList.RemoveAt(0);
-            arrayList.Reverse();
-            arrayList.Remove(4);
-            arrayList.Sort();
-            arrayList.Clear();
+            // ArrayList
+                // Позволяет хранить разнотипные объекты
+                var arrayList = new ArrayList { Capacity = 50 };
+                arrayList.Add(1);
+                Console.WriteLine(arrayList[0]);
+                arrayList.RemoveAt(0);
+                arrayList.Reverse();
+                arrayList.Remove(4);
+                arrayList.Sort();
+                arrayList.Clear();
 
-            // Коллекция отсортирована по ключу
-            var sortedList = new SortedList()
-            {
-                { 0, "0" },
-                { 1, "1" },
-                { 2, "2" },
-            };
-            sortedList.Add(3, "3");
-            sortedList.Clear();
+            // SortedList
+                // Коллекция отсортирована по ключу
+                var sortedList = new SortedList()
+                {
+                    { 0, "0" },
+                    { 1, "1" },
+                    { 2, "2" },
+                };
+                sortedList.Add(3, "3");
+                sortedList.Clear();
 
-            // Первый пришел - последний ушел
-            var stack = new Stack();
-            stack.Push("string");
-            stack.Push(4);
-            stack.Pop();       // Удалить элемент
-            stack.Clear();
+            // Stack
+                // Первый пришел - последний ушел
+                var stack = new Stack();
+                stack.Push("string");
+                stack.Push(4);
+                stack.Pop();       // Удалить элемент
+                stack.Clear();
 
-            // Первый пришел - первый ушел
-            var queue = new Queue();
-            queue.Enqueue("string");
-            queue.Enqueue(5);
-            queue.Dequeue(); // Возвращает элемент из начала очереди
-
-            // Конкурентные коллекции
-            /*
-                Могут быть безопасно использованы из нескольких потоков одновременно:
-                - ConcurrentBag<T> - неупорядоченная коллекция
-                - ConcurrentDictionary<TKey, TValue>
-                - ConcurrentQueue<T>
-                - ConcurrentStack<T>
-            
-                
-            */
-
-            // Неизменяемые коллекции
-            /*
-                Не могут быть изменены после создания
-                Операции добавления удаления и изменения элементов создают новую коллекцию
-                Используются в многопоточных приложениях, где несколько потоков могут пытаться изменить
-                одну и ту же коллекцию одновременно
-                Также используются, для сохранения состояния коллекции на определенный момент времени,
-                например, для реализации отмены операции или для сохранения состояния приложения
-                - ImmutableList < T >
-                -ImmutableArray < T >
-                -ImmutableDictionary < TKey, TValue >
-                -ImmutableHashSet < T >
-                -ImmutableQueue < T >
-                -ImmutableStack<T>
-            */
+            // Queue
+                // Первый пришел - первый ушел
+                var queue = new Queue();
+                queue.Enqueue("string");
+                queue.Enqueue(5);
+                queue.Dequeue(); // Возвращает элемент из начала очереди
         }
 
         #region IList и List
@@ -446,13 +405,21 @@ class Program
             static void ShowLeafIds(TreeData root)
             {
                 if (root == null)
+                {
                     return;
+                }
 
                 if (root.Child == null || root.Child.Length == 0)
+                {
                     Console.WriteLine(root.Id);
+                }
                 else
+                {
                     foreach (var child in root.Child)
+                    {
                         ShowLeafIds(child);
+                    }
+                }
             }
 
             static void Main()
@@ -499,21 +466,27 @@ class Program
     {
         struct Structure_
         {
-            // Могут наследоваться только от интерфейса, а их нельзя наследовать
+            // Могут наследоваться только от интерфейса
+            // Их нельзя наследовать
             // Могут быть readonly, но все поля тоже должны быть readonly
 
             public string name;
-
             public int age;
 
-            //public string gender = "Male";        // Ошибка - нельзя инициализировать поля при объявлении
-            public Structure_(string name, int age) // Если определяем конструктор - он должен инициализировать все поля
+            // Ошибка - нельзя инициализировать поля при объявлении
+            //public string gender = "Male";
+
+            // Если определяем конструктор - он должен инициализировать все поля
+            public Structure_(string name, int age)
             {
                 this.name = name;
                 this.age = age;
             }
 
-            public void DisplayInfo() { Console.WriteLine($"Name: {name} Age: {age}"); }
+            public void DisplayInfo()
+            {
+                Console.WriteLine($"Name: {name} Age: {age}");
+            }
         }
 
         static void Main_()
@@ -536,14 +509,12 @@ class Program
     class Record_
     {
         // Ссылочный тип, могут представлять неизменяемый immutable тип
-        // Такие типы более безопасны, когда надо гарантировать, что данные объекта не будут изменяться
-        // В .NET уже есть неизменяемые типы, например, String
+        // Такие типы более безопасны, если данные объекта не должны изменяться
 
         // Есть
-        // - record классы
+        // - record классы, для них слово class можно не писать
         // - record структуры
 
-        // При определении record класса слово class можно не писать
         public record class MyRecordClass_
         {
             public string Name { get; init; } // init делает св-во неизменяемым
@@ -557,31 +528,47 @@ class Program
             }
 
             // Деконструктор позволяет разложить объект на кортеж значений
-            public void Deconstruct(out string name, out int age) => (name, age) = (Name, Age);
+            public void Deconstruct(out string name, out int age)
+            {
+                (name, age) = (Name, Age);
+            }
         }
 
         public record struct MyRecordStruct_
         {
             public string Name { get; init; }
-            public MyRecordStruct_(string name) => Name = name;
+
+            public MyRecordStruct_(string name)
+            {
+                Name = name;
+            }
         }
 
         public class UserClass
         {
             public string Name { get; init; }
-            public UserClass(string name) => Name = name;
+
+            public UserClass(string name)
+            {
+                Name = name;
+            }
         }
 
         public record UserRecord
         {
             public string Name { get; init; }
 
-            public UserRecord(string name) => Name = name;
+            public UserRecord(string name)
+            {
+                Name = name;
+            }
         }
 
         // Как и обыччные классы, record-классы могут наследоваться
         public record Person(string Name, int Age);
-        public record Employee(string Name, int Age, string Company) : Person(Name, Age);
+
+        public record Employee(string Name, int Age, string Company)
+            : Person(Name, Age);
 
         static void Main_()
         {
@@ -633,8 +620,10 @@ class Program
             Далее в скобках перечисляются параметры - один из них должен представлять класс или структуру, в котором определяется оператор
             В примере перегруженные операторы проводятся над двумя объектами, поэтому для каждой перегрузки будет по два параметра
         */
+
         int Value { get; set; }
-        public static OperatorOverload_ operator +(OperatorOverload_ c1, OperatorOverload_ c2) 
+
+        public static OperatorOverload_ operator + (OperatorOverload_ c1, OperatorOverload_ c2) 
         {
             return new OperatorOverload_
             {
@@ -642,12 +631,12 @@ class Program
             };
         }
 
-        public static bool operator >(OperatorOverload_ c1, OperatorOverload_ c2)
+        public static bool operator > (OperatorOverload_ c1, OperatorOverload_ c2)
         { 
             return c1.Value > c2.Value; 
         }
 
-        public static bool operator <(OperatorOverload_ c1, OperatorOverload_ c2)
+        public static bool operator < (OperatorOverload_ c1, OperatorOverload_ c2)
         { 
             return c1.Value < c2.Value; 
         }
@@ -668,19 +657,32 @@ class Program
     class InterfaceLink_
     {
         // Интерфейсы могут хранить свойства и методы
-        interface IMyInterface { void F1(); }
+        interface IMyInterface
+        {
+            void F1();
+        }
 
         class A : IMyInterface
         {
-            public void F1() { Console.WriteLine("F1"); }
-            public void F2() { Console.WriteLine("F2"); }
+            public void F1()
+            {
+                Console.WriteLine("F1");
+            }
+
+            public void F2()
+            {
+                Console.WriteLine("F2");
+            }
         }
 
         static void Main_()
         {
             var objA = new A();
+
             IMyInterface inter = objA;
+
             inter.F1();
+
             //inter.F2(); // Ошибка
         }
     }
@@ -688,43 +690,78 @@ class Program
     class IEnumerable_IQueryable_
     {
         /*
-            IEnumerable - коллекция, которую можно перебирать поочередно
-            IQueryable  - коллекция, которую можно запросить у БД и получить только нужные данные
+            IEnumerable
+            
+                Можно перебирать поочередно
 
-            IEnumerable работает с коллекциями, которые находятся в памяти, и выполняет запросы на месте,
-            т.е. вытаскивает данные из коллекции в память и затем выполняет запрос на них
-            Это может привести к проблемам производительности при работе с большими коллекциями
+                Работает с коллекциями, которые находятся в памяти, и выполняет запросы на месте,
+                т.е. вытаскивает данные из коллекции в память и затем выполняет запрос на них
+                Это может привести к проблемам производительности при работе с большими коллекциями
 
-            List<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
-            IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0);
-            foreach (int number in evenNumbers)
+                Преобразуется в SQL без where - отбирается вся коллекция, а потом фильтруется на клиенте:
+
+                    IEnumerable<Phone> phoneIEnum = db.Phones;
+                    var phones = phoneIEnum.Where(p => p.Id > id).ToList();
+                    SELECT Id, Name FROM dbo.Phones
+        */
+
+            public void F1()
             {
-                Console.WriteLine(number);
+                var numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+                IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0);
+
+                foreach (int number in evenNumbers)
+                {
+                    Console.WriteLine(number);
+                }
             }
 
-            IQueryable работает с коллекциями, которые хранятся в БД
-            Cтроит запросы, которые будут выполнены на стороне БД и вернут только нужные данные
-            Это улучшает производительность при работе с большими коллекциями
+        /*
+            IQueryable
 
+                Можно запросить у БД и получить только нужные данные
+
+                Работает с коллекциями, которые хранятся в БД
+                Cтроит запросы, которые будут выполнены на стороне БД и вернут только нужные данные
+                Это улучшает производительность при работе с большими коллекциями
+
+                Преобразуется в SQL с where - сразу отфильтровывает на сервере:
+
+                    IQueryable<Phone> phoneIQuer = db.Phones;
+                    var phones = phoneIQuer.Where(p => p.Id > id).ToList();
+                    SELECT Id, Name FROM dbo.Phones WHERE Id > 3
+        */
+
+            class MyDbContext : IDisposable
+            {
+                public IQueryable<Product>? Products { get; set; }
+
+                public void Dispose()
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            class Product
+            {
+                public int Price { get; set; }
+
+                public string? Name { get; set; }
+            }
+
+            public void F2()
+            {
                 using (var context = new MyDbContext())
                 {
                     IQueryable<Product> products = context.Products.Where(p => p.Price > 10);
+
                     foreach (Product product in products)
                     {
                         Console.WriteLine(product.Name);
                     }
                 }
-
-            IEnumerable преобразуется в SQL без where - отбирается вся коллекция, а потом фильтруется на клиенте
-                IEnumerable<Phone> phoneIEnum = db.Phones;
-                var phones = phoneIEnum.Where(p => p.Id > id).ToList();
-                SELECT Id, Name FROM dbo.Phones
-
-            IQueryable преобразуется в SQL с where - сразу отфильтровывает на сервере
-                IQueryable<Phone> phoneIQuer = db.Phones;
-                var phones = phoneIQuer.Where(p => p.Id > id).ToList();
-                SELECT Id, Name FROM dbo.Phones WHERE Id > 3
-        */
+            }
     }
 
     class SOLID_
