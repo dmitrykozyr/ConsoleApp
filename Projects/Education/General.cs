@@ -608,17 +608,12 @@ class Program
     class OperatorOverload_
     {
         /*
-            Класс представляет счетчик, значение которого хранится в свойстве Value
-            Есть два объекта класса - два счетчика, которые хотим сравнивать
-            На данный момент операция == и + для объектов класса недоступны
-            Это операции для примитивных типов, но не для классов и структур
-            Для перегрузки оператора определеним в классе, для объектов которого хотим определить оператор, специальный метод
-            Он должен иметь модификаторы public static, так как будет использоваться для всех объектов класса
-            Далее идет название возвращаемого типа
-            В результате сложения ожидаем получить новый объект класса, сравнения - bool
-            Вместо названия метода идет слово operator и сам оператор
-            Далее в скобках перечисляются параметры - один из них должен представлять класс или структуру, в котором определяется оператор
-            В примере перегруженные операторы проводятся над двумя объектами, поэтому для каждой перегрузки будет по два параметра
+            Для перегрузки определеним в классе, для объектов которого хотим определить оператор, метод, содержащий:
+            - модификаторы public static - будет использоваться всеми объектами класса
+            - название возвращаемого типа
+            - вместо названия метода идет слово operator и сам оператор
+            - в скобках перечисляются параметры - один из них должен представлять класс или структуру, в котором определяется оператор            
+              В примере перегруженные операторы проводятся над двумя объектами, поэтому для каждой перегрузки будет два параметра
         */
 
         int Value { get; set; }
@@ -694,18 +689,17 @@ class Program
             
                 Можно перебирать поочередно
 
-                Работает с коллекциями, которые находятся в памяти, и выполняет запросы на месте,
-                т.е. вытаскивает данные из коллекции в память и затем выполняет запрос на них
-                Это может привести к проблемам производительности при работе с большими коллекциями
+                Вытаскивает данные из коллекции в память и затем выполняет запрос на них
+                Может привести к проблемам производительности при работе с большими коллекциями
 
-                Преобразуется в SQL без where - отбирается вся коллекция, а потом фильтруется на клиенте:
+                Преобразуется в SQL без WHERE - отбирается вся коллекция, а потом фильтруется на клиенте:
 
                     IEnumerable<Phone> phoneIEnum = db.Phones;
                     var phones = phoneIEnum.Where(p => p.Id > id).ToList();
                     SELECT Id, Name FROM dbo.Phones
         */
 
-            public void F1()
+        public void F1()
             {
                 var numbers = new List<int> { 1, 2, 3, 4, 5 };
 
@@ -724,9 +718,9 @@ class Program
 
                 Работает с коллекциями, которые хранятся в БД
                 Cтроит запросы, которые будут выполнены на стороне БД и вернут только нужные данные
-                Это улучшает производительность при работе с большими коллекциями
+                Улучшает производительность при работе с большими коллекциями
 
-                Преобразуется в SQL с where - сразу отфильтровывает на сервере:
+                Преобразуется в SQL с WHERE - сразу отфильтровывает на сервере:
 
                     IQueryable<Phone> phoneIQuer = db.Phones;
                     var phones = phoneIQuer.Where(p => p.Id > id).ToList();
@@ -766,12 +760,16 @@ class Program
 
     class SOLID_
     {
-        // Single Responsibility    большие классы разделять на малые, чтобы каждый выполнял конкретную задачу
-        // Open Closed              методы класса должны быть открыты для расширения, но закрыты для модификации
+        // Single Responsibility    большие классы разделять на малые, чтобы каждый выполнял одну задачу
+        // Open Closed              методы класса должны быть открыты для расширения, но закрыты для изменения
         // Liskov Substitution      объекты можно заменить их наследниками без изменения свойств программы
         // Interface Segregation    не создавать интерфейсы с большим числом методов
         // Dependency Invertion     зависимости кода должны строиться от абстракции
-        interface IDependencyInvertion { void F1(); }
+
+        interface IDependencyInvertion
+        {
+            void F1();
+        }
 
         class A : IDependencyInvertion
         {
@@ -786,7 +784,12 @@ class Program
         class C
         {
             private readonly IDependencyInvertion _di;
-            public C(IDependencyInvertion di) { _di = di; }
+
+            public C(IDependencyInvertion di)
+            {
+                _di = di;
+            }
+
             public void F2() { _di.F1(); }
         }
 
@@ -802,70 +805,115 @@ class Program
 
     class AbstractAndStaticClass_
     {
-        // Статический класс нужен для группировки логически связанных членов
-        // От него нельзя наследоваться и он не может реализовывать интерфейс
+        // Статический класс:
+        // - нужен для группировки логически связанных членов
+        // - от него нельзя наследоваться
+        // - не может реализовывать интерфейс
         static class A
         {
-            static public void F1() { Console.WriteLine("A3"); }
+            static public void F1()
+            {
+                Console.WriteLine("A3");
+            }
         }
 
-        // Абстрактный класс может иметь переменные, абстрактные | методы, конструкторы, абстрактные | свойства, индексаторы, события
-        // Абстрактные методы и св-ва могут быть лишь в абстрактных классах, не могут иметь тело и должны быть переопределены наследником
+        // Абстрактный класс может иметь
+        // - переменные
+        // - абстрактные | методы
+        // - абстрактные | свойства
+        // - конструкторы
+        // - индексаторы
+        // - события
+
+        // Абстрактные методы и св-ва:
+        // - могут быть лишь в абстрактных классах
+        // - не могут иметь тело
+        // - должны быть переопределены наследником
+
         // Абстрактные члены не должны иметь модификатор private
         // Исключение - если дочерний класс тоже абстрактный
+
         abstract class B
         {
             public abstract string Name { get; set; }
-            public void F2() { Console.WriteLine("B3"); }
+
+            public void F2()
+            {
+                Console.WriteLine("B3");
+            }
+
             public abstract void F3();
         }
 
         class ProgramAbstractAndStaticClass : B
         {
-            string name;
+            string name = "";
+
             public override string Name
             {
                 get { return "Mr/Ms. " + name; }
+
                 set { name = value; }
             }
 
             static void Main_()
             {
                 A.F1();
+
                 B objB = new ProgramAbstractAndStaticClass();
+
                 objB.F2();
+
                 objB.F3();
             }
 
-            public override void F3() { Console.WriteLine("Program"); }
+            public override void F3()
+            {
+                Console.WriteLine("Program");
+            }
         }
     }
 
     class MultipleInheritance_
     {
         // Множественное наследование запрещено, но его можно реализовать через интерфейсы
-        interface IInterface { void F2(); }
+        interface IInterface
+        {
+            void F2();
+        }
 
         class A
         {
-            public void F1() { Console.WriteLine("F1"); }
+            public void F1()
+            {
+                Console.WriteLine("F1");
+            }
         }
 
         class B : IInterface
         {
-            public void F2() { Console.WriteLine("F2"); }
+            public void F2()
+            {
+                Console.WriteLine("F2");
+            }
         }
 
         class C : A, IInterface
         {
             B objB = new B();
-            public void F2() { objB.F2(); }
+
+            public void F2()
+            {
+                objB.F2();
+            }
         }
 
         static void Main_()
         {
             var objC = new C();
+
             objC.F1();
+
             objC.F2();
         }
     }
@@ -874,125 +922,51 @@ class Program
     {
         class BaseClass
         {
-            public virtual void F()
+            // virtual
+            public virtual void F1()
             {
-                Console.WriteLine("BaseClass");
+                Console.WriteLine("Вызов базового класса");
             }
         }
 
         class DerivedClass_Override : BaseClass
         {
-            public override void F()
+            // override
+            public override void F1()
             {
-                Console.WriteLine("DerivedClass");
+                Console.WriteLine("Вызов дочернего класса");
             }
         }
-
+                
         class DerivedClass_New : BaseClass
         {
-            public new void F()
+            // new
+            public new void F1()
             {
-                Console.WriteLine("DerivedClass");
+                Console.WriteLine("Вызов дочернего класса");
             }
         }
 
         static void Main_()
         {
             BaseClass obj1 = new BaseClass();
-            obj1.F(); // BaseClass
+            obj1.F1();  // Вызов базового класса
 
 
 
             DerivedClass_Override obj2 = new DerivedClass_Override();
-            obj2.F(); // DerivedClass
+            obj2.F1();  // Вызов дочернего класса
 
             BaseClass obj3 = new DerivedClass_Override();
-            obj3.F(); // DeriverClass
+            obj3.F1();  // Вызов дочернего класса
 
 
 
             DerivedClass_New obj4 = new DerivedClass_New();
-            obj4.F(); // DerivedClass
+            obj4.F1();  // Вызов дочернего класса
 
             BaseClass obj5 = new DerivedClass_New();
-            obj5.F(); // BaseClass
-        }
-    }
-
-    class TypeConversion_
-    {
-        class Person
-        {
-            public string Name { get; set; }
-            public Person(string name) { Name = name; }
-            public void Display() { Console.WriteLine($"Person {Name}"); }
-        }
-
-        class Employee : Person
-        {
-            public string Company { get; set; }
-            public Employee(string name, string company) : base(name)
-            {
-                Company = company;
-            }
-        }
-
-        class Client : Person
-        {
-            public string Bank { get; set; }
-            public Client(string name, string bank) : base(name)
-            {
-                Bank = bank;
-            }
-        }
-
-        static void Main_()
-        {
-            // ВОСХОДЯЩИЕ ПРЕОБРАЗОВАНИЕ (upcasting)
-            // Переменной per типа Person присваивается ссылка на Employee
-            // Employee наследуется от Person, поэтому выполняется восходящее преобразование,
-            // в итоге employee и person указывают на один объект,
-            // но per доступна только та часть, которая представляет функционал Person
-            var emp = new Employee("Dima", "Company");
-            Person per = emp;
-            Console.WriteLine(per.Name);
-
-            // НИСХОДЯЩИЕ ПРЕОБРАЗОВАНИЯ (downcasting) - от базового класса к производному
-            // Чтобы обратиться к функционалу Employee через переменную типа Person,
-            // нужно явное преобразование
-            var emp2 = new Employee("Tom", "Microsoft");
-            Person per2 = emp2;                     // преобразование от Employee к Person
-            var emp3 = (Employee)per2;              // преобразование от Person к Employee
-            Console.WriteLine(emp3.Company);
-
-            // obj присвоена ссылка на Employee, поэтому можем преобразовать obj к любому типу,
-            // который располагается в иерархии классов между object и Employee
-            object obj = new Employee("Bill", "Microsoft");
-            var emp4 = (Employee)obj;
-
-            object obj2 = new Employee("Bill", "Microsoft");
-            ((Person)obj2).Display();               // преобразование к Person для вызова метода Display
-            ((Employee)obj2).Display();             // эквивалентно предыдущей записи
-            string comp = ((Employee)obj2).Company; // преобразование к Employee, чтобы получить свойство Company
-
-            // СПОСОБЫ ПРЕОБРАЗОВАНИЙ
-            // as пытается преобразовать выражение к определенному типу и не выбрасывает исключение
-            // В случае неудачи вернет null
-            var per7 = new Person("Tom");
-            var emp5 = per7 as Employee;
-            if (emp == null) { Console.WriteLine("Преобразование прошло неудачно"); }
-            else { Console.WriteLine(emp.Company); }
-
-            // is - проверка допустимости преобразования
-            // person is Employee проверяет, является ли person объектом типа Employee
-            // В данном случае не является, поэтому вернет false
-            var per8 = new Person("Tom");
-            if (per8 is Employee)
-            {
-                var emp6 = (Employee)per8;
-                Console.WriteLine(emp6.Company);
-            }
-            else { Console.WriteLine("Преобразование недопустимо"); }
+            obj5.F1();  // Вызов базового класса
         }
     }
 
@@ -1059,7 +1033,10 @@ class Program
                 y = _y;
             }
 
-            public T F1() { return x; } // шаблонный тип можно возвращать
+            public T F1()
+            {
+                return x; // шаблонный тип можно возвращать
+            }
         }
 
         delegate R Del<R, T>(T val);
@@ -1067,6 +1044,7 @@ class Program
         static int Displ(int val)
         {
             Console.WriteLine(val);
+
             return 0;
         }
 
@@ -1080,7 +1058,7 @@ class Program
         }
     }
 
-    class Iterator_
+    class Yield_
     {
         // Итератор возвращает все члены коллекции
         // Нужен для сокрытия коллекции и способа ее обхода, ведь разные коллекции обходятся по разному
@@ -1092,27 +1070,15 @@ class Program
             {
                 foreach (var i in arr)
                 {
+                    // yield возвращает элементы большой коллекции поэлементно
                     yield return arr[i];
                 }
-            }
-        }
-
-        static void Main_()
-        {
-            var objA = new A();
-
-            // Цикл автоматически вызовет метод GetEnumerator
-            foreach (var i in objA)
-            {
-                Console.WriteLine(i);
             }
         }
     }
 
     class Cortege_
     {
-        // Через NuGet установить System.ValueTuple
-        // Нужны для возвращения из функции двух и боле значений
         static (int, int) GetValues()
         {
             var result = (1, 3);
@@ -1126,28 +1092,21 @@ class Program
 
         static void Main_()
         {
-            var tuple = (5, 10);
-            Console.WriteLine(tuple.Item1);
-            Console.WriteLine(tuple.Item2);
+            var tuple = (count: 5, sum: 10);
+            Console.WriteLine(tuple.count + " " + tuple.sum);
 
-            tuple.Item1 += 2;
-            Console.WriteLine(tuple.Item1);
+            tuple = GetValues();
+            Console.WriteLine(tuple.count + " " + tuple.sum);
 
-            // Можно дать названия полям и обращаться по имени а не черезItem1 и Item2
-            var tuple2 = (count: 5, sum: 10);
-            Console.WriteLine(tuple2.count);
-            Console.WriteLine(tuple2.sum);
+            var tuple2 = F2();
+            Console.WriteLine(tuple2.number + tuple2.name + tuple2.year);
 
-            tuple2 = GetValues();
-            Console.WriteLine(tuple2.count);
-            Console.WriteLine(tuple2.sum);
+            var tupleDictionary = new Dictionary<(int, int), string>
+            {
+                { (1, 2), "string1" },
+                { (3, 4), "string2" }
+            };
 
-            var tuple3 = F2();
-            Console.WriteLine(tuple3.number + tuple3.name + tuple3.year);
-
-            var tupleDictionary = new Dictionary<(int, int), string>();
-            tupleDictionary.Add((1, 2), "string1");
-            tupleDictionary.Add((3, 4), "string2");
             var result = tupleDictionary[(1, 2)];
             Console.WriteLine(result);
         }
@@ -1186,123 +1145,6 @@ class Program
         }
     }
 
-    class Indexator_
-    {
-        // Свойства с параметрами и без названия, должны иметь минимум один параметр
-        // В классе может быть несколько индексаторов, должны отличаться сигнатурой
-        class A
-        {
-            int[] arr = new int[5];
-
-            public int this[int i]
-            {
-                get { return arr[i]; }
-                set { arr[i] = value; }
-            }
-        }
-
-        class Car
-        {
-            public string Name { get; set; }
-
-            public string Number { get; set; }
-
-            public override string ToString()
-            {
-                return Name + " " + Number;
-            }
-        }
-
-        class Parking
-        {
-            List<Car> _cars = new List<Car>();
-
-            public Car this[string indexNumber] // Индексатор позволяет обращаться к объектам коллекции Car
-            {
-                get
-                {
-                    var car = _cars.FirstOrDefault(c => c.Number == indexNumber);
-                    return car;
-                }
-            }
-
-            public Car this[int indexPosition]  // Индексаторы можно перегружать
-            {
-                get
-                {
-                    if (indexPosition < _cars.Count)
-                    {
-                        return _cars[indexPosition];
-                    }
-
-                    return null;
-                }
-                set
-                {
-                    if (indexPosition < _cars.Count)
-                    {
-                        _cars[indexPosition] = value;
-                    }
-                }
-            }
-
-            public int Add(Car car)
-            {
-                if (car == null)
-                {
-                    throw new ArgumentException(nameof(car), "Car is null");
-                }
-
-                if (_cars.Count < 100)
-                {
-                    _cars.Add(car);
-                    return _cars.Count;
-                }
-
-                return -1;
-            }
-        }
-
-        static void Main_()
-        {
-            A obj = new A();
-            obj[0] = 0;
-            obj[1] = 1;
-            Console.WriteLine(obj[0]);
-            Console.WriteLine(obj[1]);
-
-            var cars = new List<Car>()
-            {
-                new Car() 
-                {
-                    Name = "Lada",
-                    Number = "12132EA"
-                },
-                new Car() 
-                {
-                    Name = "Hyundai",
-                    Number = "2225EN"
-                },
-            };
-
-            var parking = new Parking();
-            foreach (var item in cars)
-            {
-                parking.Add(item);
-            }
-
-            Console.WriteLine(parking["12132EA"].Name); // Выведет Lada
-
-            parking[1] = new Car() 
-            {
-                Name = "BMW",
-                Number = "156742XN"
-            };   // Устанавливаем значение через индексатор 
-
-            Console.WriteLine(parking[1]);
-        }
-    }
-
     class MemoryClean_
     {
         /*
@@ -1318,7 +1160,7 @@ class Program
             поэтому финализатор может быть не вызван
             Или будет вызван, но не успеет полностью отработать
 
-            Во время сборки мусора выполнение программы приостанавливается
+            Во время сборки мусора выполнение всех потоков приостанавливается
         */
         class A
         {
