@@ -1,7 +1,10 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Memento;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Xml.Linq;
 
 namespace SharpEdu;
 
@@ -422,7 +425,7 @@ class Program
                 }
             }
 
-            static void Main()
+            static void Main_()
             {
                 // Инициализация дерева
                 /*
@@ -1148,17 +1151,18 @@ class Program
     class MemoryClean_
     {
         /*
-            Большинство объектов относятся к управляемым и очищаются сборщиком мусора,
-            но есть неуправляемые
+            Сборщик мусора очищает пространство, занимаемое ссылочными типами - управляемыми объектами
+            Есть неуправляемые - соединение с БД, открытие файлов на чтение/запись,
+            они относятся к внешним объектам, которыми CLR не может управлять
 
-            Освобождение неуправляемых ресурсов выполняет
-            - Финализатор
-            - Реализация интерфейса IDisposable в блоках try/finally или using
+            Освобождение неуправляемых ресурсов выполняют:
+            - финализатор
+            - реализация интерфейса IDisposable в блоках try/finally или using
 
             Финализатор вызывается перед сборкой мусора
             Программа может завершиться до того, как произойдет сборка мусора,
             поэтому финализатор может быть не вызван
-            Или будет вызван, но не успеет полностью отработать
+            или будет вызван, но не успеет полностью отработать
 
             Во время сборки мусора выполнение всех потоков приостанавливается
         */
@@ -1204,6 +1208,10 @@ class Program
     {
         // Исключение не обязательно должно быть обработано в классе, где оно произошло
         // Можно создать класс для обработки определенных исключений
+
+        // throw    возвращает весь стек вызовов
+        // throw ex обрезает стек
+
         class ExceptionHandler
         {
             public static void Handle(Exception e)
@@ -1240,8 +1248,7 @@ class Program
                 {
                     Console.WriteLine("2");
                     throw;  // Если убрать эту строку, программа выведет 1 2 3 6
-                            // Здесь throw перебрасывает исключение, пойманное в catch так, как будто бы catch его не поймал,
-                            // поэтому бросается то же исключение, что было поймано выше - NullReferenceException
+                            // Здесь throw вверх то-же исключение, что было поймано выше - NullReferenceException
                             // throw без аргументов можно вызвать только из блока catch
                 }
                 // Вызовется в любом случае
@@ -1264,191 +1271,141 @@ class Program
                 Console.WriteLine("6");
                 throw new NullReferenceException(); // Необработанное исключение
             }
-
-            try
-            {
-                ExceptionThrower.TriggerException(true);
-            }
-            catch (Exception e)
-            {
-                ExceptionHandler.Handle(e);
-            }
         }
     }
 
     class Delegates_
     {
         // На делегаты можно подписать один и более методов, они вызовутся при вызове делегата
-        // Делегаты можно суммировать
+        // Их можно суммировать
         // Сигнатуры делегата и его методов должны совпадать (количество и типы аргументов)
         // Если на делегат подписано несколько методов, возвращающих значение, то через делегат получим значение последнего метода
-        delegate void Del();
 
-        // Анонимные методы позволяют присвоить делегату метод, не обЪявляя его
+        delegate void Del1();
         delegate int Del2(int a, int b);
 
-        // Лямбда-операторы - в них не нужно указывать тип, эта информация есть внутри делегата
-        // Короткая запись анонимного метода, присваемого экземпляру класса-делегата
-        delegate int Del3(int val);
+        // Action
+        // Принимает 0 .. 16 аргументов
+        // Ничего не возвращает
 
-        delegate void Del4();
+        #region Пример Action
 
-        Action action = F1;         // ничего не возвращает
-        Predicate<int> predicate;   // принимает минимум один аргумент
-        Func<int, string> func;     // принимает от 1 до 16 аргументов и возвращает bool значение
-
-        static class A
-        {
-            public static void Display1()
+            void PrintMessage_1(string message)
             {
-                Console.WriteLine("1");
+                Console.WriteLine(message);
             }
 
-            public static void Display2()
+            void PrintMessage_2(string message)
             {
-                Console.WriteLine("2");
+                Console.WriteLine(message);
             }
-        }
 
-        static void F1()
-        {
-            Console.WriteLine("F1");
-        }
+            void UseAction()
+            {
+                Action<string> delAction = PrintMessage_1;
+                delAction += PrintMessage_2;
+                delAction("111");  
+            }
 
-        static void F2()
-        {
-            Console.WriteLine("F2");
-        }
+        #endregion
+        
+        // Predicate
+        // Принимает один аргумент
+        // Возвращает bool
 
-        static void Main_()
-        {
-            var del_1 = new Del(A.Display1);
-            var del_2 = new Del(A.Display2);
-            var del_3 = del_1 + del_2;
-            del_3(); // 1 2
+        #region Пример Predicate
 
-            // Создаем экземпляр делегата и сообщаем ему анонимный метод
-            Del2 del2 = delegate (int a, int b)
+            bool IsEven(int number)
+            {
+                return number % 2 == 0;
+            }
+
+            void UsePredicate()
+            {
+                Predicate<int> isEven = IsEven;
+                bool result = isEven(4); // true
+            }
+
+        #endregion
+
+        // Func
+        // Принимает 0 .. 16 аргументов
+        // Возвращает значение
+
+        #region Пример Func
+
+            int Add(int a, int b)
             {
                 return a + b;
-            };
+            }
 
-            Console.WriteLine(del2(1, 2));
-
-            Del3 del3; // 3 варианта одного и того-же:
-            del3 = delegate (int val)
+            void UseFunc()
             {
-                Console.WriteLine("0");
-                return val * 2;
-            };
+                Func<int, int, int> add = Add;
+                int sum = add(3, 4); // 7
+            }
 
-            del3 = (val) =>
-            {
-                Console.WriteLine("0");
-                return val * 2;
-            };
-
-            del3 = val => val * 2;
-            Console.WriteLine(del3(5));
-
-            Del4 del4 = F1;
-            del4();         // F1
-            del4 += F2;
-            del4();         // F1 F2
-            del4 += F1;
-            del4 -= F1;     // удалить последний добавленный метод
-        }
+        #endregion
     }
 
     class Events_
     {
-        delegate void del();
+        /*
 
-        // В отличие от делегатов, события более защищены от непреднамеренных изменений,
-        // тогда как делегат может быть случайно обнулен, если использовать '=' вместо '+='
-        // Событие можно использовать лишь внутри класса, в котором оно определено
-        delegate void MyDel();
+            Позволяют объектам уведомлять другие объекты, что что-то произошло
+            События основаны на делегатах и предоставляют способ подписки на уведомления
+            Когда событие происходит, оно вызывает все подрисанные на него методы
 
-        event MyDel TankIsEmpty; // Объявляем событие для нашего типа делегата
+            1. Делегат: Определяет сигнатуру метода, который будет вызываться при возникновении события
 
-        // Метод вызывает событие
-        void F1()
+            2. Событие: Объявляется с использованием делегата и используется для вызова методов подписчиков
+
+            3. Подписчик: Метод, который подписывается на событие и будет вызван, когда событие произойдет
+
+
+            Пример:
+            1. Определяем делегат ClickEventHandler, который принимает два параметра: отправитель события и объект EventArgs
+            2. На основе делегата объявляем событие Clicked
+            3. Метод OnClick генерирует событие Clicked, если на него есть подписчики
+            4. В методе Main создаем экземпляр Button, подписываемся на событие Clicked и указываем метод-обработчик Button_Clicked
+            5. Метод Button_Clicked вызывается, когда происходит событие Clicked
+
+        */
+
+        public class Button
         {
-            TankIsEmpty();
-        }
+            public delegate void ClickEventHandler(object sender, EventArgs e);
 
-        static void F2()
-        {
-            Console.WriteLine("1");
-        }
+            public event ClickEventHandler? Clicked;
 
-        static void F3()
-        {
-            Console.WriteLine("0");
-        }
-
-        class A
-        {
-            public event del ev = null; // Создаем событие
-
-            // Здесь можно проверять, кто вызывает событие
-            public void InvokeEvent()
+            public void OnClick()
             {
-                ev.Invoke();
-            }
-        }
-
-        class B
-        {
-            public del ev = null;
-            // add remove
-            // Как в свойствах, здесь можно включить дополнительные проверки
-            public event del Event
-            {
-                add 
+                // Проверяем, есть ли подписчики на событие
+                if (Clicked != null)
                 {
-                    ev += value;
-                }
-                remove
-                {
-                    ev -= value;
+                    // Генерируем событие
+                    Clicked(this, EventArgs.Empty);
                 }
             }
-
-            public void InvokeEvent()
-            {
-                ev.Invoke();
-            }
         }
 
-        static void Main_()
+        public class Program
         {
-            var events = new Events_();
-            events.TankIsEmpty += F2;   // Подписка на событие
-            events.TankIsEmpty += F3;
-            events.F1();
-
-            var objA = new A();
-                                        // присваиваем событию делегат, на который подписываем метод
-            objA.ev += new del(F3);     // смысл ..
-            objA.ev += F2;              // .. одинаковый
-            objA.InvokeEvent();         // напрямую запрещено вызывать события через objA.ev.Invoke()
-
-            var objB = new B();
-            objB.Event += F2;
-            objB.Event += F3;
-            objB.Event += delegate
+            static void Main()
             {
-                Console.WriteLine("Anonimnyi method");
-            };
+                var button = new Button();
 
-            // Отписать анонимный метод нельзя, код ниже не сработает
-            objB.Event -= delegate
+                // Подписка на событие
+                button.Clicked += Button_Clicked;
+
+                // Имитация нажатия кнопки
+                button.OnClick();
+            }
+
+            private static void Button_Clicked(object sender, EventArgs e)
             {
-                Console.WriteLine("Anonimnyi method");
-            };
-
-            objB.InvokeEvent();
+                Console.WriteLine("Кнопка была нажата!");
+            }
         }
     }
 
@@ -1480,59 +1437,42 @@ class Program
 
     class IsAsTypeof_
     {
-        // is используется для проверки, является ли объект экземпляром указанного типа или его производным
-        // Возвращает true или false
+        // is
+        // Проверяет, является-ли объект экземпляром указанного типа или его производным
+        // Возвращает true/false
 
-        // as используется для преобразования объекта к указанному типу или его производному типу
-        // Если объект может быть преобразован к указанному типу,
-        // то оператор возвращает ссылку на преобразованный объект, иначе возвращает null
+        // as
+        // Преобразует объект к указанному типу или его производному:
+        // - если объект может быть преобразован к указанному типу, возвращается ссылкы на преобразованный объект
+        // - иначе возвращает null
 
         class A { }
+
         class B : A { }
+
         class C { }
 
         static void UseIs()
         {
-            // is проверяет совместимость типов
-            A objA = new A();
-            B objB = new B();
-            C objC = new C();
+            var objA = new A();
+            var objB = new B();
+            var objC = new C();
 
-            // Если true - в переменную tmp запишется objA, приведенный к типу A
-            if (objA is A tmp)
-            {
-                Console.WriteLine($"a is A, {tmp}");
-            }
+            if (objA is A)      { /* true */ }
 
-            if (objB is A)
-            {
-                Console.WriteLine("b is A");
-            }
+            if (objB is A)      { /* true */ }
 
-            if (objA is B)
-            {
-                Console.WriteLine("Error");
-            }
+            if (objA is object) { /* true */ }
 
-            if (objA is object)
-            {
-                Console.WriteLine("a is object");
-            }
+            if (objA is B)      { /* ERROR */ }
 
-            if (objC is A)
-            {
-                Console.WriteLine("Error");
-            }
+            if (objC is A)      { /* ERROR */ }
         }
 
         static void UseAs()
         {
-            // as выполняе преобразование типов во время выполнения и не
-            // генерирует исключение, если преобразование не удалось
-            // Если удалось - возвращается ссылка на тип
-            A objA = new A();
-
-            B objB = new B();
+            var objA = new A();
+            var objB = new B();
 
             if (objA is B)
             {
@@ -1543,8 +1483,7 @@ class Program
                 Console.WriteLine("Error");
             }
 
-            // В примере выше выполняем проверку и в случае успеха делаем присвоение,
-            // as делает это в один шаг
+            // as делает описанный выше код в один шаг
             objB = objA as B;
 
             if (objB is not null)
@@ -1585,105 +1524,74 @@ class Program
         }
     }
 
-    class HashTables_
-    {
-        /*
-            Добавляем в хеш-таблицу слова Андрей, Артур, Борис, Владимир
-            Если мы выбрали ключем первую букву слова, то для Бориса и Владимира поиск по ключу прйдет за O(1),
-            т.к. они единственне с таким ключем, а для Андрея и Артура поиск займет O(N)
-            То есть если есть одинаковые ключи, то для этого ключа создается отдельный список,
-            а в случае с Dictionary все будет одно за другим в одном списке и там всегда O(N)
-            
-            А      | Б     | В         
-            ----------------------------
-            Андрей | Борис | Владимир  
-            Артур  |       |           
-        */
-    }
-
     class Equals_
     {
-        class A
-        {
-            int x = 2;
-        }
+        /*
 
-        // Переопределение Equals
-        // Если переопределяем Equals, то нужно переопределить и GetHashCode
-        class B
+            Позволяет определить, равны ли два объекта по содержимому, а не по ссылке (то есть, по адресу в памяти)
+            По умолчанию метод Equals наследуется от класса Object, и его реализация сравнивает ссылки объектов
+            Но часто требуется переопределить этот метод, чтобы сравнивать объекты по значению их полей
+
+            Зачем переопределять метод Equals:
+            - Если есть класс с определенными свойствами и вы хотите, чтобы два объекта этого класса считались равными, если их свойства равны
+            - Многие коллекции(HashSet, Dictionary) используют Equals для определения уникальности объектов или поиска
+            - Переопределение позволяет использовать оператор == (если также переопределен оператор) или метод Equals для более интуитивного сравнения объектов
+
+            Пример переопределения метода Equals:
+            - рассмотрим пример класса Person, который имеет два свойства: Name и Age
+            - переопределим метод Equals, чтобы сравнивать объекты Person по этим свойствам
+
+
+            Пример:
+            - класс Person определяет св-ва Name и Age;
+            - переопределение метода Equals: В этом методе мы проверяем, является ли переданный объект obj экземпляром класса Person
+              Если да - сравниваем значения свойств Name и Age;
+            - переопределим метод GetHashCode, чтобы обеспечить корректную работу в коллекциях, использующих хэширование;
+            - создаем три объекта Person и проверяем их на равенство с помощью метода Equals.
+
+        */
+
+        public class Person
         {
-            public int x;
-            public B(int _x)
-            {
-                x = _x;
-            }
+            public string? Name { get; set; }
+
+            public int Age { get; set; }
 
             public override bool Equals(object obj)
             {
-                if (obj == null || GetType() != obj.GetType())
+                // Проверяем, что объект не равен null и является экземпляром Person
+                if (obj is Person other)
                 {
-                    return false;
+                    return this.Name == other.Name && this.Age == other.Age;
                 }
 
-                B b = (B)obj;
-
-                return (x == b.x);
+                return false;
             }
 
             public override int GetHashCode()
             {
-                return x;
+                return HashCode.Combine(Name, Age);
             }
         }
 
-        static void Main_()
+        public class Program
         {
-            // Слева у нас ссылка, а справа значение, на которое ссылается ссылка
-            // == отвечает за сравнениие ссылок
-            // Equals отвечает за сравнение значений
-            object a = "1";
-            object b = a;
-            Console.WriteLine(a == b);                      // true
-            Console.WriteLine(a.Equals(b));                 // true
+            static void Main()
+            {
+                var person1 = new Person { Name = "Alice", Age = 30 };
+                var person2 = new Person { Name = "Alice", Age = 30 };
+                var person3 = new Person { Name = "Bob", Age = 25 };
 
-            object c = "1";
-            object d = "1";
-            Console.WriteLine(c == d);                      // true
-            Console.WriteLine(c.Equals(d));                 // true
-
-            string str1 = "1";
-            string str2 = "1";
-            Console.WriteLine(string.Equals(str1, str2));   // true
-            Console.WriteLine(str1.Equals(str2));           // true
-
-            string str3 = "1";
-            string str4 = "2";
-            Console.WriteLine(string.Equals(str3, str4));   // false
-            Console.WriteLine(str3.Equals(str4));           // false
-
-            // Здесь false, потому что у объектов разные хеш-коды
-            var objA_1 = new A();
-            var objA_2 = new A();
-            Console.WriteLine(objA_1 == objA_2);            // false
-            Console.WriteLine(objA_1.Equals(objA_2));       // false
-            Console.WriteLine(objA_1.GetHashCode());
-            Console.WriteLine(objA_2.GetHashCode());
-
-            // Здесь true, потому что переопределили метод Equals
-            // и у обоих объектов в конструктор передается одинаковое значение
-            // Оператор == мы не переопределяли, поэтому false
-            var objB_1 = new B(1);
-            var objB_2 = new B(1);
-            Console.WriteLine(objB_1 == objB_2);            // false
-            Console.WriteLine(objB_1.Equals(objB_2));       // true
+                Console.WriteLine(person1.Equals(person2)); // true
+                Console.WriteLine(person1.Equals(person3)); // false
+            }
         }
     }
 
     class WeakReference_
     {
         /*
-            Слабые ссылки (weak references) - это ссылки на объекты, которые не увеличивают
-            счетчик ссылок на объект и не предотвращают его удаление из памяти сборщиком мусора
+            Слабые ссылки не увеличивают счетчик ссылок на объект и не предотвращают его удаление из памяти сборщиком мусора
             Используются, когда нужно ссылаться на объект, но не нужно сохранять его в памяти, если не используется
             Могут использоваться в кэше для автоматического удаления неиспользуемых объектов
             или в реализации обработчиков событий, чтобы избежать утечек памяти
