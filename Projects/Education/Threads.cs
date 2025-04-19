@@ -4,19 +4,25 @@ public class Threads
 {
     #region Конкурентные коллекции
     /*
+
         Могут быть безопасно использованы из нескольких потоков одновременно:
+
         - ConcurrentBag<T> - неупорядоченная коллекция
         - ConcurrentDictionary<TKey, TValue>
         - ConcurrentQueue<T>
         - ConcurrentStack<T>
+
     */
     #endregion
 
     #region Неизменяемые коллекции
     /*
+
         Используются:
-        - в многопоточных приложениях, где несколько потоков могут пытаться изменить одну коллекцию одновременно
-        - для сохранения состояния коллекции на определенный момент времени для реализации отмены операции или для сохранения состояния приложения
+        - в многопоточных приложениях, где несколько потоков изменяют одну коллекцию одновременно
+        - для сохранения состояния коллекции на определенный момент времени
+        - для реализации отмены операции
+        - для сохранения состояния приложения
 
         ImmutableList<T>
         ImmutableArray<T>
@@ -24,21 +30,32 @@ public class Threads
         ImmutableHashSet<T>
         ImmutableQueue<T>
         ImmutableStack<T>
+
     */
     #endregion
 
     class Counter
     {
         public int X;
+
         public int Y;
+
         public Counter() { }
-        public Counter(int x, int y) { X = x; Y = y; }
+
+        public Counter(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+
         public void Count()
         {
             for (int i = 1; i < 9; i++)
             {
                 Console.WriteLine("Вторичный поток:");
+
                 Console.WriteLine(i * X * Y);
+
                 Thread.Sleep(400);
             }
         }
@@ -71,21 +88,24 @@ public class Threads
 
     static void General_()
     {
-        // Каждому потоку выделяется квант времени
+        /*
+            Каждому потоку выделяется квант времени
 
-        // Статусы потока содержатся в перечислении ThreadState:
-        // Unstarted        еще не был запущен
-        // Running          запущен и работает
-        // Background       выполняется в фоновом режиме
-        // StopRequested    получил запрос на остановку
-        // Stopped          завершен
-        // SuspendRequested получил запрос на приостановку
-        // Suspended        приостановлен
-        // WaitSleepJoin    заблокирован методами Sleep или Join
-        // AbortRequested   для потока вызван метод Abort, но остановка еще не произошла
-        // Aborted          остановлен, но еще окончательно не завершен
+            Статусы потока содержатся в перечислении ThreadState:
+            - Unstarted         не запущен
+            - Running           запущен и работает
+            - Background        выполняется в фоновом режиме
+            - StopRequested     получил запрос на остановку
+            - Stopped           завершен
+            - SuspendRequested  получил запрос на приостановку
+            - Suspended         приостановлен
+            - WaitSleepJoin     заблокирован методами Sleep или Join
+            - AbortRequested    для потока вызван метод Abort, но остановка еще не произошла
+            - Aborted           остановлен, но еще окончательно не завершен
+        */
 
         object lockCompleted = new object();
+
         void F1()
         {
             lock (lockCompleted) 
@@ -95,8 +115,11 @@ public class Threads
         }
 
         var thread = new Thread(F1);
+
         //new Thread(F1).Start(); // Эквивалентно предыдущей записи
+
         thread.Name = "Thread 1";
+
         thread.Start();
 
         // CurrentThread - поток, выполняющий данный метод
@@ -131,14 +154,14 @@ public class Threads
 
     static void Priorities_()
     {
-        // Приоритеты потоков, располагаются в перечислении ThreadPriority
-        // Влияет на время, выделяемое потоку процессором
-
-        // Lowest
-        // BelowNormal
-        // Normal - по умолчанию
-        // AboveNormal
-        // Highest
+        /*
+            Приоритеты потоков, располагаются в перечислении ThreadPriority:
+            - Lowest
+            - BelowNormal
+            - Normal - по умолчанию
+            - AboveNormal
+            - Highest
+        */
 
         static void F1()
         {
@@ -173,41 +196,43 @@ public class Threads
 
     static void Pool_()
     {
-        void F1() // Cколько потоков доступно в пуле
+        void F1()
         {
             int availableThreads;
             int availableIOThreads;
 
             ThreadPool.GetAvailableThreads(out availableThreads, out availableIOThreads);
 
-            Console.WriteLine("Threads in pool " + availableThreads);
+            Console.WriteLine("Потоков в пуле " + availableThreads);
 
-            Console.WriteLine("Free threads in pool " + availableIOThreads);
+            Console.WriteLine("Свободных потоков в пуле " + availableIOThreads);
         }
 
         void F2(object state)
         {
             Thread.CurrentThread.Name = "1";
 
-            Console.WriteLine("Start thread " + Thread.CurrentThread.Name);
+            Console.WriteLine("Начало потока " + Thread.CurrentThread.Name);
 
             Thread.Sleep(1000);
 
-            Console.WriteLine("End thread " + Thread.CurrentThread.Name);
+            Console.WriteLine("Конец потока " + Thread.CurrentThread.Name);
         }
 
         void F3(object state)
         {
             Thread.CurrentThread.Name = "2";
 
-            Console.WriteLine("Start thread " + Thread.CurrentThread.Name);
+            Console.WriteLine("Начало потока " + Thread.CurrentThread.Name);
 
             Thread.Sleep(1000);
 
-            Console.WriteLine("End thread " + Thread.CurrentThread.Name);
+            Console.WriteLine("Конец потока " + Thread.CurrentThread.Name);
         }
 
-        Console.WriteLine("Start");
+
+
+        Console.WriteLine("Начало");
 
         ThreadPool.QueueUserWorkItem(new WaitCallback(F2));
 
@@ -217,7 +242,7 @@ public class Threads
 
         Thread.Sleep(1000);
 
-        Console.WriteLine("End");
+        Console.WriteLine("Конец");
     }
 
     static void ForegroundBackground_()
@@ -243,12 +268,6 @@ public class Threads
         thread.Start();
     }
 
-    // Синхронизация
-
-    // Атрибут означает, что каждый поток работает со своей статической переменной, а не с общей для всех
-    [ThreadStatic]
-    static int counter = 0;
-
     static void Join_()
     {
         // Заставляет первичный поток ждать завершения вторичного
@@ -273,6 +292,10 @@ public class Threads
         Console.WriteLine("End: " + Thread.CurrentThread.ManagedThreadId);
     }
 
+    // Каждый поток работает со своей статической переменной, а не общей для всех
+    [ThreadStatic]
+    static int counter = 0;
+
     static void AccessStaticVariables_()
     {
         static void F1()
@@ -281,7 +304,7 @@ public class Threads
             {
                 counter++;
 
-                Console.WriteLine("Start " + Thread.CurrentThread.ManagedThreadId + ", counter " + counter);
+                Console.WriteLine("Начало " + Thread.CurrentThread.ManagedThreadId + ", счетчик " + counter);
 
                 var thread = new Thread(F1); // Плохо - каждый раз создаем новый поток
 
@@ -291,7 +314,7 @@ public class Threads
             }
         }
 
-        Console.WriteLine("Start " + Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine("Начало " + Thread.CurrentThread.ManagedThreadId);
 
         var thread = new Thread(F1);
 
@@ -299,7 +322,7 @@ public class Threads
 
         thread.Join();
 
-        Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine("Конец " + Thread.CurrentThread.ManagedThreadId);
     }
 
     static void Interlocked_()
@@ -332,11 +355,8 @@ public class Threads
     static void Lock_()
     {
         // Внутри lock может одновременно работать один поток
-        // locker - это пустой объект-заглушка типа object
-        
-        // Внутри lock нельзя вызывать await, т.к. возможна ситуация, что объект синхронизации
-        // берется одним потоком, а отпускается другим
-
+        // locker - это пустой объект-заглушка типа object        
+        // Внутри lock нельзя вызывать await, т.к. возможна ситуация, что объект синхронизации берется одним потоком, а отпускается другим
         // Может привести к deadlock
 
         object locker = new object();
@@ -406,37 +426,35 @@ public class Threads
 
     static void Semaphore_()
     {
-        // Позволяет ограничить количество потоков, имеющих доступ к ресурсу
-        // путем создания счетчика, который:
+        // Позволяет ограничить количество потоков, имеющих доступ к ресурсу путем создания счетчика, который:
         // - уменьшается, когда поток получает доступ к ресурсу
         // - увеличивается, когда поток освобождает ресурс
 
         // Если счетчик равен нулю - другие потоки должны ждать, пока ресурс освободится
-
         // Может быть полезным для ограничения количества запросов к БД
-
-        // SemaphoreSlim
-        // меньше нагружает процессор и работает в рамках одного процесса
+        // SemaphoreSlim меньше нагружает процессор и работает в рамках одного процесса
 
         Semaphore semaphore;
 
         void F1(object number)
         {
-            semaphore.WaitOne(); // Ожидание получения семафора
+            // Ждем получения семафора
+            semaphore.WaitOne();
 
-            Console.WriteLine("Begin " + Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("Начало " + Thread.CurrentThread.ManagedThreadId);
 
             Thread.Sleep(2000);
 
-            Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("Конец " + Thread.CurrentThread.ManagedThreadId);
 
-            semaphore.Release(); // Освобождаем семафор
+            // Освобождаем семафор
+            semaphore.Release();
         }
 
         // 1й аргумент - начальное количество слотов
         // 2й аргумент - максимальное количество слотов
         // 3й аргумент - имя семафора
-        semaphore = new Semaphore(2, 4, "Semaphore");
+        semaphore = new Semaphore(2, 4, "Семафор");
 
         // Убираем 2 из предыдущей строки, теперь семафор могут использовать максимальное число потоков - 4
         semaphore.Release(2);
@@ -450,17 +468,7 @@ public class Threads
     static void Mutex_()
     {
         // Позволяет блокировать доступ к ресурсу не только в пределах одного процесса, но и между процессами
-        // Работает путем создания объекта блокировки, который может быть захвачен только одним потоком
-
-        // Если другой поток попытается захватить блокировку, пока она уже занята,
-        // он будет заблокирован и будет ждать, пока блокировка не будет освобождена первым потоком
-
-        // Блокировка может быть освобождена явным вызовом функции
-        // или автоматически при завершении выполнения кода, который ее захватил
-
-        // Когда выполнение дойдет до mutex.WaitOne(), поток будет ожидать, пока не освободится мьютекс
-        // После освобождения продолжит работу
-
+        // Создает объект блокировки, который одновременно может быть захвачен только одним потоком
         // Нет межпроцессорной синхронизации
 
         var mutex = new Mutex(false, "Mutex");
@@ -472,7 +480,7 @@ public class Threads
             Console.WriteLine("F1");
 
             // Запускаем метод, который тоже использует данный конкретный mutex
-            // Пока F6_2() не отработает, F6_2 будет ждать
+            // Пока F2() не отработает, F1 будет ждать
             F2();
 
             mutex.ReleaseMutex();
@@ -485,11 +493,11 @@ public class Threads
 
             Console.WriteLine("F2");
 
-            // После выполнения всех действий, когда мьютекс не нужен,
-            // поток освобождает
+            // После выполнения всех действий поток освобождает
             mutex.ReleaseMutex();
-
         }
+
+
 
         var thread = new Thread[5];
 
