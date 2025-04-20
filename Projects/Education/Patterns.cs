@@ -232,7 +232,9 @@ namespace Builder
         public void GetResult()
         {
             foreach (var part in product.parts)
+            {
                 Console.WriteLine(part);
+            }
         }
     }
 
@@ -250,6 +252,7 @@ namespace Builder
         public void Construnt()
         {
             _builder.BuildPartA();
+
             _builder.BuildPartB();
         }
     }
@@ -259,8 +262,11 @@ namespace Builder
         static void Main_()
         {
             IBuilder builder = new ConcreteBuilder();
+
             var director = new Director(builder);
+
             director.Construnt();
+
             builder.GetResult();
         }
     }
