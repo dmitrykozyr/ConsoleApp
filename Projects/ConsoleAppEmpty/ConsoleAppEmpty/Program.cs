@@ -1164,7 +1164,7 @@
             return F1(n - 2, list);
         }
 
-        public static void Main()
+        public static void Main_()
         {
             var result = F1(5);
             Console.WriteLine(string.Join(", ", result));
@@ -1326,7 +1326,7 @@
 
         public class B
         {
-            public static void Main()
+            public static void Main_()
             {
                 var animals = new Animal[]
                 {
@@ -1536,7 +1536,7 @@
         // Пример использования
         class Program2
         {
-            static void Main(string[] args)
+            static void Main_()
             {
                 Character warrior = new Warrior();
                 Character mage = new Mage();
@@ -1555,7 +1555,7 @@
     #endregion
 
 
-    static async Task Main()
+    static void Main()
     {
 
     }

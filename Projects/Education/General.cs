@@ -1,10 +1,7 @@
-﻿using Memento;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.Collections;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Xml.Linq;
 
 namespace SharpEdu;
 
@@ -1391,7 +1388,7 @@ class Program
 
         public class Program
         {
-            static void Main()
+            static void Main_()
             {
                 var button = new Button();
 
@@ -1527,28 +1524,9 @@ class Program
     class Equals_
     {
         /*
-
-            Позволяет определить, равны ли два объекта по содержимому, а не по ссылке (то есть, по адресу в памяти)
-            По умолчанию метод Equals наследуется от класса Object, и его реализация сравнивает ссылки объектов
-            Но часто требуется переопределить этот метод, чтобы сравнивать объекты по значению их полей
-
-            Зачем переопределять метод Equals:
-            - Если есть класс с определенными свойствами и вы хотите, чтобы два объекта этого класса считались равными, если их свойства равны
-            - Многие коллекции(HashSet, Dictionary) используют Equals для определения уникальности объектов или поиска
-            - Переопределение позволяет использовать оператор == (если также переопределен оператор) или метод Equals для более интуитивного сравнения объектов
-
-            Пример переопределения метода Equals:
-            - рассмотрим пример класса Person, который имеет два свойства: Name и Age
-            - переопределим метод Equals, чтобы сравнивать объекты Person по этим свойствам
-
-
-            Пример:
-            - класс Person определяет св-ва Name и Age;
-            - переопределение метода Equals: В этом методе мы проверяем, является ли переданный объект obj экземпляром класса Person
-              Если да - сравниваем значения свойств Name и Age;
-            - переопределим метод GetHashCode, чтобы обеспечить корректную работу в коллекциях, использующих хэширование;
-            - создаем три объекта Person и проверяем их на равенство с помощью метода Equals.
-
+            Позволяет определить, равны-ли два объекта по содержимому, а не по адресу в памяти
+            По умолчанию сравнивает ссылки объектов
+            Но можно переопределить, чтобы сравнивать объекты по значению их полей
         */
 
         public class Person
@@ -1576,7 +1554,7 @@ class Program
 
         public class Program
         {
-            static void Main()
+            static void Main_()
             {
                 var person1 = new Person { Name = "Alice", Age = 30 };
                 var person2 = new Person { Name = "Alice", Age = 30 };
@@ -1588,148 +1566,85 @@ class Program
         }
     }
 
-    class WeakReference_
-    {
-        /*
-            Слабые ссылки не увеличивают счетчик ссылок на объект и не предотвращают его удаление из памяти сборщиком мусора
-            Используются, когда нужно ссылаться на объект, но не нужно сохранять его в памяти, если не используется
-            Могут использоваться в кэше для автоматического удаления неиспользуемых объектов
-            или в реализации обработчиков событий, чтобы избежать утечек памяти
-
-            В этом примере создаем объект класса `MyObject` и сохраняем его в слабой ссылке `weakRef`
-            Затем проверяем, что объект еще существует, используя метод `TryGetTarget`
-            После этого удаляем ссылку на объект, вызываем сборщик мусора и снова проверяем,что объект удален
-            В конструкторе и деструкторе класса `MyObject` выводятся сообщения о создании и удалении объекта,
-            чтобы мы могли убедиться, что объект действительно был удален из памяти
-
-            Результат работы программы:
-            A: Object Created
-            Main 1: Object Exists
-            Main 2: Object Exists
-
-            При завершении программы сборщик мусора вызывает финализатор объекта,
-            который выводит сообщение 'A: Object Deleted'
-        */
-
-        class A
-        {
-            public A()
-            {
-                Console.WriteLine("A: Object Created");
-            }
-
-            ~A()
-            {
-                Console.WriteLine("A: Object Deleted");
-            }
-        }
-
-        static void Main_()
-        {
-            // Создаем объект и сохраняем его в слабой ссылке
-            var weakRef = new WeakReference<A>(new A());
-
-            // Проверяем, что объект еще существует
-            A obj;
-            if (weakRef.TryGetTarget(out obj))
-            {
-                Console.WriteLine("Main 1: Object Exists");
-            }
-            else
-            {
-                Console.WriteLine("Main 1: Object Deleted");
-            }
-
-            // Удаляем ссылку на объект
-            obj = null;
-
-            // Вызываем сборщик мусора для удаления объекта из памяти
-            GC.Collect();
-
-            // Проверяем, что объект был удален
-            if (weakRef.TryGetTarget(out obj))
-            {
-                Console.WriteLine("Main 2: Object Exists");
-            }
-            else
-            {
-                Console.WriteLine("Main 2: Object Deleted");
-            }
-        }
-    }
-
     class LazyLoading_
     {
         /*
-            Lazy loading - данные загружаются в момент, когда они нужны
-            Позволяет уменьшить нагрузку на приложение и ускорить его работу
 
-            Если есть класс с коллекцией объектов, то при использовании LL
-            объекты будут загружаться только при первом обращении к ним,
-            а не сразу при загрузке класса
-            
-            Это позволяет избежать загрузки большого количества данных,
-            которые могут не понадобиться
+            LL откладывает инициализацию объекта до момента, когда он необходим
+            Используется для оптимизации производительности при работе с большими объемами данных, которые могут быть дорогими в создании
 
-            При обращении к свойству, которое содержит отложенно загружаемые данные,
-            проверяется наличие данных и идет их загрузка при необходимости
-            
-            В примере свойство Posts помечено модификатором virtual,
-            что позволяет его переопределить в производных классах
-        
-            В методе get проверяем, были ли посты уже загружены из базы данных, и если нет - загружаем
+            - объекты и данные загружаются только по мере необходимости, что снижает время загрузки
+            - если объект не используется, он не будет загружен в память
+            - можно избежать ненужной инициализации объектов, что упрощает управление зависимостями
+
+            Пример:
+
+            - В классе DataLoader используем Lazy<string> для хранения данных
+              Объект Lazy<string> инициализируется с функцией, которая загружает данные
+            - Метод LoadData симулирует долгую операцию чтения из БД
+            - При первом обращении к св-ву Data вызывается _data.Value, что приводит к выполнению функции загрузки данных
+              Если данные уже были загружены, св-во возвращает уже загруженные данные без повторной загрузки
+            - В методе Main создаем экземпляр DataLoader, но данные еще не загружаются до первого обращения к свойству Data
+
         */
 
-        public class B { }
-
-        public class A
+        public class DataLoader
         {
-            private List<B> _listB;
+            private Lazy<string> _data;
 
-            public virtual List<B> ListB
+            public string Data => _data.Value;
+
+            public DataLoader()
             {
-                get
-                {
-                    if (_listB == null)
-                    {
-                        _listB = LoadPostsFromDatabase();
-                    }
-
-                    return _listB;
-                }
+                _data = new Lazy<string>(() => LoadData());
             }
 
-            private List<B> LoadPostsFromDatabase()
+            private string LoadData()
             {
-                // Загружаем посты из базы данных
-                // var reault = _dbContext.Post.GetAll();
-                return null;
+                Console.WriteLine("Загрузка данных...");
+                Thread.Sleep(2000);
+                return "Данные загружены";
+            }
+
+            static void Main()
+            {
+                var dataLoader = new DataLoader();
+
+                Console.WriteLine("Объект DataLoader создан.");
+
+                Console.WriteLine("Данные еще не загружены.");
+
+                // Данные загружаются только при первом доступе
+                Console.WriteLine(dataLoader.Data);
+
+                // Повторный доступ к данным не вызывает повторной загрузки
+                Console.WriteLine(dataLoader.Data);
             }
         }
     }
 
     class Transaction_
     {
-        public void F1()
-        {
-            /*using (var transaction = _dbContext.GetDatabase().BeginTransaction())
-            {
-                try
-                {
-                    //...
+        //public bool F1()
+        //{
+        //    using (var transaction = _dbContext.GetDatabase().BeginTransaction())
+        //    {
+        //        try
+        //        {
+        //            //...
 
-                    bool result = _dbContext.SaveChanges() > 0;
-                    transaction.Commit();
-                    return result;
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError($"Категория id={id} не была : {e}");
-                    transaction.Rollback();
-                    throw;
-                }
-            }*/
-        }
+        //            bool result = _dbContext.SaveChanges() > 0;
+        //            transaction.Commit();
+        //            return result;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            _logger.LogError($"Категория id={id} не была : {e}");
+        //            transaction.Rollback();
+        //            throw;
+        //        }
+        //    }
+        //}
     }
 
     class FluentValidation_
@@ -1737,6 +1652,7 @@ class Program
         public void F1()
         {
             /*
+
             RuleFor(ps => ps.IncludePosMonth).InclusiveBetween(1, 12)
                 .WithMessage("Количество месяцев больще должно быть пустым или в диапазоне 1-12");
 
@@ -1756,88 +1672,9 @@ class Program
                 .Must(promotion => promotion.ClientsFile is not null && promotion.Id.HasValue)
                 .When(promotion => promotion.ClientSegmentations is not null)
                 .WithMessage("Необходимо прикрепить файл с клиентами");
+
             */
         }
-    }
-
-    class WeakReferences_
-    {
-        // Сильные и слабые ссылки
-        public class A
-        {
-            public void F1() { }
-        }
-
-        public void Main_()
-        {
-            // Сильная ссылка
-            // Здесь присваиваем эеземпляр переменной и он не будет удален сборщиком мусора,
-            // пока существует сильная ссылка
-            WeakReferences_.A obj = new A();
-            obj.F1();
-
-            // Слабая ссылка
-            // Создаем экземпляр, но ничему его не присваиваем,
-            // а только вызываем метод через него,
-            // поэтому будет сразу удален сборщиком мусора
-            new A().F1();
-        }
-        
-    }
-
-    class Net_8
-    {
-        /*
-        */
-    }
-
-    class CSharp_11
-    {
-        /*
-        */
-    }
-
-    class DebugRules
-    {
-        // Правила отладки
-        /*         
-            Understand the system:
-            Read the manual, read everything in depth, know the fundamentals, know the road map, understand your tools, and look up the details
-            
-            Make it fail:
-            Do it again, start at the beginning, stimulate the failure, don't simulate the failure,
-            find the uncontrolled condition that makes it intermittent, record everything and find the signature of intermittent bugs,
-            don't trust statistics too much, know that "that" can happen, and never throw away a debugging tool
-            
-            Quit thinking and look (get data first, don't just do complicated repairs based on guessing):
-            See the failure, see the details, build instrumentation in, add instrumentation on, don't be afraid to dive in,
-            watch out for Heisenberg, and guess only to focus the search
-            
-            Divide and conquer:
-            Narrow the search with successive approximation, get the range,
-            determine which side of the bug you're on, use easy-to-spot test patterns, start with the bad,
-            fix the bugs you know about, and fix the noise first
-            
-            Change one thing at a time:
-            Isolate the key factor, grab the brass bar with both hands (understand what's wrong before fixing),
-            change one test at a time, compare it with a good one, and determine what you changed since the last time it worked
-            
-            Keep an audit trail:
-            Write down what you did in what order and what happened as a result, understand that any detail could be the important one,
-            correlate events, understand that audit trails for design are also good for testing, and write it down
-            
-            Check the plug:
-            Question your assumptions, start at the beginning, and test the tool
-            
-            Get a fresh view:
-            Ask for fresh insights (just explaining the problem to a mannequin may help!), tap expertise,
-            listen to the voice of experience, know that help is all around you, don't be proud,
-            report symptoms (not theories), and realize that you don't have to be sure
-            
-            If you didn't fix it, it ain't fixed:
-            Check that it's really fixed, check that it's really your fix that fixed it,
-            know that it never just goes away by itself, fix the cause, and fix the process
-        */
     }
 
     class DDD_
@@ -1846,13 +1683,12 @@ class Program
             Концепции Domain-Driven Design (проектирование, ориентированное на домен) включают:
 
             1. Абстракцию, отражающую бизнес-логику и правила, должна быть понятной для разработчиков и бизнеса
-            2. Предлагает разбивать сложные системы на более мелкие, управляемые части, такие как агрегаты, сущности и значения объектов
-            3. Определение границ контекста (Bounded Context), что позволяет четко разделять различные части системы и их модели
+            2. Разбивку сложных систем на мелкие, управляемые части
+            3. Определение границ контекста, что позволяет четко разделять различные части системы
             4. Создание агрегатов - групп связанных объектов, которые обрабатываются как единое целое, помогают управлять целостностью данных
-            5. События домена используются для уведомления о произошедших изменениях в состоянии модели домена, помогает в реализации реактивных систем
+            5. События домена используются для уведомления о произошедших изменениях
             6. Репозитории - шаблон, который используется для доступа к объектам домена, абстрагируя детали хранения данных
             7. Службы домена - это операции, которые не принадлежат конкретной сущности или агрегату, но имеют смысл в контексте бизнес-логики
-            8. Ubiquitous Language (Универсальный язык) - общий язык, используемый разработчиками и бизнесом для обсуждения требований и модели домена
         */
     }
 }
@@ -1865,6 +1701,7 @@ static class ExtensionMethods_
     // Можно перегружать
     // Первый аргумент не может быть помечен словами ref, out, остальные могут
     // Не имеют доступ к private и protected полям расширяемого класса
+
     static void Extention(this string value) 
     { 
         Console.WriteLine(value); 
@@ -1880,8 +1717,11 @@ static class ExtensionMethods_
         static void Main_()
         {
             string text = "1";
+
             text.Extention();
+
             text.Extention("2");
+
             "1".Extention("2");
         }
     }
