@@ -4,9 +4,7 @@
 
         git checkout develop
 
-
         Remove-Migration
-
 
         Update-Database 2021080100_NameOfPreviousMigration
 
@@ -165,5 +163,4 @@
         git merge develop
 
     #endregion
-
 }
