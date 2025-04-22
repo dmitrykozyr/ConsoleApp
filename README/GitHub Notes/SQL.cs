@@ -355,6 +355,9 @@
 
     #region Функции
 
+        // Внутри функций нельзя выполнять транзакции, только в хранимых процедурах
+        // Функции должны быть детерминированными и не могут изменять состояние БД
+
         // Объявление ф-ии с указанием типа возвращаемого значения
         create function fnFunc1 (@var1 int)
 		   returns int
@@ -367,12 +370,12 @@
 		// Вызов ф-ии
 		print dbo.fnFunc1 (2)
 
-	#endregion
+    #endregion
 
-	#region Триггеры
+    #region Триггеры
 
-		// Триггер на insert в таблицу OrderDetails
-		begin
+    // Триггер на insert в таблицу OrderDetails
+        begin
 			create trigger trMatchingCtocksOnInsert		
 			on dbo.OrderDetails for insert
 			as
@@ -471,7 +474,7 @@
 
 	#endregion 
 
-	#region Предаставления, процедуры
+	#region Представления, процедуры
 
 		// Представления используют для отображения данных
 		CREATE VIEW ShowProducts

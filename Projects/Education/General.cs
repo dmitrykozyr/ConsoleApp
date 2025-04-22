@@ -155,7 +155,7 @@ class Program
             set { _name = value; }
         }
     }
-    
+
     class BigO_
     {
         /*
@@ -517,8 +517,10 @@ class Program
 
         public record class MyRecordClass_
         {
-            public string Name { get; init; } // init делает св-во неизменяемым
-                                              // set тоже можно использовать, но тогда св-во будет изменяемым
+            // init делает св-во неизменяемым
+            // set тоже можно использовать, но тогда св-во будет изменяемым
+            public string Name { get; init; }
+
             public int Age { get; init; }
 
             public MyRecordClass_(string name, int age)
@@ -572,36 +574,21 @@ class Program
 
         static void Main_()
         {
-            // 1
             // В record св-во с init нельзя изменять
             var myRecordClass_ = new MyRecordClass_("Tom", 37);
             //myRecordClass_.Name = "Bob"; // ошибка
 
-            // 2
-            // В отличие от классов, в record идет сравнение по значению
-            var class1 = new UserClass("Tom");
-            var class2 = new UserClass("Tom");
-            Console.WriteLine(class1.Equals(class2));   // false
-
-            var record1 = new UserRecord("Tom");
-            var record2 = new UserRecord("Tom");
-            Console.WriteLine(record1.Equals(record2)); // true
-
-            // 3
             // records поддерживают инициализацию с помощью оператора with
             // Он позволяет создать одну record на основе другой
             var tom = new MyRecordClass_("Tom", 37);
             var sam = tom with { Name = "Sam" };
-            var joe = tom with { };                     // Если хотим скопировать все св-ва - оставляем пустые скобки
-            Console.WriteLine($"{sam.Name} - {sam.Age}"); // Sam - 37
 
-            // 4
+            // Если хотим скопировать все св-ва - оставляем пустые скобки
+            var joe = tom with { };
+
             // Использование премуществ кортжей и деконструктора, определенного выше
             var person = new MyRecordClass_("Tom", 37);
-            Console.WriteLine(person.Name);         // Tom
             var (personName, personAge) = person;
-            Console.WriteLine(personAge);           // 37
-            Console.WriteLine(personName);          // Tom
         }
     }
 
@@ -766,41 +753,70 @@ class Program
         // Interface Segregation    не создавать интерфейсы с большим числом методов
         // Dependency Invertion     зависимости кода должны строиться от абстракции
 
-        interface IDependencyInvertion
-        {
-            void F1();
-        }
+        #region Liskov Substitution
 
-        class A : IDependencyInvertion
-        {
-            public void F1() { Console.WriteLine("A"); }
-        }
+            // Класс FrozenDeposit нарушает принцип подстановки Лисков
+            // Объекты подкласса должны быть заменяемыми объектами базового класса без изменения желаемых свойств программы
 
-        class B : IDependencyInvertion
-        {
-            public void F1() { Console.WriteLine("B"); }
-        }
-
-        class C
-        {
-            private readonly IDependencyInvertion _di;
-
-            public C(IDependencyInvertion di)
+            public abstract class Deposit
             {
-                _di = di;
+                public decimal Balance { get; protected set; }
+
+                public virtual void Credit(decimal amount)
+                {
+                    Balance += amount;
+                }
             }
 
-            public void F2() { _di.F1(); }
-        }
+            public class FrozenDeposit : Deposit
+            {
+                public override void Credit(decimal amount)
+                {
+                    throw new Exception("This deposit does not support filling up");
+                }
+            }
 
-        static void Main_()
-        {
-            IDependencyInvertion dependencyInvertion = new A(); // A меняем на B при необходимости
-            dependencyInvertion.F1();
+        #endregion
 
-            C c = new C(dependencyInvertion);
-            c.F2();
-        }
+        #region DependencyInvertion
+
+            interface IDependencyInvertion
+            {
+                void F1();
+            }
+
+            class A : IDependencyInvertion
+            {
+                public void F1() { Console.WriteLine("A"); }
+            }
+
+            class B : IDependencyInvertion
+            {
+                public void F1() { Console.WriteLine("B"); }
+            }
+
+            class C
+            {
+                private readonly IDependencyInvertion _di;
+
+                public C(IDependencyInvertion di)
+                {
+                    _di = di;
+                }
+
+                public void F2() { _di.F1(); }
+            }
+
+            static void Main_()
+            {
+                IDependencyInvertion dependencyInvertion = new A(); // A меняем на B при необходимости
+                dependencyInvertion.F1();
+
+                C c = new C(dependencyInvertion);
+                c.F2();
+            }
+
+        #endregion
     }
 
     class AbstractAndStaticClass_
@@ -1529,8 +1545,28 @@ class Program
             Но можно переопределить, чтобы сравнивать объекты по значению их полей
         */
 
+        public record RecordA(int Value, string Value2);
+
         public class Person
         {
+            // Оба числа 1 приводятся к типу object, и сравниваются как ссылки
+            // false
+            bool a = (object)1 == (object)1;
+
+            // Метод Equals сравнивает значения, а не ссылки
+            // true
+            bool b = 1.Equals(1);
+
+            // Благодаря интернированию строк, это один и тот-же участок в памяти
+            // true
+            bool c = (object)"1" == (object)"1";
+
+            // Для record метод Equals переопределен и сравнивает значения всех свойств, а не ссылки
+            // true
+            bool d = new RecordA(1, "TEST").Equals(new RecordA(1, "TEST"));
+
+
+
             public string? Name { get; set; }
 
             public int Age { get; set; }
@@ -1689,6 +1725,63 @@ class Program
             5. События домена используются для уведомления о произошедших изменениях
             6. Репозитории - шаблон, который используется для доступа к объектам домена, абстрагируя детали хранения данных
             7. Службы домена - это операции, которые не принадлежат конкретной сущности или агрегату, но имеют смысл в контексте бизнес-логики
+        */
+    }
+
+    class HttpClient_
+    {
+        // Получение данных с веб-сайта через HttpClient
+        static async Task Main_()
+        {
+            var httpClient = new HttpClient();
+
+            var message = new HttpRequestMessage()
+            {
+                RequestUri = new Uri("https://google.ru/")
+            };
+
+            HttpResponseMessage result = httpClient.Send(message);
+
+            var data = await result.Content.ReadAsStringAsync();
+        }
+    }
+
+    class SQLInjection
+    {
+        /*
+            Код имеет уязвимость к SQL-инъекциям, потому что значение dealId
+            вставляется непосредственно в строку SQL-запроса без какой-либо обработки или параметризации
+
+            Для защиты от SQL-инъекций следует использовать параметризованные запросы
+        */
+
+        /*
+            private async Task<Client> F1_Error(string dealId)
+            {
+                using var connection = _connectionFactory.Create();
+
+                // Неправильно
+                //var selectCommandText = @"SELECT c.FirstName, c.SecondName, c.*
+                //                          FROM clients as c   
+                //                          INNER JOIN client_deal as cd on cd.ClientId = c.Id   
+                //                          WHERE cd.DealId = @DealId";
+
+                var selectCommandText = $@"SELECT c.FirstName, c.SecondName, c.*
+                                           FROM clients as c   
+                                           INNER JOIN client_deal as cd on cd.ClientId = c.Id   
+                                           WHERE cd.DealId = {dealId}";
+
+                var selectSqlCommand = new SqlCommand(selectCommandText, connection);
+
+                // Неправильно
+                //var result = await connection.ExecuteAsync(readQuery);
+
+                // Правильно
+                selectSqlCommand.Parameters.AddWithValue("@DealId", dealId);
+                var result = await connection.ExecuteAsync(selectSqlCommand);
+
+                return result;
+            }
         */
     }
 }
