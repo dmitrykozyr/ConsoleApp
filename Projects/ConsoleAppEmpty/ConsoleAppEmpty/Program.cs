@@ -2,29 +2,46 @@
 {
     /*
         Фичефлаги
+            Фича флаг вместо конфигурации
+            Вместо
+	        'bool shouldGetDataFromVault = _configuration.GetValue<bool>("GetDataFromVault");'
+	        использовать фича флаги через
+	        'FeatureManagerExtensions.IsFeatureEnabled' или 'IFeatureManager'
+            https://learn.microsoft.com/en-us/azure/azure-app-configuration/feature-management-dotnet-reference
+
         Domain Driven Design
+        
         gRPC
+    
         SOAP
+    
         MediatR
+    
         Quartz
+
+        Уровни изоляции транзакций в БД
+        https://habr.com/ru/articles/845522/
+
+        ConfigureAwait
+        https://habr.com/ru/articles/482354/
+
+        Async/await
+        https://habr.com/ru/articles/470830/
+
         Saga Паттерн используется для управления распределенными транзакциями
-        Билдер
-        Виды индексов
-        первые 3 нормальные формы
+        
         IEnumerable, IEnumerator отложенное выполнение
+    
         yield return, yield break
-        интернирование строк, интерполяция
+    
+        интерполяция
+    
         примитивы синхронизации(ReadWriteLock, отличия slim версий)
-        httpclient vs httpclientfactory
+    
+        httpclientfactory
 
-        // DTO должны быть immutable
+        DTO должны быть immutable
         public Guid ImageLinkId { get; init; }
-
-        // Фича флаг вместо конфигурации
-        Вместо
-	    'bool shouldGetDataFromVault = _configuration.GetValue<bool>("GetDataFromVault");'
-	    использовать фича флаги через
-	    'FeatureManagerExtensions.IsFeatureEnabled' или 'IFeatureManager'
 
 	    // Так можно не делать метод асинхронным, чтобы получить асинхронный результат
 	    {
@@ -50,8 +67,21 @@
         'DateTime.Now' не используем, вметсо него '_dateProvider.CurrentDateNow'
     */
 
+    
+
     static void Main()
     {
-        
+        int a = 0;
+
+        int Foo()
+        {
+            a = a + 41;
+            return 1;
+        }
+
+        a += Foo();
+        Console.WriteLine(a);
     }
+
+    
 }
