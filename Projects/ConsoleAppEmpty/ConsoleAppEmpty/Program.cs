@@ -29,7 +29,11 @@
         https://habr.com/ru/articles/470830/
 
         Saga Паттерн используется для управления распределенными транзакциями
-        
+
+        Monitor
+
+        микросервисы сервисориентированная архитектура
+
         IEnumerable, IEnumerator отложенное выполнение
     
         yield return, yield break
