@@ -67,21 +67,8 @@
         'DateTime.Now' не используем, вметсо него '_dateProvider.CurrentDateNow'
     */
 
-    
-
     static void Main()
     {
-        int a = 0;
-
-        int Foo()
-        {
-            a = a + 41;
-            return 1;
-        }
-
-        a += Foo();
-        Console.WriteLine(a);
+        
     }
-
-    
 }
