@@ -1,11 +1,11 @@
 using Microsoft.Extensions.Options;
 using OptionConfiguration;
 
-internal class Program
+public class Program
 {
-    private static void Main(string[] args)
+    public static void Main()
     {
-        var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder();
 
         //  онфигурацию можно хранить в JSON и обращатьс€ к ней через IOptions
         // ≈сли данные в JSON изменились, дл€ их применени€ нужно перезапустить приложение
