@@ -16,7 +16,7 @@ builder.Services
     .AddPresentation();
 
 // SeriLog
-builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+//!builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
@@ -27,7 +27,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // SeriLog
-app.UseSerilogRequestLogging();
+//!app.UseSerilogRequestLogging();
 
 // Minimal API
 /*

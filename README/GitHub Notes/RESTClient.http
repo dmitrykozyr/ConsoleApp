@@ -3,7 +3,7 @@
 # Нужно расширение REST Client
 
 # Локально
-@ConfigurationHelper_HostAddress = http://localhost:8080
+@ConfigurationHelper_HostAddress = https://localhost:7138
 
 # Контур 2
 #@ConfigurationHelper_HostAddress = https://loyalty-app-test.mcb.ru:8243
@@ -60,15 +60,25 @@ DELETE {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail/{{bankDet
 
 
 
+# Получить курсы валют
+GET https://localhost:7077/api/v1/centralbank/exchangeRate?date=2025-04-25&rateCode=826
+Accept: application/json
+###
 
 
 
-POST https://fm1-test.4-money.ru:444/moby-dev2-44/clientprivilegesservice
-Content-Type: application/json
 
+
+
+
+# Получить курсы валют
+POST https://localhost:7077/api/v1/centralbank/exchangeRate
+Accept: application/json
+content-type: application/json
 {
-    "type": "GetTravelPrivileges",
-    "rid": "111",
-    "sid": "IJKiz4U4gpLs0vQ6s2J9W5Nd",
-    "uid": "Z5tdPekynuQlvIoCos8AGVafX62vmf2kgrZa2Rwn8k4"
+  "date": "2025-04-25",
+  "rateCode": 826
 }
+###
+
+
