@@ -2,12 +2,11 @@
 {
     /*
         Фичефлаги
-            Фича флаг вместо конфигурации
-            Вместо
+        Вместо
 	        'bool shouldGetDataFromVault = _configuration.GetValue<bool>("GetDataFromVault");'
-	        использовать фича флаги через
+	    использовать фича флаги через
 	        'FeatureManagerExtensions.IsFeatureEnabled' или 'IFeatureManager'
-            https://learn.microsoft.com/en-us/azure/azure-app-configuration/feature-management-dotnet-reference
+        https://learn.microsoft.com/en-us/azure/azure-app-configuration/feature-management-dotnet-reference
 
         Domain Driven Design
         
@@ -69,6 +68,10 @@
         _logger.LogError(e, "Загрузка Excel не было произведена");
 
         'DateTime.Now' не используем, вметсо него '_dateProvider.CurrentDateNow'
+
+        IResult, IActionResult, ActionResult - разница
+
+        unit of work
     */
 
     static void Main()
