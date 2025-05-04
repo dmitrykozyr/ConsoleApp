@@ -37,8 +37,6 @@
     
         yield return, yield break
     
-        интерполяция
-    
         примитивы синхронизации(ReadWriteLock, отличия slim версий)
     
         httpclientfactory
@@ -68,8 +66,6 @@
         _logger.LogError(e, "Загрузка Excel не было произведена");
 
         'DateTime.Now' не используем, вметсо него '_dateProvider.CurrentDateNow'
-
-        IResult, IActionResult, ActionResult - разница
 
         unit of work
     */

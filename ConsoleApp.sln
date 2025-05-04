@@ -56,9 +56,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{D6A9D2
 	ProjectSection(SolutionItems) = preProject
 		README\ApiTypes.cs = README\ApiTypes.cs
 		README\Architectures.cs = README\Architectures.cs
-		README\AuthenticationAuthorization.cs = README\AuthenticationAuthorization.cs
 		README\Docker.cs = README\Docker.cs
-		README\FakeItEasy_.cs = README\FakeItEasy_.cs
 		README\GraphQL тело запросов в Postman.cs = README\GraphQL тело запросов в Postman.cs
 		README\JSON.cs = README\JSON.cs
 		README\Kafka.cs = README\Kafka.cs
@@ -179,15 +177,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptionConfiguration", "Projects\Configuration\OptionConfiguration\OptionConfiguration.csproj", "{EB98B7F3-6964-4174-BD71-61DC2E16CE16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Projects\Architectures\Structure patterns\CQRS\Application\Application.csproj", "{57EE0C32-CFB7-43E7-8278-B90B17A9D990}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Projects\Architectures\Structure patterns\CQRS\Application\Application.csproj", "{57EE0C32-CFB7-43E7-8278-B90B17A9D990}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Projects\Architectures\Structure patterns\CQRS\Domain\Domain.csproj", "{C26D4CCF-7991-434D-A7B5-A4E8DF5B3C68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Projects\Architectures\Structure patterns\CQRS\Domain\Domain.csproj", "{C26D4CCF-7991-434D-A7B5-A4E8DF5B3C68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "Projects\Architectures\Structure patterns\CQRS\WebApi\WebApi.csproj", "{CC3C6212-3FF0-47A2-9D4E-04D1F26590B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "Projects\Architectures\Structure patterns\CQRS\WebApi\WebApi.csproj", "{CC3C6212-3FF0-47A2-9D4E-04D1F26590B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Projects\Architectures\Structure patterns\CQRS\Presentation\Presentation.csproj", "{770F25B0-2624-49B3-8D02-5764E0780076}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Projects\Architectures\Structure patterns\CQRS\Presentation\Presentation.csproj", "{770F25B0-2624-49B3-8D02-5764E0780076}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Projects\Architectures\Structure patterns\CQRS\Infrastructure\Infrastructure.csproj", "{5BCA7D05-4676-4367-B15A-EC5824C956A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Projects\Architectures\Structure patterns\CQRS\Infrastructure\Infrastructure.csproj", "{5BCA7D05-4676-4367-B15A-EC5824C956A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

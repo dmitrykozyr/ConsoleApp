@@ -78,4 +78,42 @@
 		Статус коды 0-16
 
 	#endregion
+
+	#region IResult, IActionResult, ActionResult
+
+		// IResult
+		Представляет результат выполнения операции в более низком уровне абстракции
+		Используется в минимальных API
+		Позволяет гибко управлять результатами, включая различные типы ответов, такие как JSON, текст, файлы
+
+			public IResult Get()
+			{
+				return Results.Ok(new { message = "Hello World" });
+			}
+
+		// IActionResult
+		Представляет результат действия контроллера и является частью MVC
+		Используется в классических контроллерах MVC для возврата различных типов ответов, таких как представления, JSON, редиректы
+		Позволяет возвращать множество различных типов результатов
+
+			public IActionResult Get()
+			{
+				return Ok(new { message = "Hello World" });
+			}
+
+		// ActionResult<T>
+		Реализует интерфейс IActionResult
+		Предоставляет возможность возвращать как конкретные типы результатов (OkObjectResult, NotFoundResult), так и обобщенные результаты
+		Можно вернуть как Ok(), так и NotFound() из одного метода
+
+			public ActionResult<string> Get()
+			{
+				if (someCondition)
+				{
+					return Ok("Hello World");
+				}
+				return NotFound();
+			}
+  
+    #endregion
 }
