@@ -187,6 +187,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Projects\Ar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Projects\Architectures\Structure patterns\CQRS\Infrastructure\Infrastructure.csproj", "{5BCA7D05-4676-4367-B15A-EC5824C956A6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FeatureFlag", "FeatureFlag", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureFlag", "Projects\FeatureFlag\FeatureFlag\FeatureFlag.csproj", "{B717D223-C8BE-45AA-810E-A4F503932281}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -341,6 +345,10 @@ Global
 		{5BCA7D05-4676-4367-B15A-EC5824C956A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BCA7D05-4676-4367-B15A-EC5824C956A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BCA7D05-4676-4367-B15A-EC5824C956A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B717D223-C8BE-45AA-810E-A4F503932281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B717D223-C8BE-45AA-810E-A4F503932281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B717D223-C8BE-45AA-810E-A4F503932281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B717D223-C8BE-45AA-810E-A4F503932281}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -406,6 +414,7 @@ Global
 		{CC3C6212-3FF0-47A2-9D4E-04D1F26590B1} = {C70FEA3E-C589-4F13-93A2-CF31526D0233}
 		{770F25B0-2624-49B3-8D02-5764E0780076} = {C70FEA3E-C589-4F13-93A2-CF31526D0233}
 		{5BCA7D05-4676-4367-B15A-EC5824C956A6} = {C70FEA3E-C589-4F13-93A2-CF31526D0233}
+		{B717D223-C8BE-45AA-810E-A4F503932281} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C3FE8DB-917F-412C-81A3-E5F87D993B11}

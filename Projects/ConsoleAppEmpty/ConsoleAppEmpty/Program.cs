@@ -2,15 +2,6 @@
 {
     //! Что нужно выучить
     /*
-        Фичефлаги
-        Вместо
-	        'bool shouldGetDataFromVault = _configuration.GetValue<bool>("GetDataFromVault");'
-	    использовать фича флаги через
-	        'FeatureManagerExtensions.IsFeatureEnabled' или 'IFeatureManager'
-        https://learn.microsoft.com/en-us/azure/azure-app-configuration/feature-management-dotnet-reference
-
-        Domain Driven Design
-        
         gRPC
     
         SOAP
@@ -18,9 +9,6 @@
         MediatR
     
         Quartz
-
-        Уровни изоляции транзакций в БД
-        https://habr.com/ru/articles/845522/
 
         ConfigureAwait
         https://habr.com/ru/articles/482354/
@@ -32,7 +20,7 @@
 
         Monitor
 
-        микросервисы сервисориентированная архитектура
+        JSONb, blob
 
         IEnumerable, IEnumerator отложенное выполнение
     
@@ -41,6 +29,11 @@
         примитивы синхронизации(ReadWriteLock, отличия slim версий)
     
         httpclientfactory
+
+        unit of work
+
+
+
 
         DTO должны быть immutable
         public Guid ImageLinkId { get; init; }
@@ -67,8 +60,6 @@
         _logger.LogError(e, "Загрузка Excel не было произведена");
 
         'DateTime.Now' не используем, вметсо него '_dateProvider.CurrentDateNow'
-
-        unit of work
     */
 
     static void Main()
