@@ -1,5 +1,6 @@
 ﻿public class Program
 {
+    //!
     /*
         gRPC
     
@@ -29,7 +30,7 @@
     
         httpclientfactory
 
-
+        inMemoryDb
 
 
         DTO должны быть immutable

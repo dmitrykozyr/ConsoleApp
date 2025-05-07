@@ -69,29 +69,34 @@ app.UseAuthentication();
 
 app.UseSwagger();
 
+// MINIMAL API
+
+const string STANDARD = "Standard";
+const string ADMINISTRATOR = "Administrator";
+
 app.MapGet("/", 
     () => "Hello World!");
+
+app.MapGet("/get",
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = STANDARD + ", " + ADMINISTRATOR)]
+    (int id, IMovieService service) => Get(id, service));
+
+app.MapGet("/list",
+    (IMovieService service) => GetAll(service));
 
 app.MapPost("/login", 
     (UserLogin user, IUserService service) => Login(user, service));
 
 app.MapPost("/create", 
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Roles = ADMINISTRATOR)]
     (Movie movie, IMovieService service) => Create(movie, service));
 
-app.MapGet("/get",
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Standard, Administrator")]
-    (int id, IMovieService service) => Get(id, service));
-
-app.MapGet("/list", 
-    (IMovieService service) => GetAll(service));
-
 app.MapPut("/update", 
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Roles = ADMINISTRATOR)]
     (Movie newMovie, IMovieService service) => Update(newMovie, service));
 
 app.MapDelete("/delete",
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Roles = ADMINISTRATOR)]
     (int id, IMovieService service) => Delete(id, service));
 
 IResult Login(UserLogin user, IUserService service)

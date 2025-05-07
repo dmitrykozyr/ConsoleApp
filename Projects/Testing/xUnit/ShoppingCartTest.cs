@@ -5,7 +5,6 @@ using Xunit;
 
 namespace xUnit_;
 
-//! Используем InMemory БД
 public class ShoppingCartTest
 {
     // Если класс использует DependencyInjection, то для его тестирования используем Mock
