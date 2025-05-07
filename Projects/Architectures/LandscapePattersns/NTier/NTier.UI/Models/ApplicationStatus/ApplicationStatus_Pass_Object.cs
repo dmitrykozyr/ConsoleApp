@@ -2,5 +2,5 @@
 
 public class ApplicationStatus_Pass_Object
 {
-    public string name { get; set; }
+    public string? name { get; set; }
 }

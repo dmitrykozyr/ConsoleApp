@@ -20,8 +20,11 @@ public class Startup
         {
             options.UseInMemoryDatabase("Customers");
         });
+
         services.AddScoped<ICustomersProvider, CustomersProvider>();
+
         services.AddAutoMapper(typeof(Startup));
+
         services.AddControllers();
     }
 
@@ -31,8 +34,11 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+
         app.UseRouting();
+
         app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

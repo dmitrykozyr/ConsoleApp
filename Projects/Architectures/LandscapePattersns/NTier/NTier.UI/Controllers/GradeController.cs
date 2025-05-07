@@ -47,7 +47,11 @@ public class GradeController : ControllerBase
     [Route("[action]")]
     public async Task<IActionResult> UpdateGrade(GradeUpdate_Pass_Object grade_object)
     {
-        var result = await _gradeService.UpdateGrade(grade_object.id, grade_object.name, grade_object.grade_number, grade_object.capacity);
+        var result = await _gradeService.UpdateGrade(
+            grade_object.id,
+            grade_object.name,
+            grade_object.grade_number,
+            grade_object.capacity);
 
         switch (result.success)
         {

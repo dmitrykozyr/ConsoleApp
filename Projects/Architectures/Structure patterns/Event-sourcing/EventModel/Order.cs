@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 
-// Модель событий
-
 public class Order
 {
     private var _events = new List<object>();
@@ -36,7 +34,6 @@ public class Order
 
     private void Apply(object _event)
     {
-        // Update state of the order based on the event
         switch (_event)
         {
             case OrderCreatedEvent orderCreated:
@@ -52,7 +49,6 @@ public class Order
                 throw new NotSupportedException($"Event type '{_event.GetType().Name}' is not supported.");
         }
 
-        // Add event to the list of events
         _events.Add(_event);
     }
 }

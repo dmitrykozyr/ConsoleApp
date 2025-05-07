@@ -3,7 +3,8 @@ using MVVM.ViewModels;
 
 namespace MVVM.Commands;
 
-public class NavigateCommand<TViewModel> : CommandBase where TViewModel : ViewModelBase
+public class NavigateCommand<TViewModel> : CommandBase
+    where TViewModel : ViewModelBase
 {
     private readonly NavigationService<TViewModel> _navigationService;
 

@@ -1,7 +1,5 @@
 ﻿using System;
 
-// Определение событий и состояний системы
-
 public class OrderCreatedEvent
 {
     public Guid OrderId { get; set; }

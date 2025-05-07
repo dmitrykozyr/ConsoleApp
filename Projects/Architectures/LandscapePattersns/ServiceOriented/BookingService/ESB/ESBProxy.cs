@@ -9,6 +9,7 @@ public class ESBProxy : IESBroxy
     public void NotifyBookingMade(Booking booking)
     {
         var client = new RestClient("https://localhost:4001");
+
         //var request = new RestRequest("esb/explorecalifornia/bookingmade", DataFormat.Json)
         //    .AddJsonBody(new Message<BookingMade>(new BookingMade
         //    {

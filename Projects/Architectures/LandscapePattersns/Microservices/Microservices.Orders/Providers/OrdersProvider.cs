@@ -38,9 +38,10 @@ public class OrdersProvider : IOrdersProvider
                     new DB.OrderItem() { OrderId = 1, ProductId = 2, Quantity = 10, UnitPrice = 10 },
                     new DB.OrderItem() { OrderId = 1, ProductId = 3, Quantity = 10, UnitPrice = 10 },
                     new DB.OrderItem() { OrderId = 2, ProductId = 2, Quantity = 10, UnitPrice = 10 },
-                    new DB.OrderItem() { OrderId = 3, ProductId = 3, Quantity = 1, UnitPrice = 100 }
+                    new DB.OrderItem() { OrderId = 3, ProductId = 3, Quantity = 1,  UnitPrice = 100 }
                 }
             });
+
             _DBContext.Orders.Add(new DB.Order()
             {
                 Id = 2,
@@ -53,9 +54,10 @@ public class OrdersProvider : IOrdersProvider
                     new DB.OrderItem() { OrderId = 1, ProductId = 2, Quantity = 10, UnitPrice = 10 },
                     new DB.OrderItem() { OrderId = 1, ProductId = 3, Quantity = 10, UnitPrice = 10 },
                     new DB.OrderItem() { OrderId = 2, ProductId = 2, Quantity = 10, UnitPrice = 10 },
-                    new DB.OrderItem() { OrderId = 3, ProductId = 3, Quantity = 1, UnitPrice = 100 }
+                    new DB.OrderItem() { OrderId = 3, ProductId = 3, Quantity = 1,  UnitPrice = 100 }
                 }
             });
+
             _DBContext.Orders.Add(new DB.Order()
             {
                 Id = 3,
@@ -66,9 +68,10 @@ public class OrdersProvider : IOrdersProvider
                 {
                     new DB.OrderItem() { OrderId = 1, ProductId = 1, Quantity = 10, UnitPrice = 10 },
                     new DB.OrderItem() { OrderId = 2, ProductId = 2, Quantity = 10, UnitPrice = 10 },
-                    new DB.OrderItem() { OrderId = 3, ProductId = 3, Quantity = 1, UnitPrice = 100 }
+                    new DB.OrderItem() { OrderId = 3, ProductId = 3, Quantity = 1,  UnitPrice = 100 }
                 }
             });
+
             _DBContext.SaveChanges();
         }
     }
@@ -78,18 +81,24 @@ public class OrdersProvider : IOrdersProvider
         try
         {
             _logger?.LogInformation("Queryng customers");
+
             var orders = await _DBContext.Orders.Where(z => z.CustomerId == customerId).ToListAsync();
+
             if (orders is not null && orders.Any())
             {
                 _logger?.LogInformation($"{orders.Count} order(s) found");
+
                 var result = _mapper.Map<IEnumerable<DB.Order>, IEnumerable<Models.Order>>(orders);
+
                 return (true, result, null);
             }
+
             return (false, null, "Not found");
         }
         catch (Exception ex)
         {
             _logger?.LogError(ex.ToString());
+
             return (false, null, ex.Message);
         }
     }

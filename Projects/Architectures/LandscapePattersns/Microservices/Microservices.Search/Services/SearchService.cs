@@ -22,7 +22,9 @@ public class SearchService : ISearchService
     public async Task<(bool IsSuccess, dynamic SearchResults)> SearchAsync(int customerId)
     {
         var ordersResult = await _ordersService.GetOrdersAsync(customerId);
+
         var productsResult = await _productsService.GetProductsAsync();
+
         var customersResult = await _customersService.GetCustomerAsync(customerId);
 
         if (ordersResult.IsSuccess)
@@ -44,8 +46,10 @@ public class SearchService : ISearchService
                     customersResult.Customer :
                     new { Name = "Customer information not found" }
             };
+
             return (true, result);
         }
+
         return (false, null);
     }
 }

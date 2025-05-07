@@ -102,7 +102,9 @@ IResult Login(UserLogin user, IUserService service)
         var loggedInUser = service.Get(user);
 
         if (loggedInUser == null)
+        {
             return Results.NotFound("User not found");
+        }
 
         var claims = new[]
         {
@@ -126,6 +128,7 @@ IResult Login(UserLogin user, IUserService service)
         );
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
         return Results.Ok(tokenString);
     }
 
@@ -135,6 +138,7 @@ IResult Login(UserLogin user, IUserService service)
 IResult Create(Movie movie, IMovieService service)
 {
     var result = service.Create(movie);
+
     return Results.Ok(result);
 }
 
@@ -143,7 +147,9 @@ IResult Get(int id, IMovieService service)
     var result = service.Get(id);
 
     if (result == null)
+    {
         return Results.NotFound("Movie not found");
+    }
 
     return Results.Ok(result);
 }
@@ -151,6 +157,7 @@ IResult Get(int id, IMovieService service)
 IResult GetAll(IMovieService service)
 {
     var result = service.GetAll();
+
     return Results.Ok(result);
 }
 
@@ -159,7 +166,9 @@ IResult Update(Movie newMovie, IMovieService service)
     var result = service.Update(newMovie);
 
     if (result == null)
+    {
         return Results.NotFound("Movie not found");
+    }
 
     return Results.Ok(result);
 }
@@ -169,7 +178,9 @@ IResult Delete(int id, IMovieService service)
     var result = service.Delete(id);
 
     if (result == false)
+    {
         return Results.BadRequest("Something went wrong");
+    }
 
     return Results.Ok(result);
 }

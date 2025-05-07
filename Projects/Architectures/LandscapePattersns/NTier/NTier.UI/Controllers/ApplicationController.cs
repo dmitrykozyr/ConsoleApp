@@ -21,8 +21,14 @@ public class ApplicationController : ControllerBase
     public async Task<IActionResult> AddApplicationApplicant(Application_Pass_Object application)
     {
         var result = await _application_Service.AddApplicationAndApplicant(
-            application.grade_id, 1, application.school_year, application.applicant.name, application.applicant.surname,
-            application.applicant.birthday, application.applicant.email, application.applicant.phone_number);
+            application.grade_id,
+            1,
+            application.school_year,
+            application.applicant.name,
+            application.applicant.surname,
+            application.applicant.birthday,
+            application.applicant.email,
+            application.applicant.phone_number);
 
         switch (result.success)
         {
@@ -36,7 +42,11 @@ public class ApplicationController : ControllerBase
     public async Task<IActionResult> UpdateApplication(ApplicationUpdate_Pass_Object application)
     {
         var result = await _application_Service.UpdateApplication(
-            application.id, application.grade_id, application.status_id, application.school_year, application.applicant_id);
+            application.id,
+            application.grade_id,
+            application.status_id,
+            application.school_year,
+            application.applicant_id);
 
         switch (result.success)
         {

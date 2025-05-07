@@ -14,15 +14,28 @@ public class Application_Service : IApplication_Service
     private IApplication_Operations _application_Operations = new Application_Operations();
 
     public async Task<Generic_ResultSet<ApplicationApplicant_ResultSet>> AddApplicationAndApplicant(
-        Int64 grade_id, Int64 application_status_id, Int32 school_year, string name, 
-        string surname, DateTime birthday, string email, string phone_number)
+        Int64 grade_id,
+        Int64 application_status_id,
+        Int32 school_year,
+        string name, 
+        string surname,
+        DateTime birthday,
+        string email,
+        string phone_number)
     {
         var result = new Generic_ResultSet<ApplicationApplicant_ResultSet>();
         result.result_set = new ApplicationApplicant_ResultSet();
         try
         {
             Application ApplicationAdded = await _application_Operations.AddFullApplication(
-                grade_id, application_status_id, school_year, name, surname, birthday, email, phone_number);
+                grade_id,
+                application_status_id,
+                school_year,
+                name,
+                surname,
+                birthday,
+                email,
+                phone_number);
 
             result.result_set.applicant_ResultSet = new Models.Applicant.Applicant_ResultSet
             {
@@ -46,14 +59,19 @@ public class Application_Service : IApplication_Service
             };
 
             result.userMessage = "Application and applicant was added successfully";
+            
             result.internalMessage = "LOGIC.Services.Implementation.Application_Service: AddApplicationAndApplicant() method executed successfully";
+
             result.result_set = result.result_set;
+            
             result.success = true;
         }
         catch (Exception exception)
         {
             result.exception = exception;
+            
             result.userMessage = "Failed to register information for your child";
+            
             result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Application_Service: AddApplicationAndApplicant(): {0}", exception.Message); ;
         }
         return result;
@@ -78,21 +96,30 @@ public class Application_Service : IApplication_Service
             };
 
             result.userMessage = "Your application was located successfully";
+            
             result.internalMessage = "LOGIC.Services.Implementation.Application_Service: GetApplicationById() method executed successfully";
+            
             result.result_set = appplicationReturned;
+            
             result.success = true;
         }
         catch (Exception exception)
         {
             result.exception = exception;
+            
             result.userMessage = "Failed to find the application you are looking for";
+            
             result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Application_Service: GetApplicationById(): {0}", exception.Message);
         }
         return result;
     }
 
     public async Task<Generic_ResultSet<Application_ResultSet>> UpdateApplication(
-        Int64 application_id, Int64 grade_id, Int64 application_status_id, Int32 school_year, Int64 applicant_id)
+        Int64 application_id,
+        Int64 grade_id,
+        Int64 application_status_id,
+        Int32 school_year,
+        Int64 applicant_id)
     {
         var result = new Generic_ResultSet<Application_ResultSet>();
 
@@ -121,14 +148,19 @@ public class Application_Service : IApplication_Service
             };
 
             result.userMessage = "Application was updated successfully";
+            
             result.internalMessage = "LOGIC.Services.Implementation.Application_Service: UpdateApplication() method executed successfully";
+            
             result.result_set = applicationUpdated;
+            
             result.success = true;
         }
         catch (Exception exception)
         {
             result.exception = exception;
+            
             result.userMessage = "Failed to update your information for the application supplied";
+            
             result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Application_Service: UpdateApplication(): {0}", exception.Message); ;
         }
         return result;
@@ -137,6 +169,7 @@ public class Application_Service : IApplication_Service
     public async Task<Generic_ResultSet<List<Application_ResultSet>>> GetApplicationsByApplicantId(Int64 applicant_id)
     {
         var result = new Generic_ResultSet<List<Application_ResultSet>>();
+        
         result.result_set = new List<Application_ResultSet>();
 
         try
@@ -156,14 +189,19 @@ public class Application_Service : IApplication_Service
             });
 
             result.userMessage = "Applications were located successfully";
+            
             result.internalMessage = "LOGIC.Services.Implementation.Application_Service: GetApplicationsByApplicantId() method executed successfully";
+            
             result.result_set = result.result_set;
+            
             result.success = true;
         }
         catch (Exception exception)
         {
             result.exception = exception;
+            
             result.userMessage = "Failed to find the applications you were looking for";
+            
             result.internalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Application_Service: GetApplicationsByApplicantId(): {0}", exception.Message);
         }
         return result;

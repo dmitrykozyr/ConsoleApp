@@ -9,8 +9,11 @@ public class DatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContex
     public DatabaseContext CreateDbContext(string[] args)
     {
         var settings = new AppConfiguration();
+
         var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
+
         optionsBuilder.UseSqlServer(settings.SqlConnectionString);
+
         return new DatabaseContext(optionsBuilder.Options);
     }
 }

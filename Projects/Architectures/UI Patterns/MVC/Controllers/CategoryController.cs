@@ -39,7 +39,9 @@ namespace MVC.Controllers
             // Программа смотрит на атрибуты валидации в модели Category
             // Поле Name там указано как обязательное
             if (!ModelState.IsValid)
+            {
                 return View(category);
+            }
 
             _dbContext.Add(category);
             _dbContext.SaveChanges();
@@ -56,13 +58,17 @@ namespace MVC.Controllers
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
+            {
                 return NotFound();
+            }
 
             //var category = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
             var category = _dbContext.Categories.Find(id); // Find ищет по Primary Key
 
             if (category == null)
+            {
                 return NotFound();
+            }
 
             return View(category);
         }
@@ -77,9 +83,12 @@ namespace MVC.Controllers
             }
 
             if (!ModelState.IsValid)
+            {
                 return View(category);
+            }
 
             _dbContext.Update(category);
+
             _dbContext.SaveChanges();
 
             TempData["success"] = "Category updated successfully";
@@ -90,11 +99,16 @@ namespace MVC.Controllers
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
+            {
                 return NotFound();
+            }
 
             var category = _dbContext.Categories.Find(id);
+
             if (category == null)
+            {
                 return NotFound();
+            }
 
             return View(category);
         }
@@ -104,10 +118,14 @@ namespace MVC.Controllers
         public IActionResult Delete(int id)
         {
             var category = _dbContext.Categories.Find(id);
+
             if (category == null)
+            {
                 return NotFound();
+            }
 
             _dbContext.Categories.Remove(category);
+
             _dbContext.SaveChanges();
 
             TempData["success"] = "Category deleted successfully";

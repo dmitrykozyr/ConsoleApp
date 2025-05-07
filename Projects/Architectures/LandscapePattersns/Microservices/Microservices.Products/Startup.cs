@@ -17,11 +17,14 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddScoped<IProductsProvider, ProductsProvider>();
+
         services.AddAutoMapper(typeof(Startup));
+
         services.AddDbContext<ProductsDbContext>(options =>
         {
             options.UseInMemoryDatabase("Products");
         });
+
         services.AddControllers();
     }
 
@@ -31,8 +34,11 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+
         app.UseRouting();
+
         app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

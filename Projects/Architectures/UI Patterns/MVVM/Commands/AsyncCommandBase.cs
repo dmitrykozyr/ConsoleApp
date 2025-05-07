@@ -6,6 +6,7 @@ namespace MVVM.Commands;
 public abstract class AsyncCommandBase : CommandBase
 {
     private bool _isExecuting;
+
     private bool IsExecuting 
     {
         get
@@ -15,6 +16,7 @@ public abstract class AsyncCommandBase : CommandBase
         set
         {
             _isExecuting = value;
+
             OnCanExecuteChanged();
         }
     }

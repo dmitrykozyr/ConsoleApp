@@ -25,7 +25,9 @@ public class BookingsController : ControllerBase
     public void Post(Booking booking)
     {
         var domainBooking = _mapper.Map<Domain.Booking>(booking);
+
         _bookingsRepository.Save(domainBooking);
+
         _esbProxy.NotifyBookingMade(domainBooking);
     }
 }

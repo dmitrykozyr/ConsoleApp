@@ -7,8 +7,8 @@ namespace MVP.Presenters
 {
     public class CalculatorPresenter
     {
-        Calculator _calculator = new Calculator();
-        private ICalculator _calculatorView;
+        private readonly Calculator _calculator = new Calculator();
+        private readonly ICalculator _calculatorView;
 
         public CalculatorPresenter(ICalculator calculatorView)
         {
@@ -24,18 +24,21 @@ namespace MVP.Presenters
         public void Sum()
         {
             ModelViewConnection();
+
             _calculatorView.Result = _calculator.CalculateSumation().ToString();
         }
 
         public void Sub()
         {
             ModelViewConnection();
+
             _calculatorView.Result = _calculator.CalculateSubstraction().ToString();
         }
 
         public void Mul()
         {
             ModelViewConnection();
+
             _calculatorView.Result = _calculator.CalculateMultiplication().ToString();
         }
 

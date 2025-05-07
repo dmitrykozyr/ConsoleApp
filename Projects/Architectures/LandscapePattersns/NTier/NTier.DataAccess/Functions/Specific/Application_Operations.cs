@@ -29,6 +29,7 @@ public class Application_Operations : IApplication_Operations
                         };
 
                         var trackingApplicant = await context.Applicants.AddAsync(applicant);
+
                         await context.SaveChangesAsync();
 
                         var application = new Application
@@ -41,8 +42,11 @@ public class Application_Operations : IApplication_Operations
                         };
 
                         var trackingApplication = await context.Applications.AddAsync(application);
+
                         await context.SaveChangesAsync();
+
                         await transaction.CommitAsync();
+
                         application.Applicant = applicant;
 
                         return application;
@@ -50,6 +54,7 @@ public class Application_Operations : IApplication_Operations
                     catch
                     {
                         await transaction.RollbackAsync();
+
                         throw;
                     }
                 }
@@ -67,11 +72,10 @@ public class Application_Operations : IApplication_Operations
         {
             using (var context = new DatabaseContext(DatabaseContext.Options.DatabaseOptions))
             {
-                List<Application> Applications = await context.Applications
-                                    .Include(a => a.Applicant)
-                                    .OrderBy(a => a.SchoolYear)
-                                    .Where(a => a.Applicant_ID == applicantId)
-                                    .ToListAsync();
+                List<Application> Applications = await context.Applications.Include(a => a.Applicant)
+                                                                           .OrderBy(a => a.SchoolYear)
+                                                                           .Where(a => a.Applicant_ID == applicantId)
+                                                                           .ToListAsync();
 
                 return Applications;
             }

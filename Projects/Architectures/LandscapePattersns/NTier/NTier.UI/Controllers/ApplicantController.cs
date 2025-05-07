@@ -22,7 +22,11 @@ public class ApplicantController : ControllerBase
     public async Task<IActionResult> AddApplicant(Applicant_Pass_Object applicant)
     {
         var result = await _applicantService.AddSingleApplicant(
-            applicant.name, applicant.surname, applicant.birthday, applicant.email, applicant.phone_number);
+            applicant.name,
+            applicant.surname,
+            applicant.birthday,
+            applicant.email,
+            applicant.phone_number);
 
         switch (result.success)
         {
@@ -35,6 +39,7 @@ public class ApplicantController : ControllerBase
     [Route("[action]")]
     public async Task<IActionResult> GetApplicantById(int id)
     {
+
         var result = await _applicantService.GetApplicantById(id);
         switch (result.success)
         {
@@ -48,7 +53,12 @@ public class ApplicantController : ControllerBase
     public async Task<IActionResult> UpdateApplicant(ApplicantUpdate_Pass_Object applicant)
     {
         var result = await _applicantService.UpdateApplicant(
-            applicant.id, applicant.name, applicant.surname, applicant.birthday, applicant.email, applicant.phone_number);
+            applicant.id,
+            applicant.name,
+            applicant.surname,
+            applicant.birthday,
+            applicant.email,
+            applicant.phone_number);
 
         switch (result.success)
         {

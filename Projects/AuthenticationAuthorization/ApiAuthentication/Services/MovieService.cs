@@ -9,19 +9,23 @@ public class MovieService : IMovieService
     public Movie Get(int id)
     {
         var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
+
         return movie;
     }
 
     public List<Movie> GetAll()
     {
         var movie = MovieRepository.Movies;
+
         return movie;
     }
 
     public Movie Create(Movie movie)
     {
         movie.Id = MovieRepository.Movies.Count + 1;
+
         MovieRepository.Movies.Add(movie);
+
         return movie;
     }
 
@@ -30,7 +34,9 @@ public class MovieService : IMovieService
         var oldMovie = MovieRepository.Movies.FirstOrDefault(x => x.Id == updatedMovie.Id);
 
         if (oldMovie == null)
+        {
             return null;
+        }
 
         oldMovie.Title = updatedMovie.Title;
         oldMovie.Description = updatedMovie.Description;
@@ -44,9 +50,12 @@ public class MovieService : IMovieService
         var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
 
         if (movie == null)
+        {
             return false;
+        }
 
         MovieRepository.Movies.Remove(movie);
+
         return true;
     }
 }

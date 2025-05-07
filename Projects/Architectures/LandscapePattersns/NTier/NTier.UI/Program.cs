@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddRazorPages();
 
 builder.Services.AddControllers();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gettoe_Elementary", Version = "v1" });

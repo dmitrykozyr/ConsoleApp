@@ -2,5 +2,5 @@
 
 public class Generic_ResultSet<T> : StandardResultObject
 {
-    public T result_set { get; set; }
+    public T? result_set { get; set; }
 }

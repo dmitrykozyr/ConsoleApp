@@ -32,9 +32,9 @@ public class DatabaseReservationProvider : IReservationProvider
     private static Reservation ToReservation(ReservationDTO dto)
     {
         return new Reservation(
-                        new RoomID(dto.FloorNumber, dto.RoomNumber),
-                        dto.Username,
-                        dto.StartTime,
-                        dto.EndTime);
+            new RoomID(dto.FloorNumber, dto.RoomNumber),
+            dto.Username,
+            dto.StartTime,
+            dto.EndTime);
     }
 }

@@ -9,9 +9,9 @@ namespace MVC.Models
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         
-        [DisplayName("Display Order")] // Если произойдет ошибка валидации, в тексте ошибки свойство будет называться так
+        [DisplayName("Display Order")]
         [Range(1, 100, ErrorMessage = "Value must be in range 1 .. 100")]
         public int DisplayOrder { get; set; }
 

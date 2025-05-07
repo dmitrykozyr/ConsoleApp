@@ -15,6 +15,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
+
         services.AddTransient<IToursProxy, ToursProxy>();
     }
 
@@ -26,7 +27,9 @@ public class Startup
         }
 
         app.UseHttpsRedirection();
+
         app.UseRouting();
+
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

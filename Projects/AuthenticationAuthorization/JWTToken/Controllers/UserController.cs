@@ -31,7 +31,9 @@ public class UserController : ControllerBase
         var currentUser = GetCurrentUser();
 
         if (currentUser == null)
+        {
             return NotFound();
+        }
 
         return Ok($"Hi {currentUser.GivenName}, your role is {currentUser.Role}");
     }

@@ -125,22 +125,11 @@ class Tasks
         //BreakCycle_();
     }
 
-    static void ThreadSleep()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            Thread.Sleep(500);
-
-            Console.WriteLine("Thread Id " + Thread.CurrentThread.ManagedThreadId);
-
-            Console.WriteLine("TaskId " + Task.CurrentId);
-        }
-    }
-
     static void General_()
     {
         /*
             Task использует пул потоков
+            Task.Run создает новый поток из пула потоков
 
             Ресурсы, связанные с Task, освобождаются автоматически сборщиком мусора
             В классе Task реализуется интерфейс IDisposable

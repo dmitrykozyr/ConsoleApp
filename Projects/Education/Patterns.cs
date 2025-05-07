@@ -1,4 +1,4 @@
-﻿// Порождающие
+﻿// ПОРОЖДАЮЩИЕ
 
 using Microsoft.EntityFrameworkCore;
 
@@ -348,7 +348,7 @@ namespace Singleton
     }
 }
 
-// Структурные
+// СТРУКТУРНЫЕ
 //+
 namespace Adapter
 {
@@ -767,7 +767,7 @@ namespace Proxy
     }
 }
 
-// Поведенческие
+// ПОВЕДЕНЧЕСКИЕ
 
 namespace ChainOfResponsibility
 {
@@ -1395,16 +1395,16 @@ namespace Visitor
     }
 }
 
-// Другие паттерны
+// ДРУГИЕ ПАТТЕРНЫ
 
 namespace UnitOfWork
 {
     /*     
         Объединяет несколько операций над данными в одну единицу работы,
-        чтобы выполнить несколько изменений (добавление, обновление, удаление) и затем сохранить все в БД одновременно
+        чтобы выполнить несколько изменений (добавление, обновление, удаление) в БД одновременно
         
-        Управляет транзакциями, обеспечивая, чтобы все изменения были применены только при успешном завершения всех операций
-        Если одна из операций не удалась, все изменения могут быть отменены
+        Управляет транзакциями, чтобы все изменения применились только при успешном завершении всех операций
+        Если одна из операций не удалась, все изменения будут отменены
     */
 
     public interface IRepository<TEntity>
@@ -1412,11 +1412,13 @@ namespace UnitOfWork
         public void Add(TEntity entity);
     }
 
-    public class MyDbContext : DbContext { }
+    public class MyDbContext : DbContext
+    {
+    }
 
     public class User
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 
     public interface IUnitOfWork : IDisposable
@@ -1436,7 +1438,8 @@ namespace UnitOfWork
             _context = context;
         }
 
-        public IRepository<TEntity> Repository<TEntity>() where TEntity : class
+        public IRepository<TEntity> Repository<TEntity>()
+            where TEntity : class
         {
             return new Repository<TEntity>(_context);
         }
@@ -1455,7 +1458,8 @@ namespace UnitOfWork
     // Создаем экземпляр UnitOfWork
     // Выполняем операции с репозиториями
     // Сохраняем все изменения методом Save
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity>
+        where TEntity : class
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
@@ -1485,7 +1489,11 @@ namespace UnitOfWork
             {
                 var userRepository = unitOfWork.Repository<User>();
 
-                var newUser = new User { Name = "John Doe" };
+                var newUser = new User
+                {
+                    Name = "John Doe"
+                };
+
                 userRepository.Add(newUser);
 
                 unitOfWork.Save();

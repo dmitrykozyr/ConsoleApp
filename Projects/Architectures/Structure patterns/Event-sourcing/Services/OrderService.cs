@@ -1,7 +1,5 @@
 ﻿using System;
 
-// Командная часть
-
 public class OrderService
 {
     private readonly IEventStore _eventStore;
@@ -14,6 +12,7 @@ public class OrderService
     public void CreateOrder(decimal totalAmount)
     {
         var order = new Order();
+
         order.CreateOrder(totalAmount);
 
         _eventStore.SaveEvents(order.Id, -1, order.GetUncommittedEvents());
@@ -22,6 +21,7 @@ public class OrderService
     public void CancelOrder(Guid orderId)
     {
         var order = LoadOrder(orderId);
+
         order.CancelOrder();
 
         _eventStore.SaveEvents(order.Id, order.Version, order.GetUncommittedEvents());
@@ -37,6 +37,7 @@ public class OrderService
         }
 
         var order = new Order();
+
         order.LoadFromHistory(events);
 
         return order;

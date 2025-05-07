@@ -6,12 +6,13 @@ namespace MVVM.Models;
 public class Hotel
 {
     private readonly ReservationBook _reservationBook;
-    public string Name { get; }
 
+    public string Name { get; }
 
     public Hotel(string name, ReservationBook reservationBook)
     {
         Name = name;
+
         _reservationBook = reservationBook;
     }
 

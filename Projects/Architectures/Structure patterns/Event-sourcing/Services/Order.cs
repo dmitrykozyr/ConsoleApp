@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-// Механизм восстановления состояния
-
 public class Order
 {
     public void LoadFromHistory(IEnumerable<object> events)

@@ -5,6 +5,7 @@ namespace MVVM.Models;
 public class RoomID
 {
     public int FloorNumber { get; set; }
+
     public int RoomNumber { get; set; }
 
     public RoomID(int floorNumber, int roomNumber)
@@ -33,7 +34,9 @@ public class RoomID
     public static bool operator ==(RoomID roomID_1, RoomID roomID_2)
     {
         if (roomID_1 is null && roomID_2 is null)
+        {
             return true;
+        }
 
         return !(roomID_1 is null) && roomID_1.Equals(roomID_2);
     }

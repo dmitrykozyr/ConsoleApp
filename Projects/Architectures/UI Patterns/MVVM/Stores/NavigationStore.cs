@@ -6,6 +6,7 @@ namespace MVVM.Stores;
 public class NavigationStore
 {
     private ViewModelBase _currentViewModel;
+
     public ViewModelBase CurrentViewModel
     {
         get => _currentViewModel;
@@ -15,6 +16,7 @@ public class NavigationStore
             _currentViewModel?.Dispose();
 
             _currentViewModel = value;
+
             OnCurrentViewModelChanged();
         }
     }

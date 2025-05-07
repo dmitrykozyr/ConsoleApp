@@ -19,10 +19,12 @@ public class SearchController : ControllerBase
     public async Task<IActionResult> SearchAsync(SearchTerm term)
     {
         var result = await _searchService.SearchAsync(term.CustomerId);
+
         if (result.IsSuccess)
         {
             return Ok(result.SearchResults);
         }
+
         return NotFound();
     }
 }

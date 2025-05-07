@@ -30,8 +30,7 @@ public class ReservationBook
 
     public async Task AddReservation(Reservation reservation)
     {
-        Reservation conflictingReservation =
-            await _reservationConflictValidator.GetConflictingReservation(reservation);
+        Reservation conflictingReservation = await _reservationConflictValidator.GetConflictingReservation(reservation);
 
         if (conflictingReservation is not null)
         {

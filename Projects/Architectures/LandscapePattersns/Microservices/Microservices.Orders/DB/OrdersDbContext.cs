@@ -6,7 +6,8 @@ namespace Microservices.Orders.DB
     {
         public DbSet<Order> Orders { get; set; }
 
-        public OrdersDbContext(DbContextOptions options) : base(options)
+        public OrdersDbContext(DbContextOptions options)
+            : base(options)
         {
         }
     }

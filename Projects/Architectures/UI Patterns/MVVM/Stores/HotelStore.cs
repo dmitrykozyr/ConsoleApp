@@ -8,9 +8,13 @@ namespace MVVM.Stores;
 public class HotelStore
 {
     private readonly Hotel _hotel;
+
     private Lazy<Task> _initializeLazy;
+
     private readonly List<Reservation> _reservations;
+
     public IEnumerable<Reservation> Reservations => _reservations;
+
     public event Action<Reservation> ReservationMade;
 
     public HotelStore(Hotel hotel)
@@ -39,7 +43,9 @@ public class HotelStore
     public async Task MakeReservation(Reservation reservation)
     {
         await _hotel.MakeReservation(reservation);
+
         _reservations.Add(reservation);
+
         OnReservationMade(reservation);
     }
 
@@ -51,7 +57,9 @@ public class HotelStore
     private async Task Initialize()
     {
         IEnumerable<Reservation> reservations = await _hotel.GetAllReservations();
+
         _reservations.Clear();
+
         _reservations.AddRange(reservations);
 
         // Тестирование обработчика ошибок

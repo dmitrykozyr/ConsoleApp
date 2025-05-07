@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-// Запросная часть
-
 public class OrderQueryService
 {
     private readonly IEventStore _eventStore;

@@ -20,7 +20,13 @@ public class BookingsRepository : IBookingsRepository
         {
             connection.Execute(
                 "INSERT INTO Booking (TourId, Name, Email, Transport) VALUES (@TourId, @Name, @Email, @Transport)",
-                new { TourId = booking.TourId, Name = booking.Name, Email = booking.Email, Transport = booking.Transport });
+                new
+                {
+                    TourId = booking.TourId,
+                    Name = booking.Name,
+                    Email = booking.Email,
+                    Transport = booking.Transport
+                });
         }
     }
 }

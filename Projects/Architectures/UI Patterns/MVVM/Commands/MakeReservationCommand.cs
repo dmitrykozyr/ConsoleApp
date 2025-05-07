@@ -17,9 +17,9 @@ public class MakeReservationCommand : AsyncCommandBase
     private readonly NavigationService<ReservationListingViewModel> _reservationViewNavigationService;
 
     public MakeReservationCommand(
-                MakeReservationViewModel makeReservationViewModel,
-                HotelStore hotelStore,
-                NavigationService<ReservationListingViewModel> reservationViewNavigationService)
+        MakeReservationViewModel makeReservationViewModel,
+        HotelStore hotelStore,
+        NavigationService<ReservationListingViewModel> reservationViewNavigationService)
     {
         _makeReservationViewModel = makeReservationViewModel;
         _hotelStore = hotelStore;
@@ -43,7 +43,7 @@ public class MakeReservationCommand : AsyncCommandBase
 
     public override async Task ExecuteAsync(object parameter)
     {
-        Reservation reservation = new Reservation(
+        var reservation = new Reservation(
             new RoomID(_makeReservationViewModel.FloorNumber, _makeReservationViewModel.RoomNumber),
             _makeReservationViewModel.Username,
             _makeReservationViewModel.StartDate,

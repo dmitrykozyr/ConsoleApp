@@ -1,6 +1,5 @@
 ﻿public class Program
 {
-    //! Что нужно выучить
     /*
         gRPC
     
@@ -30,8 +29,6 @@
     
         httpclientfactory
 
-        unit of work
-
 
 
 
@@ -40,14 +37,13 @@
 
 	    // Так можно не делать метод асинхронным, чтобы получить асинхронный результат
 	    {
-		    // Task.Run - создает новый поток из пула потоков
-		    // ConfigureAwait(true) гарантирует продолжение выполнения в том-же контексте синхронизации
 		    // GetAwaiter().GetResult() - блокирует выполнение до завершения задачи
+
 		    _merchantsService.GetMerchantsListAsync("", context.Token)
-		    .IfFailThrow()
-		    .ConfigureAwait(true)
-		    .GetAwaiter()
-		    .GetResult();
+		        .IfFailThrow()
+		        .ConfigureAwait(true)
+		        .GetAwaiter()
+		        .GetResult();
         }
 
         // Когда есть IServiceScopeFactory, зависимости запрашиваем через него

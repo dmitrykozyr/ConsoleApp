@@ -9,5 +9,6 @@ public class Message<T>
     }
 
     public Guid MessageId { get; set; }
+
     public T Data { get; set; }
 }

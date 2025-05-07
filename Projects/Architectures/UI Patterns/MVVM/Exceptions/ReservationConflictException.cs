@@ -17,15 +17,18 @@ public class ReservationConflictException : Exception
         IncomingReservation = incomingReservation;
     }
 
-    public ReservationConflictException(string? message) : base(message)
+    public ReservationConflictException(string? message)
+        : base(message)
     {
     }
 
-    public ReservationConflictException(string? message, Exception? innerException) : base(message, innerException)
+    public ReservationConflictException(string? message, Exception? innerException)
+        : base(message, innerException)
     {
     }
 
-    protected ReservationConflictException(SerializationInfo info, StreamingContext context) : base(info, context)
+    protected ReservationConflictException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
     {
     }
 }

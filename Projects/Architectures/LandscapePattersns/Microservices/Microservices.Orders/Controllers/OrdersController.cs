@@ -18,10 +18,12 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> GetOrdersAsync(int customerId)
     {
         var result = await _ordersProvider.GetOrdersAsync(customerId);
+
         if (result.IsSuccess)
         {
             return Ok(result.Orders);
         }
+
         return NotFound();
     }
 }
