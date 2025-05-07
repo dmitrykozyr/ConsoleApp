@@ -46,12 +46,13 @@ namespace MVC.Controllers
             _dbContext.Add(category);
             _dbContext.SaveChanges();
 
-            // Выводим это сообщение в Index.cshtml, ищем TempData по ключу 'success'
+            // Выводим сообщение в Index.cshtml, ищем TempData по ключу 'success'
             // Сообщение исчезнет после перезагрузки страницы
             TempData["success"] = "Category created successfully";
 
-            return RedirectToAction("Index"); // Переходим на страницу Index текущего контроллера
+            // Переходим на страницу Index текущего контроллера
             // Если нужно перейти на страницу другого контроллера, указываем его вторым параметром RedirectToAction("", "")
+            return RedirectToAction("Index");
         }
 
         // GET Открываем страницу изменения категории
@@ -62,8 +63,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            //var category = _dbContext.Categories.FirstOrDefault(c => c.Id == id);
-            var category = _dbContext.Categories.Find(id); // Find ищет по Primary Key
+            var category = _dbContext.Categories.Find(id);
 
             if (category == null)
             {

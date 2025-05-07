@@ -39,13 +39,13 @@ public class Application_Service : IApplication_Service
 
             result.result_set.applicant_ResultSet = new Models.Applicant.Applicant_ResultSet
             {
-                id = ApplicationAdded.Applicant_ID,
-                name = ApplicationAdded.Applicant.Applicant_Name,
-                surname = ApplicationAdded.Applicant.Applicant_Surname,
-                birthday = ApplicationAdded.Applicant.Applicant_BirthDate,
-                email = ApplicationAdded.Applicant.Contact_Email,
-                phone_number = ApplicationAdded.Applicant.Contact_Number,
-                submission_date = ApplicationAdded.Applicant.Applicant_CreationDate
+                Id = ApplicationAdded.Applicant_ID,
+                Name = ApplicationAdded.Applicant.Applicant_Name,
+                Surname = ApplicationAdded.Applicant.Applicant_Surname,
+                Birthday = ApplicationAdded.Applicant.Applicant_BirthDate,
+                Email = ApplicationAdded.Applicant.Contact_Email,
+                PhoneNumber = ApplicationAdded.Applicant.Contact_Number,
+                SubmissionDate = ApplicationAdded.Applicant.Applicant_CreationDate
             };
 
             result.result_set.application_ResultSet = new Application_ResultSet

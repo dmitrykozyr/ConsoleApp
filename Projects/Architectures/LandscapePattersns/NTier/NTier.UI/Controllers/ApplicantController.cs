@@ -5,9 +5,9 @@ using NTier.UI.Models.Applicant;
 
 namespace NTier.UI.Controllers;
 
+[ApiController]
 [EnableCors("angular")]
 [Route("api/[controller]")]
-[ApiController]
 public class ApplicantController : ControllerBase
 {
     private IApplicant_Service _applicantService;
@@ -19,14 +19,14 @@ public class ApplicantController : ControllerBase
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> AddApplicant(Applicant_Pass_Object applicant)
+    public async Task<IActionResult> AddApplicant(ApplicantPassObject applicant)
     {
         var result = await _applicantService.AddSingleApplicant(
-            applicant.name,
-            applicant.surname,
-            applicant.birthday,
-            applicant.email,
-            applicant.phone_number);
+            applicant.Name,
+            applicant.Surname,
+            applicant.Birthday,
+            applicant.Email,
+            applicant.PhoneNumber);
 
         switch (result.success)
         {
@@ -50,15 +50,15 @@ public class ApplicantController : ControllerBase
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> UpdateApplicant(ApplicantUpdate_Pass_Object applicant)
+    public async Task<IActionResult> UpdateApplicant(ApplicantUpdatePassObject applicant)
     {
         var result = await _applicantService.UpdateApplicant(
-            applicant.id,
-            applicant.name,
-            applicant.surname,
-            applicant.birthday,
-            applicant.email,
-            applicant.phone_number);
+            applicant.Id,
+            applicant.Name,
+            applicant.Surname,
+            applicant.Birthday,
+            applicant.Email,
+            applicant.PhoneNumber);
 
         switch (result.success)
         {

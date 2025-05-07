@@ -203,10 +203,10 @@
     // Делегаты, вызов Invoke здесь опционален
     var deepThought = A.Fake<Func<string, int>>();
 
-    A.CallTo(() => deepThought.Invoke("String 1"))
+    A.CallTo(() => deepThought.Invoke("string 1"))
         .Returns(1);
 
-    A.CallTo(() => deepThought("String 2"))
+    A.CallTo(() => deepThought("string 2"))
         .Returns(2);
 
 

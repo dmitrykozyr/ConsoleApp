@@ -4,12 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FactoryMethod
 {
-    // Есть фабрика по постройке деревянных домов
-    // Мы расширяемся и создаем фабрику по постройке панельных домов
+    // Есть фабрика постройки деревянных домов
+    // Создаем фабрику постройки панельных домов
     // Мы не привязаны к типу домов, поэтому можем легко добавить это расширение
-    // Создаем новые объекты не напрямую через new, а через фабричный метод,
-    // благодаря этому можем его переопределить, чтобы он возвращал нужный тип объектов
-    interface IHouse { }
+    // Создаем новые объекты не через new, а через фабричный метод, который переопределить, чтобы возвращал нужный тип объектов
+
+    interface IHouse
+    {
+    }
 
     class WoodHouse : IHouse 
     {
@@ -52,9 +54,11 @@ namespace FactoryMethod
     {
         static void _Main()
         {
+            // Деревянный дом
             IDeveloper developer = new WoodDeveloper();
             IHouse woodHouse = developer.FactoryMethod();
 
+            // Панельный дом
             developer = new PanelDeveloper();
             IHouse panelHouse = developer.FactoryMethod();
         }
@@ -63,52 +67,57 @@ namespace FactoryMethod
 
 namespace AbstractFactory
 {
-    // Задает интерфейс для создания продуктов
+    // Задаем интерфейс создания продуктов
     // Каждая реализация фабрики порождает продукты одной из вариаций
-    // Клиент вызывает методы фабрики для получения продуктов,
-    // вместо самостоятельного создания через new
-    interface IWeapon 
+    // Клиент вызывает методы фабрики для получения продуктов, вместо создания через new
+
+    // WEAPON
+    interface IWeapon
     { 
         public void Hit();
     }
 
-    class Arbalet : IWeapon 
+    class Arbalet : IWeapon
     { 
-        public void Hit() 
-        { 
-            Console.WriteLine("Shoot from arbalet"); 
+        public void Hit()
+        {
+            Console.WriteLine("Shoot from arbalet");
         } 
     }
 
     class Sword : IWeapon
     { 
-        public void Hit() 
-        { 
-            Console.WriteLine("Hit by sword"); 
+        public void Hit()
+        {
+            Console.WriteLine("Hit by sword");
         } 
     }
 
-    interface IMovement 
+
+    // MOVEMENT
+    interface IMovement
     { 
-        public void Move(); 
+        public void Move();
     }
 
-    class Fly : IMovement 
+    class Fly : IMovement
     { 
-        public void Move() 
-        { 
-            Console.WriteLine("Fly"); 
+        public void Move()
+        {
+            Console.WriteLine("Fly");
         } 
     }
 
-    class Run : IMovement 
+    class Run : IMovement
     { 
-        public void Move() 
-        { 
-            Console.WriteLine("Run"); 
+        public void Move()
+        {
+            Console.WriteLine("Run");
         }
     }
 
+
+    // FACTORY
     interface IHeroesFactory
     {
         IWeapon CreateWeapon();
@@ -119,16 +128,16 @@ namespace AbstractFactory
     class ElfFactory : IHeroesFactory
     {
         public ElfFactory()
-        { 
-            Console.WriteLine("Elf was created"); 
+        {
+            Console.WriteLine("Elf was created");
         }
 
-        public IMovement CreateMovement() 
+        public IMovement CreateMovement()
         { 
             return new Fly(); 
         }
 
-        public IWeapon CreateWeapon() 
+        public IWeapon CreateWeapon()
         { 
             return new Arbalet();
         }
@@ -136,19 +145,19 @@ namespace AbstractFactory
 
     class WarriorFactory : IHeroesFactory
     {
-        public WarriorFactory() 
-        { 
+        public WarriorFactory()
+        {
             Console.WriteLine("Warrior was created");
         }
 
-        public IMovement CreateMovement() 
+        public IMovement CreateMovement()
         { 
             return new Run(); 
         }
 
-        public IWeapon CreateWeapon() 
+        public IWeapon CreateWeapon()
         { 
-            return new Sword(); 
+            return new Sword();
         }
     }
 
@@ -164,14 +173,14 @@ namespace AbstractFactory
             _movement = factory.CreateMovement();
         }
 
-        public void Run() 
+        public void Run()
         { 
-            _movement.Move(); 
+            _movement.Move();
         }
 
-        public void Hit() 
+        public void Hit()
         { 
-            _weapon.Hit(); 
+            _weapon.Hit();
         }
     }
 
@@ -195,6 +204,7 @@ namespace AbstractFactory
 namespace Builder
 {
     // Динамически создаем объект из нескольких частей
+
     class Product
     {
         public List<object> parts = new List<object>();
@@ -238,8 +248,7 @@ namespace Builder
         }
     }
 
-    // Директор отвечает за построение в определенной последовательности,
-    // его можно определить на стороне клиента
+    // Директор отвечает за построение в определенной последовательности, его можно определить на стороне клиента
     class Director
     {
         IBuilder _builder;
@@ -312,6 +321,7 @@ namespace Prototype
         public IClone Clone()
         {
             Console.WriteLine("Sphere was cloned");
+
             return new Sphere(_radius);
         }
     }
@@ -409,9 +419,10 @@ namespace Adapter
 
 namespace Bridge
 {
-    // Разделяет абстракцию и реализацию, позволяя изменять их независимо друг от друга
+    // Разделяет абстракцию и реализацию, позволяя менять их независимо друг от друга
     // Храним информацию об цвете геометрической фигуры в отдельном классе
     // При добавлении новых цветов не нужно расширять классы фигур
+
     interface IColor
     {
         string Color();
@@ -450,7 +461,8 @@ namespace Bridge
 
     class Sphere : Figure
     {
-        public Sphere(IColor color) : base(color) { }
+        public Sphere(IColor color)
+            : base(color) { }
 
         public override string Paint()
         {
@@ -473,8 +485,9 @@ namespace Bridge
 
 namespace Composite
 {
-    // Есть большая коробка, в которую ложим игрушки и еще одну коробку с игрушкой
+    // Есть коробка, в которую ложим игрушки и еще одну коробку с игрушкой
     // Можем посчитать стоимость всех игрушек, обойдя эту древовидную структуру
+
     abstract class Gift
     {
         public string Name { get; }
@@ -499,7 +512,8 @@ namespace Composite
     {
         private List<Gift> _gifts = new List<Gift>();
 
-        public Box(string name, int price) : base(name, price) { }
+        public Box(string name, int price)
+            : base(name, price) { }
 
         public void Add(Gift gift)
         {
@@ -509,7 +523,9 @@ namespace Composite
         public override int TotalPrice()
         {
             int totalPrice = 0;
+
             Console.WriteLine();
+
             Console.WriteLine($"{Name} contains: ");
 
             foreach (var gift in _gifts)
@@ -523,11 +539,13 @@ namespace Composite
 
     class ConcreteGift : Gift
     {
-        public ConcreteGift(string name, int price) : base(name, price) { }
+        public ConcreteGift(string name, int price)
+            : base(name, price) { }
 
         public override int TotalPrice()
         {
             Console.WriteLine($"{Name}, price {Price}");
+
             return Price;
         }
     }
@@ -565,35 +583,59 @@ namespace Decorator
 {
     // Пиццерия готовит разные пиццы с разными добавками
     // В зависимости от комбинации меняется стоимость
+
     abstract class Pizza
     {
         public string Name { get; set; }
-        public Pizza(string name) { Name = name; }
+
+        public Pizza(string name)
+        {
+            Name = name;
+        }
+
         public abstract int GetCost();
     }
 
     class ItalianPizza : Pizza
     {
-        public ItalianPizza() : base("Italian pizza") { }
+        public ItalianPizza()
+            : base("Italian pizza") { }
+
         public override int GetCost() { return 10; }
     }
 
     abstract class PizzaDecorator : Pizza
     {
-        protected Pizza Pizza; // Ссылка на декорируемый объект
-        public PizzaDecorator(string name, Pizza pizza) : base(name) { Pizza = pizza; }
+        // Ссылка на декорируемый объект
+        protected Pizza Pizza;
+
+        public PizzaDecorator(string name, Pizza pizza)
+            : base(name)
+        {
+            Pizza = pizza;
+        }
     }
 
     class TomatoPizza : PizzaDecorator
     {
-        public TomatoPizza(Pizza pizza) : base(pizza.Name + ", with tomatos", pizza) { }
-        public override int GetCost() { return Pizza.GetCost() + 3; }
+        public TomatoPizza(Pizza pizza)
+            : base(pizza.Name + ", with tomatos", pizza) { }
+
+        public override int GetCost()
+        {
+            return Pizza.GetCost() + 3;
+        }
     }
 
     class CheesePizza : PizzaDecorator
     {
-        public CheesePizza(Pizza pizza) : base(pizza.Name + ", with cheeze", pizza) { }
-        public override int GetCost() { return Pizza.GetCost() + 5; }
+        public CheesePizza(Pizza pizza)
+            : base(pizza.Name + ", with cheeze", pizza) { }
+
+        public override int GetCost()
+        {
+            return Pizza.GetCost() + 5;
+        }
     }
 
     class Program
@@ -603,10 +645,12 @@ namespace Decorator
             Pizza italianPizza = new ItalianPizza();
             Console.WriteLine($"{italianPizza.Name}, price {italianPizza.GetCost()}");
 
-            italianPizza = new TomatoPizza(italianPizza);   // Декорируем пиццу томатом
+            // Декорируем пиццу томатом
+            italianPizza = new TomatoPizza(italianPizza);
             Console.WriteLine($"{italianPizza.Name}, price {italianPizza.GetCost()}");
 
-            italianPizza = new CheesePizza(italianPizza);   // Декорируем пиццу сыром
+            // Декорируем пиццу сыром
+            italianPizza = new CheesePizza(italianPizza);
             Console.WriteLine($"{italianPizza.Name}, price {italianPizza.GetCost()}");
         }
     }
@@ -614,9 +658,10 @@ namespace Decorator
 //+
 namespace Facade
 {
-    // Если бы для управления авто нужно было подать питание с аккумулятора на инжектор
+    // Если-бы для управления авто нужно было подать питание с аккумулятора на инжектор
     // и нажать кнопку включения генератора - это было-бы сложно
     // Эти действя заменяются поворотом ключа, остальное происходит под капотом
+
     class Facade
     {
         SubsystemA subsystemA = new SubsystemA();
@@ -631,15 +676,36 @@ namespace Facade
         }
     }
 
-    class SubsystemA { public void OperationA() { Console.WriteLine("Operation A"); } }
-    class SubsystemB { public void OperationB() { Console.WriteLine("Operation B"); } }
-    class SubsystemC { public void OperationC() { Console.WriteLine("Operation C"); } }
+    class SubsystemA
+    {
+        public void OperationA()
+        {
+            Console.WriteLine("Operation A");
+        }
+    }
+
+    class SubsystemB
+    {
+        public void OperationB()
+        {
+            Console.WriteLine("Operation B");
+        }
+    }
+
+    class SubsystemC
+    {
+        public void OperationC()
+        {
+            Console.WriteLine("Operation C");
+        }
+    }
 
     class Program
     {
         static void Main_()
         {
-            Facade facade = new Facade();
+            var facade = new Facade();
+
             facade.OperationABC();
         }
     }
@@ -649,24 +715,34 @@ namespace Flyweight
 {
     // Если играем в шутер, то нет смысла создавать для каждой пули новый объект
     // Лучше создать несколько и переиспользовать их
-    interface IBullet { abstract void Shoot(); }
+
+    interface IBullet
+    {
+        abstract void Shoot();
+    }
 
     class Bullet : IBullet
     {
         public string Name { get; set; }
+
         public Bullet(string name)
         {
             Name = name;
+
             Console.WriteLine($"{name} was created");
         }
 
-        public void Shoot() { Console.WriteLine($"Shoot {Name}"); }
+        public void Shoot()
+        {
+            Console.WriteLine($"Shoot {Name}");
+        }
     }
 
     class BulletFactory
     {
-        // Фабрика приспособленцев возвращает запрошенные объекты
-        // Если такого нет, то создает его и возвращает
+        // Фабрика возвращает запрошенные объекты
+        // Если такого нет - создает его и возвращает
+
         List<Bullet> allBullets = new List<Bullet>();
 
         public BulletFactory()
@@ -680,7 +756,9 @@ namespace Flyweight
             if (!allBullets.Any(z => z.Name == key))
             {
                 var newBullet = new Bullet(key);
+
                 allBullets.Add(newBullet);
+
                 return newBullet;
             }
 
@@ -710,7 +788,11 @@ namespace Proxy
 {
     // Сначала отрабатывает прокси, потом основной объект и опять прокси
     // Прокси может замещать или дополнять объект
-    interface ISubject { void Request(); }
+
+    interface ISubject
+    {
+        void Request();
+    }
 
     class Client 
     { 
@@ -740,12 +822,21 @@ namespace Proxy
         public void Request()
         {
             ProxyBegin();
+
             _realSubject.Request();
+
             ProxyEnd();
         }
 
-        public void ProxyBegin() { Console.WriteLine("Proxy begin"); }
-        public void ProxyEnd() { Console.WriteLine("Proxy end"); }
+        public void ProxyBegin()
+        {
+            Console.WriteLine("Proxy begin");
+        }
+
+        public void ProxyEnd()
+        {
+            Console.WriteLine("Proxy end");
+        }
     }
 
     class Program
@@ -774,6 +865,7 @@ namespace ChainOfResponsibility
     // Требуется получить справку из банка, но не ясно, кто должен ее дать
     // В банке направляют в другое отделение, там в региональное и там получаем справку
     // Запрос может быть обработан в первом отделении, втором или нескольких
+
     interface IHandler
     {
         IHandler SetNext(IHandler handler);
@@ -789,7 +881,8 @@ namespace ChainOfResponsibility
         {
             _nextHandler = handler;
 
-            return handler; // Возврат обработчика позволит связать обработчики так: monkey.SetNext(squirrel)
+            // Возврат обработчика позволит связать обработчики так: monkey.SetNext(squirrel)
+            return handler;
         }
 
         public virtual object Handle(object request)
@@ -846,17 +939,22 @@ namespace ChainOfResponsibility
     {
         public static void ClientCode(AbstractHandler handler)
         {
-            foreach (var food in new List<string> { "Nut", "Banana", "Meat" })
+            var myList = new List<string> { "Nut", "Banana", "Meat" };
+
+            foreach (var food in myList)
             {
                 Console.Write($"Who wants {food}?");
+
                 var result = handler.Handle(food);
 
                 if (result is not null)
                 {
                     Console.WriteLine($" {result}");
                 }
-
-                else Console.WriteLine($" {food} left untouched");
+                else
+                {
+                    Console.WriteLine($" {food} left untouched");
+                }
             }
         }
     }
@@ -882,13 +980,24 @@ namespace ChainOfResponsibility
 namespace Command
 {
     // Клиент в ресторане говорит официанту заказ, тот записывает его и передает повару, а он готовит блюда
+
     class Chief
     {
-        public void CookFirstDish(string a) { Console.WriteLine($"Chief: Cooking {a}"); }
-        public void CookSecondDish(string b) { Console.WriteLine($"Chief: Also cooking {b}"); }
+        public void CookFirstDish(string a)
+        {
+            Console.WriteLine($"Chief: Cooking {a}");
+        }
+
+        public void CookSecondDish(string b)
+        {
+            Console.WriteLine($"Chief: Also cooking {b}");
+        }
     }
 
-    interface ICommand { void GiveOrderToChief(); }
+    interface ICommand
+    {
+        void GiveOrderToChief();
+    }
 
     class Waiter : ICommand
     {
@@ -915,8 +1024,17 @@ namespace Command
     {
         private ICommand _onStart;
         private ICommand _onFinish;
-        public void OrderFirstDishes(ICommand command) { _onStart = command; }
-        public void OrderSecondDishes(ICommand command) { _onFinish = command; }
+
+        public void OrderFirstDishes(ICommand command)
+        {
+            _onStart = command;
+        }
+
+        public void OrderSecondDishes(ICommand command)
+        {
+            _onFinish = command;
+        }
+
         public void DoSomethingImportant()
         {
             _onStart.GiveOrderToChief();
@@ -942,15 +1060,18 @@ namespace Command
 namespace Iterator
 {
     // Не важно, какой класс и из каких учеников построен, должны быть общие правила подсчета
+
     interface IStudentsIterator
     {
         string Current { get; }
+
         bool MoveNext();
     }
 
     class StudentsIterator : IStudentsIterator
     {
         private List<string> _students;
+
         private int _position;
 
         public StudentsIterator(List<string> students)
@@ -964,7 +1085,10 @@ namespace Iterator
         public bool MoveNext()
         {
             if (++_position == _students.Count)
+            {
                 return false;
+            }
+
             return true;
         }
     }
@@ -974,17 +1098,25 @@ namespace Iterator
         static void Main_()
         {
             var students = new List<string> { "Student 1", "Student 2", "Student 3" };
+
             var iterator = new StudentsIterator(students);
+
             while (iterator.MoveNext())
+            {
                 Console.WriteLine(iterator.Current);
+            }
         }
     }
 }
 //+
 namespace Mediator
 {
-    // Самолеты не общаются друг с другом напрямую, их координирует диспетчер (медиатор)
-    interface IDispatcher { void Notify(string destination); }
+    // Самолеты не общаются напрямую, их координирует диспетчер (медиатор)
+
+    interface IDispatcher
+    {
+        void Notify(string destination);
+    }
 
     class Dispatcher : IDispatcher
     {
@@ -1018,8 +1150,16 @@ namespace Mediator
     class Planes
     {
         protected IDispatcher _dispatcher;
-        public Planes(IDispatcher dispatcher = null) { _dispatcher = dispatcher; }
-        public void SetDispatcher(IDispatcher dispatcher) { _dispatcher = dispatcher; }
+
+        public Planes(IDispatcher dispatcher = null)
+        {
+            _dispatcher = dispatcher;
+        }
+
+        public void SetDispatcher(IDispatcher dispatcher)
+        {
+            _dispatcher = dispatcher;
+        }
     }
 
     class PlaneBoeing : Planes
@@ -1027,12 +1167,14 @@ namespace Mediator
         public void FlyToParis()
         {
             Console.WriteLine("Boeing flying to Paris");
+
             _dispatcher.Notify("Paris");
         }
 
         public void FlyToSanFrancisco()
         {
             Console.WriteLine("Boeing flying to San Francisco");
+
             _dispatcher.Notify("San Francisco");
         }
     }
@@ -1042,12 +1184,14 @@ namespace Mediator
         public void FlyToTokyo()
         {
             Console.WriteLine("Airbus flying to Tokyo");
+
             _dispatcher.Notify("Tokyo");
         }
 
         public void FlyToLondon()
         {
             Console.WriteLine("Airbus flying to London");
+
             _dispatcher.Notify("London");
         }
     }
@@ -1058,10 +1202,13 @@ namespace Mediator
         {
             var planeBoeing = new PlaneBoeing();
             var planeAirbus = new PlaneAirbus();
+
             new Dispatcher(planeBoeing, planeAirbus);
 
             planeBoeing.FlyToParis();
+
             Console.WriteLine();
+
             planeAirbus.FlyToLondon();
         }
     }
@@ -1069,22 +1216,40 @@ namespace Mediator
 //+
 namespace Memento
 {
-    // Просим друга запомнить номер, что диктуют нам по телефону, он запоминает,
-    // нам диктуют новый и старый мы забываем, но можем попросить друга напомнить его
+    // Просим друга запомнить номер, что диктуют по телефону
+    // Он запоминает
+    // Нам диктуют новый и старый мы забываем
+    // Можем попросить друга напомнить его
+
     class Man
     {
-        public string PhoneNumber { get; set; }
-        public void RestoreNumber(DataToRemember phoneNumber) { PhoneNumber = phoneNumber.PhoneNumber; }
-        public DataToRemember GetNumber() { return new DataToRemember(PhoneNumber); }
+        public string? PhoneNumber { get; set; }
+
+        public void RestoreNumber(DataToRemember phoneNumber)
+        {
+            PhoneNumber = phoneNumber.PhoneNumber;
+        }
+
+        public DataToRemember GetNumber()
+        {
+            return new DataToRemember(PhoneNumber);
+        }
     }
 
     class DataToRemember
     {
-        public string PhoneNumber { get; private set; }
-        public DataToRemember(string phoneNumber) { PhoneNumber = phoneNumber; }
+        public string? PhoneNumber { get; private set; }
+
+        public DataToRemember(string? phoneNumber)
+        {
+            PhoneNumber = phoneNumber;
+        }
     }
 
-    class Friend { public DataToRemember PhoneNumber { get; set; } }
+    class Friend
+    {
+        public DataToRemember? PhoneNumber { get; set; }
+    }
 
     class Program
     {
@@ -1104,43 +1269,57 @@ namespace Memento
 namespace Observer
 {
     // Подписчики подписались на рассылку издателя и, в зависимости от типа рассылки, реагируют по разному
-    interface IObserver { void ReactToPublisherEvent(IPublisher publisher); }
+
+    interface IObserver
+    {
+        void ReactToPublisherEvent(IPublisher publisher);
+    }
 
     interface IPublisher
     {
         void Subscribe(IObserver observer);
+
         void Unsubscribe(IObserver observer);
+
         void NotifySubscribers();
     }
 
     class Publisher : IPublisher
     {
         public int State { get; set; }
+
         private List<IObserver> _subscribers = new List<IObserver>();
 
         public void Subscribe(IObserver subscriber)
         {
             Console.WriteLine("Attached subscriber " + subscriber.GetType().Name);
+
             _subscribers.Add(subscriber);
         }
 
         public void Unsubscribe(IObserver subscriber)
         {
             _subscribers.Remove(subscriber);
+
             Console.WriteLine("Detached subscriber");
         }
 
         public void NotifySubscribers()
         {
             Console.WriteLine("Notifying all subscribers");
+
             foreach (var subscriber in _subscribers)
+            {
                 subscriber.ReactToPublisherEvent(this);
+            }
         }
 
         public void SomeBusinessLogic()
         {
             State = new Random().Next(0, 10);
+
             Console.WriteLine("\nPublisher changed state to: " + State);
+
             NotifySubscribers();
         }
     }
@@ -1150,7 +1329,9 @@ namespace Observer
         public void ReactToPublisherEvent(IPublisher publisher)
         {
             if ((publisher as Publisher).State < 3)
+            {
                 Console.WriteLine("Subscriber A reacted to the event");
+            }
         }
     }
 
@@ -1159,7 +1340,9 @@ namespace Observer
         public void ReactToPublisherEvent(IPublisher publisher)
         {
             if ((publisher as Publisher).State == 0 || (publisher as Publisher).State >= 2)
+            {
                 Console.WriteLine("Subscriber B reacted to the event");
+            }
         }
     }
 
@@ -1184,10 +1367,14 @@ namespace Observer
 
 namespace State
 {
-    // Если мы устали, то на фразу "Сходи в магазин" скажем "Не пойду",
-    // а если нужно сходить за пивом - скажем "Уже бегу"
+    // Если мы устали, то на фразу "Сходи в магазин" скажем "Не пойду"
+    // А если нужно сходить за пивом - скажем "Уже бегу"
     // Человек тот-же, а поведение разное
-    interface IState { public abstract void Handle(Context context); }
+
+    interface IState
+    {
+        public abstract void Handle(Context context);
+    }
 
     class StateBuyFood : IState
     {
@@ -1248,6 +1435,7 @@ namespace Strategy
     // Говорим "Хочу права, денег мало" - получим права через месяц
     // Говорим "Хочу права, денег много" - получим права завтра
     // Что делал человек - мы не знаем, но задаем начальные условия, а он решает, как себя вести
+
     interface IStrategy 
     { 
         public abstract void AlgorithmInterface(); 
@@ -1299,11 +1487,14 @@ namespace Strategy
 //+
 namespace TemplateMethod
 {
-    // Определяет основу алгоритма и позволяет подклассам переопределить шаги, не меняя структуру
+    // Определяем основу алгоритма и позволяем подклассам переопределить шаги, не меняя структуру
+
     interface IAbstractClass
     {
         public abstract void Step1();
+
         public abstract void Step2();
+
         public void TemplateMethod()
         {
             Step1();
@@ -1313,8 +1504,15 @@ namespace TemplateMethod
 
     class ConcreteClass : IAbstractClass
     {
-        public void Step1() { Console.WriteLine("PrimitiveOperation1"); }
-        public void Step2() { Console.WriteLine("PrimitiveOperation2"); }
+        public void Step1()
+        {
+            Console.WriteLine("PrimitiveOperation1");
+        }
+
+        public void Step2()
+        {
+            Console.WriteLine("PrimitiveOperation2");
+        }
     }
 
     class Program
@@ -1322,6 +1520,7 @@ namespace TemplateMethod
         static void Main_()
         {
             IAbstractClass instance = new ConcreteClass();
+
             instance.TemplateMethod();
         }
     }
@@ -1330,25 +1529,46 @@ namespace TemplateMethod
 namespace Visitor
 {
     // Есть студенты - сначала их посещает доктор, а потом продавец книг
-    // Каждый выполняет с каждый студентом определенные действия (проверяет здоровье | дает книгу)
-    interface IElement { void Accept(IVisitor visitor); }
+    // Каждый выполняет с каждым студентом определенные действия (проверяет здоровье | дает книгу)
+
+    interface IElement
+    {
+        void Accept(IVisitor visitor);
+    }
 
     class Student : IElement
     {
         public string Name { get; set; }
-        public Student(string name) { Name = name; }
-        public void Accept(IVisitor visitor) { visitor.Visit(this); }
+
+        public Student(string name)
+        {
+            Name = name;
+        }
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 
-    interface IVisitor { void Visit(IElement element); }
+    interface IVisitor
+    {
+        void Visit(IElement element);
+    }
 
     class Doctor : IVisitor
     {
         public string Name { get; set; }
-        public Doctor(string name) { Name = name; }
+
+        public Doctor(string name)
+        {
+            Name = name;
+        }
+
         public void Visit(IElement element)
         {
-            Student student = (Student)element;
+            var student = (Student)element;
+
             Console.WriteLine(Name + " checked student: " + student.Name);
         }
     }
@@ -1356,10 +1576,16 @@ namespace Visitor
     class Salesman : IVisitor
     {
         public string Name { get; set; }
-        public Salesman(string name) { Name = name; }
+
+        public Salesman(string name)
+        {
+            Name = name;
+        }
+
         public void Visit(IElement element)
         {
-            Student student = (Student)element;
+            var student = (Student)element;
+
             Console.WriteLine(Name + " gave book to student: " + student.Name);
         }
     }
@@ -1367,14 +1593,21 @@ namespace Visitor
     class School
     {
         private static List<IElement> students;
+
         static School()
         {
-            students = new List<IElement> { new Student("Ram"), new Student("Sara") };
+            students = new List<IElement>
+            {
+                new Student("Ram"),
+                new Student("Sara")
+            };
         }
         public void PerformOperation(IVisitor visitor)
         {
             foreach (var kid in students)
+            {
                 kid.Accept(visitor);
+            }
         }
     }
 

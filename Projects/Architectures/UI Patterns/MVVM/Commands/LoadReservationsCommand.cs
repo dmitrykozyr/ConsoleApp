@@ -18,7 +18,7 @@ public class LoadReservationsCommand : AsyncCommandBase
     
     public override async Task ExecuteAsync(object parameter)
     {
-        _viewModel.ErrorMessage = String.Empty;
+        _viewModel.ErrorMessage = string.Empty;
         _viewModel.IsLoading = true;
 
         try

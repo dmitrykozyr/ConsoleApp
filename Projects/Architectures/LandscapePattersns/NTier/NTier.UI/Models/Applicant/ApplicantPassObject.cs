@@ -1,9 +1,7 @@
-﻿namespace NTier.Logic.Services.Models.Applicant;
+﻿namespace NTier.UI.Models.Applicant;
 
-public class Applicant_ResultSet
+public class ApplicantPassObject
 {
-    public long Id { get; set; }
-
     public string? Name { get; set; }
 
     public string? Surname { get; set; }
@@ -13,6 +11,4 @@ public class Applicant_ResultSet
     public string? Email { get; set; }
 
     public string? PhoneNumber { get; set; }
-
-    public DateTime SubmissionDate { get; set; }
 }

@@ -34,13 +34,13 @@ public class Applicant_Service : IApplicant_Service
             Applicant = await _crud.Create<Applicant>(Applicant);
             var applicantAdded = new Applicant_ResultSet
             {
-                id = Applicant.Applicant_ID,
-                name = Applicant.Applicant_Name,
-                surname = Applicant.Applicant_Surname,
-                birthday = Applicant.Applicant_BirthDate,
-                email = Applicant.Contact_Email,
-                phone_number = Applicant.Contact_Number,
-                submission_date = Applicant.Applicant_CreationDate
+                Id = Applicant.Applicant_ID,
+                Name = Applicant.Applicant_Name,
+                Surname = Applicant.Applicant_Surname,
+                Birthday = Applicant.Applicant_BirthDate,
+                Email = Applicant.Contact_Email,
+                PhoneNumber = Applicant.Contact_Number,
+                SubmissionDate = Applicant.Applicant_CreationDate
             };
 
             result.userMessage = string.Format("Your child {0} was registered successfully", name);
@@ -73,16 +73,16 @@ public class Applicant_Service : IApplicant_Service
 
             var applicantReturned = new Applicant_ResultSet
             {
-                id = Applicant.Applicant_ID,
-                name = Applicant.Applicant_Name,
-                surname = Applicant.Applicant_Surname,
-                birthday = Applicant.Applicant_BirthDate,
-                email = Applicant.Contact_Email,
-                phone_number = Applicant.Contact_Number,
-                submission_date = Applicant.Applicant_CreationDate
+                Id = Applicant.Applicant_ID,
+                Name = Applicant.Applicant_Name,
+                Surname = Applicant.Applicant_Surname,
+                Birthday = Applicant.Applicant_BirthDate,
+                Email = Applicant.Contact_Email,
+                PhoneNumber = Applicant.Contact_Number,
+                SubmissionDate = Applicant.Applicant_CreationDate
             };
 
-            result.userMessage = string.Format("Applicant {0} was found successfully", applicantReturned.name);
+            result.userMessage = string.Format("Applicant {0} was found successfully", applicantReturned.Name);
             
             result.internalMessage = "LOGIC.Services.Implementation.Applicant_Service: GetApplicantById() method executed successfully";
             
@@ -129,13 +129,13 @@ public class Applicant_Service : IApplicant_Service
 
             var applicantAdded = new Applicant_ResultSet
             {
-                id = ApplicantToUpdate.Applicant_ID,
-                name = ApplicantToUpdate.Applicant_Name,
-                surname = ApplicantToUpdate.Applicant_Surname,
-                birthday = ApplicantToUpdate.Applicant_BirthDate,
-                email = ApplicantToUpdate.Contact_Email,
-                phone_number = ApplicantToUpdate.Contact_Number,
-                submission_date = ApplicantToUpdate.Applicant_CreationDate
+                Id = ApplicantToUpdate.Applicant_ID,
+                Name = ApplicantToUpdate.Applicant_Name,
+                Surname = ApplicantToUpdate.Applicant_Surname,
+                Birthday = ApplicantToUpdate.Applicant_BirthDate,
+                Email = ApplicantToUpdate.Contact_Email,
+                PhoneNumber = ApplicantToUpdate.Contact_Number,
+                SubmissionDate = ApplicantToUpdate.Applicant_CreationDate
             };
 
             result.userMessage = string.Format("Applicant {0} was updated successfully", name);

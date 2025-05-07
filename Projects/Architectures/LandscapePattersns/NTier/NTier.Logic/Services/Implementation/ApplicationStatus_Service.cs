@@ -24,8 +24,8 @@ public class ApplicationStatus_Service : IApplicationStatus_Service
             ApplicationStatus = await _crud.Create<ApplicationStatus>(ApplicationStatus);
             var statusAdded = new ApplicationStatus_ResultSet
             {
-                name = ApplicationStatus.ApplicationStatus_Name,
-                status_id = ApplicationStatus.ApplicationStatus_ID
+                Name = ApplicationStatus.ApplicationStatus_Name,
+                StatusId = ApplicationStatus.ApplicationStatus_ID
             };
 
             result.userMessage = string.Format("Status {0} was added successfully", name);
@@ -54,8 +54,8 @@ public class ApplicationStatus_Service : IApplicationStatus_Service
             {
                 result.result_set.Add(new ApplicationStatus_ResultSet
                 {
-                    status_id = z.ApplicationStatus_ID,
-                    name = z.ApplicationStatus_Name
+                    StatusId = z.ApplicationStatus_ID,
+                    Name = z.ApplicationStatus_Name
                 });
             });
 
@@ -88,8 +88,8 @@ public class ApplicationStatus_Service : IApplicationStatus_Service
             ApplicationStatus = await _crud.Update<ApplicationStatus>(ApplicationStatus, status_id);
             var statusUpdated = new ApplicationStatus_ResultSet
             {
-                name = ApplicationStatus.ApplicationStatus_Name,
-                status_id = ApplicationStatus.ApplicationStatus_ID
+                Name = ApplicationStatus.ApplicationStatus_Name,
+                StatusId = ApplicationStatus.ApplicationStatus_ID
             };
 
             result.userMessage = string.Format("Status {0} was updated successfully", name);

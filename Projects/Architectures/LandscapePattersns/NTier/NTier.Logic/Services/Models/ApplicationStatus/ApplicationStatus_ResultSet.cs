@@ -2,7 +2,7 @@
 
 public class ApplicationStatus_ResultSet
 {
-    public Int64 status_id { get; set; }
+    public long StatusId { get; set; }
 
-    public String? name { get; set; }
+    public string? Name { get; set; }
 }

@@ -129,7 +129,7 @@ class Program
         //Console.WriteLine((int)MyEnum.c);
 
         Double[,] myDoubles = new Double[10, 20];
-        String[,,] myStrings = new String[5, 3, 10];
+        string[,,] myStrings = new string[5, 3, 10];
 
         /*
             int? x = null;          Переменная может принмать null
