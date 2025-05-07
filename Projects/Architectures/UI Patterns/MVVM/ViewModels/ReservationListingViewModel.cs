@@ -98,7 +98,7 @@ public class ReservationListingViewModel : ViewModelBase
 
         foreach (Reservation reservation in reservations)
         {
-            ReservationViewModel reservationViewModel = new ReservationViewModel(reservation);
+            var reservationViewModel = new ReservationViewModel(reservation);
 
             _reservations.Add(reservationViewModel);
         }

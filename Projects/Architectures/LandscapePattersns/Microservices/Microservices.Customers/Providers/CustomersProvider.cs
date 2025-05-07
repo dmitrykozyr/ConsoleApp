@@ -27,9 +27,9 @@ public class CustomersProvider : ICustomersProvider
     {
         if (!_dbContext.Customers.Any())
         {
-            _dbContext.Customers.Add(new DB.Customer() { Id = 1, Name = "Jessica", Address = "Address 1" });
-            _dbContext.Customers.Add(new DB.Customer() { Id = 2, Name = "John",    Address = "Address 2" });
-            _dbContext.Customers.Add(new DB.Customer() { Id = 3, Name = "William", Address = "Address 3" });
+            _dbContext.Customers.Add(new Customer() { Id = 1, Name = "Jessica", Address = "Address 1" });
+            _dbContext.Customers.Add(new Customer() { Id = 2, Name = "John",    Address = "Address 2" });
+            _dbContext.Customers.Add(new Customer() { Id = 3, Name = "William", Address = "Address 3" });
 
             _dbContext.SaveChanges();
         }

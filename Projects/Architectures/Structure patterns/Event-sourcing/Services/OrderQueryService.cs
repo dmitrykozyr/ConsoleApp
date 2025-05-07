@@ -16,6 +16,7 @@ public class OrderQueryService
         foreach (var events in _eventStore.GetAllEvents())
         {
             var order = new Order();
+
             order.LoadFromHistory(events);
 
             orders.Add(new OrderDto

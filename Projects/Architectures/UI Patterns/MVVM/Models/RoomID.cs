@@ -2,13 +2,13 @@
 
 namespace MVVM.Models;
 
-public class RoomID
+public class RoomId
 {
     public int FloorNumber { get; set; }
 
     public int RoomNumber { get; set; }
 
-    public RoomID(int floorNumber, int roomNumber)
+    public RoomId(int floorNumber, int roomNumber)
     {
         FloorNumber = floorNumber;
         RoomNumber = roomNumber;
@@ -21,9 +21,9 @@ public class RoomID
 
     public override bool Equals(object obj)
     {
-        return obj is RoomID roomId &&
-            FloorNumber == roomId.FloorNumber &&
-            RoomNumber == roomId.RoomNumber;
+        return obj is RoomId roomId
+            && FloorNumber == roomId.FloorNumber
+            && RoomNumber == roomId.RoomNumber;
     }
 
     public override int GetHashCode()
@@ -31,18 +31,18 @@ public class RoomID
         return HashCode.Combine(FloorNumber, RoomNumber);
     }
 
-    public static bool operator ==(RoomID roomID_1, RoomID roomID_2)
+    public static bool operator ==(RoomId roomId_1, RoomId roomId_2)
     {
-        if (roomID_1 is null && roomID_2 is null)
+        if (roomId_1 is null && roomId_2 is null)
         {
             return true;
         }
 
-        return !(roomID_1 is null) && roomID_1.Equals(roomID_2);
+        return !(roomId_1 is null) && roomId_1.Equals(roomId_2);
     }
 
-    public static bool operator !=(RoomID roomID_1, RoomID roomID_2)
+    public static bool operator !=(RoomId roomId_1, RoomId roomId_2)
     {
-        return !(roomID_1 == roomID_2);
+        return !(roomId_1 == roomId_2);
     }
 }

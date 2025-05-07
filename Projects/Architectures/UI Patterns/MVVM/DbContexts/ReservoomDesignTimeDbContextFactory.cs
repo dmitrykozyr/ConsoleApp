@@ -7,7 +7,9 @@ public class ReservoomDesignTimeDbContextFactory : IDesignTimeDbContextFactory<R
 {
     public ReservoomDbContext CreateDbContext(string[] args)
     {
-        DbContextOptions options = new DbContextOptionsBuilder().UseSqlite("Data Source=reservoom.db").Options;
+        DbContextOptions options = new DbContextOptionsBuilder()
+            .UseSqlite("Data Source=reservoom.db")
+            .Options;
 
         return new ReservoomDbContext(options);
     }

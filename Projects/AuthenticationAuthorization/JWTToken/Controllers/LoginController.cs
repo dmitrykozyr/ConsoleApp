@@ -8,8 +8,8 @@ using System.Text;
 
 namespace JWTToken.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class LoginController : ControllerBase
 {
     private IConfiguration _config;
@@ -19,7 +19,7 @@ public class LoginController : ControllerBase
         _config = config;
     }
 
-    // Генерация JWT-токена
+    //! Генерация JWT-токена
     // https://localhost:7269/api/login
     [AllowAnonymous]
     [HttpPost]

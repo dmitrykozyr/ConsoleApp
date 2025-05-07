@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-// Запуск проекта
+//! Запуск проекта
 // https://localhost:7202/swagger/index.html
 
 var builder = WebApplication.CreateBuilder(args);
@@ -101,7 +101,7 @@ IResult Login(UserLogin user, IUserService service)
     {
         var loggedInUser = service.Get(user);
 
-        if (loggedInUser == null)
+        if (loggedInUser is null)
         {
             return Results.NotFound("User not found");
         }
@@ -146,7 +146,7 @@ IResult Get(int id, IMovieService service)
 {
     var result = service.Get(id);
 
-    if (result == null)
+    if (result is null)
     {
         return Results.NotFound("Movie not found");
     }
@@ -165,7 +165,7 @@ IResult Update(Movie newMovie, IMovieService service)
 {
     var result = service.Update(newMovie);
 
-    if (result == null)
+    if (result is null)
     {
         return Results.NotFound("Movie not found");
     }

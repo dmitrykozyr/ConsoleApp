@@ -1,6 +1,6 @@
 ﻿namespace NTier.Logic.Services.Models.ApplicationStatus;
 
-public class ApplicationStatus_ResultSet
+public class ApplicationStatusResultSet
 {
     public long StatusId { get; set; }
 

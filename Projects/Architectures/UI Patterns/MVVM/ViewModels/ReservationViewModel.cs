@@ -6,7 +6,7 @@ public class ReservationViewModel : ViewModelBase
 {
     private Reservation _reservation;
 
-    public string RoomID => _reservation.RoomID.ToString();
+    public string RoomId => _reservation.RoomId.ToString();
 
     public string Username => _reservation.Username;
 

@@ -1,8 +1,8 @@
-﻿namespace AppToTest.FunctionalityToTest.Shopping_.Interfaces
+﻿namespace AppToTest.FunctionalityToTest.Shopping_.Interfaces;
+
+public interface IDbService
 {
-    public interface IDbService
-    {
-        bool SaveItemToShoppingCart(Product? product);
-        bool RemoveItemFromShoppingCart(int? productId);
-    }
+    bool SaveItemToShoppingCart(Product? product);
+
+    bool RemoveItemFromShoppingCart(int? productId);
 }

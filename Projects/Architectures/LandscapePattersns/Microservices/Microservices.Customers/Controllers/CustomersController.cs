@@ -23,6 +23,7 @@ public class CustomersController : ControllerBase
         {
             return Ok(result.Customers);
         }
+
         return NotFound();
     }
 

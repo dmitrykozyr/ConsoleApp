@@ -5,11 +5,17 @@ using NTier.DataAccess.Functions.Interfaces;
 
 namespace NTier.DataAccess.Functions.Specific;
 
-public class Application_Operations : IApplication_Operations
+public class ApplicationOperations : IApplicationOperations
 {
     public async Task<Application> AddFullApplication(
-        long gradeId, long applicationStatusId, Int32 schoolYear, string firstName, 
-        string surname, DateTime birthDate, string email, string contactNumber)
+        long gradeId,
+        long applicationStatusId,
+        int schoolYear,
+        string firstName, 
+        string surname,
+        DateTime birthDate,
+        string email,
+        string contactNumber)
     {
         try
         {
@@ -21,11 +27,11 @@ public class Application_Operations : IApplication_Operations
                     {
                         var applicant = new Applicant
                         {
-                            Applicant_Name = firstName,
-                            Applicant_Surname = surname,
-                            Applicant_BirthDate = birthDate,
-                            Contact_Email = email,
-                            Contact_Number = contactNumber
+                            ApplicantName = firstName,
+                            ApplicantSurname = surname,
+                            ApplicantBirthDate = birthDate,
+                            ContactEmail = email,
+                            ContactNumber = contactNumber
                         };
 
                         var trackingApplicant = await context.Applicants.AddAsync(applicant);
@@ -34,11 +40,10 @@ public class Application_Operations : IApplication_Operations
 
                         var application = new Application
                         {
-                            ApplicantId = applicant.Applicant_ID,
+                            ApplicantId = applicant.ApplicantId,
                             ApplicationStatusId = applicationStatusId,
                             GradeId = gradeId,
                             SchoolYear = schoolYear
-
                         };
 
                         var trackingApplication = await context.Applications.AddAsync(application);

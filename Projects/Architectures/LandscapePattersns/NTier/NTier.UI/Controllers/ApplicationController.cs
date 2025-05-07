@@ -10,17 +10,17 @@ namespace NTier.UI.Controllers;
 [ApiController]
 public class ApplicationController : ControllerBase
 {
-    private IApplication_Service _application_Service;
-    public ApplicationController(IApplication_Service application_Service)
+    private IApplicationService _applicationService;
+    public ApplicationController(IApplicationService applicationService)
     {
-        _application_Service = application_Service;
+        _applicationService = applicationService;
     }
 
     [HttpPost]
     [Route("[action]")]
     public async Task<IActionResult> AddApplicationApplicant(ApplicationPassObject application)
     {
-        var result = await _application_Service.AddApplicationAndApplicant(
+        var result = await _applicationService.AddApplicationAndApplicant(
             application.GradeId,
             1,
             application.SchoolYear,
@@ -30,7 +30,7 @@ public class ApplicationController : ControllerBase
             application.Applicant.Email,
             application.Applicant.PhoneNumber);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -41,14 +41,14 @@ public class ApplicationController : ControllerBase
     [Route("[action]")]
     public async Task<IActionResult> UpdateApplication(ApplicationUpdatePassObject application)
     {
-        var result = await _application_Service.UpdateApplication(
+        var result = await _applicationService.UpdateApplication(
             application.Id,
             application.GradeId,
             application.StatusId,
             application.SchoolYear,
             application.ApplicantId);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -59,9 +59,9 @@ public class ApplicationController : ControllerBase
     [Route("[action]")]
     public async Task<IActionResult> GetApplicationsByApplicantId(int id)
     {
-        var result = await _application_Service.GetApplicationsByApplicantId(id);
+        var result = await _applicationService.GetApplicationsByApplicantId(id);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -72,9 +72,9 @@ public class ApplicationController : ControllerBase
     [Route("[action]")]
     public async Task<IActionResult> GetApplicationById(int id)
     {
-        var result = await _application_Service.GetApplicationById(id);
+        var result = await _applicationService.GetApplicationById(id);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);

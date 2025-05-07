@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MVC.Models;
 
-namespace MVC.Data
-{
-    public class ApplicationDbContext : DbContext
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) { }
+namespace MVC.Data;
 
-        public DbSet<Category> Categories { get; set; }
-    }
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options) { }
+
+    public DbSet<Category> Categories { get; set; }
 }

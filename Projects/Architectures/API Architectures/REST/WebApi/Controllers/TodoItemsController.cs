@@ -26,7 +26,7 @@ public class TodoItemsController : ControllerBase
     {
         var todoItem = await _context.TodoItems.FindAsync(id);
 
-        if (todoItem == null)
+        if (todoItem is null)
         {
             return NotFound();
         }
@@ -81,7 +81,7 @@ public class TodoItemsController : ControllerBase
     {
         var todoItem = await _context.TodoItems.FindAsync(id);
 
-        if (todoItem == null)
+        if (todoItem is null)
         {
             return NotFound();
         }

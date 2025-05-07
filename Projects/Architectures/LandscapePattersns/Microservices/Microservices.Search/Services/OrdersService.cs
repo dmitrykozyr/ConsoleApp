@@ -4,7 +4,6 @@ using System.Text.Json;
 
 namespace Microservices.Search.Services;
 
-// Класс для взаимодействия с сервисом Orders
 public class OrdersService : IOrdersService
 {
     IHttpClientFactory _httpClientFactory;

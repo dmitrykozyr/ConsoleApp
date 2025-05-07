@@ -1,6 +1,6 @@
 ﻿namespace NTier.Logic.Services.Models.Applicant;
 
-public class Applicant_ResultSet
+public class ApplicantResultSet
 {
     public long Id { get; set; }
 

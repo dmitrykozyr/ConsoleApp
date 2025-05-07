@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace MVVM.Views
+namespace MVVM.Views;
+
+/// <summary>
+/// Interaction logic for ReservationListingView.xaml
+/// </summary>
+public partial class ReservationListingView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for ReservationListingView.xaml
-    /// </summary>
-    public partial class ReservationListingView : UserControl
+    public ReservationListingView()
     {
-        public ReservationListingView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MVC.Data;
-
+//!
 // Подключение сервисов
 var builder = WebApplication.CreateBuilder(args);
 

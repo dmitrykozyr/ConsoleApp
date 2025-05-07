@@ -2,7 +2,7 @@
 
 namespace ApiAuthentication.Repositories;
 
-// Класс для эмуляции БД
+// Класс эмуляции БД
 public class MovieRepository
 {
     public static List<Movie> Movies = new()

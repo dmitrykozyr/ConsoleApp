@@ -10,9 +10,9 @@ namespace NTier.UI.Controllers;
 [Route("api/[controller]")]
 public class ApplicantController : ControllerBase
 {
-    private IApplicant_Service _applicantService;
+    private IApplicantService _applicantService;
 
-    public ApplicantController(IApplicant_Service applicant_Service)
+    public ApplicantController(IApplicantService applicant_Service)
     {
         _applicantService = applicant_Service;
     }
@@ -28,7 +28,7 @@ public class ApplicantController : ControllerBase
             applicant.Email,
             applicant.PhoneNumber);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -41,7 +41,7 @@ public class ApplicantController : ControllerBase
     {
 
         var result = await _applicantService.GetApplicantById(id);
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -60,7 +60,7 @@ public class ApplicantController : ControllerBase
             applicant.Email,
             applicant.PhoneNumber);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);

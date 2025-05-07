@@ -2,7 +2,7 @@
 
 namespace ApiAuthentication.Repositories;
 
-// Класс для эмуляции БД
+// Класс эмуляции БД
 public class UserRepository
 {
     public static List<User> Users = new()

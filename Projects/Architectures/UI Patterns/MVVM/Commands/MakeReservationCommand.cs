@@ -44,7 +44,7 @@ public class MakeReservationCommand : AsyncCommandBase
     public override async Task ExecuteAsync(object parameter)
     {
         var reservation = new Reservation(
-            new RoomID(_makeReservationViewModel.FloorNumber, _makeReservationViewModel.RoomNumber),
+            new RoomId(_makeReservationViewModel.FloorNumber, _makeReservationViewModel.RoomNumber),
             _makeReservationViewModel.Username,
             _makeReservationViewModel.StartDate,
             _makeReservationViewModel.EndDate);

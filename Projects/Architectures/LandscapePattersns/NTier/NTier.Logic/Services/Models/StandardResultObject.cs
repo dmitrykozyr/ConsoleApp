@@ -2,21 +2,19 @@
 
 public class StandardResultObject
 {
-    public bool success { get; set; }
+    public bool Success { get; set; }
 
-    public string userMessage { get; set; }
+    public string UserMessage { get; set; }
 
+    public string InternalMessage { get; set; }
 
-    // User will not see internal fields
-    internal string internalMessage { get; set; }
-
-    internal Exception exception { get; set; }
+    public Exception Exception { get; set; }
 
     public StandardResultObject()
     {
-        success = false;
-        userMessage = string.Empty;
-        internalMessage = string.Empty;
-        exception = null;
+        Success = false;
+        UserMessage = string.Empty;
+        InternalMessage = string.Empty;
+        Exception = null;
     }
 }

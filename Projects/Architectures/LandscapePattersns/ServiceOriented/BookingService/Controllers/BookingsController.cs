@@ -14,7 +14,10 @@ public class BookingsController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IESBroxy _esbProxy;
 
-    public BookingsController(IBookingsRepository bookingsRepository, IMapper mapper, IESBroxy esbProxy)
+    public BookingsController(
+        IBookingsRepository bookingsRepository,
+        IMapper mapper,
+        IESBroxy esbProxy)
     {
         _bookingsRepository = bookingsRepository;
         _mapper = mapper;

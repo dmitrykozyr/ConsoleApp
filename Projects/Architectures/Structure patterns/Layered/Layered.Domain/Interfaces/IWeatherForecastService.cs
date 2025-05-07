@@ -1,9 +1,8 @@
 ﻿using Layered.Domain.Models;
 
-namespace Layered.Domain.Interfaces
+namespace Layered.Domain.Interfaces;
+
+public interface IWeatherForecastService
 {
-    public interface IWeatherForecastService
-    {
-        List<WeatherForecast> ProcessTemperature();
-    }
+    List<WeatherForecast> ProcessTemperature();
 }

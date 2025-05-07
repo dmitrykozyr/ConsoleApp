@@ -1,4 +1,4 @@
-﻿// 2. Сделать этот проект старотвым, после чего из указанной очереди будет получено сообщение
+﻿// 2. Сделать этот проект стартовым, после чего из указанной очереди будет получено сообщение
 // и больше этого сообщения в очереди не будет
 
 using RabbitMQ.Client;
@@ -23,7 +23,9 @@ using (var channel = connection.CreateModel())
     consumer.Received += (sender, e) =>
     {
         var body = e.Body;
+
         var message = Encoding.UTF8.GetString(body.ToArray());
+
         Console.WriteLine("Received message: {0}", message);
     };
 

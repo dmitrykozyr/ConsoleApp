@@ -19,6 +19,7 @@ public class OrdersProvider : IOrdersProvider
         _DBContext = DBContext;
         _logger = logger;
         _mapper = mapper;
+
         SeedData();
     }
 

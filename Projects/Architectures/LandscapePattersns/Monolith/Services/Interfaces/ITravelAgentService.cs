@@ -1,9 +1,8 @@
 ﻿using Monolith.Domain;
 
-namespace Monolith.Services.Interfaces
+namespace Monolith.Services.Interfaces;
+
+public interface ITravelAgentService
 {
-    public interface ITravelAgentService
-    {
-        void NotifyTravelAgentOfBooking(Booking booking);
-    }
+    void NotifyTravelAgentOfBooking(Booking booking);
 }

@@ -2,7 +2,7 @@
 
 namespace MVVM.ViewModels;
 
-// ViewModel для MainWindow.xaml
+//! ViewModel для MainWindow.xaml
 public class MainViewModel : ViewModelBase
 {
     private readonly NavigationStore _navigationStore;

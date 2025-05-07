@@ -14,7 +14,7 @@ public class Application
 
     public DateTime ApplicationModifiedDate { get; set; }
 
-    public Int32 SchoolYear { get; set; }
+    public int SchoolYear { get; set; }
 
     public Applicant? Applicant { get; set; }
 

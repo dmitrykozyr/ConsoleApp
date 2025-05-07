@@ -2,12 +2,12 @@
 
 namespace NTier.DataAccess.Functions.Interfaces;
 
-public interface IApplication_Operations
+public interface IApplicationOperations
 {
     Task<Application> AddFullApplication(
                         long gradeId,
                         long applicationStatusId,
-                        Int32 schoolYear,
+                        int schoolYear,
                         string firstName,
                         string surName,
                         DateTime birthDate,

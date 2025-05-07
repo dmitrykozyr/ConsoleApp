@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 
-// Для многопоточности используем AddPooledDbContextFactory вместо AddDbContext
+//! Для многопоточности используем AddPooledDbContextFactory вместо AddDbContext
 builder.Services.AddPooledDbContextFactory<ApiDbContext>(options =>
     options.UseSqlite(
         builder.Configuration.GetConnectionString("DefaultConnection")));

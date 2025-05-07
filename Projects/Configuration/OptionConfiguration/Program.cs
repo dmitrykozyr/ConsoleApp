@@ -7,7 +7,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder();
 
-        //  онфигурацию можно хранить в JSON и обращатьс€ к ней через IOptions
+        //!  онфигурацию можно хранить в JSON и обращатьс€ к ней через IOptions
         // ≈сли данные в JSON изменились, дл€ их применени€ нужно перезапустить приложение
         builder.Services.ConfigureOptions<ApplicationOptionsSetup>();
 

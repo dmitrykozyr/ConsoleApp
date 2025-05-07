@@ -33,7 +33,7 @@ public class MovieService : IMovieService
     {
         var oldMovie = MovieRepository.Movies.FirstOrDefault(x => x.Id == updatedMovie.Id);
 
-        if (oldMovie == null)
+        if (oldMovie is null)
         {
             return null;
         }
@@ -49,7 +49,7 @@ public class MovieService : IMovieService
     {
         var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
 
-        if (movie == null)
+        if (movie is null)
         {
             return false;
         }

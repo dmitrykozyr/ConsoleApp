@@ -10,10 +10,6 @@ public class Message : Message<string>
 
 public class Message<T>
 {
-    public Message()
-    {
-    }
-
     public Message(T data)
     {
         MessageId = Guid.NewGuid();

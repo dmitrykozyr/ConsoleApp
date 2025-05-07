@@ -19,10 +19,11 @@ public class UserManagementTest
 
         // Assert
         var savedUser = Assert.Single(userManagement.AllUsers);
+
         Assert.NotNull(savedUser);
         Assert.Equal(savedUser.firstName, "Amazing");
         Assert.Equal(savedUser.lastName, "User");
-        Assert.False(savedUser.verifiedEmail);
+        Assert.False(savedUser.VerifiedEmail);
     }
     
     [Fact]
@@ -31,11 +32,15 @@ public class UserManagementTest
         var userManagement = new UserManagement();
         
         userManagement.AddUser(new ("Amazing", "User"));
+
         var firstUser = userManagement.AllUsers.First();
+
         firstUser.Phone = "+123334445577";
+
         userManagement.UpdatePhone(firstUser);
 
         var savedUser = Assert.Single(userManagement.AllUsers);
+
         Assert.NotNull(savedUser);
         Assert.Equal(savedUser.Phone, "+123334445577");
     }
@@ -46,6 +51,7 @@ public class UserManagementTest
     {
         // Arrange
         var fakeDependency = A.Fake<IDependency>();
+
         var myService = new MyService(fakeDependency);
 
         // Act

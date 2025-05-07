@@ -5,11 +5,11 @@ using System.Security.Claims;
 
 namespace JWTToken.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    // Метод, не требующий аутентификации и авторизации
+    //! Метод, не требующий аутентификации и авторизации
     // https://localhost:7269/api/user/public
     [HttpGet("Public")]
     public IActionResult Public()
@@ -30,7 +30,7 @@ public class UserController : ControllerBase
     {
         var currentUser = GetCurrentUser();
 
-        if (currentUser == null)
+        if (currentUser is null)
         {
             return NotFound();
         }

@@ -2,13 +2,13 @@
 
 public class ApplicationStatus
 {
-    public long ApplicationStatus_ID { get; set; }
+    public long ApplicationStatusId { get; set; }
 
-    public string? ApplicationStatus_Name { get; set; }
+    public string? ApplicationStatusName { get; set; }
 
-    public DateTime ApplicationStatus_CreationDate { get; set; }
+    public DateTime ApplicationStatusCreationDate { get; set; }
 
-    public DateTime ApplicationStatus_ModifiedDate { get; set; }
+    public DateTime ApplicationStatusModifiedDate { get; set; }
 
     public ICollection<Application>? Applications { get; set; }
 }

@@ -10,20 +10,23 @@ namespace NTier.UI.Controllers;
 [ApiController]
 public class GradeController : ControllerBase
 {
-    private IGrade_Service _gradeService;
+    private IGradeService _gradeService;
 
-    public GradeController(IGrade_Service grade_Service)
+    public GradeController(IGradeService gradeService)
     {
-        _gradeService = grade_Service;
+        _gradeService = gradeService;
     }
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> AddGrade(Grade_Pass_Object grade_object)
+    public async Task<IActionResult> AddGrade(GradePassObject gradeObject)
     {
-        var result = await _gradeService.AddSingleGrade(grade_object.name, grade_object.grade_number, grade_object.capacity);
+        var result = await _gradeService.AddSingleGrade(
+            gradeObject.Name,
+            gradeObject.GradeNumber,
+            gradeObject.Capacity);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -36,7 +39,7 @@ public class GradeController : ControllerBase
     {
         var result = await _gradeService.GetAllGrades();
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -45,15 +48,15 @@ public class GradeController : ControllerBase
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> UpdateGrade(GradeUpdate_Pass_Object grade_object)
+    public async Task<IActionResult> UpdateGrade(GradeUpdatePassObject gradeObject)
     {
         var result = await _gradeService.UpdateGrade(
-            grade_object.id,
-            grade_object.name,
-            grade_object.grade_number,
-            grade_object.capacity);
+            gradeObject.Id,
+            gradeObject.Name,
+            gradeObject.GradeNumber,
+            gradeObject.Capacity);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);

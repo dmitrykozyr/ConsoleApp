@@ -2,17 +2,17 @@
 
 public class Grade
 {
-    public long Grade_ID { get; set; }
+    public long GradeId { get; set; }
 
-    public string? Grade_Name { get; set; }
+    public string? GradeName { get; set; }
 
-    public Int32 Grade_Number { get; set; }
+    public int GradeNumber { get; set; }
 
-    public Int32 Grade_Capacity { get; set; }
+    public int GradeCapacity { get; set; }
 
-    public DateTime Grade_CreationDate { get; set; }
+    public DateTime GradeCreationDate { get; set; }
 
-    public DateTime Grade_ModifiedDate { get; set; }
+    public DateTime GradeModifiedDate { get; set; }
 
     public ICollection<Application>? Applications { get; set; }
 }

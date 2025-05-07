@@ -18,9 +18,11 @@ public class TokenMiddleware
         // Получаем из запроса параметр "token"
         // Если он равен "12345678", то передаем запрос следующему компоненту, иначе возвращаем сообщение об ошибке
         var token = context.Request.Query["token"];
+
         if (token != "12345678")
         {
             context.Response.StatusCode = 403;
+
             await context.Response.WriteAsync("Token is invalid");
         }
         else

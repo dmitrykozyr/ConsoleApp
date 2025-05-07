@@ -1,9 +1,8 @@
 ﻿using Monolith.Domain;
 
-namespace Monolith.Services.Interfaces
+namespace Monolith.Services.Interfaces;
+
+public interface IEmailService
 {
-    public interface IEmailService
-    {
-        void SendBookingConfirmationMail(Booking booking, Tour tour);
-    }
+    void SendBookingConfirmationMail(Booking booking, Tour tour);
 }

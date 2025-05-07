@@ -28,7 +28,8 @@ public class Startup
         services.AddHttpClient("ProductsService", config =>
         {
             config.BaseAddress = new Uri(Configuration["Services:Products"]);
-        }).AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(5, _ => TimeSpan.FromMilliseconds(500)));
+        })
+        .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(5, _ => TimeSpan.FromMilliseconds(500)));
 
         services.AddHttpClient("CustomersService", config =>
         {
@@ -44,8 +45,11 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+
         app.UseRouting();
+
         app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

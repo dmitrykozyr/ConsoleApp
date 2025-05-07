@@ -1,4 +1,4 @@
-﻿// Ссылка на локальный RabbitMQ http://localhost:15672/#/
+﻿//! Ссылка на локальный RabbitMQ http://localhost:15672/#/
 // guest | guest
 
 // 1. Сделать этот проект старотвым, после чего в указанную очередь будут отправлены сообщения
@@ -30,6 +30,7 @@ using (var channel = connection.CreateModel())
                              arguments: null);
         
         string message = "Some message " + messageNumber;
+
         var messageBytes = Encoding.UTF8.GetBytes(message);
 
         channel.BasicPublish(exchange: "",

@@ -12,7 +12,7 @@ namespace MVVM.ViewModels;
 
 public class MakeReservationViewModel : ViewModelBase, INotifyDataErrorInfo
 {
-    // В MakeReservationView.xaml есть строчка Text="{Binding Username}"
+    //! В MakeReservationView.xaml есть строчка Text="{Binding Username}"
     // Когда меняем значение там - оно меняется и здесь
     private string _username;
 

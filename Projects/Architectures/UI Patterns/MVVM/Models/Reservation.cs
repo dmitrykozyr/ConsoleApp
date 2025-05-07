@@ -4,7 +4,7 @@ namespace MVVM.Models;
 
 public class Reservation
 {
-    public RoomID RoomID { get; }
+    public RoomId RoomId { get; }
 
     public string Username { get; }
 
@@ -14,9 +14,9 @@ public class Reservation
 
     public TimeSpan Length => EndTime.Subtract(StartTime);
 
-    public Reservation(RoomID roomID, string userName, DateTime startTime, DateTime endTime)
+    public Reservation(RoomId roomId, string userName, DateTime startTime, DateTime endTime)
     {
-        RoomID = roomID;
+        RoomId = roomId;
         Username = userName;
         StartTime = startTime;
         EndTime = endTime;

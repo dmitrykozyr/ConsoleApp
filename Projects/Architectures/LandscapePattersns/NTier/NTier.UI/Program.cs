@@ -13,10 +13,10 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Gettoe_Elementary", Version = "v1" });
 });
 
-builder.Services.AddScoped<IApplicant_Service, Applicant_Service>();
-builder.Services.AddScoped<IGrade_Service, Grade_Service>();
-builder.Services.AddScoped<IApplication_Service, Application_Service>();
-builder.Services.AddScoped<IApplicationStatus_Service, ApplicationStatus_Service>();
+builder.Services.AddScoped<IApplicantService, ApplicantService>();
+builder.Services.AddScoped<IGradeService, GradeService>();
+builder.Services.AddScoped<IApplicationService, ApplicationService>();
+builder.Services.AddScoped<IApplicationStatusService, ApplicationStatusService>();
 
 
 

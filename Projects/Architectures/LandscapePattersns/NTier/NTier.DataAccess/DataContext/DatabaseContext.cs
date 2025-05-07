@@ -48,51 +48,51 @@ public class DatabaseContext : DbContext
                 .ToTable("applicant");
         
             modelBuilder.Entity<Applicant>()
-                .HasKey(z => z.Applicant_ID);
+                .HasKey(z => z.ApplicantId);
 
             modelBuilder.Entity<Applicant>()
-                .Property(z => z.Applicant_ID)
+                .Property(z => z.ApplicantId)
                 .UseIdentityColumn(1, 1)
                 .IsRequired()
                 .HasColumnName("applicant_id");
         
             modelBuilder.Entity<Applicant>()
-                .Property(z => z.Applicant_Name)
+                .Property(z => z.ApplicantName)
                 .IsRequired(true)
                 .HasMaxLength(100)
                 .HasColumnName("applicant_name");
         
             modelBuilder.Entity<Applicant>()
-                .Property(z => z.Applicant_Surname)
+                .Property(z => z.ApplicantSurname)
                 .IsRequired(true)
                 .HasMaxLength(100)
                 .HasColumnName("applicant_surname");
         
             modelBuilder.Entity<Applicant>()
-                .Property(z => z.Applicant_BirthDate)
+                .Property(z => z.ApplicantBirthDate)
                 .IsRequired(true)
                 .HasColumnName("applicant_birthdate");
         
             modelBuilder.Entity<Applicant>()
-                .Property(z => z.Contact_Email)
+                .Property(z => z.ContactEmail)
                 .IsRequired(false)
                 .HasMaxLength(250)
                 .HasColumnName("contact_email");
         
             modelBuilder.Entity<Applicant>()
-                .Property(z => z.Contact_Number)
+                .Property(z => z.ContactNumber)
                 .IsRequired(true)
                 .HasMaxLength(25)
                 .HasColumnName("contact_number");
         
             modelBuilder.Entity<Applicant>()
-                .Property(z => z.Applicant_CreationDate)
+                .Property(z => z.ApplicantCreationDate)
                 .IsRequired(true)
                 .HasDefaultValue(DateTime.UtcNow)
                 .HasColumnName("applicant_creationdate");
         
             modelBuilder.Entity<Applicant>()
-                .Property(z => z.Applicant_ModifiedDate)
+                .Property(z => z.ApplicantModifiedDate)
                 .IsRequired(true)
                 .HasDefaultValue(modifiedDate)
                 .HasColumnName("applicant_modifieddate");
@@ -111,32 +111,32 @@ public class DatabaseContext : DbContext
                 .ToTable("application_status");
 
             modelBuilder.Entity<ApplicationStatus>()
-                .HasKey(z => z.ApplicationStatus_ID);
+                .HasKey(z => z.ApplicationStatusId);
         
             modelBuilder.Entity<ApplicationStatus>()
-                .Property(z => z.ApplicationStatus_ID)
+                .Property(z => z.ApplicationStatusId)
                 .UseIdentityColumn(1, 1)
                 .IsRequired()
                 .HasColumnName("application_status_id"); 
         
             modelBuilder.Entity<ApplicationStatus>()
-                .HasIndex(z => z.ApplicationStatus_Name)
+                .HasIndex(z => z.ApplicationStatusName)
                 .IsUnique();
 
             modelBuilder.Entity<ApplicationStatus>()
-                .Property(z => z.ApplicationStatus_Name)
+                .Property(z => z.ApplicationStatusName)
                 .IsRequired(true)
                 .HasMaxLength(100)
                 .HasColumnName("application_status_name");    
         
             modelBuilder.Entity<ApplicationStatus>()
-                .Property(z => z.ApplicationStatus_CreationDate)
+                .Property(z => z.ApplicationStatusCreationDate)
                 .IsRequired(true)
                 .HasDefaultValue(DateTime.UtcNow)
                 .HasColumnName("application_status_creationdate");
 
             modelBuilder.Entity<ApplicationStatus>()
-                .Property(z => z.ApplicationStatus_ModifiedDate)
+                .Property(z => z.ApplicationStatusModifiedDate)
                 .IsRequired(true)
                 .HasDefaultValue(modifiedDate)
                 .HasColumnName("application_status_modifieddate");
@@ -155,46 +155,46 @@ public class DatabaseContext : DbContext
                 .ToTable("grade");
 
             modelBuilder.Entity<Grade>()
-                .HasKey(z => z.Grade_ID);
+                .HasKey(z => z.GradeId);
         
             modelBuilder.Entity<Grade>()
-                .Property(z => z.Grade_ID)
+                .Property(z => z.GradeId)
                 .UseIdentityColumn(1, 1)
                 .IsRequired()
                 .HasColumnName("grade_id");
         
             modelBuilder.Entity<Grade>()
-                .Property(z => z.Grade_Name)
+                .Property(z => z.GradeName)
                 .IsRequired(true)
                 .HasMaxLength(100)
                 .HasColumnName("grade_name");
         
             modelBuilder.Entity<Grade>()
-                .Property(z => z.Grade_Number)
+                .Property(z => z.GradeNumber)
                 .IsRequired(true)
                 .HasColumnName("grade_number");
         
             modelBuilder.Entity<Grade>()
-                .HasIndex(z => z.Grade_Name)
+                .HasIndex(z => z.GradeName)
                 .IsUnique();
         
             modelBuilder.Entity<Grade>()
-                .HasIndex(z => z.Grade_Number)
+                .HasIndex(z => z.GradeNumber)
                 .IsUnique();
         
             modelBuilder.Entity<Grade>()
-                .Property(z => z.Grade_Capacity)
+                .Property(z => z.GradeCapacity)
                 .IsRequired(true)
                 .HasColumnName("grade_capacity");
         
             modelBuilder.Entity<Grade>()
-                .Property(z => z.Grade_CreationDate)
+                .Property(z => z.GradeCreationDate)
                 .IsRequired(true)
                 .HasDefaultValue(DateTime.UtcNow)
                 .HasColumnName("grade_creationdate");
         
             modelBuilder.Entity<Grade>()
-                .Property(z => z.Grade_ModifiedDate)
+                .Property(z => z.GradeModifiedDate)
                 .IsRequired(true)
                 .HasDefaultValue(modifiedDate)
                 .HasColumnName("grade_modifieddate");

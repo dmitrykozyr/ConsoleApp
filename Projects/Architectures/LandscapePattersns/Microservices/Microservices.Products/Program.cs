@@ -4,7 +4,9 @@ public class Program
 {
     public static void Main()
     {
-        CreateHostBuilder().Build().Run();
+        CreateHostBuilder()
+            .Build()
+            .Run();
     }
 
     public static IHostBuilder CreateHostBuilder() =>

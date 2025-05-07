@@ -1,4 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿//! See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
 
 // Юнит-тесты проверяют методы или классы в изоляции от других частей системы

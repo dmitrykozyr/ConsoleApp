@@ -427,12 +427,12 @@ class Program
 
             static void ShowLeafIds(TreeData root)
             {
-                if (root == null)
+                if (root is null)
                 {
                     return;
                 }
 
-                if (root.Child == null || root.Child.Length == 0)
+                if (root.Child is null || root.Child.Length == 0)
                 {
                     Console.WriteLine(root.Id);
                 }
@@ -1427,7 +1427,7 @@ class Program
             public void OnClick()
             {
                 // Проверяем, есть ли подписчики на событие
-                if (Clicked != null)
+                if (Clicked is not null)
                 {
                     // Генерируем событие
                     Clicked(this, EventArgs.Empty);

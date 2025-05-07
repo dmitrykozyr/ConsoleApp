@@ -1,9 +1,8 @@
 ﻿using Layered.Domain.Models;
 
-namespace Layered.Domain.Interfaces
+namespace Layered.Domain.Interfaces;
+
+public interface IWeatherForecastRepository
 {
-    public interface IWeatherForecastRepository
-    {
-        WeatherForecast[] GetForecasts();
-    }
+    WeatherForecast[] GetForecasts();
 }

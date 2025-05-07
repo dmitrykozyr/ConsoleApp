@@ -10,20 +10,20 @@ namespace NTier.UI.Controllers;
 [ApiController]
 public class ApplicationStatusController : ControllerBase
 {
-    private IApplicationStatus_Service _applicationStatus_Service;
+    private IApplicationStatusService _applicationStatusService;
 
-    public ApplicationStatusController(IApplicationStatus_Service applicationStatus_Service)
+    public ApplicationStatusController(IApplicationStatusService applicationStatusService)
     {
-        _applicationStatus_Service = applicationStatus_Service;
+        _applicationStatusService = applicationStatusService;
     }
 
     [HttpGet]
     [Route("[action]")]
     public async Task<IActionResult> AddAppStatus(string name)
     {
-        var result = await _applicationStatus_Service.AddApplicationStatus(name);
+        var result = await _applicationStatusService.AddApplicationStatus(name);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -34,9 +34,9 @@ public class ApplicationStatusController : ControllerBase
     [Route("[action]")]
     public async Task<IActionResult> GetAllAppStatuses()
     {
-        var result = await _applicationStatus_Service.GetAllApplicationStatuses();
+        var result = await _applicationStatusService.GetAllApplicationStatuses();
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);
@@ -45,11 +45,11 @@ public class ApplicationStatusController : ControllerBase
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> UpdateAppStatus(ApplicationStatusUpdate_Pass_Object status)
+    public async Task<IActionResult> UpdateAppStatus(ApplicationStatusUpdatePassObject status)
     {
-        var result = await _applicationStatus_Service.UpdateApplicationStatus(status.id, status.name);
+        var result = await _applicationStatusService.UpdateApplicationStatus(status.Id, status.Name);
 
-        switch (result.success)
+        switch (result.Success)
         {
             case true:  return Ok(result);
             case false: return StatusCode(500, result);

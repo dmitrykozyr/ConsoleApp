@@ -11,7 +11,7 @@ builder.Services
     .AddApplication()
     .AddInfrastructure()
     .AddPresentation();
-
+//!
 // SeriLog
 //builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
