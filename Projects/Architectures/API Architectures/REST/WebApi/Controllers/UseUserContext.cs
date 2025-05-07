@@ -14,11 +14,15 @@ public class UseUserContext
 
             db.Users.Add(user1);
             db.Users.Add(user2);
+
             db.SaveChanges();
 
             var users = db.Users;
+
             foreach (User u in users)
+            {
                 Console.WriteLine("{0}.{1} - {2}", u.Id, u.Name, u.Age);
+            }
         }
     }
 }

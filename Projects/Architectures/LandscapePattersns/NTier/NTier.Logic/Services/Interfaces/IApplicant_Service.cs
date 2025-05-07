@@ -12,10 +12,10 @@ public interface IApplicant_Service
         string email,
         string phone_number);
 
-    Task<Generic_ResultSet<Applicant_ResultSet>> GetApplicantById(Int64 applicant_id);
+    Task<Generic_ResultSet<Applicant_ResultSet>> GetApplicantById(long applicant_id);
 
     Task<Generic_ResultSet<Applicant_ResultSet>> UpdateApplicant(
-        Int64 applicant_id,
+        long applicant_id,
         string name,
         string surname,
         DateTime birthday,

@@ -10,8 +10,7 @@ builder.Services.AddRazorPages();
 // Для многопоточности используем AddPooledDbContextFactory вместо AddDbContext
 builder.Services.AddPooledDbContextFactory<ApiDbContext>(options =>
     options.UseSqlite(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-        ));
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Подключаем возможность выполнять Query
 builder.Services.AddGraphQLServer()

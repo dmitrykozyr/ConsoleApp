@@ -2,7 +2,7 @@
 
 public class ApplicationStatus
 {
-    public Int64 ApplicationStatus_ID { get; set; }
+    public long ApplicationStatus_ID { get; set; }
 
     public string? ApplicationStatus_Name { get; set; }
 

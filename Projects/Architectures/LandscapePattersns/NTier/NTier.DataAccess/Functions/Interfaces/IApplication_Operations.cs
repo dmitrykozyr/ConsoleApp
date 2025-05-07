@@ -5,8 +5,8 @@ namespace NTier.DataAccess.Functions.Interfaces;
 public interface IApplication_Operations
 {
     Task<Application> AddFullApplication(
-                        Int64 gradeId,
-                        Int64 applicationStatusId,
+                        long gradeId,
+                        long applicationStatusId,
                         Int32 schoolYear,
                         string firstName,
                         string surName,
@@ -14,5 +14,5 @@ public interface IApplication_Operations
                         string email,
                         string contactNumber);
 
-    Task<List<Application>> GetApplicationsByApplicantId(Int64 applicantId);
+    Task<List<Application>> GetApplicationsByApplicantId(long applicantId);
 }

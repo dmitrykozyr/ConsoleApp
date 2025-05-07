@@ -7,7 +7,7 @@ public class Query
 {
     [UseDbContext(typeof(ApiDbContext))]
     [UseProjection]
-    [UseFiltering]  // Включаем фильтрацию и сортировку
+    [UseFiltering]
     [UseSorting]
     public IQueryable<ItemList> GetList([ScopedService] ApiDbContext context)
     {

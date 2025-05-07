@@ -4,19 +4,28 @@ namespace WebApi.Services;
 
 public class EmailMessageSender : IMessageSender
 {
-    public string Send() { return "Sent by Email"; }
+    public string Send()
+    {
+        return "Sent by Email";
+    }
 }
 
 public class SmsMessageSender
 {
-    public string Send() { return "Sent by SMS"; }
+    public string Send()
+    {
+        return "Sent by SMS";
+    }
 }
 
-// Инжектим сервис через конструктор
 public class UseService
 {
     IMessageSender _messageSender;
-    public UseService(IMessageSender messageSender) { _messageSender = messageSender; }
+
+    public UseService(IMessageSender messageSender)
+    {
+        _messageSender = messageSender;
+    }
 
     void F1()
     {

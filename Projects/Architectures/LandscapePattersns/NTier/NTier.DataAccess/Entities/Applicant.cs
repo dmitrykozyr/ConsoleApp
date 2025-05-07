@@ -2,7 +2,7 @@
 
 public class Applicant
 {
-    public Int64 Applicant_ID { get; set; }
+    public long Applicant_ID { get; set; }
 
     public string? Applicant_Name { get; set; }
 

@@ -4,22 +4,16 @@ using WebApi.Models;
 
 namespace WebApi.Controllers;
 
-// action нужен, когда есть два метода одного типа, например, два Post, тогда в URL указываем название метода GET api/users/get
-//[Route("api/[controller]/[action]")]
-
-// POST https://localhost:5001/api/todoitems
-/*{
-    "name":"walk dog",
-    "isComplete":true
-}*/
-
-// GET https://localhost:5001/api/todoitems/1 
+[ApiController]
 [Route("api/[controller]")]
-[ApiController] // Контроллер отвечает на запросы веб API
 public class TodoItemsController : ControllerBase
 {
     private readonly DbContextSetUp _context;
-    public TodoItemsController(DbContextSetUp context) { _context = context; }
+
+    public TodoItemsController(DbContextSetUp context)
+    {
+        _context = context;
+    }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
@@ -31,8 +25,12 @@ public class TodoItemsController : ControllerBase
     public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
     {
         var todoItem = await _context.TodoItems.FindAsync(id);
+
         if (todoItem == null)
+        {
             return NotFound();
+        }
+
         return todoItem;
     }
 
@@ -40,7 +38,10 @@ public class TodoItemsController : ControllerBase
     public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
     {
         if (id != todoItem.Id)
+        {
             return BadRequest();
+        }
+
         _context.Entry(todoItem).State = EntityState.Modified;
 
         try
@@ -50,8 +51,13 @@ public class TodoItemsController : ControllerBase
         catch (DbUpdateConcurrencyException)
         {
             if (!TodoItemExists(id))
+            {
                 return NotFound();
-            else throw;
+            }
+            else
+            {
+                throw;
+            }
         }
 
         return NoContent();
@@ -61,18 +67,29 @@ public class TodoItemsController : ControllerBase
     public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
     {
         _context.TodoItems.Add(todoItem);
+
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
+
+        return CreatedAtAction(
+            nameof(GetTodoItem),
+            new { id = todoItem.Id },
+            todoItem);
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<TodoItem>> DeleteTodoItem(long id)
     {
         var todoItem = await _context.TodoItems.FindAsync(id);
+
         if (todoItem == null)
+        {
             return NotFound();
+        }
+
         _context.TodoItems.Remove(todoItem);
+
         await _context.SaveChangesAsync();
+
         return todoItem;
     }
 

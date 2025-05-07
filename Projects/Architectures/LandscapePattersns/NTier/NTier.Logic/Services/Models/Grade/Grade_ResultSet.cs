@@ -2,7 +2,7 @@
 
 public class Grade_ResultSet
 {
-    public Int64 id { get; set; }
+    public long id { get; set; }
 
     public string? name { get; set; }
 

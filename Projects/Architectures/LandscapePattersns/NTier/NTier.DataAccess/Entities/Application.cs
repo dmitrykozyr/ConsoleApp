@@ -2,17 +2,17 @@
 
 public class Application
 {
-    public Int64 Application_ID { get; set; }
+    public long ApplicationId { get; set; }
 
-    public Int64 Applicant_ID { get; set; }
+    public long ApplicantId { get; set; }
 
-    public Int64 Grade_ID { get; set; }
+    public long GradeId { get; set; }
 
-    public Int64 ApplicationStatus_ID { get; set; }
+    public long ApplicationStatusId { get; set; }
 
-    public DateTime Application_CreationDate { get; set; }
+    public DateTime ApplicationCreationDate { get; set; }
 
-    public DateTime Application_ModifiedDate { get; set; }
+    public DateTime ApplicationModifiedDate { get; set; }
 
     public Int32 SchoolYear { get; set; }
 

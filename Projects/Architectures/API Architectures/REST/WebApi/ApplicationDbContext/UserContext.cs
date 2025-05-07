@@ -5,6 +5,7 @@ namespace WebApi.ApplicationDbContext;
 
 public class UserContext : DbContext
 {
+    //!
     // DbConnection - имя строки подключения к БД
     // Если БД с именем DbConnection нет - она будет создана
     public UserContext() : base("DbConnection") { }

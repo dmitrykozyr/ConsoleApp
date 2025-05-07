@@ -100,7 +100,7 @@ public class DatabaseContext : DbContext
             modelBuilder.Entity<Applicant>()
                 .HasMany(z => z.Applications)
                 .WithOne(z => z.Applicant)
-                .HasForeignKey(z => z.Applicant_ID)
+                .HasForeignKey(z => z.ApplicantId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
@@ -144,7 +144,7 @@ public class DatabaseContext : DbContext
             modelBuilder.Entity<ApplicationStatus>()
                 .HasMany(z => z.Applications)
                 .WithOne(z => z.ApplicationStatus)
-                .HasForeignKey(z => z.ApplicationStatus_ID)
+                .HasForeignKey(z => z.ApplicationStatusId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
@@ -202,7 +202,7 @@ public class DatabaseContext : DbContext
             modelBuilder.Entity<Grade>()
                 .HasMany<Application>(z => z.Applications)
                 .WithOne(z => z.Grade)
-                .HasForeignKey(z => z.Grade_ID)
+                .HasForeignKey(z => z.GradeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
@@ -213,37 +213,37 @@ public class DatabaseContext : DbContext
                 .ToTable("application");
             
             modelBuilder.Entity<Application>()
-                .HasKey(z => z.Application_ID);
+                .HasKey(z => z.ApplicationId);
         
             modelBuilder.Entity<Application>()
-                .Property(z => z.Application_ID)
+                .Property(z => z.ApplicationId)
                 .UseIdentityColumn(1, 1)
                 .IsRequired()
                 .HasColumnName("application_id");
 
             modelBuilder.Entity<Application>()
-                .Property(z => z.Applicant_ID)
+                .Property(z => z.ApplicantId)
                 .IsRequired(true)
                 .HasColumnName("applicant_id");
             
             modelBuilder.Entity<Application>()
-                .Property(z => z.Grade_ID)
+                .Property(z => z.GradeId)
                 .IsRequired(true)
                 .HasColumnName("grade_id");
         
             modelBuilder.Entity<Application>()
-                .Property(z => z.ApplicationStatus_ID)
+                .Property(z => z.ApplicationStatusId)
                 .IsRequired(true)
                 .HasColumnName("application_status_id");
         
             modelBuilder.Entity<Application>()
-                .Property(z => z.Application_CreationDate)
+                .Property(z => z.ApplicationCreationDate)
                 .IsRequired(true)
                 .HasDefaultValue(DateTime.UtcNow)
                 .HasColumnName("application_creationdate");
         
             modelBuilder.Entity<Application>()
-                .Property(z => z.Application_ModifiedDate)
+                .Property(z => z.ApplicationModifiedDate)
                 .IsRequired(true)
                 .HasDefaultValue(modifiedDate)
                 .HasColumnName("application_modifieddate");
@@ -256,19 +256,19 @@ public class DatabaseContext : DbContext
             modelBuilder.Entity<Application>()
                 .HasOne<Applicant>(z => z.Applicant)
                 .WithMany(z => z.Applications)
-                .HasForeignKey(z => z.Applicant_ID)
+                .HasForeignKey(z => z.ApplicantId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Application>()
                 .HasOne<Grade>(z => z.Grade)
                 .WithMany(z => z.Applications)
-                .HasForeignKey(z => z.Grade_ID)
+                .HasForeignKey(z => z.GradeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Application>()
                 .HasOne<ApplicationStatus>(z => z.ApplicationStatus)
                 .WithMany(z => z.Applications)
-                .HasForeignKey(z => z.ApplicationStatus_ID)
+                .HasForeignKey(z => z.ApplicationStatusId)
                 .OnDelete(DeleteBehavior.NoAction);
 
         #endregion

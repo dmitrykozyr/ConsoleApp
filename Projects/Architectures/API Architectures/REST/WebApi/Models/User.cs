@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Models;
-
+//!
 // EF при работе с Code First требует определения ключа для создания первичного ключа в таблице в БД
 // По умолчанию EF в качестве первичных ключей рассматривает св-ва с именами Id или [Имя_класса]Id
 

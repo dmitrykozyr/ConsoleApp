@@ -8,7 +8,7 @@ namespace NTier.DataAccess.Functions.Specific;
 public class Application_Operations : IApplication_Operations
 {
     public async Task<Application> AddFullApplication(
-        Int64 gradeId, Int64 applicationStatusId, Int32 schoolYear, string firstName, 
+        long gradeId, long applicationStatusId, Int32 schoolYear, string firstName, 
         string surname, DateTime birthDate, string email, string contactNumber)
     {
         try
@@ -34,9 +34,9 @@ public class Application_Operations : IApplication_Operations
 
                         var application = new Application
                         {
-                            Applicant_ID = applicant.Applicant_ID,
-                            ApplicationStatus_ID = applicationStatusId,
-                            Grade_ID = gradeId,
+                            ApplicantId = applicant.Applicant_ID,
+                            ApplicationStatusId = applicationStatusId,
+                            GradeId = gradeId,
                             SchoolYear = schoolYear
 
                         };
@@ -66,7 +66,7 @@ public class Application_Operations : IApplication_Operations
         }
     }
 
-    public async Task<List<Application>> GetApplicationsByApplicantId(Int64 applicantId)
+    public async Task<List<Application>> GetApplicationsByApplicantId(long applicantId)
     {
         try
         {
@@ -74,7 +74,7 @@ public class Application_Operations : IApplication_Operations
             {
                 List<Application> Applications = await context.Applications.Include(a => a.Applicant)
                                                                            .OrderBy(a => a.SchoolYear)
-                                                                           .Where(a => a.Applicant_ID == applicantId)
+                                                                           .Where(a => a.ApplicantId == applicantId)
                                                                            .ToListAsync();
 
                 return Applications;

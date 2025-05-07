@@ -14,8 +14,8 @@ public class Application_Service : IApplication_Service
     private IApplication_Operations _application_Operations = new Application_Operations();
 
     public async Task<Generic_ResultSet<ApplicationApplicant_ResultSet>> AddApplicationAndApplicant(
-        Int64 grade_id,
-        Int64 application_status_id,
+        long grade_id,
+        long application_status_id,
         Int32 school_year,
         string name, 
         string surname,
@@ -39,7 +39,7 @@ public class Application_Service : IApplication_Service
 
             result.result_set.applicant_ResultSet = new Models.Applicant.Applicant_ResultSet
             {
-                Id = ApplicationAdded.Applicant_ID,
+                Id = ApplicationAdded.ApplicantId,
                 Name = ApplicationAdded.Applicant.Applicant_Name,
                 Surname = ApplicationAdded.Applicant.Applicant_Surname,
                 Birthday = ApplicationAdded.Applicant.Applicant_BirthDate,
@@ -50,12 +50,12 @@ public class Application_Service : IApplication_Service
 
             result.result_set.application_ResultSet = new Application_ResultSet
             {
-                id = ApplicationAdded.Application_ID,
-                applicant_id = ApplicationAdded.Applicant_ID,
-                grade_id = ApplicationAdded.Grade_ID,
-                status_id = ApplicationAdded.ApplicationStatus_ID,
+                id = ApplicationAdded.ApplicationId,
+                applicant_id = ApplicationAdded.ApplicantId,
+                grade_id = ApplicationAdded.GradeId,
+                status_id = ApplicationAdded.ApplicationStatusId,
                 school_year = ApplicationAdded.SchoolYear,
-                submission_date = ApplicationAdded.Application_CreationDate
+                submission_date = ApplicationAdded.ApplicationCreationDate
             };
 
             result.userMessage = "Application and applicant was added successfully";
@@ -77,7 +77,7 @@ public class Application_Service : IApplication_Service
         return result;
     }
 
-    public async Task<Generic_ResultSet<Application_ResultSet>> GetApplicationById(Int64 application_id)
+    public async Task<Generic_ResultSet<Application_ResultSet>> GetApplicationById(long application_id)
     {
         var result = new Generic_ResultSet<Application_ResultSet>();
 
@@ -87,12 +87,12 @@ public class Application_Service : IApplication_Service
 
             var appplicationReturned = new Application_ResultSet
             {
-                id = Application.Application_ID,
-                applicant_id = Application.Applicant_ID,
-                grade_id = Application.Grade_ID,
-                status_id = Application.ApplicationStatus_ID,
+                id = Application.ApplicationId,
+                applicant_id = Application.ApplicantId,
+                grade_id = Application.GradeId,
+                status_id = Application.ApplicationStatusId,
                 school_year = Application.SchoolYear,
-                submission_date = Application.Application_CreationDate
+                submission_date = Application.ApplicationCreationDate
             };
 
             result.userMessage = "Your application was located successfully";
@@ -115,11 +115,11 @@ public class Application_Service : IApplication_Service
     }
 
     public async Task<Generic_ResultSet<Application_ResultSet>> UpdateApplication(
-        Int64 application_id,
-        Int64 grade_id,
-        Int64 application_status_id,
+        long application_id,
+        long grade_id,
+        long application_status_id,
         Int32 school_year,
-        Int64 applicant_id)
+        long applicant_id)
     {
         var result = new Generic_ResultSet<Application_ResultSet>();
 
@@ -127,24 +127,24 @@ public class Application_Service : IApplication_Service
         {
             Application Application = new Application
             {
-                Application_ID = application_id,
-                Applicant_ID = applicant_id,
-                Grade_ID = grade_id,
-                ApplicationStatus_ID = application_status_id,
+                ApplicationId = application_id,
+                ApplicantId = applicant_id,
+                GradeId = grade_id,
+                ApplicationStatusId = application_status_id,
                 SchoolYear = school_year,
-                Application_ModifiedDate = DateTime.UtcNow
+                ApplicationModifiedDate = DateTime.UtcNow
             };
 
             Application = await _crud.Update<Application>(Application, application_id);
 
             Application_ResultSet applicationUpdated = new Application_ResultSet
             {
-                id = Application.Application_ID,
-                applicant_id = Application.Applicant_ID,
-                grade_id = Application.Grade_ID,
-                status_id = Application.ApplicationStatus_ID,
+                id = Application.ApplicationId,
+                applicant_id = Application.ApplicantId,
+                grade_id = Application.GradeId,
+                status_id = Application.ApplicationStatusId,
                 school_year = Application.SchoolYear,
-                submission_date = Application.Application_CreationDate
+                submission_date = Application.ApplicationCreationDate
             };
 
             result.userMessage = "Application was updated successfully";
@@ -166,7 +166,7 @@ public class Application_Service : IApplication_Service
         return result;
     }
 
-    public async Task<Generic_ResultSet<List<Application_ResultSet>>> GetApplicationsByApplicantId(Int64 applicant_id)
+    public async Task<Generic_ResultSet<List<Application_ResultSet>>> GetApplicationsByApplicantId(long applicant_id)
     {
         var result = new Generic_ResultSet<List<Application_ResultSet>>();
         
@@ -179,12 +179,12 @@ public class Application_Service : IApplication_Service
             Applications.ForEach(app => {
                 result.result_set.Add(new Application_ResultSet
                 {
-                    applicant_id = app.Applicant_ID,
-                    grade_id = app.Grade_ID,
-                    id = app.Application_ID,
+                    applicant_id = app.ApplicantId,
+                    grade_id = app.GradeId,
+                    id = app.ApplicationId,
                     school_year = app.SchoolYear,
-                    status_id = app.ApplicationStatus_ID,
-                    submission_date = app.Application_CreationDate
+                    status_id = app.ApplicationStatusId,
+                    submission_date = app.ApplicationCreationDate
                 });
             });
 

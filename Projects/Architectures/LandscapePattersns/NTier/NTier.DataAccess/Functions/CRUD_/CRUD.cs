@@ -62,7 +62,7 @@ public class CRUD : ICRUD
         }
     }
 
-    public async Task<T> Update<T>(T objectToUpdate, Int64 entityId)
+    public async Task<T> Update<T>(T objectToUpdate, long entityId)
         where T : class
     {
         try

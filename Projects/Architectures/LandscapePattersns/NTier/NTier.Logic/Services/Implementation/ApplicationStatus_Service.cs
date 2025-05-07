@@ -73,7 +73,7 @@ public class ApplicationStatus_Service : IApplicationStatus_Service
         return result;
     }
 
-    public async Task<Generic_ResultSet<ApplicationStatus_ResultSet>> UpdateApplicationStatus(Int64 status_id, string name)
+    public async Task<Generic_ResultSet<ApplicationStatus_ResultSet>> UpdateApplicationStatus(long status_id, string name)
     {
         var result = new Generic_ResultSet<ApplicationStatus_ResultSet>();
         try

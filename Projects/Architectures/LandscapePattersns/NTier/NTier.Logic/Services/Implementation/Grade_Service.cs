@@ -81,7 +81,7 @@ public class Grade_Service : IGrade_Service
         return result;
     }
 
-    public async Task<Generic_ResultSet<Grade_ResultSet>> UpdateGrade(Int64 id, string name, int grade_number, int capacity)
+    public async Task<Generic_ResultSet<Grade_ResultSet>> UpdateGrade(long id, string name, int grade_number, int capacity)
     {
         var result = new Generic_ResultSet<Grade_ResultSet>();
 

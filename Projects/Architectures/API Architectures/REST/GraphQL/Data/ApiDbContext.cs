@@ -5,9 +5,11 @@ namespace GraphQL.Data;
 
 public class ApiDbContext : DbContext
 {
-    public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
+    public ApiDbContext(DbContextOptions<ApiDbContext> options)
+        : base(options) { }
 
     public virtual DbSet<ItemData> Items { get; set; }
+
     public virtual DbSet<ItemList> Lists { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

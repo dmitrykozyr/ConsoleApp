@@ -15,7 +15,9 @@ public class Mutation
         };
 
         context.Lists.Add(list);
+
         await context.SaveChangesAsync();
+
         return new AddListPayload(list);
     }
 
@@ -31,7 +33,9 @@ public class Mutation
         };
 
         context.Items.Add(item);
+
         await context.SaveChangesAsync();
+
         return new AddItemPayload(item);
     }
 }

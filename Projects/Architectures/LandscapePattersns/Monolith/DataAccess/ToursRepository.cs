@@ -28,7 +28,12 @@ public class ToursRepository : IToursRepository
     {
         using (var connection = new SqliteConnection(_connectionString))
         {
-            var tours = connection.Query<Tour>("SELECT Id, Name, Description, Image FROM Tour WHERE Id = @Id", new { Id = id });
+            var tours = connection.Query<Tour>(
+                "SELECT Id, Name, Description, Image FROM Tour WHERE Id = @Id",
+                new
+                {
+                    Id = id
+                });
 
             return tours.FirstOrDefault();
         }

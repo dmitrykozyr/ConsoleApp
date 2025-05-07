@@ -63,7 +63,7 @@ public class Applicant_Service : IApplicant_Service
         return result;
     }
 
-    public async Task<Generic_ResultSet<Applicant_ResultSet>> GetApplicantById(Int64 applicant_id)
+    public async Task<Generic_ResultSet<Applicant_ResultSet>> GetApplicantById(long applicant_id)
     {
         var result = new Generic_ResultSet<Applicant_ResultSet>();
 
@@ -103,7 +103,7 @@ public class Applicant_Service : IApplicant_Service
     }
 
     public async Task<Generic_ResultSet<Applicant_ResultSet>> UpdateApplicant(
-        Int64 applicant_id,
+        long applicant_id,
         string name,
         string surname,
         DateTime birthday,

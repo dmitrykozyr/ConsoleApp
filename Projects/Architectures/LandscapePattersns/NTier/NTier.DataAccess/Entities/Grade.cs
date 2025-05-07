@@ -2,7 +2,7 @@
 
 public class Grade
 {
-    public Int64 Grade_ID { get; set; }
+    public long Grade_ID { get; set; }
 
     public string? Grade_Name { get; set; }
 

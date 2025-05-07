@@ -9,5 +9,5 @@ public interface IGrade_Service
 
     Task<Generic_ResultSet<List<Grade_ResultSet>>> GetAllGrades();
 
-    Task<Generic_ResultSet<Grade_ResultSet>> UpdateGrade(Int64 id, string name, int grade_number, int capacity);
+    Task<Generic_ResultSet<Grade_ResultSet>> UpdateGrade(long id, string name, int grade_number, int capacity);
 }

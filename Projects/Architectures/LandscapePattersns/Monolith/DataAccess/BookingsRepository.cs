@@ -22,10 +22,10 @@ public class BookingsRepository : IBookingsRepository
                 "INSERT INTO Booking (TourId, Name, Email, Transport) VALUES (@TourId, @Name, @Email, @Transport)",
                 new
                 {
-                    TourId = booking.TourId,
-                    Name = booking.Name,
-                    Email = booking.Email,
-                    Transport = booking.Transport
+                    booking.TourId,
+                    booking.Name,
+                    booking.Email,
+                    booking.Transport
                 });
         }
     }
