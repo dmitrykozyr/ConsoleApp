@@ -6,7 +6,8 @@ public class TokenMiddleware
     private readonly RequestDelegate _next;
 
     // Конструктор должен принимать тип RequestDelegate
-    // Через него можно получить ссылку на тот делегат запроса, который стоит следующим в конвейере обработки запроса
+    // Через него можно получить ссылку на тот делегат запроса,
+    // который стоит следующим в конвейере обработки запроса
     public TokenMiddleware(RequestDelegate next)
     {
         _next = next;
@@ -16,7 +17,8 @@ public class TokenMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         // Получаем из запроса параметр "token"
-        // Если он равен "12345678", то передаем запрос следующему компоненту, иначе возвращаем сообщение об ошибке
+        // Если он равен "12345678", то передаем запрос следующему компоненту,
+        // иначе возвращаем сообщение об ошибке
         var token = context.Request.Query["token"];
 
         if (token != "12345678")

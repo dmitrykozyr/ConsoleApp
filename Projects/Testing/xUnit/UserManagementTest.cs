@@ -21,8 +21,8 @@ public class UserManagementTest
         var savedUser = Assert.Single(userManagement.AllUsers);
 
         Assert.NotNull(savedUser);
-        Assert.Equal(savedUser.firstName, "Amazing");
-        Assert.Equal(savedUser.lastName, "User");
+        Assert.Equal("Amazing", savedUser.firstName);
+        Assert.Equal("User", savedUser.lastName);
         Assert.False(savedUser.VerifiedEmail);
     }
     
@@ -42,7 +42,7 @@ public class UserManagementTest
         var savedUser = Assert.Single(userManagement.AllUsers);
 
         Assert.NotNull(savedUser);
-        Assert.Equal(savedUser.Phone, "+123334445577");
+        Assert.Equal("+123334445577", savedUser.Phone);
     }
 
     // FakeItEasy

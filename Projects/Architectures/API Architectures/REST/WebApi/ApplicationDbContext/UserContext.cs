@@ -11,6 +11,7 @@ public class UserContext : DbContext
     public UserContext() : base("DbConnection") { }
 
     public DbSet<User> Users { get; set; }
+
     public DbSet<UserProfile> UserProfiles { get; set; }
 
     // При Code First модели сопоставляются с таблицами,

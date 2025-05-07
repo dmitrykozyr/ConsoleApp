@@ -1151,7 +1151,7 @@ namespace Mediator
     {
         protected IDispatcher _dispatcher;
 
-        public Planes(IDispatcher dispatcher = null)
+        public Planes(IDispatcher dispatcher = default)
         {
             _dispatcher = dispatcher;
         }

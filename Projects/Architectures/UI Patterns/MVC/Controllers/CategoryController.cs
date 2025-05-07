@@ -3,7 +3,7 @@ using MVC.Data;
 using MVC.Models;
 
 namespace MVC.Controllers;
-//!
+
 public class CategoryController : Controller
 {
     private readonly ApplicationDbContext _dbContext;
@@ -19,7 +19,7 @@ public class CategoryController : Controller
         return View(categories);
     }
 
-    // GET Открываем страницу создания категории
+    //! GET Открываем страницу создания категории
     public IActionResult Create()
     {
         return View();

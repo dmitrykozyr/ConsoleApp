@@ -1234,7 +1234,7 @@ class Program
         // Можно использовать using, вызывающий Dispose неявно
         static void Main_()
         {
-            B objB = null;
+            B objB = default;
 
             try
             {

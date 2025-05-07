@@ -1,4 +1,7 @@
-﻿namespace Education;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace Education;
 
 public class EF_
 {
@@ -95,23 +98,136 @@ public class EF_
 
     #region Безопасное хранение паролей в БД
 
-        // Хеширование паролей
+    // Хеширование паролей
 
-        // Добавление соли
-        /*
+    // Добавление соли
+    /*
+        Если просто захешировать пароль 123456,
+        то для некоторых алгоримов хеширования есть список хешей, которым соответстуют простые пароли
+
+        Поэтому к паролю добавляется соль и пароль хешируется
+        123456 + salt -> vrt$%VTBW$
+
+        Соль можно хранить в открытом виде в БД
+        Когда пользователь авторизуется, он вводит пароль,
+        нажимает ввод и к парою прибавляется соль, а затем хешируется
+        и полученный хеш сравнивается с тем, что находится в БД
+    */
+
+    #endregion
+
+    #region Атрибуты свойств модели
+    /*
+        EF при работе с Code First требует определения ключа для создания первичного ключа в таблице в БД
+        По умолчанию EF в качестве первичных ключей рассматривает св-ва с именами Id или [Имя_класса]Id
         
-            Если просто захешировать пароль 123456,
-            то для некоторых алгоримов хеширования есть список хешей, которым соответстуют простые пароли
+        [Key]                                                       первичный ключ
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]  установить ключ в качестве идентификатора
+        [Required]                                                  обязательное св-во, в БД будет помечено как NOT NULL
+        [Required(ErrorMessage = "Не указан электронный адрес")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Длина строки должна быть от 3 до 50 символов")]
+        [Range(1, 110, ErrorMessage = "Недопустимый возраст")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [MinLength(10)]
+        [MaxLength(20)]
+        [NotMapped]                                                 не добавлять столбец в БД
+        [Table("Mobiles")]                                          если имя модели и таблицы разные, можно указать, с какой таблицей сопоставить модель
+        [Column("ModelName")]                                       аналогично для свойств
+        [ForeignKey("CompId")]                                      установить внешний ключ для связи с другой сущностью
+        [Index]                                                     установить индекс для столбца
+        [ConcurrencyCheck]                                          решаем проблему параллелизма, когда с одной же записью могут работать одновременно несколько пользователей
+    */
+    #endregion
 
-            Поэтому к паролю добавляется соль и пароль хешируется
-            123456 + salt -> vrt$%VTBW$
+    #region Один к одному
 
-            Соль можно хранить в открытом виде в БД
-            Когда пользователь авторизуется, он вводит пароль,
-            нажимает ввод и к парою прибавляется соль, а затем хешируется
-            и полученный хеш сравнивается с тем, что находится в БД
-         
-        */
+    public class User
+        {
+            public int Id { get; set; }
+
+            public string? Name { get; set; }
+
+            public int Age { get; set; }
+
+            public decimal MoneyAmount { get; set; }
+
+            public UserProfile? UserProfile { get; set; }
+        }
+
+        public class UserProfile
+        {
+            [Key]
+            [ForeignKey("User")]
+            public int Id { get; set; }
+
+            public string? Login { get; set; }
+
+            public string? Password { get; set; }
+
+            public User? User { get; set; }
+        }
+
+    #endregion
+
+    #region Один ко многим
+
+        public class Player
+        {
+            public int Id { get; set; }
+
+            public string? Name { get; set; }
+
+            public int TeamId { get; set; }
+
+            public Team? Team { get; set; }
+        }
+
+        public class Team
+        {
+            public int Id { get; set; }
+
+            public string TeamName { get; set; }
+
+            public ICollection<Player> Players { get; set; }
+
+            public Team()
+            {
+                Players = new List<Player>();
+            }
+        }
+
+    #endregion
+
+    #region Многие ко многим
+
+        public class Team_
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+
+            public ICollection<Player_> Players { get; set; }
+
+            public Team_()
+            {
+                Players = new List<Player_>();
+            }
+        }
+
+        public class Player_
+        {
+            public int Id { get; set; }
+
+            public string TeamName { get; set; }
+
+            public ICollection<Team_> Teams { get; set; }
+
+            public Player_()
+            {
+                Teams = new List<Team_>();
+            }
+        }
 
     #endregion
 
