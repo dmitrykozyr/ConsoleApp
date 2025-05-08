@@ -58,7 +58,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{D6A9D2
 		README\Architectures.cs = README\Architectures.cs
 		README\Docker.cs = README\Docker.cs
 		README\GraphQL тело запросов в Postman.cs = README\GraphQL тело запросов в Postman.cs
-		README\JSON.cs = README\JSON.cs
 		README\Kafka.cs = README\Kafka.cs
 		README\MongoDB.cs = README\MongoDB.cs
 		README\Тестирование.cs = README\Тестирование.cs
@@ -186,11 +185,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Projects\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FeatureFlag", "FeatureFlag", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureFlag", "Projects\FeatureFlag\FeatureFlag\FeatureFlag.csproj", "{B717D223-C8BE-45AA-810E-A4F503932281}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatureFlag", "Projects\FeatureFlag\FeatureFlag\FeatureFlag.csproj", "{B717D223-C8BE-45AA-810E-A4F503932281}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Middleware", "Middleware", "{A3E6A5A6-8143-406B-BF92-9AE4074231C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middleware_", "Projects\Middleware\Middleware_\Middleware_.csproj", "{53C2A05F-ED8F-408E-8BDE-0909ED2959A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Middleware_", "Projects\Middleware\Middleware_\Middleware_.csproj", "{53C2A05F-ED8F-408E-8BDE-0909ED2959A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
