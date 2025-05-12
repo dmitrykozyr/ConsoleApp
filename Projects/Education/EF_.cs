@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.SqlClient;
+using System.Transactions;
 
 namespace Education;
 
@@ -140,6 +143,7 @@ public class EF_
     */
     #endregion
 
+
     #region Один к одному
 
     public class User
@@ -231,4 +235,201 @@ public class EF_
 
     #endregion
 
+
+    #region Паттерн Saga
+
+        /*
+            Используется для управления долгоживущими транзакциями и координации распределенных процессов
+            Разбивает транзакции на серию шагов, каждый из которых может быть отменен при необходимости
+
+            Пример:
+
+            Есть процесс заказа товара, который включает шаги:
+            - резервирование товара
+            - обработка платежа
+            - отправка уведомления о заказе
+
+            Каждый шаг может завершиться успехом или неудачей
+            Если что-то пойдет не так, нужно выполнить компенсационные действия
+
+            Каждый шаг обрабатывается последовательно
+            В случае ошибки выполняются компенсационные действия   
+            В реальных приложениях можно использовать более сложные механизмы управления состоянием и обработки событий
+        */
+
+        public interface IProductService
+        {
+            Task<bool> ReserveProduct(int productId);
+
+            Task<bool> ReleaseProduct(int productId);
+        }
+
+        public interface IPaymentService
+        {
+            Task<bool> ProcessPayment(decimal amount);
+        }
+
+        public interface INotificationService
+        {
+            Task SendOrderConfirmation(Order order);
+        }
+
+        public class Order
+        {
+            public int ProductId { get; set; }
+
+            public decimal Amount { get; set; }
+        }
+
+        public class OrderSaga
+        {
+            private readonly IProductService _productService;
+            private readonly IPaymentService _paymentService;
+            private readonly INotificationService _notificationService;
+
+            public OrderSaga(
+                IProductService productService,
+                IPaymentService paymentService,
+                INotificationService notificationService)
+            {
+                _productService = productService;
+                _paymentService = paymentService;
+                _notificationService = notificationService;
+            }
+
+            public async Task PlaceOrder(Order order)
+            {
+                try
+                {
+                    // Резервируем товар
+                    var productReserved = await _productService.ReserveProduct(order.ProductId);
+                    if (!productReserved)
+                    {
+                        throw new Exception("Не удалось зарезервировать товар");
+                    }
+
+                    // Обрабатываем платеж
+                    var paymentProcessed = await _paymentService.ProcessPayment(order.Amount);
+                    if (!paymentProcessed)
+                    {
+                        // Если не удалось обработать платеж, откатываем резервирование товара
+                        await _productService.ReleaseProduct(order.ProductId);
+                        throw new Exception("Не удалось обработать платеж");
+                    }
+
+                    // Отправляем уведомление
+                    await _notificationService.SendOrderConfirmation(order);
+                }
+                catch (Exception ex)
+                {
+                    // Логируем ошибку
+                    Console.WriteLine($"Ошибка в процессе заказа: {ex.Message}");
+                }
+            }
+        }
+
+        public class OrderController : ControllerBase
+        {
+            private readonly OrderSaga _orderSaga;
+
+            public OrderController(OrderSaga orderSaga)
+            {
+                _orderSaga = orderSaga;
+            }
+
+            [HttpPost]
+            public async Task<IActionResult> CreateOrder([FromBody] Order order)
+            {
+                await _orderSaga.PlaceOrder(order);
+                return Ok();
+            }
+        }
+
+    #endregion
+
+    #region Распределенные транзакции
+
+        /*    
+            Осуществляется с использованием технологий:
+            - Microsoft Distributed Transaction Coordinator (MSDTC)
+            - ADO.NET
+
+            Эти технологии позволяют управлять транзакциями, которые охватывают несколько БД
+
+            Пример ADO.NET:
+            - используем TransactionScope для создания распределенной транзакции
+            - запустить на компьютере MSDTC
+            - нужны 2 БД SQL Server
+
+            -- В DatabaseA
+            CREATE TABLE Users
+            (
+                Id INT
+                    PRIMARY KEY IDENTITY,
+                Name NVARCHAR(100)
+            );
+
+            -- В DatabaseB
+            CREATE TABLE Logs
+            (
+                Id INT
+                    PRIMARY KEY IDENTITY,
+                UserId INT,
+                Action NVARCHAR(100)
+            );
+        */
+
+        class Program
+        {
+            static void Main()
+            {
+                string connectionStringA = "Data Source=server;Initial Catalog=DatabaseA;Integrated Security=True;";
+                string connectionStringB = "Data Source=server;Initial Catalog=DatabaseB;Integrated Security=True;";
+
+                // Создаем область транзакции - все операции внутри будут частью одной транзакции
+                using (var scope = new TransactionScope())
+                {
+                    try
+                    {
+                        // Вставка в первую БД
+                        using (var connectionA = new SqlConnection(connectionStringA))
+                        {
+                            connectionA.Open();
+
+                            using (var commandA = new SqlCommand("INSERT INTO Users (Name) VALUES (@Name);", connectionA))
+                            {
+                                commandA.Parameters.AddWithValue("@Name", "User1");
+                                commandA.ExecuteNonQuery();
+                            }
+                        }
+
+                        // Вставка во вторую БД
+                        using (var connectionB = new SqlConnection(connectionStringB))
+                        {
+                            connectionB.Open();
+
+                            using (var commandB = new SqlCommand("INSERT INTO Logs (UserId, Action) VALUES (@UserId, @Action);", connectionB))
+                            {
+                                // Предполагается, что пользователь с ID 1 был создан
+                                commandB.Parameters.AddWithValue("@UserId", 1);
+                                commandB.Parameters.AddWithValue("@Action", "Created User1");
+                                commandB.ExecuteNonQuery();
+                            }
+                        }
+
+                    // Если все операции прошли успешно, вызывается scope.Complete(), чтобы зафиксировать транзакцию
+                    // Если возникает ошибка, транзакция будет отменена при выходе из блока using
+                    scope.Complete();
+                        Console.WriteLine("Transaction completed successfully.");
+                    }
+                    catch (Exception ex)
+                    {
+                        // Обработка ошибок
+                        Console.WriteLine($"Transaction failed: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+    #endregion
 }

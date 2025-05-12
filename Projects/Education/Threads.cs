@@ -352,6 +352,75 @@ public class Threads
         Console.WriteLine(count_2);
     }
 
+    private static int count = 0;
+    private static readonly object lockObject = new object();
+    static void Monitor_()
+    {
+        /*
+            Создадим класс Counter, который будет инкрементировать счетчик из нескольких потоков
+            Используем Monitor для синхронизации доступа к счетчику
+        */
+
+        static int GetCount()
+        {
+            // Захватываем блокировку на объекте lockObject
+            Monitor.Enter(lockObject);
+            try
+            {
+                return count;
+            }
+            finally
+            {
+                // Освобождаем блокировку
+                Monitor.Exit(lockObject);
+            }
+        }
+
+        static void Increment()
+        {
+            // Захватываем блокировку на объекте lockObject
+            Monitor.Enter(lockObject);
+            try
+            {
+                count++;
+                Console.WriteLine($"Current Count: {count}");
+            }
+            finally
+            {
+                // Освобождаем блокировку
+                Monitor.Exit(lockObject);
+            }
+        }
+
+
+        static void Main_()
+        {
+            var threads = new Thread[10];
+        
+            for (int i = 0; i < threads.Length; i++)
+            {
+                threads[i] = new Thread(() =>
+                {
+                    for (int j = 0; j < 1000; j++)
+                    {
+                        Increment();
+                    }
+                });
+
+                threads[i].Start();
+            }
+
+            // Ожидаем завершения всех потоков
+            foreach (var thread in threads)
+            {
+                thread.Join();
+            }
+
+            Console.WriteLine($"Final Count: { GetCount() }");
+        }
+
+    }
+
     static void Lock_()
     {
         // Внутри lock может одновременно работать один поток
@@ -424,47 +493,87 @@ public class Threads
         }
     }
 
+    private static Semaphore semaphore = new Semaphore(2, 2);
+    private static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(2, 2);
     static void Semaphore_()
     {
-        // Позволяет ограничить количество потоков, имеющих доступ к ресурсу путем создания счетчика, который:
-        // - уменьшается, когда поток получает доступ к ресурсу
-        // - увеличивается, когда поток освобождает ресурс
+        /*            
+            Позволяет ограничить количество потоков, имеющих доступ к ресурсу путем создания счетчика, который:
+            - уменьшается, когда поток получает доступ к ресурсу
+            - увеличивается, когда поток освобождает ресурс
 
-        // Если счетчик равен нулю - другие потоки должны ждать, пока ресурс освободится
-        // Может быть полезным для ограничения количества запросов к БД
-        // SemaphoreSlim меньше нагружает процессор и работает в рамках одного процесса
+            Если счетчик равен нулю - другие потоки ждут освобождения ресурса
+            Позволяет ограничить число запросов к БД
 
-        Semaphore semaphore;
+            1й аргумент - начальное количество слотов
+            2й аргумент - максимальное количество слотов
+            3й аргумент - имя семафора
 
-        void F1(object number)
+            Semaphore:
+            - использует системные ресурсы и может работать с процессами, а не только с потоками
+            - более тяжелый и медленный, т.к. взаимодействует с ядром ОС
+            - может использоваться для синхронизации между процессами
+            - поддерживает методы для ожидания и освобождения семафора с возможностью задания таймаута
+
+            SemaphoreSlim:
+            - легковесный и оптимизированный для работы с потоками в пределах одного процесса
+            - быстрее, т.к. использует блокировки на уровне пользователя
+            - предназначен только для синхронизации потоков внутри одного процесса
+            - предоставляет более простые методы, такие как Wait(), Release(), поддерживает асинхронные операции через WaitAsync()
+        */
+
+
+        static void SemaphoreExample(object id)
         {
-            // Ждем получения семафора
+            // Ожидание семафора
             semaphore.WaitOne();
 
-            Console.WriteLine("Начало " + Thread.CurrentThread.ManagedThreadId);
-
+            // Имитация работы с ресурсом
             Thread.Sleep(2000);
 
-            Console.WriteLine("Конец " + Thread.CurrentThread.ManagedThreadId);
-
-            // Освобождаем семафор
+            // Освобождение семафора
             semaphore.Release();
         }
 
-        // 1й аргумент - начальное количество слотов
-        // 2й аргумент - максимальное количество слотов
-        // 3й аргумент - имя семафора
-        semaphore = new Semaphore(2, 4, "Семафор");
-
-        // Убираем 2 из предыдущей строки, теперь семафор могут использовать максимальное число потоков - 4
-        semaphore.Release(2);
-        
-        for (int i = 0; i < 5; i++)
+        static void MainSemaphore()
         {
-            new Thread(F1).Start(i);
+            for (int i = 0; i < 5; i++)
+            {
+                Thread thread = new Thread(SemaphoreExample);
+                thread.Start(i);
+            }
+        }
+
+
+
+        static async Task SemaphoreSlimExample(int id)
+        {
+            // Ожидание семафора асинхронно
+            await semaphoreSlim.WaitAsync();
+
+            // Имитация работы с ресурсом
+            await Task.Delay(2000);
+
+            // Освобождение семафора
+            semaphoreSlim.Release();
+        }
+
+        static async Task MainSemaphoreSlim()
+        {
+            Task[] tasks = new Task[5];
+
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                // Локальная переменная для захвата переменной цикла
+                int taskId = i;
+
+                tasks[i] = Task.Run(() => SemaphoreSlimExample(taskId));
+            }
+
+            await Task.WhenAll(tasks);
         }
     }
-    
+
     static void Mutex_()
     {
         // Позволяет блокировать доступ к ресурсу не только в пределах одного процесса, но и между процессами
