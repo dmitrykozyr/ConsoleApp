@@ -51,7 +51,7 @@ public class AsyncAwait
 
     #endregion
 
-    #region IAsyncEnumerable, yield return
+    #region IAsyncEnumerable
 
     /*
         Для возвращения нескольких значений применяются итераторы, но они:
