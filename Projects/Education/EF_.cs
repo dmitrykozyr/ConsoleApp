@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
@@ -381,7 +383,7 @@ public class EF_
 
         class Program
         {
-            static void Main()
+            static void Main_()
             {
                 string connectionStringA = "Data Source=server;Initial Catalog=DatabaseA;Integrated Security=True;";
                 string connectionStringB = "Data Source=server;Initial Catalog=DatabaseB;Integrated Security=True;";
@@ -426,6 +428,67 @@ public class EF_
                     {
                         // Обработка ошибок
                         Console.WriteLine($"Transaction failed: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+    #endregion
+
+    #region InMemoryDb
+
+        /*
+    
+            Используется в Entity Framework Core, когда нужно выполнять операции CRUD без необходимости настраивать полноценную БД
+
+            Пакеты:
+            - Microsoft.EntityFrameworkCore
+            - Microsoft.EntityFrameworkCore.InMemory
+     
+        */
+
+        public class Product
+        {
+            public int Id { get; set; }
+
+            public string Name { get; set; }
+
+            public decimal Price { get; set; }
+        }
+
+        public class AppDbContext : DbContext
+        {
+            public DbSet<Product> Products { get; set; }
+
+            public AppDbContext(DbContextOptions<AppDbContext> options)
+                : base(options) { }
+        }
+
+        class A
+        {
+            static void Main_()
+            {
+                var serviceProvider = new ServiceCollection()
+                    //.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("TestDatabase"))
+                    .BuildServiceProvider();
+
+                using (var context = serviceProvider.GetService<AppDbContext>())
+                {
+                    // Сохранение данных
+                    context.Products.Add(new Product { Name = "Product1", Price = 10.0m });
+                    context.Products.Add(new Product { Name = "Product2", Price = 20.0m });
+
+                    context.SaveChanges();
+                }
+
+                using (var context = serviceProvider.GetService<AppDbContext>())
+                {
+                    // Получение данных
+                    var products = context.Products.ToList();
+
+                    foreach (var product in products)
+                    {
+                        Console.WriteLine($"{product.Id}, {product.Name}, {product.Price}");
                     }
                 }
             }
