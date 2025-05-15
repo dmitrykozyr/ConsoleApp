@@ -10,28 +10,7 @@
     
         Quartz
 
-        ConfigureAwait
-        https://habr.com/ru/articles/482354/
-
-        Async/await
-        https://habr.com/ru/articles/470830/
-
-        Saga Паттерн используется для управления распределенными транзакциями
-
-        Monitor
-
         JSONb, blob
-
-        IEnumerable, IEnumerator отложенное выполнение
-    
-        yield return, yield break
-    
-        примитивы синхронизации(ReadWriteLock, отличия slim версий)
-    
-        httpclientfactory
-
-        inMemoryDb
-
 
         DTO должны быть immutable
         public Guid ImageLinkId { get; init; }
