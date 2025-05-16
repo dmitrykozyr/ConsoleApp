@@ -692,80 +692,102 @@ class Program
         }
     }
 
-    class IEnumerable_IQueryable_
+    class IEnumerable_
     {
         /*
-            IEnumerable
-            
-                Можно перебирать поочередно
+            Определяет метод GetEnumerator(), позволяющий перебрать коллекцию поочередно
+            Является базовым интерфейсом всех коллекций, которые могут быть перечислены в C#
+            Если класс реализует IEnumerable - значит его экземпляры могут быть использованы в конструкции foreach
+            Преобразуется в SQL без WHERE - отбирается вся коллекция, а потом фильтруется на клиенте:
 
-                Вытаскивает данные из коллекции в память и затем выполняет запрос на них
-                Может привести к проблемам производительности при работе с большими коллекциями
-
-                Преобразуется в SQL без WHERE - отбирается вся коллекция, а потом фильтруется на клиенте:
-
-                    IEnumerable<Phone> phoneIEnum = db.Phones;
-                    var phones = phoneIEnum.Where(p => p.Id > id).ToList();
-                    SELECT Id, Name FROM dbo.Phones
+                IEnumerable<Phone> phoneIEnum = db.Phones;
+                var phones = phoneIEnum.Where(p => p.Id > id).ToList();
+                SELECT Id, Name FROM dbo.Phones
         */
 
-        public void F1()
+        public static IEnumerable<int> GetNumbers()
+        {
+            for (int i = 0; i < 5; i++)
             {
-                var numbers = new List<int> { 1, 2, 3, 4, 5 };
-
-                IEnumerable<int> evenNumbers = numbers.Where(n => n % 2 == 0);
-
-                foreach (int number in evenNumbers)
-                {
-                    Console.WriteLine(number);
-                }
+                // Используем yield для отложенного выполнения
+                yield return i;
             }
+        }
 
+        public static void Main_()
+        {
+            IEnumerable<int> numbers = GetNumbers();
+
+            foreach (var number in numbers)
+            {
+                Console.WriteLine(number);
+            }
+        }
+    }
+
+    class IQueryable_
+    {        
         /*
-            IQueryable
+            Работает с коллекциями, которые хранятся в БД
+            Строит запросы, которые будут выполнены на стороне БД и вернут только нужные данные
+            Улучшает производительность при работе с большими коллекциями
+            Преобразуется в SQL с WHERE - сразу отфильтровывает на сервере:
 
-                Можно запросить у БД и получить только нужные данные
-
-                Работает с коллекциями, которые хранятся в БД
-                Cтроит запросы, которые будут выполнены на стороне БД и вернут только нужные данные
-                Улучшает производительность при работе с большими коллекциями
-
-                Преобразуется в SQL с WHERE - сразу отфильтровывает на сервере:
-
-                    IQueryable<Phone> phoneIQuer = db.Phones;
-                    var phones = phoneIQuer.Where(p => p.Id > id).ToList();
-                    SELECT Id, Name FROM dbo.Phones WHERE Id > 3
+                IQueryable<Phone> phoneIQuer = db.Phones;
+                var phones = phoneIQuer.Where(p => p.Id > id).ToList();
+                SELECT Id, Name FROM dbo.Phones WHERE Id > 3
         */
 
-            class MyDbContext : IDisposable
-            {
-                public IQueryable<Product>? Products { get; set; }
+        class Product
+        {
+            public int Price { get; set; }
 
-                public void Dispose()
+            public string? Name { get; set; }
+        }
+
+        class MyDbContext : IDisposable
+        {
+            public IQueryable<Product>? Products { get; set; }
+
+            public void Dispose()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void F2()
+        {
+            using (var context = new MyDbContext())
+            {
+                IQueryable<Product> products = context.Products.Where(p => p.Price > 10);
+
+                foreach (Product product in products)
                 {
-                    throw new NotImplementedException();
+                    Console.WriteLine(product.Name);
                 }
             }
+        }
+    }
 
-            class Product
+    class IEnumerator_
+    {
+        /*         
+            Позволяет перебирать элементы коллекции
+            Предоставляет методы для перемещения по коллекции и доступ к текущему элементу
+            Обычно не используется напрямую, а работаем с ним через foreach.
+        */
+
+        public static void Main_()
+        {
+            var numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+            IEnumerator enumerator = numbers.GetEnumerator();
+
+            while (enumerator.MoveNext())
             {
-                public int Price { get; set; }
-
-                public string? Name { get; set; }
+                Console.WriteLine(enumerator.Current);
             }
-
-            public void F2()
-            {
-                using (var context = new MyDbContext())
-                {
-                    IQueryable<Product> products = context.Products.Where(p => p.Price > 10);
-
-                    foreach (Product product in products)
-                    {
-                        Console.WriteLine(product.Name);
-                    }
-                }
-            }
+        }
     }
 
     class SOLID_
@@ -1657,7 +1679,6 @@ class Program
     class LazyLoading_
     {
         /*
-
             LL откладывает инициализацию объекта до момента, когда он необходим
             Используется для оптимизации производительности при работе с большими объемами данных, которые могут быть дорогими в создании
 
@@ -1673,7 +1694,6 @@ class Program
             - При первом обращении к св-ву Data вызывается _data.Value, что приводит к выполнению функции загрузки данных
               Если данные уже были загружены, св-во возвращает уже загруженные данные без повторной загрузки
             - В методе Main создаем экземпляр DataLoader, но данные еще не загружаются до первого обращения к свойству Data
-
         */
 
         public class DataLoader
