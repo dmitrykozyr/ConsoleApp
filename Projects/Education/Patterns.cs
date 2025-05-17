@@ -1,6 +1,9 @@
 ﻿// ПОРОЖДАЮЩИЕ
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace FactoryMethod
 {
@@ -1733,4 +1736,71 @@ namespace UnitOfWork
             }
         }
     }    
+}
+
+namespace HttpClientFactory
+{
+    /*
+        Упрощает создание и управление экземплярами HttpClient
+
+        Помогает избежать проблем, связанных с использованием HttpClient
+        - истощение сокетов
+        - неправильное управление временем жизни экземпляров
+
+        Преимущества HttpClientFactory:
+        - HttpClient - дорогостоящий объект для создания, его следует использовать повторно
+          HttpClientFactory управляет временем жизни экземпляров, что позволяет избежать проблем с исчерпанием сокетов
+        - можно централизованно настраивать параметры HttpClient:
+            - базовый адрес
+            - заголовки
+            - обработчики
+        - можно добавлять общие обработчики (например, для аутентификации или логирования) для всех запросов
+        - можно создавать несколько настроек HttpClient для различных сценариев использования
+
+        Как использовать HttpClientFactory:
+        - установка пакета Microsoft.Extensions.Http
+        - настройка Startup.cs
+        - использование IHttpClientFactory для получения экземпляров HttpClient в классах
+
+        Пример:
+        - сервис MyService использует IHttpClientFactory для создания экземпляра HttpClient,
+          настроенного для работы с API GitHub
+        - добавим заголовок User-Agent, чтобы соответствовать требованиям GitHub API
+    */
+
+    class Program
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            // Регистрация HttpClientFactory
+            services.AddHttpClient();
+
+            // Регистрация именованного клиента
+            services.AddHttpClient("GitHub", client =>
+            {
+                client.BaseAddress = new Uri("https://api.github.com/");
+                client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("MyApp", "1.0"));
+            });
+        }
+
+        public class MyService
+        {
+            private readonly IHttpClientFactory _httpClientFactory;
+
+            public MyService(IHttpClientFactory httpClientFactory)
+            {
+                _httpClientFactory = httpClientFactory;
+            }
+
+            public async Task<string> GetGitHubDataAsync()
+            {
+                var client = _httpClientFactory.CreateClient("GitHub");
+                var response = await client.GetAsync("repos/dotnet/aspnetcore");
+
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+    }
 }
