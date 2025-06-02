@@ -3,35 +3,39 @@
 public class Threads
 {
     #region Конкурентные коллекции
-    /*
 
-        Могут быть безопасно использованы из нескольких потоков одновременно:
+        /*
 
-        - ConcurrentBag<T> - неупорядоченная коллекция
-        - ConcurrentDictionary<TKey, TValue>
-        - ConcurrentQueue<T>
-        - ConcurrentStack<T>
+            Могут быть безопасно использованы из нескольких потоков одновременно:
 
-    */
+            - ConcurrentBag<T> - неупорядоченная коллекция
+            - ConcurrentDictionary<TKey, TValue>
+            - ConcurrentQueue<T>
+            - ConcurrentStack<T>
+
+        */
+
     #endregion
 
     #region Неизменяемые коллекции
-    /*
 
-        Используются:
-        - в многопоточных приложениях, где несколько потоков изменяют одну коллекцию одновременно
-        - для сохранения состояния коллекции на определенный момент времени
-        - для реализации отмены операции
-        - для сохранения состояния приложения
+        /*
 
-        ImmutableList<T>
-        ImmutableArray<T>
-        ImmutableDictionary<TKey, TValue>
-        ImmutableHashSet<T>
-        ImmutableQueue<T>
-        ImmutableStack<T>
+            Используются:
+            - в многопоточных приложениях, где несколько потоков изменяют одну коллекцию одновременно
+            - для сохранения состояния коллекции на определенный момент времени
+            - для реализации отмены операции
+            - для сохранения состояния приложения
 
-    */
+            ImmutableList<T>
+            ImmutableArray<T>
+            ImmutableDictionary<TKey, TValue>
+            ImmutableHashSet<T>
+            ImmutableQueue<T>
+            ImmutableStack<T>
+
+        */
+
     #endregion
 
     class Counter
