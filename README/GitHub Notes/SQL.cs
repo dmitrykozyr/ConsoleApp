@@ -16,12 +16,12 @@
 
 	#region CREATE
 
-		CREATE DATABASE DimaChampion
+		CREATE DATABASE EduDb
 
-		CREATE TABLE IF NOT EXISTS schema_name.Table1
+        CREATE TABLE IF NOT EXISTS schema_name.Table1
 		(
 			id			bigint generated always as identity
-						primary key
+						primary key,
 			name		varchar(50),
 			condition	integer			not null,
 			passport	varchar(10),
@@ -582,103 +582,187 @@
 
     #region Оконная функция
 
-		/*
-			// Внутри функций нельзя выполнять транзакции, только в хранимых процедурах
-			// Функции должны быть детерминированными и не могут изменять состояние БД
+    /*
+		// Внутри функций нельзя выполнять транзакции, только в хранимых процедурах
+		// Функции должны быть детерминированными и не могут изменять состояние БД
 
-			// Объявление ф-ии с указанием типа возвращаемого значения
-			create function fnFunc1 (@var1 int)
-			   returns int
-			as
-				begin
-				declare @var2 int;
-			set @var2 = @var1 * 2;
-			return @var2;
+		// Объявление ф-ии с указанием типа возвращаемого значения
+		create function fnFunc1 (@var1 int)
+		   returns int
+		as
+			begin
+			declare @var2 int;
+		set @var2 = @var1 * 2;
+		return @var2;
 
-			// Вызов ф-ии
-			print dbo.fnFunc1 (2)
+		// Вызов ф-ии
+		print dbo.fnFunc1 (2)
 
 
-			Позволяют выполнять вычисления по набору строк, связанному с текущей строкой
+		Позволяют выполнять вычисления по набору строк, связанному с текущей строкой
 
-			Полезны для таких операций:
-			- как вычисление скользящих средних, 
-			- ранжирование и агрегация данных без группировки
+		Полезны для таких операций:
+		- как вычисление скользящих средних, 
+		- ранжирование и агрегация данных без группировки
 
-			Пример 1:
+		Пример 1:
 
-				Пример использования оконной функции ROW_NUMBER() для присвоения уникального номера каждой строке в рамках определенной группы
+			Пример использования оконной функции ROW_NUMBER() для присвоения уникального номера каждой строке в рамках определенной группы
 
-				Есть таблица employees с данными о сотрудниках:
+			Есть таблица employees с данными о сотрудниках:
 
-					CREATE TABLE employees (
-						id INT,
-						name VARCHAR(100),
-						department VARCHAR(100),
-						salary DECIMAL(10, 2)
-					);
+				CREATE TABLE employees (
+					id INT,
+					name VARCHAR(100),
+					department VARCHAR(100),
+					salary DECIMAL(10, 2)
+				);
 
-				Мы хотим получить список сотрудников с их уникальными номерами в пределах каждого отдела, отсортированным по зарплате
+			Мы хотим получить список сотрудников с их уникальными номерами в пределах каждого отдела, отсортированным по зарплате
 
-					SELECT 
-						id,
-						name,
-						department,
-						salary,
-						ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rank
-					FROM 
-						employees;
+				SELECT 
+					id,
+					name,
+					department,
+					salary,
+					ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rank
+				FROM 
+					employees;
 
-				- PARTITION BY department
-				  делит набор строк на группы по отделам
+			- PARTITION BY department
+			  делит набор строк на группы по отделам
 
-				- ORDER BY salary DESC
-				  сортирует сотрудников внутри каждой группы по зарплате в порядке убывания
+			- ORDER BY salary DESC
+			  сортирует сотрудников внутри каждой группы по зарплате в порядке убывания
 
-				- ROW_NUMBER()
-				  присваивает уникальный номер каждой строке в пределах своей группы.
+			- ROW_NUMBER()
+			  присваивает уникальный номер каждой строке в пределах своей группы.
 
-				Результат будет содержать столбец rank, который показывает позицию каждого сотрудника в своем отделе по зарплате
+			Результат будет содержать столбец rank, который показывает позицию каждого сотрудника в своем отделе по зарплате
 
-			Пример 2:
+		Пример 2:
 
-				Есть таблица sales, которая содержит информацию о продажах:
+			Есть таблица sales, которая содержит информацию о продажах:
 
-					CREATE TABLE sales (
-						id INT,
-						salesperson VARCHAR(100),
-						sale_amount DECIMAL(10, 2),
-						sale_date DATE
-					);
+				CREATE TABLE sales (
+					id INT,
+					salesperson VARCHAR(100),
+					sale_amount DECIMAL(10, 2),
+					sale_date DATE
+				);
 
-				Мы хотим рассчитать кумулятивную сумму продаж для каждого продавца по датам
-				Используем оконную функцию SUM() с предложением OVER():
+			Мы хотим рассчитать кумулятивную сумму продаж для каждого продавца по датам
+			Используем оконную функцию SUM() с предложением OVER():
 
-					SELECT 
-						id,
-						salesperson,
-						sale_amount,
-						sale_date,
-						SUM(sale_amount) OVER (PARTITION BY salesperson ORDER BY sale_date) AS cumulative_sales
-					FROM 
-						sales
-					ORDER BY 
-						salesperson, sale_date;
+				SELECT 
+					id,
+					salesperson,
+					sale_amount,
+					sale_date,
+					SUM(sale_amount) OVER (PARTITION BY salesperson ORDER BY sale_date) AS cumulative_sales
+				FROM 
+					sales
+				ORDER BY 
+					salesperson, sale_date;
 
-				- SUM(sale_amount)
-				  вычисляет сумму продаж
+			- SUM(sale_amount)
+			  вычисляет сумму продаж
 
-				- OVER (PARTITION BY salesperson ORDER BY sale_date)
-				  делит набор строк на группы по продавцам и сортирует их по дате продажи
-				  Кумулятивная сумма будет рассчитываться для каждой группы (продавца) по порядку дат
+			- OVER (PARTITION BY salesperson ORDER BY sale_date)
+			  делит набор строк на группы по продавцам и сортирует их по дате продажи
+			  Кумулятивная сумма будет рассчитываться для каждой группы (продавца) по порядку дат
 
-				- ORDER BY salesperson, sale_date
-				  сортирует итоговый результат по продавцу и дате
+			- ORDER BY salesperson, sale_date
+			  сортирует итоговый результат по продавцу и дате
 
-				Результат будет содержать столбец cumulative_sales,
-				который показывает кумулятивную сумму продаж для каждого продавца по мере продвижения по датам
+			Результат будет содержать столбец cumulative_sales,
+			который показывает кумулятивную сумму продаж для каждого продавца по мере продвижения по датам
 
-		*/
+	*/
+
+    #endregion
+
+
+    #region ЗАДАЧИ
+
+		#region 1
+
+			// Подготовка таблиц
+
+				CREATE TABLE Employees(
+					Id INT PRIMARY KEY,
+					Name VARCHAR(100),
+					DepartmentId INT,
+					Salary INT,
+					FOREIGN KEY(DepartmentId) REFERENCES Departments(Id)
+				);
+
+				CREATE TABLE Departments(
+					Id INT PRIMARY KEY,
+					DepartmentName VARCHAR(100)
+				);
+
+				INSERT INTO Departments(Id, DepartmentName) VALUES
+					(1, 'HR'),
+					(2, 'IT'),
+					(3, 'Finance');
+
+				INSERT INTO Employees(Id, Name, DepartmentId, salary) VALUES
+					(1, 'Alice',    1, 50),
+					(2, 'Bob',      2, 40),
+					(3, 'Charlie',  2, 20),
+					(4, 'David',    3, 10),
+					(5, 'Eve',      1, 20);
+
+				select* from departments order by id;
+
+				select* from employees order by id;
+
+			// Найти сотрудников с зарплатой выше средней
+
+				select name, salary
+				from employees
+				where salary > (select avg(salary) from employees);
+
+			// Найти количество сотрудников в каждом отделе
+
+				select d.departmentname, count(e.name)
+				from departments d
+				join employees e
+				on d.id = e.departmentid
+				group by d.departmentname;
+
+			// Найти второго по зарплате сотрудника
+
+				select max(salary)
+				from employees
+				where salary<
+				(
+					select max(salary) from employees
+				);
+
+			// Получить список уникальных зарплат
+
+				select distinct salary
+				from employees
+				order by salary;
+
+			// Найти сотрудников с одинаковой зарплатой
+
+				select name, salary
+				from employees
+				where salary in
+				(
+					select salary from employees
+					group by salary
+					having count(*) > 1
+				);
+
+		#endregion
+
+		#region 2
+
+		#endregion
 
     #endregion
 
