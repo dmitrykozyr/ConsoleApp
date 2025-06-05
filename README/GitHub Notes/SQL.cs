@@ -685,38 +685,62 @@
 
     #region ЗАДАЧИ
 
-		#region 1
+		#region Подготовка таблиц
 
-			// Подготовка таблиц
+			// drop table if exists employeedepartments;
+			// drop table if exists employees;
+			// drop table if exists departments;
 
-				CREATE TABLE Employees(
-					Id INT PRIMARY KEY,
-					Name VARCHAR(100),
-					DepartmentId INT,
-					Salary INT,
-					FOREIGN KEY(DepartmentId) REFERENCES Departments(Id)
-				);
+			CREATE TABLE IF NOT EXISTS Departments(
+				Id INT PRIMARY KEY,
+				DepartmentName VARCHAR(100)
+			);
 
-				CREATE TABLE Departments(
-					Id INT PRIMARY KEY,
-					DepartmentName VARCHAR(100)
-				);
+			CREATE TABLE IF NOT EXISTS Employees(
+				Id INT PRIMARY KEY,
+				Name VARCHAR(100),
+				DepartmentId INT,
+				Salary INT,
+				FOREIGN KEY(DepartmentId) REFERENCES Departments(Id)
+			);
 
-				INSERT INTO Departments(Id, DepartmentName) VALUES
-					(1, 'HR'),
-					(2, 'IT'),
-					(3, 'Finance');
+			CREATE TABLE IF NOT EXISTS EmployeeDepartments(
+				EmployeeId INT,
+				DepartmentId INT,
+				PRIMARY KEY (EmployeeId, DepartmentId),
+				FOREIGN KEY (EmployeeId) REFERENCES Employees(Id),
+				FOREIGN KEY (DepartmentId) REFERENCES Departments(Id)
+			);
 
-				INSERT INTO Employees(Id, Name, DepartmentId, salary) VALUES
-					(1, 'Alice',    1, 50),
-					(2, 'Bob',      2, 40),
-					(3, 'Charlie',  2, 20),
-					(4, 'David',    3, 10),
-					(5, 'Eve',      1, 20);
+			INSERT INTO Departments(Id, DepartmentName) VALUES
+				(1, 'HR'),
+				(2, 'IT'),
+				(3, 'Finance');
 
-				select* from departments order by id;
+			INSERT INTO Employees(Id, Name, DepartmentId, salary) VALUES
+				(1, 'Alice',    1, 50),
+				(2, 'Bob',      2, 40),
+				(3, 'Charlie',  2, 20),
+				(4, 'David',    3, 10),
+				(5, 'Eve',      1, 20);
 
-				select* from employees order by id;
+			INSERT INTO EmployeeDepartments(EmployeeId, DepartmentId) VALUES
+				(1, 1),
+				(1, 2),
+				(2, 2),
+				(3, 1),
+				(3, 3),
+				(4, 2);
+
+			select * from departments;
+
+			select * from employees;
+
+			select * from employeedepartments;
+
+		#endregion		
+
+		#region Задачи
 
 			// Найти сотрудников с зарплатой выше средней
 
@@ -758,11 +782,41 @@
 					having count(*) > 1
 				);
 
-		#endregion
+			// Найти сотрудников, которые работают в нескольких отделах
+			// Два варианта решения
 
-		#region 2
+				select distinct Id, Name
+				from employees e
+				join employeedepartments ed on e.id = ed.EmployeeId
+				where EmployeeId in
+				(
+					select EmployeeId
+					from EmployeeDepartments
+					group by EmployeeId
+					having count(*) > 1
+				);
 
-		#endregion
+				select e.id, e.name
+				from employees e
+				join employeedepartments ed
+					on e.Id = ed.EmployeeId
+				group by e.Id, e.name
+				having count(ed.departmentid) > 1;
+
+			// Найти среднюю зарплату в каждом отделе
+
+				select DepartmentId, avg(Salary)
+				from employees
+				group by DepartmentId;
+
+			// Получить топ-3 сотрудников по зарплате
+
+				select Name, Salary
+				from employees
+				order by Salary desc
+				limit 3;
+
+    #endregion
 
     #endregion
 
