@@ -268,6 +268,7 @@ class Program
         static void Main_()
         {
             // List
+
                 // Хранит однотипные объекты
                 // Внутри это массив, можно обращаться к элементам по индексу
                 var list = new List<int>();
@@ -279,13 +280,15 @@ class Program
                 list2[0] = 1;
 
             // LinkedList - двусвязный список
+
                 // Каждый элемент хранит ссылку на следующий и предыдущий элемент
                 var numbers = new LinkedList<int>();
-                    numbers.AddLast(1);
-                    numbers.AddFirst(2);
-                    numbers.AddAfter(numbers.Last, 3);
+                numbers.AddLast(1);
+                numbers.AddFirst(2);
+                numbers.AddAfter(numbers.Last, 3);
 
             // Dictionary
+
                 // В словаре нельзя создать два поля с одинаковым ключем
                 // Ключ преобразуется в хеш, по которому поиск идет за O(1)
                 var dictionary = new Dictionary<int, string>();
@@ -293,8 +296,9 @@ class Program
                 dictionary.Add(1, "1");
 
             // Hashtable
+
                 // Похоже на словарь, но ключи и значения приводятся к object,
-                // что увеличивает расход памяти, но поддерживается многопоточное чтение
+                // что увеличивает расход памяти, но поддерживает многопоточное чтение
                 var hashtable = new Hashtable()
                 {
                     { 0, "00" },
@@ -306,16 +310,17 @@ class Program
                 hashtable.Remove(2);
 
             // HashSet
-                // Хранит уникальную коллекцию в неотсортированном виде
-                // Последняя еденица не добавится, т.к. она уже есть в коллекции
-                // Будет 2 3 1
+
+                // Хранит уникальную коллекцию в неотсортированном виде                
                 var hashSet = new HashSet<int>();
                 hashSet.Add(2);
                 hashSet.Add(3);
                 hashSet.Add(1);
-                hashSet.Add(1);
+                hashSet.Add(1); // Не добавится, т.к. значение уже есть в коллекции
+                                // Будет 2 3 1
 
             // ArrayList
+
                 // Позволяет хранить разнотипные объекты
                 var arrayList = new ArrayList { Capacity = 50 };
                 arrayList.Add(1);
@@ -327,8 +332,9 @@ class Program
                 arrayList.Clear();
 
             // SortedList
+
                 // Коллекция отсортирована по ключу
-                var sortedList = new SortedList()
+                var sortedList = new SortedList
                 {
                     { 0, "0" },
                     { 1, "1" },
@@ -338,14 +344,16 @@ class Program
                 sortedList.Clear();
 
             // Stack
+
                 // Первый пришел - последний ушел
                 var stack = new Stack();
                 stack.Push("string");
                 stack.Push(4);
-                stack.Pop();       // Удалить элемент
+                stack.Pop(); // Удалить элемент
                 stack.Clear();
 
             // Queue
+
                 // Первый пришел - первый ушел
                 var queue = new Queue();
                 queue.Enqueue("string");
@@ -355,58 +363,53 @@ class Program
 
         #region IList и List
 
-        /*
-         
-            IList
-                Это интерфейс, определяющий стандартные операции для работы с коллекциями:
-                - добавление
-                - удаление
-                - доступ к элементам по индексу
+            /*         
+                IList
 
-                Определяет только базовые методы,
-                - Add
-                - Remove
-                - Insert
-                - IndexOf
-                - и свойства Count, Item[index]
+                    Используется, если хотим создать метод или класс, который может работать с различными типами коллекций
 
-                Используется, вы хотим создать метод или класс, который может работать с различными типами коллекций
+                    Интерфейс определяет операции для работы с коллекциями:
+                    - Add
+                    - Remove
+                    - Insert
+                    - IndexOf
+                    - свойство Count
+                    - свойство Item[index] для доступа к элементу по индексу
 
-            List
-                Это конкретная реализация интерфейса IList
-                Представляет собой изменяемый массив, предоставляющий возможность хранить элементы и управлять ими
+                List
+
+                    Конкретная реализация интерфейса IList
+                    Представляет изменяемый массив, предоставляющий возможность хранить элементы и управлять ими
+                    Используется, если нужно работать с конкретной реализацией коллекции и использовать ее специфические методы
             
-                Включает в себя дополнительные методы
-                - Sort
-                - Reverse
-                - и другие
+                    Включает дополнительные методы:
+                    - Sort
+                    - Reverse
+                    - и другие
+            */
 
-                Используется, если нужно работать с конкретной реализацией коллекции и использовать ее специфические методы
-        */
-
-        // Пример
-        // Метод ProcessItems может принимать любой объект, реализующий IList<string>, что делает его более универсальным
-        public void F1()
-        {
-            void ProcessItems(IList<string> items)
+            // Метод ProcessItems может принимать любой объект, реализующий IList<string>, что делает его более универсальным
+            public void F1()
             {
-                foreach (var item in items)
+                void ProcessItems(IList<string> items)
                 {
-                    Console.WriteLine(item);
+                    foreach (var item in items)
+                    {
+                        Console.WriteLine(item);
+                    }
                 }
+
+                void AddItem(List<string> items, string newItem)
+                {
+                    items.Add(newItem);
+                }
+
+                List<string> myItems = new List<string> { "Item1", "Item2" };
+
+                ProcessItems(myItems); // Можно передать List в метод, принимающий IList
+
+                AddItem(myItems, "Item3");
             }
-
-            void AddItem(List<string> items, string newItem)
-            {
-                items.Add(newItem);
-            }
-
-            List<string> myItems = new List<string> { "Item1", "Item2" };
-
-            ProcessItems(myItems); // Можно передать List в метод, принимающий IList
-
-            AddItem(myItems, "Item3");
-        }
 
         #endregion
 
@@ -416,7 +419,8 @@ class Program
             public class TreeData
             {
                 public int Id { get; set; }
-                public TreeData[] Child { get; set; }
+
+                public TreeData[]? Child { get; set; }
             }
 
             static void ShowLeafIds(TreeData root)
@@ -448,7 +452,7 @@ class Program
                       4   5   6
                 */
 
-                TreeData data = new TreeData
+                var treeData = new TreeData
                 {
                     Id = 1,
                     Child = new TreeData[]
@@ -458,8 +462,16 @@ class Program
                             Id = 2,
                             Child = new TreeData[]
                             {
-                                new TreeData { Id = 4 },
-                                new TreeData { Id = 5 }
+                                new TreeData
+                                {
+                                    Id = 4
+                                    //Child = null
+                                },
+                                new TreeData
+                                {
+                                    Id = 5
+                                    //Child = null
+                                }
                             }
                         },
                         new TreeData
@@ -467,16 +479,19 @@ class Program
                             Id = 3,
                             Child = new TreeData[]
                             {
-                                new TreeData { Id = 6 }
+                                new TreeData
+                                {
+                                    Id = 6
+                                    //Child = null
+                                }
                             }
                         }
                     }
                 };
 
-                ShowLeafIds(data); // 4 5 6
+                ShowLeafIds(treeData); // 4 5 6
             }
         }
-
     }
 
     class Struct_
