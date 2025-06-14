@@ -8,7 +8,9 @@
     
         MediatR
     
-        Quartz
+        Шедулеры Quartz
+
+        Виртуальная БД
 
         JSONb, blob
 
