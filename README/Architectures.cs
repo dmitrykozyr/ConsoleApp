@@ -2,7 +2,7 @@
 
 public class A
 {
-	#region LANDSCAPE PATTERNS, физическая архитектура
+	#region Физическая архитектура (Monolith, N-Tier, Service-Oriented, Microservices, Peer to peer)
 			
 		// Monolith
 		Для небольших приложений
@@ -53,12 +53,12 @@ public class A
         // Peer to peer
         Нет центрального сервера, машины общаются напрямую
 
-	#endregion
+    #endregion
 
-	#region STRUCTURE PATTERNS, логическая архитектура
+    #region Логическая архитектура (Layered, MVC, MVVM)
 
-		// Layered
-		Есть несколько слоев, по которым идет запрос от первого к последнему, но не наоборот
+        // Layered
+        Есть несколько слоев, по которым идет запрос от первого к последнему, но не наоборот
 
 		- Presentation:				UI
 		- Application (Service):    Translate between UI and business logic
