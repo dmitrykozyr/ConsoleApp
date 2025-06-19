@@ -784,8 +784,8 @@
 				);
 
 			// Найти сотрудников, которые работают в нескольких отделах
-			// Два варианта решения
 
+				// Первый вариант решения
 				select distinct Id, Name
 				from employees e
 				join employeedepartments ed on e.id = ed.EmployeeId
@@ -797,6 +797,7 @@
 					having count(*) > 1
 				);
 
+				// Второй вариант решения
 				select e.id, e.name
 				from employees e
 				join employeedepartments ed
@@ -817,7 +818,20 @@
 				order by Salary desc
 				limit 3;
 
-		#endregion
+			// Получить имена сотрудников с максимальной зарплатой в каждом отделе
+
+				select e.Name, e.Salary, d.DepartmentName
+				from Employees e
+				join Departments d
+				on e.DepartmentId = d.Id
+				where e.Salary =
+				(
+					SELECT max(Salary)
+					from Employees
+					where DepartmentId = d.Id
+				);
+
+    #endregion
 
     #endregion
 
