@@ -2,13 +2,13 @@
 {
     #region Создание Docker Image и его пуш в DockerHub
 
-    // В VS Code устанавливаем расширение Docker и в терминале вводим
-    docker login
+        // В VS Code устанавливаем расширение Docker и в терминале вводим
+        docker login
 
         // docker build -t          собираем Image
         // dockeredukozyr/testtask  логин и название Image в DockerHub
         // .\JobSearcherRepo\       путь к Dockerfile в проекте
-        docker build -t dockeredukozyr/testtask.\JobSearcherRepo\
+        docker build -t dockeredukozyr/testtask .\JobSearcherRepo\
 
         // посмотреть список Image
         docker images
