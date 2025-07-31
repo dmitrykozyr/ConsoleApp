@@ -14,6 +14,10 @@
 
         JSONb, blob
 
+        Балансировщик
+
+        Api Gateway
+
         DTO должны быть immutable
         public Guid ImageLinkId { get; init; }
 
@@ -38,6 +42,13 @@
         _logger.LogError(e, "Загрузка Excel не было произведена");
 
         'DateTime.Now' не используем, вметсо него '_dateProvider.CurrentDateNow'
+
+        GitLab Runner
+        Docker Hub
+        Logger Elastic
+        Архитектура мессенджера, выбор БД
+
+        В контексте Entity Framework (EF Core), DbContext часто выступает как реализация паттернов "Репозиторий" и "Единица работы" (Unit of Work)
     */
 
     static void Main()
