@@ -198,6 +198,10 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakWebAPI", "Projects\AuthenticationAuthorization\Keycloak\KeycloakWebAPI\KeycloakWebAPI.csproj", "{6C969380-C3E8-468B-A925-7A68404E3B84}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SecretsStorage", "SecretsStorage", "{788BC1D4-E842-487F-9ACD-6F8A6044108A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault_", "..\Vault_\Vault_.csproj", "{0EDEF73B-3449-4F39-B3D9-B027670D22A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -368,6 +372,10 @@ Global
 		{6C969380-C3E8-468B-A925-7A68404E3B84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C969380-C3E8-468B-A925-7A68404E3B84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C969380-C3E8-468B-A925-7A68404E3B84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EDEF73B-3449-4F39-B3D9-B027670D22A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EDEF73B-3449-4F39-B3D9-B027670D22A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EDEF73B-3449-4F39-B3D9-B027670D22A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EDEF73B-3449-4F39-B3D9-B027670D22A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -437,6 +445,8 @@ Global
 		{53C2A05F-ED8F-408E-8BDE-0909ED2959A1} = {A3E6A5A6-8143-406B-BF92-9AE4074231C3}
 		{3CFC58EB-1856-4113-A1EE-CADB67A2EEB6} = {2697FB2E-D3A1-4034-84C9-F5CAB163142D}
 		{6C969380-C3E8-468B-A925-7A68404E3B84} = {3CFC58EB-1856-4113-A1EE-CADB67A2EEB6}
+		{788BC1D4-E842-487F-9ACD-6F8A6044108A} = {2697FB2E-D3A1-4034-84C9-F5CAB163142D}
+		{0EDEF73B-3449-4F39-B3D9-B027670D22A3} = {788BC1D4-E842-487F-9ACD-6F8A6044108A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C3FE8DB-917F-412C-81A3-E5F87D993B11}
