@@ -28,11 +28,11 @@ POST {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail
 Accept: application/json
 content-type: application/json
 
-{
-"id": 0,
-"nameDetail": "string",
-"detail": "string"
-}
+  {
+    "id": 0,
+    "nameDetail": "string",
+    "detail": "string"
+  }
 
 ###
 
@@ -41,11 +41,11 @@ PUT {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail
 Accept: application/json
 content-type: application/json
 
-{
-"id": 0,
-"nameDetail": "string",
-"detail": "string"
-}
+  {
+    "id": 0,
+    "nameDetail": "string",
+    "detail": "string"
+  }
 
 ###
 
@@ -53,32 +53,8 @@ content-type: application/json
 DELETE {{ConfigurationHelper_HostAddress}}/api/v2/directory/bankDetail/{{bankDetailId}}
 ###
 
-
-
-
-
-
-
-
 # Получить курсы валют
 GET https://localhost:7077/api/v1/centralbank/exchangeRate?date=2025-04-25&rateCode=826
 Accept: application/json
 ###
-
-
-
-
-
-
-
-# Получить курсы валют
-POST https://localhost:7077/api/v1/centralbank/exchangeRate
-Accept: application/json
-content-type: application/json
-{
-  "date": "2025-04-25",
-  "rateCode": 826
-}
-###
-
 
