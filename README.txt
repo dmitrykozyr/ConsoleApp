@@ -64,7 +64,7 @@
 
 // НАСТРОЙКА POSTMAN ---------------------------------------------------------------------------------
 
-public-client password:
+Access Token:
 	POST http://localhost:8081/realms/MyRealm/protocol/openid-connect/token
 		grant_type		password
 		client_id		public-client
@@ -72,13 +72,13 @@ public-client password:
 		username		myuser@test.com
 		password		123
 
-public-client refresh_token
+Refresh Token:
 	POST http://localhost:8081/realms/MyRealm/protocol/openid-connect/token
 		grant_type		refresh_token
 		client_id		public-client
 		refresh_token	[refresh_token из прошлого запроса]
 
-confidential-client token
+Access Token Confidential (для взаимодействия сервер-сервер):
 	POST http://localhost:8081/realms/MyRealm/protocol/openid-connect/token
 		grant_type		client_credentials
 		client_id		confidential-client
