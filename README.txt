@@ -84,3 +84,20 @@ Access Token Confidential (для взаимодействия сервер-сервер):
 		client_id		confidential-client
 		client_secret	[Client Secret '.................']
 		scope			openid
+
+// ИНТЕГРАЦИЯ С .NET ---------------------------------------------------------------------------------
+
+Realm settings -> Login:
+	User registration:	ON
+
+Create client:
+	Client type: 			OpenID Connect
+	Client ID:				public-client2
+	Standard flow:			true
+	Direct access grants:	true
+	Implicit flow:			true
+	Valid redirect URIs:	https://localhost:7118/* (по этому адресу запускается мое АПИ)
+	Web origins: 			https://localhost:7118
+
+
+
