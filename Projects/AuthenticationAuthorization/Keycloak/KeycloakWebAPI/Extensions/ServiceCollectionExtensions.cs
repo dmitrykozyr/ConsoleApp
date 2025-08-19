@@ -1,7 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
 
-namespace KeycloakWebAPI.Extensions;
-
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSwaggerGenWithAuth(this IServiceCollection services, IConfiguration configuration)

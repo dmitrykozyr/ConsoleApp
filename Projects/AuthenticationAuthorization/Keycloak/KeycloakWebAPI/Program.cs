@@ -1,11 +1,24 @@
-using KeycloakWebAPI.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
-//builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(o =>
+    {
+        o.RequireHttpsMetadata      = false;
+        o.Audience                  = builder.Configuration["Authentication:Audience"];
+        o.MetadataAddress           = builder.Configuration["Authentication:MetadataAddress"] ?? "";
+        o.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = builder.Configuration["Authentication:ValidIssuer"]
+        };
+    });
 
 WebApplication app = builder.Build();
 
@@ -15,42 +28,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-
-//var summaries = new[]
-//{
-//    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-//};
-
-//app.MapGet("/weatherforecast", () =>
-//{
-//    var forecast = Enumerable
-//        .Range(1, 5)
-//        .Select(
-//            index =>
-//                new WeatherForecast
-//                (
-//                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-//                    Random.Shared.Next(-20, 55),
-//                    summaries[Random.Shared.Next(summaries.Length)]
-//                )).ToArray();
-
-//    return forecast;
-//})
-//.WithName("GetWeatherForecast")
-//.WithOpenApi();
-
 app.MapGet("users/me", (ClaimsPrincipal claimsPrincipal) =>
 {
     return claimsPrincipal.Claims.ToDictionary(c => c.Type, c => c.Value);
 }).RequireAuthorization();
 
-//app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
-
-//internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-//{
-//    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-//}
