@@ -1,9 +1,9 @@
 // НАСТРОЙКА DOCKER ----------------------------------------------------------------------------------
 
 Запускаем ДЕВ сервер Keycloak в Docker:
-	docker run -p 127.0.0.1:8080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.3.3 start-dev
+	docker run -d --name keycloak -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin -p 8080:8080 quay.io/keycloak/keycloak:26.3.3 start-dev
 
-Если выдает ошибку, что данный порт недоступен, можно посмотреть, каки он занят процессом:
+Если выдает ошибку, что данный порт недоступен, можно посмотреть, каким он занят процессом:
 	netstat -ano | findstr :8080	узнать PID процесса
 	tasklist | findstr <PID>		посмотреть имя процесса по PID
 	taskkill /PID <PID> /F			завершить процесс по PID
@@ -38,5 +38,18 @@ Create client:
 		Password: 	MyUser
 		Temporary: 	Off
 
+// Запуск проекта ------------------------------------------------------------------------------------
 
+Заупскаем сервер с Keycloak в Docker или через .exe
+Запускаем проект
 
+В сваггере нажимаем Authorize:
+	Client ID:		public-client
+	openid:			true
+	profile:		true
+
+Попаадем в окно аутентификации Keycloak:
+	login:			MyUser
+	password:		MyUser
+
+Мы аутентифицированы и теперь можем слать запросы в сваггере
