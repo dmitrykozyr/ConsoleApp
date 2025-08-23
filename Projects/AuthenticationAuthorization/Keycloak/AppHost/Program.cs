@@ -1,1 +1,0 @@
-var builder = DistributedApplication.CreateBuilder();

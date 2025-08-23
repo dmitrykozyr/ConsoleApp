@@ -7,6 +7,10 @@ namespace SharpEdu;
 
 class Program
 {
+    static void Main()
+    {
+    }
+
     class DotNetCoreLifeCycle_
     {
         /*        

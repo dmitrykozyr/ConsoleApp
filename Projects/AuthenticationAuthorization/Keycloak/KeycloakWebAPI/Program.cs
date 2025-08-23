@@ -1,33 +1,49 @@
-using KeycloakWebAPI.Extensions;
-using System.Security.Claims;
+//! Настроить аутентификация на Keycloak
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-//builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
-
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+internal class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    private static void Main(string[] args)
     {
-        c.SwaggerEndpoint("/swagger/v1/", "My API V1");
-        c.RoutePrefix = string.Empty;
-    });
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        var summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
+
+        app.MapGet("/weatherforecast", () =>
+        {
+            var forecast = Enumerable.Range(1, 5).Select(index =>
+                new WeatherForecast
+                (
+                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                    Random.Shared.Next(-20, 55),
+                    summaries[Random.Shared.Next(summaries.Length)]
+                ))
+                .ToArray();
+            return forecast;
+        })
+        .WithName("GetWeatherForecast")
+        .WithOpenApi();
+
+        app.Run();
+    }
 }
 
-app.MapGet("users/me", (ClaimsPrincipal claimsPrincipal) =>
+internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
-    return claimsPrincipal.Claims.ToDictionary(c => c.Type, c => c.Value);
-}).RequireAuthorization(); // Только пользователь с аутентификацией может вызвать этот эндпоинт
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.Run();
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}

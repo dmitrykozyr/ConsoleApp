@@ -4,25 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>177a12c3-18a5-4da0-8047-662cbdfd7ae1</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..\..\..</DockerfileContext>
-    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
-    <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
-    <DockerComposeProjectPath>..\..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.19" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ContainerEnvironmentVariable Include="ASPNETCORE_HTTPS_PORTS">
-      <Value>8081</Value>
-    </ContainerEnvironmentVariable>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
 </Project>

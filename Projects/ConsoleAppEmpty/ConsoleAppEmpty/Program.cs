@@ -1,4 +1,7 @@
-﻿public class Program
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
+public class Program
 {
     //!
     /*
@@ -53,6 +56,5 @@
 
     static void Main()
     {
-        
     }
 }

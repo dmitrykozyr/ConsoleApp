@@ -1,6 +1,6 @@
-﻿namespace xUnit_.FunctionalityToTest.User_;
+﻿namespace AppToTest.Models;
 
-public record User(string firstName, string lastName)
+public class User
 {
     public int Id { get; set; }
 
