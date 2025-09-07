@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
@@ -11,7 +11,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(o =>
     {
-        o.RequireHttpsMetadata      = false;
+        o.RequireHttpsMetadata      = false; // Только для ДЕВ
         o.Audience                  = builder.Configuration["Authentication:Audience"];
         o.MetadataAddress           = builder.Configuration["Authentication:MetadataAddress"] ?? "";
         o.TokenValidationParameters = new TokenValidationParameters

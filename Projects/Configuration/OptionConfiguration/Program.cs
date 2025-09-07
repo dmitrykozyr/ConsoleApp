@@ -17,7 +17,7 @@ public class Program
 
         // ѕосле старта приложение€ при переходе по https://localhost:7138/options
         // получим значение из конфигурации
-        app.MapGet("options", (IOptions<ApplicationOptions> options) =>
+        app.MapGet("options", (IOptions<MyConfigs_1> options) =>
         {
             var response = new
             {
