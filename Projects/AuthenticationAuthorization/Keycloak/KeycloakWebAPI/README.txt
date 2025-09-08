@@ -19,12 +19,12 @@
 
 Create client:	
 	Client ID:				public-client
+	Client authentication	on
 	Standard flow:			true
 	Direct access grants:	true
 	Implicit flow			true
 
-
-	Valid redirect URIs:	https://localhost:7118/* (по этому адрему запускается АПИ/приложение)
+	Valid redirect URIs:	https://localhost:7118/signin-oidc/* (по этому адрему запускается АПИ/приложение)
 	Web origins: 			https://localhost:7118
 
 Создаем User:	

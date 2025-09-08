@@ -1,11 +1,9 @@
-using KeycloakWebApp.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGenWithAuth(builder.Configuration);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthorization();
@@ -31,7 +29,7 @@ builder.Services.AddAuthentication(options =>
     {
         OnRedirectToIdentityProvider = context =>
         {
-            // Здесь можно добавить дополнительные параметры, если необходимо
+            // Здесь можно добавить дополнительные параметры
             return Task.CompletedTask;
         },
         OnTokenValidated = context =>
