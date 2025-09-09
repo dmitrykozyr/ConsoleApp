@@ -201,6 +201,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault_", "..\Vault_\Vault_.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeycloakWebApp", "Projects\AuthenticationAuthorization\Keycloak\KeycloakWebApp\KeycloakWebApp.csproj", "{C409197F-7B89-4D44-98CB-067B8D4AC19B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{32F8D4A6-0055-4894-87E9-724256182379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOptionsConfig", "Projects\Configuration\IOptionsConfig\IOptionsConfig.csproj", "{8494CA9C-2ECA-4435-8504-FA736D457CF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -375,6 +379,10 @@ Global
 		{C409197F-7B89-4D44-98CB-067B8D4AC19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C409197F-7B89-4D44-98CB-067B8D4AC19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C409197F-7B89-4D44-98CB-067B8D4AC19B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8494CA9C-2ECA-4435-8504-FA736D457CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8494CA9C-2ECA-4435-8504-FA736D457CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8494CA9C-2ECA-4435-8504-FA736D457CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8494CA9C-2ECA-4435-8504-FA736D457CF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -446,6 +454,7 @@ Global
 		{788BC1D4-E842-487F-9ACD-6F8A6044108A} = {2697FB2E-D3A1-4034-84C9-F5CAB163142D}
 		{0EDEF73B-3449-4F39-B3D9-B027670D22A3} = {788BC1D4-E842-487F-9ACD-6F8A6044108A}
 		{C409197F-7B89-4D44-98CB-067B8D4AC19B} = {3CFC58EB-1856-4113-A1EE-CADB67A2EEB6}
+		{8494CA9C-2ECA-4435-8504-FA736D457CF2} = {32F8D4A6-0055-4894-87E9-724256182379}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C3FE8DB-917F-412C-81A3-E5F87D993B11}
