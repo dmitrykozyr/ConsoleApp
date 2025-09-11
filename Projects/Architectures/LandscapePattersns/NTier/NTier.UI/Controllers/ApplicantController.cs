@@ -8,7 +8,7 @@ namespace NTier.UI.Controllers;
 [ApiController]
 [EnableCors("angular")]
 [Route("api/[controller]")]
-public class ApplicantController : ControllerBase
+public class ApplicantController
 {
     private IApplicantService _applicantService;
 
@@ -19,7 +19,7 @@ public class ApplicantController : ControllerBase
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> AddApplicant(ApplicantPassObject applicant)
+    public async Task<IResult> AddApplicant(ApplicantPassObject applicant)
     {
         var result = await _applicantService.AddSingleApplicant(
             applicant.Name,
@@ -30,27 +30,27 @@ public class ApplicantController : ControllerBase
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 
     [HttpGet]
     [Route("[action]")]
-    public async Task<IActionResult> GetApplicantById(int id)
+    public async Task<IResult> GetApplicantById(int id)
     {
 
         var result = await _applicantService.GetApplicantById(id);
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> UpdateApplicant(ApplicantUpdatePassObject applicant)
+    public async Task<IResult> UpdateApplicant(ApplicantUpdatePassObject applicant)
     {
         var result = await _applicantService.UpdateApplicant(
             applicant.Id,
@@ -62,8 +62,8 @@ public class ApplicantController : ControllerBase
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 }

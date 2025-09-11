@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IOptionsConfig.Controllers;
 
-[Controller]
-public class MyController //! Везде переделать, чтобы не наследоваться от ControllerBase
+[Controller] //! Протестить получение опций
+public class MyController
 {
     private readonly IMyService _myService;
 

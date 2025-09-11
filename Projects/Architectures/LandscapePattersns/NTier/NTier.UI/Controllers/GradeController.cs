@@ -8,7 +8,7 @@ namespace NTier.UI.Controllers;
 [EnableCors("angular")]
 [Route("api/[controller]")]
 [ApiController]
-public class GradeController : ControllerBase
+public class GradeController
 {
     private IGradeService _gradeService;
 
@@ -19,7 +19,7 @@ public class GradeController : ControllerBase
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> AddGrade(GradePassObject gradeObject)
+    public async Task<IResult> AddGrade(GradePassObject gradeObject)
     {
         var result = await _gradeService.AddSingleGrade(
             gradeObject.Name,
@@ -28,27 +28,27 @@ public class GradeController : ControllerBase
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 
     [HttpGet]
     [Route("[action]")]
-    public async Task<IActionResult> GetAllGrades()
+    public async Task<IResult> GetAllGrades()
     {
         var result = await _gradeService.GetAllGrades();
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> UpdateGrade(GradeUpdatePassObject gradeObject)
+    public async Task<IResult> UpdateGrade(GradeUpdatePassObject gradeObject)
     {
         var result = await _gradeService.UpdateGrade(
             gradeObject.Id,
@@ -58,8 +58,8 @@ public class GradeController : ControllerBase
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 }

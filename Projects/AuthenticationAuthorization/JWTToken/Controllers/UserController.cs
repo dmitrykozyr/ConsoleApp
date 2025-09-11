@@ -7,7 +7,7 @@ namespace JWTToken.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UserController : ControllerBase //!
 {
     //! Метод, не требующий аутентификации и авторизации
     // https://localhost:7269/api/user/public

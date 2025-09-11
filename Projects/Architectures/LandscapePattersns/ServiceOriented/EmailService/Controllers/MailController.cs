@@ -6,7 +6,7 @@ namespace EmailService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MailController : ControllerBase
+public class MailController
 {
     private readonly IToursProxy _toursProxy;
 

@@ -5,7 +5,7 @@ namespace Microservices.Customers.Controllers;
 
 [ApiController]
 [Route("api/customers")]
-public class CustomersController : ControllerBase
+public class CustomersController
 {
     private readonly ICustomersProvider _customersProvider;
 
@@ -15,28 +15,28 @@ public class CustomersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetCustomersAsync()
+    public async Task<IResult> GetCustomersAsync()
     {
         var result = await _customersProvider.GetCustomersAsync();
 
         if (result.IsSuccess)
         {
-            return Ok(result.Customers);
+            return Results.Ok(result.Customers);
         }
 
-        return NotFound();
+        return Results.NotFound();
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetCustomerAsync(int id)
+    public async Task<IResult> GetCustomerAsync(int id)
     {
         var result = await _customersProvider.GetCustomerAsync(id);
 
         if (result.IsSuccess)
         {
-            return Ok(result.Customer);
+            return Results.Ok(result.Customer);
         }
 
-        return NotFound();
+        return Results.NotFound();
     }
 }

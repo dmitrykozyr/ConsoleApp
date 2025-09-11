@@ -10,7 +10,7 @@ namespace JWTToken.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class LoginController : ControllerBase
+public class LoginController
 {
     private IConfiguration _config;
 
@@ -23,7 +23,7 @@ public class LoginController : ControllerBase
     // https://localhost:7269/api/login
     [AllowAnonymous]
     [HttpPost]
-    public IActionResult Login([FromBody] UserLogin userLogin)
+    public IResult Login([FromBody] UserLogin userLogin)
     {
         var user = Authenticate(userLogin);
 
@@ -31,10 +31,10 @@ public class LoginController : ControllerBase
         {
             var token = GenerateToken(user);
 
-            return Ok(token);
+            return Results.Ok(token);
         }
 
-        return NotFound("User not found");
+        return Results.NotFound("User not found");
     }
 
     private string GenerateToken(UserModel user)

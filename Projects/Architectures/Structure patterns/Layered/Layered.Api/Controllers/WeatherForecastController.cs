@@ -6,16 +6,13 @@ namespace Layered.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class WeatherForecastController
 {
-    private readonly ILogger<WeatherForecastController> _logger;
     private readonly IWeatherForecastService _service;
 
     public WeatherForecastController(
-        ILogger<WeatherForecastController> logger,
         IWeatherForecastService service)
     {
-        _logger = logger;
         _service = service;
     }
 

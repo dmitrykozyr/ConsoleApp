@@ -8,9 +8,10 @@ namespace NTier.UI.Controllers;
 [EnableCors("angular")]
 [Route("api/[controller]")]
 [ApiController]
-public class ApplicationController : ControllerBase
+public class ApplicationController
 {
     private IApplicationService _applicationService;
+
     public ApplicationController(IApplicationService applicationService)
     {
         _applicationService = applicationService;
@@ -18,7 +19,7 @@ public class ApplicationController : ControllerBase
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> AddApplicationApplicant(ApplicationPassObject application)
+    public async Task<IResult> AddApplicationApplicant(ApplicationPassObject application)
     {
         var result = await _applicationService.AddApplicationAndApplicant(
             application.GradeId,
@@ -32,14 +33,14 @@ public class ApplicationController : ControllerBase
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 
     [HttpPost]
     [Route("[action]")]
-    public async Task<IActionResult> UpdateApplication(ApplicationUpdatePassObject application)
+    public async Task<IResult> UpdateApplication(ApplicationUpdatePassObject application)
     {
         var result = await _applicationService.UpdateApplication(
             application.Id,
@@ -50,34 +51,34 @@ public class ApplicationController : ControllerBase
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 
     [HttpGet]
     [Route("[action]")]
-    public async Task<IActionResult> GetApplicationsByApplicantId(int id)
+    public async Task<IResult> GetApplicationsByApplicantId(int id)
     {
         var result = await _applicationService.GetApplicationsByApplicantId(id);
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 
     [HttpGet]
     [Route("[action]")]
-    public async Task<IActionResult> GetApplicationById(int id)
+    public async Task<IResult> GetApplicationById(int id)
     {
         var result = await _applicationService.GetApplicationById(id);
 
         switch (result.Success)
         {
-            case true:  return Ok(result);
-            case false: return StatusCode(500, result);
+            case true:  return Results.Ok(result);
+            case false: return Results.BadRequest(result);
         }
     }
 }

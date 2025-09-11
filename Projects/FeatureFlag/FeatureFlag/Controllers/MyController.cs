@@ -5,7 +5,7 @@ namespace FeatureFlag.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class MyController : ControllerBase
+public class MyController
 {
     private readonly IFeatureManager _featureManager;
 
@@ -15,7 +15,7 @@ public class MyController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IResult> Get()
     {
         var isFeature1Enabled = await _featureManager.IsEnabledAsync("MyFeature_1");
         var isFeature2Enabled = await _featureManager.IsEnabledAsync("MyFeature_2");
@@ -25,6 +25,6 @@ public class MyController : ControllerBase
             // Do something
         }
 
-        return Ok();
+        return Results.Ok();
     }
 }

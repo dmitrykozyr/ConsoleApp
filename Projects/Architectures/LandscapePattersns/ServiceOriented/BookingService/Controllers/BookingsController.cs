@@ -8,7 +8,7 @@ namespace BookingService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class BookingsController : ControllerBase
+public class BookingsController
 {
     private readonly IBookingsRepository _bookingsRepository;
     private readonly IMapper _mapper;

@@ -6,7 +6,7 @@ namespace Microservices.Search.Controllers;
 
 [ApiController]
 [Route("api/search")]
-public class SearchController : ControllerBase
+public class SearchController
 {
     private readonly ISearchService _searchService;
 
@@ -16,15 +16,15 @@ public class SearchController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> SearchAsync(SearchTerm term)
+    public async Task<IResult> SearchAsync(SearchTerm term)
     {
         var result = await _searchService.SearchAsync(term.CustomerId);
 
         if (result.IsSuccess)
         {
-            return Ok(result.SearchResults);
+            return Results.Ok(result.SearchResults);
         }
 
-        return NotFound();
+        return Results.NotFound();
     }
 }

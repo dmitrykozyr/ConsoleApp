@@ -5,7 +5,7 @@ namespace Microservices.Orders.Controllers;
 
 [ApiController]
 [Route("api/orders")]
-public class OrdersController : ControllerBase
+public class OrdersController
 {
     public readonly IOrdersProvider _ordersProvider;
 
@@ -15,15 +15,15 @@ public class OrdersController : ControllerBase
     }
 
     [HttpGet("{customerId}")]
-    public async Task<IActionResult> GetOrdersAsync(int customerId)
+    public async Task<IResult> GetOrdersAsync(int customerId)
     {
         var result = await _ordersProvider.GetOrdersAsync(customerId);
 
         if (result.IsSuccess)
         {
-            return Ok(result.Orders);
+            return Results.Ok(result.Orders);
         }
 
-        return NotFound();
+        return Results.NotFound();
     }
 }

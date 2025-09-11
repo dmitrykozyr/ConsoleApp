@@ -5,7 +5,7 @@ namespace Microservices.Products.Controllers;
 
 [ApiController]
 [Route("api/products")]
-public class ProductsController : ControllerBase
+public class ProductsController
 {
     public IProductsProvider _productsProvider { get; }
 
@@ -15,28 +15,28 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetProductsAsync()
+    public async Task<IResult> GetProductsAsync()
     {
         var result = await _productsProvider.GetProductsAsync();
 
         if (result.IsSuccess)
         {
-            return Ok(result.Products);
+            return Results.Ok(result.Products);
         }
 
-        return NotFound();
+        return Results.NotFound();
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetProductAsync(int id)
+    public async Task<IResult> GetProductAsync(int id)
     {
         var result = await _productsProvider.GetProductAsync(id);
 
         if (result.IsSuccess)
         {
-            return Ok(result.Product);
+            return Results.Ok(result.Product);
         }
 
-        return NotFound();
+        return Results.NotFound();
     }
 }
