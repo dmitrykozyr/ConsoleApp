@@ -19,16 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\Services\" />
-    <Folder Include="Interfaces\Repositories\" />
     <Folder Include="Models\DTO\" />
     <Folder Include="Models\JsonDeserialize\" />
     <Folder Include="Models\ViewModels\" />
-    <Folder Include="Models\ResponseModels\" />
-    <Folder Include="Models\RequentModels\" />
     <Folder Include="Models\Options\" />
-    <Folder Include="Validators\" />
-    <Folder Include="Services\API\" />
   </ItemGroup>
 
 </Project>

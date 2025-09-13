@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Enums;
+using Domain.Interfaces;
 
 namespace Infrastructure.LoggingData;
 
@@ -9,7 +10,7 @@ public class Logging : ILogging
 
     }
 
-    public void LogToDb(string message)
+    public void LogToDB(RestMethods restMethod, string message, Guid fileGuid)
     {
 
     }

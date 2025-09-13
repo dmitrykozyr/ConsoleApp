@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="HttpClient_\" />
     <Folder Include="Vault\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

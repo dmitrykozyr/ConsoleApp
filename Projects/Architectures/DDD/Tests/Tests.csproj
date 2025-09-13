@@ -30,7 +30,6 @@
   <ItemGroup>
     <Folder Include="IntegrationTests\" />
     <Folder Include="RestClient\" />
-    <Folder Include="UnitTests\Service\" />
     <Folder Include="UnitTests\Repository\" />
   </ItemGroup>
 
