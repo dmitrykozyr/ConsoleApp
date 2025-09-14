@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="HttpClient_\" />
-    <Folder Include="Vault\" />
   </ItemGroup>
 
 </Project>

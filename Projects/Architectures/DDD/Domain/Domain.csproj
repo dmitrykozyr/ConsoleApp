@@ -20,9 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Models\DTO\" />
-    <Folder Include="Models\JsonDeserialize\" />
     <Folder Include="Models\ViewModels\" />
-    <Folder Include="Models\Options\" />
   </ItemGroup>
 
 </Project>
