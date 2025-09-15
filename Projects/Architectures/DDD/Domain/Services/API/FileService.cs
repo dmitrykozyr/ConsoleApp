@@ -7,11 +7,11 @@ namespace Domain.Services.API;
 
 public class FileService : IFileService
 {
-    private readonly IFileRepository _fakeFileRepository;
+    private readonly IFileRepository _fileRepository;
 
-    public FileService(IFileRepository fakeFileRepository)
+    public FileService(IFileRepository fileRepository)
     {
-        _fakeFileRepository = fakeFileRepository;
+        _fileRepository = fileRepository;
     }
 
     public FileStorageResponse GetFile(FileStorageRequest model)

@@ -83,15 +83,15 @@ public class VaultConfigurationProvider : ConfigurationProvider
 
             foreach (var secretName in secretNames)
             {
-                //VaultSecrets? kvSecret = await _httpClientData.GetRequest($"{VaultOptions.Address}v1/secret/{secretName.Name}");
+                VaultSecrets? kvSecret = await _httpClientData.GetRequest($"{VaultOptions.Address}v1/secret/{secretName.Name}");
 
-                //Guard.IsNotNull(kvSecret);
-                //Guard.IsNotNull(kvSecret.data);
+                Guard.IsNotNull(kvSecret);
+                Guard.IsNotNull(kvSecret.data);
 
-                //KeyValuePair<string, string> secret = kvSecret.data.FirstOrDefault();
+                KeyValuePair<string, string> secret = kvSecret.data.FirstOrDefault();
 
-                //// Секреты из Vault кладутся в IConfiguration
-                //Data.Add(secret.Key, secret.Value.ToString());
+                // Секреты из Vault кладутся в IConfiguration
+                Data.Add(secret.Key, secret.Value.ToString());
             }
         }
         catch (Exception ex)

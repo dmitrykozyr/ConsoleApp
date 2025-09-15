@@ -6,10 +6,12 @@ using Domain.Models.JsonDeserialize;
 using Domain.Models.Options;
 using Domain.Services;
 using Domain.Services.API;
+using Domain.Services.Login;
 using Infrastructure.LoggingData;
 using Infrastructure.Repositories;
 using Infrastructure.Vault;
 using Microsoft.Extensions.Options;
+using Presentation;
 
 /*
     Есть три способа настройки приложений:
@@ -42,23 +44,41 @@ using Microsoft.Extensions.Options;
         • Предлагает более высокоуровневый API для настройки приложения, комбинируя функциональность обоих предыдущих методов
 */
 
-//!
-//apiVersion
-//IOptions
-// keycloak
-// authorization
-// authentication
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllersWithViews();
+builder.Services.AddApiVersioning();
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient();
+
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
+#region ConfigurationBuilder
+
+string environment = $"appsettings.{builder.Environment.EnvironmentName}.json";
+builder.Configuration.AddJsonFile(environment, optional: false, reloadOnChange: true);
+builder.Configuration.AddEnvironmentVariables(prefix: "VAULT_");
+
+var cb = new ConfigurationBuilder();
+cb.SetBasePath(Directory.GetCurrentDirectory());
+cb.AddJsonFile(environment, optional: true, reloadOnChange: true);
+cb.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
+IConfiguration configuration = cb.Build();
+
+#endregion
+
+// IOption
+builder.Services.ConfigureOptions<ApplicationOptionsSetup<DatabaseOptions>>();
+builder.Services.ConfigureOptions<ApplicationOptionsSetup<GeneralOptions>>();
+builder.Services.ConfigureOptions<ApplicationOptionsSetup<LoginOptions>>();
+builder.Services.ConfigureOptions<ApplicationOptionsSetup<VaultOptions>>();
+
 // Services
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IDbConStrService, DbConStrService>();
 
 // Common services
 builder.Services.AddScoped<ILogging, Logging>();
@@ -68,64 +88,37 @@ builder.Services.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
 // Repositories
 builder.Services.AddScoped<IFileRepository, FileRepository>();
 
-// IOptions
-builder.Services.AddScoped<IOptions<VaultOptions>>();
-
-
-#region ConfigurationBuilder
-
-string environment = $"appsettings.{builder.Environment.EnvironmentName}.json";
-builder.Configuration.AddJsonFile(environment, optional: false, reloadOnChange: true);
-builder.Configuration.AddEnvironmentVariables(prefix: "VAULT_");
-var cb = new ConfigurationBuilder();
-cb.SetBasePath(Directory.GetCurrentDirectory());
-cb.AddJsonFile(environment, optional: true, reloadOnChange: true);
-cb.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
-IConfiguration configuration = cb.Build();
-
-//! Это нужно?
-if (builder.Configuration.GetSection("VaultOptions")["Role"] is not null)
-{
-    var serviceProvider = builder.Services.BuildServiceProvider();
-
-    var options = serviceProvider.GetRequiredService<IOptions<VaultOptions>>();
-    var logging = serviceProvider.GetRequiredService<ILogging>();
-    var httpClientData = serviceProvider.GetRequiredService<IHttpClientData<VaultSecrets>>();
-
-    Guard.IsNotNull(options);
-    Guard.IsNotNull(logging);
-    Guard.IsNotNull(httpClientData);
-
-    builder.Configuration.AddVault(
-        //!
-        //options =>
-        //{
-        //    IConfigurationSection? vaultOptions = builder.Configuration.GetSection("VaultOptions");
-
-        //    options.Address     = vaultOptions["Address"];
-        //    options.Role        = vaultOptions["Role"];
-        //    options.MountPath   = vaultOptions["MountPath"];
-        //    options.SecretType  = vaultOptions["SecretType"];
-        //    options.Secret      = vaultOptions["Secret"];
-        //},
-        options,
-        logging,
-        configuration,
-        httpClientData
-    );
-}
-
-#endregion
-
 
 #region Middleware
 
 var app = builder.Build();
 
+    #region HashiConf Vault
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var logging = scope.ServiceProvider.GetService<ILogging>();
+        var httpClientData = scope.ServiceProvider.GetService<IHttpClientData<VaultSecrets>>();
+        var vaultOptions = scope.ServiceProvider.GetService<IOptions<VaultOptions>>();
+
+        Guard.IsNotNull(logging);
+        Guard.IsNotNull(httpClientData);
+        Guard.IsNotNull(vaultOptions);
+
+        builder.Configuration.AddVault(vaultOptions, logging, configuration, httpClientData);
+    }
+
+    #endregion
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts(); //! что это?
+    app.UseHsts();
+}
+else
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -135,9 +128,15 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "FileDownload",
+    pattern: "{controller=Home}/{action=FileDownload}/{id?}");
 
 app.Run();
 

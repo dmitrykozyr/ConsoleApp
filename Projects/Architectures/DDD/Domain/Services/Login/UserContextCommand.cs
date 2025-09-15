@@ -1,0 +1,108 @@
+﻿using CommunityToolkit.Diagnostics;
+using Domain.Interfaces;
+using System.Data;
+
+namespace Domain.Services.Login;
+
+public class UserContextCommand : IDisposable
+{
+    private byte[]? cookie;
+    private readonly bool internalConnection = false;
+    private readonly SqlCommand command;
+    private readonly SqlConnection? connection;
+    private readonly SqlTransaction? transaction;
+
+    private readonly ISqlService _sqlService;
+
+    internal UserContextCommand(string commandText, CommandType commandType, int timeout, ISqlService sqlService)
+    {
+        internalConnection = true;
+        _sqlService = sqlService;
+
+        Guard.IsNotNull(_sqlService);
+        connection = _sqlService.CreateConnection();
+
+        Guard.IsNotNull(connection);
+        command = connection.CreateCommand();
+
+        command.CommandText = commandText;
+        command.CommandType = commandType;
+        command.CommandTimeout = timeout;
+    }
+
+    public SqlDataReader ExecuteReader(string login)
+    {
+        SqlDataReader reader;
+
+        try
+        {
+            SwitchSqlExecuteContext(login);
+            reader = command.ExecuteReader(CommandBehavior.Default);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+
+        return reader;
+    }
+
+    private void SwitchSqlExecuteContext(string login)
+    {
+        if (cookie is null)
+        {
+            Guard.IsNotNull(connection);
+
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                command.CommandText =
+                    string.Format(
+                        @"DECLARE @cookie VARBINARY(100); EXECUTE AS LOGIN = '{0}' WITH COOKIE INTO @cookie; SELECT @cookie;",
+                        login);
+
+                command.CommandType = CommandType.Text;
+
+                if (transaction is not null)
+                {
+                    command.Transaction = transaction;
+                }
+
+                cookie = (byte[])command.ExecuteScalar();
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        Guard.IsNotNull(connection);
+
+        // Revert SQL execute context
+        if (cookie is not null)
+        {
+
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                command.CommandText =
+                    string.Format(
+                        "DECLARE @cookie VARBINARY(100); SET @cookie = 0x{0}; REVERT WITH COOKIE = @cookie;",
+                        BitConverter.ToString(cookie).Replace("-", ""));
+
+                command.CommandType = CommandType.Text;
+
+                if (transaction is not null)
+                {
+                    command.Transaction = transaction;
+                }
+
+                command.ExecuteNonQuery();
+            }
+
+            cookie = null;
+        }
+
+        if (internalConnection)
+        {
+            connection.Close();
+        }
+    }
+}

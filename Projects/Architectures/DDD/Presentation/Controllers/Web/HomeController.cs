@@ -1,30 +1,61 @@
+using Domain.Interfaces;
+using Domain.Models.RequentModels;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Models;
-using System.Diagnostics;
 
 namespace Presentation.Controllers.Web;
+
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILoginService _loginService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILoginService loginService)
     {
-        _logger = logger;
+        _loginService = loginService;
     }
 
     public IActionResult Index()
     {
+        var isAuthenticated = _loginService.AuthenticateDomainUser();
+        if (!isAuthenticated)
+        {
+            return View("NotAuthorized");
+        }
+
         return View();
     }
 
-    public IActionResult Privacy()
+    // Вызывается при запуске
+    [HttpGet]
+    public ViewResult FileDownload()
     {
-        return View();
+        var isAuthenticated = _loginService.AuthenticateDomainUser();
+        if (!isAuthenticated)
+        {
+            return View("NotAuthorized");
+        }
+
+        var result = new ViewResult(); //!
+
+        return View(result);
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    // Вызывается при отправке формы
+    [HttpPost]
+    public ViewResult FileDownload(FileStorageRequest model)
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var isAuthenticated = _loginService.AuthenticateDomainUser();
+        if (!isAuthenticated)
+        {
+            return View("NotAuthorized");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            var result = new ViewResult(); //!
+
+            return View(result);
+        }
+
+        return View("Thanks");
     }
 }
