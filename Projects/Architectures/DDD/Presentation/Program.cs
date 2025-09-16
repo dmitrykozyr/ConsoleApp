@@ -1,5 +1,6 @@
 using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
+using Domain.Interfaces.Login;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
 using Domain.Models.JsonDeserialize;
@@ -14,9 +15,8 @@ using Infrastructure.Vault;
 using Microsoft.Extensions.Options;
 using Presentation;
 
+// Три способа настройки приложений
 /*
-    Есть три способа настройки приложений:
-
     1. WebHost.CreateDefaultBuilder()
 
         • Создание веб-приложений на ASP.NET Core
@@ -71,7 +71,19 @@ IConfiguration configuration = cb.Build();
 
 #endregion
 
-// IOption
+// IOptions
+/*
+    IOptions
+    Обновляет информацию о конфигурации один раз при старте приложения
+
+    IOptionsSnapshot
+    Обновляет информацию о конфигурации при каждом запросе и не изменяет ее во время запроса
+
+    IOptionsMonitor
+    Обновляет информацию о конфигурации при каждом обращении к конфигурации
+    Если получаем конфигурацию в двух местах и за время запроса она изменилась,
+    то в двух местах будут разные значения
+*/
 builder.Services.ConfigureOptions<ApplicationOptionsSetup<DatabaseOptions>>();
 builder.Services.ConfigureOptions<ApplicationOptionsSetup<GeneralOptions>>();
 builder.Services.ConfigureOptions<ApplicationOptionsSetup<LoginOptions>>();
@@ -84,6 +96,8 @@ builder.Services.AddScoped<IDbConStrService, DbConStrService>();
 // Common services
 builder.Services.AddScoped<ILogging, Logging>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<ISqlService, SqlService>();
+builder.Services.AddScoped<IProvider, Provider>();
 builder.Services.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
 
 // Repositories

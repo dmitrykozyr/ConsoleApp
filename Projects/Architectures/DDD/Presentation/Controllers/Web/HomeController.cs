@@ -1,4 +1,4 @@
-using Domain.Interfaces;
+using Domain.Interfaces.Login;
 using Domain.Models.RequentModels;
 using Microsoft.AspNetCore.Mvc;
 

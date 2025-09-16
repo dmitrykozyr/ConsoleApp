@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Domain.Services;
+namespace Infrastructure;
 
 public static class SqlCommands
 {

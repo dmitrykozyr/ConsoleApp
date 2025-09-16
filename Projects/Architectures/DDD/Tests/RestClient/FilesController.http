@@ -1,0 +1,39 @@
+@HostAddress = https://localhost:7051
+//@HostAddress = http://localhost:5000
+
+@ApiVersion = v1.0
+
+@fileGuidId = 11111111-1111-1111-1111-111111111111
+
+@bucketPath = BROKER-REPORTS
+@guid = afaeec9c-a82b-4c6e-8d44-eb8b4ef952c6
+
+# Получение файла
+GET {{HostAddress}}/api/{{ApiVersion}}/Files/GetFile?bucketPath={{bucketPath}}&guid={{guid}}
+Accept: application/json
+
+###
+
+# Загрузка файла
+POST {{HostAddress}}/api/{{ApiVersion}}/Files/LoadFile/
+Accept: application/json
+content-type: application/json
+
+    {
+        "bucketPath": "AttorneyScan",
+        "lifeTimeHours": 1
+    }
+
+###
+
+# Удаление файла из СХФ
+DELETE {{HostAddress}}/api/{{ApiVersion}}/Files/DeleteFile/
+Accept: application/json
+content-type: application/json
+
+    {
+        "guid": 11111111-1111-1111-1111-111111111111,
+        "bucketPath": "BROKER-REPORTS"
+    }
+
+###

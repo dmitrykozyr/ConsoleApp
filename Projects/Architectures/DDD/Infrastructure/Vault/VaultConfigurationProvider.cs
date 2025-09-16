@@ -83,7 +83,9 @@ public class VaultConfigurationProvider : ConfigurationProvider
 
             foreach (var secretName in secretNames)
             {
-                VaultSecrets? kvSecret = await _httpClientData.GetRequest($"{VaultOptions.Address}v1/secret/{secretName.Name}");
+                var request = $"{VaultOptions.Address}/v1/secret/{secretName.Name}";
+
+                VaultSecrets? kvSecret = await _httpClientData.GetRequest(request);
 
                 Guard.IsNotNull(kvSecret);
                 Guard.IsNotNull(kvSecret.data);
