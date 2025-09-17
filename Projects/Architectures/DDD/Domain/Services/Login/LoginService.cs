@@ -4,6 +4,7 @@ using Domain.Interfaces.Login;
 using Domain.Models.Options;
 using Microsoft.Extensions.Options;
 using System.Data;
+using System.Data.SqlClient;
 using System.Security.Principal;
 
 namespace Domain.Services.Login;
@@ -16,6 +17,8 @@ public class LoginService : ILoginService
     private readonly IProvider _provider;
 
     public static LoginOptions? LoginOptions { get; set; }
+
+    private const string GET_LOGIN_BY_NOTES_NAME = "";
 
     public LoginService(ISqlService sqlService, IProvider provider, IOptions<LoginOptions> loginOptions)
     {

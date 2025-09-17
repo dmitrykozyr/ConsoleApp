@@ -21,7 +21,8 @@
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": true, // true false
+      //"launchUrl": "swagger", // Закомментировать и launchBrowser = true, чтобы увидеть Web UI
       "applicationUrl": "https://localhost:7034;http://localhost:5251",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

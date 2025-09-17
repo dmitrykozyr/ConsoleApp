@@ -3,7 +3,9 @@ using Domain.Enums;
 using Domain.Formatters;
 using Domain.Interfaces;
 using Domain.Models.Options;
+using Domain.Services;
 using Microsoft.Extensions.Options;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace Infrastructure.LoggingData;
@@ -13,6 +15,8 @@ public class Logging : ILogging
     public static GeneralOptions? GeneralOptions { get; set; }
 
     private readonly IDbConStrService _dbConStrService;
+
+    private const string DOSERVICE_BCSFS_LOG_ADD = "";
 
     public Logging(IOptions<GeneralOptions> generalOptions, IDbConStrService dbConStrService)
     {

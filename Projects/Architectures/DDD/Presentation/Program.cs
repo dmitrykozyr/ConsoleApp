@@ -7,6 +7,7 @@ using Domain.Models.Options;
 using Domain.Services;
 using Domain.Services.API;
 using Domain.Services.Login;
+using Infrastructure.HttpClient_;
 using Infrastructure.LoggingData;
 using Infrastructure.Repositories;
 using Infrastructure.Vault;

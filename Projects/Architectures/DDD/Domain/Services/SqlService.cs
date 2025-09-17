@@ -4,10 +4,11 @@ using Domain.Models.Options;
 using Domain.Services.Login;
 using Microsoft.Extensions.Options;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Domain.Services;
 
-public class SqlService : ISqlService //!
+public class SqlService : ISqlService
 {
     private readonly DatabaseOptions? DatabaseOptions;
 

@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Controllers.API;
 
 [ApiController]
-//[ApiVersion("1.0")]
-//[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [Route("api/[controller]")]
 public class FilesController
 {
@@ -38,11 +38,11 @@ public class FilesController
                 return Results.Unauthorized();
             }
 
-            //var validationResult = Validator<FileStorageRequest, FileStorageRequestValidator>.Validate(model);
-            //if (validationResult is not null)
-            //{
-            //    return Results.BadRequest(validationResult);
-            //}
+            var validationResult = Validator<FileStorageRequest, FileStorageRequestValidator>.Validate(model);
+            if (validationResult is not null)
+            {
+                return Results.BadRequest(validationResult);
+            }
 
             var result = _fileService.GetFile(model);
             if (result is not null)
