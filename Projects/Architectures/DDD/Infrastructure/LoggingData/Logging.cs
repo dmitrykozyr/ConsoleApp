@@ -3,7 +3,6 @@ using Domain.Enums;
 using Domain.Formatters;
 using Domain.Interfaces;
 using Domain.Models.Options;
-using Domain.Services;
 using Microsoft.Extensions.Options;
 using System.Data.SqlClient;
 using System.Text;
@@ -88,4 +87,3 @@ public class Logging : ILogging
         throw new NotImplementedException();
     }
 }
-

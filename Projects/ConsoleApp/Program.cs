@@ -2,20 +2,23 @@
 {
     //!
     /*
+        Kubernetes
+        Prometheus
+        Grafana,
+        PostgreSQL
+        ClickHouse
+        Oracle
+        Kafka
+        RabbitMQ
+        NATS
+
         gRPC
-
         SOAP
-
         MediatR
-
         Шедулеры Quartz
-
         Виртуальная БД
-
         JSONb, blob
-
         Балансировщик
-
         Api Gateway
 
         DTO должны быть immutable

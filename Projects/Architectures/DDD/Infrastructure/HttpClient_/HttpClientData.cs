@@ -13,17 +13,22 @@ public class HttpClientData<T> : IHttpClientData<T?>
     private static VaultOptions? VaultOptions;
 
     private readonly ILogging _logging;
+    private readonly IHttpClientFactory _httpClientFactory;
 
-    public HttpClientData(ILogging logging, IOptions<VaultOptions> vaultOptions)
+    public HttpClientData(IOptions<VaultOptions> vaultOptions, ILogging logging, IHttpClientFactory httpClientFactory)
     {
-        _logging = logging;
-
         VaultOptions = vaultOptions.Value;
+
+        _logging = logging;
+        _httpClientFactory = httpClientFactory;
     }
 
+    //! Протестить
     public async Task<T?> GetRequest(string baseAddress, string additionalUrl = "", Dictionary<string, string>? headers = null)
     {
-        using (var client = new HttpClient())
+        // Вместо HttpClient лучше использовать IHttpClientFactory
+        //using (var client = new HttpClient())
+        using (var client = _httpClientFactory.CreateClient())
         {
             try
             {

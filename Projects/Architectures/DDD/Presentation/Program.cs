@@ -52,7 +52,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddApiVersioning();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient(); //! Настроить для использования IHttpClientFactory
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
