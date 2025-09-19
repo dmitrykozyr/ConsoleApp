@@ -4,149 +4,44 @@
 медленный		| быстрый		| быстрый
 старый		    | стабильный	| стабильный
 
-#region Юнит-тесты
+// Юнит-тесты
+/*
+    Хороший юнит тест должен быть:
+    -быстрым
+    - изолированным от файловой системы и БД
+    - должен возвращать одинаковый результат, если в коде ничего не менялось
 
-    /*
-        Хороший юнит тест должен быть:
-        -быстрым
-        - изолированным от файловой системы и БД
-        - должен возвращать одинаковый результат, если в коде ничего не менялось
+    Название теста должно состоять из 3 частей:
+    -имя тестируемого метода
+    - успешный сценарий
+    - ожидаемое поведение
+    Пример: Add_SingleNumber_ReturnsSameNumber
 
-        Название теста должно состоять из 3 частей:
-        -имя тестируемого метода
-        - успешный сценарий
-        - ожидаемое поведение
-        Пример: Add_SingleNumber_ReturnsSameNumber
+    Избегать логики в тестах:
+    - if
+    - while
+    - for
+    - switch
 
-        Избегать логики в тестах:
-        - if
-        - while
-        - for
-        - switch
+    Не прописывать в конструкторе много логики для всех тестах, лучше прописать в каждом тесте отдельно для меньшей связности
+    В каждом тесте должен быть один act
+    Не тестировать private -методы - это внутренняя реализация, лучше протестировать public метод, который вызывает этот private метод
+*/
 
-        Не прописывать в конструкторе много логики для всех тестах, лучше прописать в каждом тесте отдельно для меньшей связности
-        В каждом тесте должен быть один act
-        Не тестировать private -методы - это внутренняя реализация, лучше протестировать public метод, который вызывает этот private метод
-    */
+// Функциональные тесты
+/*
+    Проверяют работу программы с точки зрения взаимодействия между компонентами
+*/
 
-    public class Calculator
-    {
-        public int Add(int a, int b)
-        {
-            return a + b;
-        }
-    }
-
-    [TestClass]
-    public class CalculatorTests
-    {
-        [TestMethod]
-        public void Add_WhenCalled_ReturnsSum()
-        {
-            // Arrange
-            Calculator calculator = new Calculator();
-
-            // Act
-            int result = calculator.Add(3, 5);
-
-            // Assert
-            Assert.AreEqual(8, result);
-        }
-    }
-
-#endregion
-
-#region Функциональные тесты
-
-    // Проверяют работу программы с точки зрения взаимодействия между компонентами
-
-    [TestClass]
-    public class LoginTests
-    {
-        [TestMethod]
-        public void Login_ValidCredentials_SuccessfulLogin()
-        {
-            // Arrange
-            var driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("http://example.com");
-
-            // Act
-            var usernameField = driver.FindElement(By.Id("username"));
-            usernameField.SendKeys("testuser");
-            var passwordField = driver.FindElement(By.Id("password"));
-            passwordField.SendKeys("password123");
-            var loginButton = driver.FindElement(By.Id("loginButton"));
-            loginButton.Click();
-
-            // Assert
-            Assert.IsTrue(driver.Url.Contains("dashboard"));
-
-            driver.Quit();
-        }
-    }
-
-#endregion
-
-#region Интеграционные тесты
-
-    /*
-        Задействуют:
-        - БД
-        - файловую систему
-        - сеть
-        - реальные компоненты системы, используемые в продакшене, не фейки
-        - проверяют, что два и более компонента системы работают вместе корректно
-    */
-
-    public interface IDataService
-    {
-        string GetData();
-    }
-
-    public class DataService : IDataService
-    {
-        public string GetData()
-        {
-            return "Mocked data";
-        }
-    }
-
-    public class DataProcessor
-    {
-        private readonly IDataService _dataService;
-
-        public DataProcessor(IDataService dataService)
-        {
-            _dataService = dataService;
-        }
-
-        public string ProcessData()
-        {
-            return _dataService.GetData();
-        }
-    }
-
-    public class DataProcessorTests
-    {
-        [Fact]
-        public void ProcessData_WhenDataServiceReturnsData_ReturnsData()
-        {
-            // Arrange
-            var mockDataService = new Mock<IDataService>();
-            mockDataService.Setup(x => x.GetData()).Returns("Mocked data");
-
-            var dataProcessor = new DataProcessor(mockDataService.Object);
-
-            // Act
-            string result = dataProcessor.ProcessData();
-
-            // Assert
-            Assert.Equal("Mocked data", result);
-        }
-    }
-
-#endregion
-
+// Интеграционные тесты
+/*
+    Задействуют:
+    - БД
+    - файловую систему
+    - сеть
+    - реальные компоненты системы, используемые в продакшене, не фейки
+    - проверяют, что два и более компонента системы работают вместе корректно
+*/
 
 // FAKE IT EASY
 
