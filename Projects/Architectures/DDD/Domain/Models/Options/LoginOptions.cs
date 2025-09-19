@@ -2,5 +2,5 @@
 
 public class LoginOptions
 {
-    public string[]? RolesAllowed { get; set; }
+    public string[]? RolesAllowed { get; init; }
 }

@@ -51,8 +51,8 @@ public class VaultConfigurationProvider : ConfigurationProvider
 
     public async Task GetSecretsFromVaultInDevMode()
     {
-        string secretsEngineName = _configuration.GetSection("Vault:SecretsEngineName").Value ?? "";
-        string secretPath = _configuration.GetSection("Vault:SecretsStorageName").Value ?? "";
+        string secretsEngineName    = _configuration.GetSection("Vault:SecretsEngineName").Value ?? "";
+        string secretPath           = _configuration.GetSection("Vault:SecretsStorageName").Value ?? "";
 
         try
         {

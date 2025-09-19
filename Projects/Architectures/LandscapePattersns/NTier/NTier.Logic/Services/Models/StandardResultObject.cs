@@ -8,13 +8,13 @@ public class StandardResultObject
 
     public string InternalMessage { get; set; }
 
-    public Exception Exception { get; set; }
+    public Exception? Exception { get; set; }
 
     public StandardResultObject()
     {
-        Success = false;
-        UserMessage = string.Empty;
+        Success         = false;
+        UserMessage     = string.Empty;
         InternalMessage = string.Empty;
-        Exception = null;
+        Exception       = null;
     }
 }

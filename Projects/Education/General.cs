@@ -17,22 +17,36 @@ class Program
             Жизненный цикл .Net Core приложения
 
             - Создание нового проекта с помощью шаблонов .NET Core (например, через команду dotnet new)
+            
             - Настройка зависимостей, конфигураций и служб в файле Startup.cs и других конфигурационных файлах
+        
             - Запуск приложения
+        
             - Приложение загружает необходимые сборки и зависимости
+        
             - Создание хоста
               Создается экземпляр IHost, который управляет жизненным циклом приложения
               Это может быть WebHost для веб-приложений или Host для консольных приложений
+        
             - Приложение считывает конфигурации из различных источников (файлы, переменные окружения, секреты) и настраивает службы
+        
             - Все необходимые службы (например, контроллеры, сервисы, репозитории) регистрируются в контейнере зависимостей
+        
             - При запуске веб-приложения сервер (например, Kestrel) начинает прослушивать входящие HTTP-запросы
+        
             - Сервер обрабатывает входящие запросы, создавая экземпляры контроллеров и вызывая соответствующие методы для обработки запросов
+        
             - Запрос проходит через middleware, которое может выполнять аутентификацию, логирование, обработку ошибок
+        
             - Запрос направляется к соответствующему контроллеру и его методу, который обрабатывает бизнес-логику
+        
             - Контроллер формирует ответ (например, HTML, JSON или другой формат) и возвращает его обратно через middleware
+        
             - Ответ отправляется клиенту через сервер
+        
             - Когда приложение завершается (например, при получении сигнала остановки), оно очищает ресурсы,
               такие как закрытие соединений с БД, освобождение памяти
+        
             - Хост завершает работу, вызывая соответствующие методы для завершения всех зарегистрированных служб
         */
     }
@@ -144,7 +158,11 @@ class Program
 
         int LocalFunction(int a, int b) // Локальная функция
         {
-            int LocalFunction(int c, int d) { return c + d; }
+            int LocalFunction(int c, int d)
+            {
+                return c + d;
+            }
+
             return LocalFunction(a, b);
         }
 
@@ -218,7 +236,7 @@ class Program
 
     class Switch_
     {
-        public string MyProperty { get; set; }
+        public string? MyProperty { get; init; }
 
         static void Main_()
         {
@@ -228,7 +246,6 @@ class Program
             switch (a)
             {
                 case string s: // Преобразование object в string
-                        // ...
                     break;
                 case Switch_ sw when sw.MyProperty == "1":
                         // Если на вход передается объект класса Switch_
@@ -367,53 +384,53 @@ class Program
 
         #region IList и List
 
-            /*         
-                IList
+        /*         
+            IList
 
-                    Используется, если хотим создать метод или класс, который может работать с различными типами коллекций
+                Используется, если хотим создать метод или класс, который может работать с различными типами коллекций
 
-                    Интерфейс определяет операции для работы с коллекциями:
-                    - Add
-                    - Remove
-                    - Insert
-                    - IndexOf
-                    - свойство Count
-                    - свойство Item[index] для доступа к элементу по индексу
+                Интерфейс определяет операции для работы с коллекциями:
+                - Add
+                - Remove
+                - Insert
+                - IndexOf
+                - свойство Count
+                - свойство Item[index] для доступа к элементу по индексу
 
-                List
+            List
 
-                    Конкретная реализация интерфейса IList
-                    Представляет изменяемый массив, предоставляющий возможность хранить элементы и управлять ими
-                    Используется, если нужно работать с конкретной реализацией коллекции и использовать ее специфические методы
+                Конкретная реализация интерфейса IList
+                Представляет изменяемый массив, предоставляющий возможность хранить элементы и управлять ими
+                Используется, если нужно работать с конкретной реализацией коллекции и использовать ее специфические методы
             
-                    Включает дополнительные методы:
-                    - Sort
-                    - Reverse
-                    - и другие
-            */
+                Включает дополнительные методы:
+                - Sort
+                - Reverse
+                - и другие
+        */
 
-            // Метод ProcessItems может принимать любой объект, реализующий IList<string>, что делает его более универсальным
-            public void F1()
+        // Метод ProcessItems может принимать любой объект, реализующий IList<string>, что делает его более универсальным
+        public void F1()
+        {
+            void ProcessItems(IList<string> items)
             {
-                void ProcessItems(IList<string> items)
+                foreach (var item in items)
                 {
-                    foreach (var item in items)
-                    {
-                        Console.WriteLine(item);
-                    }
+                    Console.WriteLine(item);
                 }
-
-                void AddItem(List<string> items, string newItem)
-                {
-                    items.Add(newItem);
-                }
-
-                List<string> myItems = new List<string> { "Item1", "Item2" };
-
-                ProcessItems(myItems); // Можно передать List в метод, принимающий IList
-
-                AddItem(myItems, "Item3");
             }
+
+            void AddItem(List<string> items, string newItem)
+            {
+                items.Add(newItem);
+            }
+
+            var myItems = new List<string> { "Item1", "Item2" };
+
+            ProcessItems(myItems); // Можно передать List в метод, принимающий IList
+
+            AddItem(myItems, "Item3");
+        }
 
         #endregion
 
@@ -422,9 +439,9 @@ class Program
         {
             public class TreeData
             {
-                public int Id { get; set; }
+                public int Id { get; init; }
 
-                public TreeData[]? Child { get; set; }
+                public TreeData[]? Child { get; init; }
             }
 
             static void ShowLeafIds(TreeData root)
@@ -639,7 +656,7 @@ class Program
               В примере перегруженные операторы проводятся над двумя объектами, поэтому для каждой перегрузки будет два параметра
         */
 
-        int Value { get; set; }
+        int Value { get; init; }
 
         public static OperatorOverload_ operator + (OperatorOverload_ c1, OperatorOverload_ c2) 
         {
@@ -753,14 +770,14 @@ class Program
 
         class Product
         {
-            public int Price { get; set; }
+            public int Price { get; init; }
 
-            public string? Name { get; set; }
+            public string? Name { get; init; }
         }
 
         class MyDbContext : IDisposable
         {
-            public IQueryable<Product>? Products { get; set; }
+            public IQueryable<Product>? Products { get; init; }
 
             public void Dispose()
             {
@@ -813,66 +830,75 @@ class Program
 
         #region Liskov Substitution
 
-            // Класс FrozenDeposit нарушает принцип подстановки Лисков
-            // Объекты подкласса должны быть заменяемыми объектами базового класса без изменения желаемых свойств программы
+        // Класс FrozenDeposit нарушает принцип подстановки Лисков
+        // Объекты подкласса должны быть заменяемыми объектами базового класса без изменения желаемых свойств программы
 
-            public abstract class Deposit
+        public abstract class Deposit
+        {
+            public decimal Balance { get; protected set; }
+
+            public virtual void Credit(decimal amount)
             {
-                public decimal Balance { get; protected set; }
-
-                public virtual void Credit(decimal amount)
-                {
-                    Balance += amount;
-                }
+                Balance += amount;
             }
+        }
 
-            public class FrozenDeposit : Deposit
+        public class FrozenDeposit : Deposit
+        {
+            public override void Credit(decimal amount)
             {
-                public override void Credit(decimal amount)
-                {
-                    throw new Exception("This deposit does not support filling up");
-                }
+                throw new Exception("This deposit does not support filling up");
             }
+        }
 
         #endregion
 
         #region DependencyInvertion
 
-            interface IDependencyInvertion
+        interface IDependencyInvertion
+        {
+            void F1();
+        }
+
+        class A : IDependencyInvertion
+        {
+            public void F1()
             {
-                void F1();
+                Console.WriteLine("A");
+            }
+        }
+
+        class B : IDependencyInvertion
+        {
+            public void F1()
+            {
+                Console.WriteLine("B");
+            }
+        }
+
+        class C
+        {
+            private readonly IDependencyInvertion _di;
+
+            public C(IDependencyInvertion di)
+            {
+                _di = di;
             }
 
-            class A : IDependencyInvertion
+            public void F2()
             {
-                public void F1() { Console.WriteLine("A"); }
+                _di.F1();
             }
+        }
 
-            class B : IDependencyInvertion
-            {
-                public void F1() { Console.WriteLine("B"); }
-            }
+        static void Main_()
+        {
+            IDependencyInvertion dependencyInvertion = new A(); // A меняем на B при необходимости
+            dependencyInvertion.F1();
 
-            class C
-            {
-                private readonly IDependencyInvertion _di;
-
-                public C(IDependencyInvertion di)
-                {
-                    _di = di;
-                }
-
-                public void F2() { _di.F1(); }
-            }
-
-            static void Main_()
-            {
-                IDependencyInvertion dependencyInvertion = new A(); // A меняем на B при необходимости
-                dependencyInvertion.F1();
-
-                C c = new C(dependencyInvertion);
-                c.F2();
-            }
+            var c = new C(dependencyInvertion);
+            c.F2();
+        }
 
         #endregion
     }
@@ -925,9 +951,15 @@ class Program
 
             public override string Name
             {
-                get { return "Mr/Ms. " + name; }
+                get
+                {
+                    return "Mr/Ms. " + name;
+                }
 
-                set { name = value; }
+                set
+                {
+                    name = value;
+                }
             }
 
             static void Main_()
@@ -987,7 +1019,6 @@ class Program
             var objC = new C();
 
             objC.F1();
-
             objC.F2();
         }
     }
@@ -1050,7 +1081,7 @@ class Program
         {
             public T x;
 
-            public T param { get; set; }
+            public T param { get; init; }
 
             public A()
             {
@@ -1068,9 +1099,9 @@ class Program
 
             public Z y;
 
-            public T param1 { get; set; }
+            public T param1 { get; init; }
 
-            public Z param2 { get; set; }
+            public Z param2 { get; init; }
 
             public B(T _x, Z _y)
             {
@@ -1097,9 +1128,9 @@ class Program
 
             public Z y;
 
-            public T param1 { get; set; }
+            public T param1 { get; init; }
 
-            public Z param2 { get; set; }
+            public Z param2 { get; init; }
 
             public D(T _x, Z _y)
             {
@@ -1219,9 +1250,9 @@ class Program
 
         class A
         {
-            public int Id { get; set; }
+            public int Id { get; init; }
 
-            public string Name { get; set; }
+            public string? Name { get; init; }
         }
 
         static void Main_()
@@ -1304,7 +1335,7 @@ class Program
         // Можно использовать using, вызывающий Dispose неявно
         static void Main_()
         {
-            B objB = default;
+            B? objB = default;
 
             try
             {
@@ -1353,9 +1384,11 @@ class Program
 
         static void Main_()
         {
-            try // Программа выведет 1 2 3 4 6
+            // Программа выведет 1 2 3 4 6
+            try
             {
-                try // Сначала выполнятся try catch finally данного уровня, даже если возникнет исключение
+                // Сначала выполнятся try catch finally данного уровня, даже если возникнет исключение
+                try
                 {
                     Console.WriteLine("1");
                     throw new NullReferenceException();
@@ -1363,9 +1396,11 @@ class Program
                 catch
                 {
                     Console.WriteLine("2");
-                    throw;  // Если убрать эту строку, программа выведет 1 2 3 6
-                            // Здесь throw вверх то-же исключение, что было поймано выше - NullReferenceException
-                            // throw без аргументов можно вызвать только из блока catch
+
+                    // Если убрать эту строку, программа выведет 1 2 3 6
+                    // Здесь throw вверх то-же исключение, что было поймано выше - NullReferenceException
+                    // throw без аргументов можно вызвать только из блока catch
+                    throw;
                 }
                 // Вызовется в любом случае
                 finally
@@ -1396,7 +1431,6 @@ class Program
         // Их можно суммировать
         // Сигнатуры делегата и его методов должны совпадать (количество и типы аргументов)
         // Если на делегат подписано несколько методов, возвращающих значение, то через делегат получим значение последнего метода
-
         delegate void Del1();
         delegate int Del2(int a, int b);
 
@@ -1477,7 +1511,6 @@ class Program
 
             3. Подписчик: Метод, который подписывается на событие и будет вызван, когда событие произойдет
 
-
             Пример:
             1. Определяем делегат ClickEventHandler, который принимает два параметра: отправитель события и объект EventArgs
             2. На основе делегата объявляем событие Clicked
@@ -1527,9 +1560,9 @@ class Program
     {
         static void Main_()
         {
-            var randomNumber = new Random(42);
-            var oneTimeKey = new byte[32];
-            var tokenHandler = new JwtSecurityTokenHandler();
+            var randomNumber    = new Random(42);
+            var oneTimeKey      = new byte[32];
+            var tokenHandler    = new JwtSecurityTokenHandler();
             randomNumber.NextBytes(oneTimeKey);
 
             var signingCredentials = new SigningCredentials(
@@ -1669,7 +1702,7 @@ class Program
             {
                 Console.WriteLine("Is class");
             }
-            if (type.IsAbstract)
+            else if (type.IsAbstract)
             {
                 Console.WriteLine("Is abstract class");
             }
@@ -1715,13 +1748,11 @@ class Program
             // true
             bool d = new RecordA(1, "TEST").Equals(new RecordA(1, "TEST"));
 
+            public string? Name { get; init; }
 
+            public int Age { get; init; }
 
-            public string? Name { get; set; }
-
-            public int Age { get; set; }
-
-            public override bool Equals(object obj)
+            public override bool Equals(object? obj)
             {
                 // Проверяем, что объект не равен null и является экземпляром Person
                 if (obj is Person other)
@@ -1742,9 +1773,9 @@ class Program
         {
             static void Main_()
             {
-                var person1 = new Person { Name = "Alice", Age = 30 };
-                var person2 = new Person { Name = "Alice", Age = 30 };
-                var person3 = new Person { Name = "Bob", Age = 25 };
+                var person1 = new Person { Name = "Alice",  Age = 30 };
+                var person2 = new Person { Name = "Alice",  Age = 30 };
+                var person3 = new Person { Name = "Bob",    Age = 25 };
 
                 Console.WriteLine(person1.Equals(person2)); // true
                 Console.WriteLine(person1.Equals(person3)); // false
@@ -1806,26 +1837,26 @@ class Program
     class Transaction_
     {
         /*
-            public bool F1()
+        public bool F1()
+        {
+            using (var transaction = _dbContext.GetDatabase().BeginTransaction())
             {
-                using (var transaction = _dbContext.GetDatabase().BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        //...
+                    //...
 
-                        bool result = _dbContext.SaveChanges() > 0;
-                        transaction.Commit();
-                        return result;
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError($"Категория id={id} не была : {e}");
-                        transaction.Rollback();
-                        throw;
-                    }
+                    bool result = _dbContext.SaveChanges() > 0;
+                    transaction.Commit();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Категория id={id} не была : {e}");
+                    transaction.Rollback();
+                    throw;
                 }
             }
+        }
         */
     }
 

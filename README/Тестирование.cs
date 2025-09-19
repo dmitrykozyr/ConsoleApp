@@ -59,9 +59,9 @@
     var foos = A.CollectionOfFake<Foo>(10);
 
 
-            // Если тип фейка заранее неизвестен, можно использовать non-generic методы
-            using FakeItEasy.Sdk;
-            var type = GetTypeOfFake();
+    // Если тип фейка заранее неизвестен, можно использовать non-generic методы
+    using FakeItEasy.Sdk;
+    var type = GetTypeOfFake();
     object fake = Create.Fake(type);
     IList<object> fakes = Create.CollectionOfFake(type, 10);
 
@@ -69,14 +69,14 @@
     // Передача аргументов в фейковый конструктор, при этом настоящий конструктор не будет вызван
     var foo1 = A.Fake<FooClass>(x => x.WithArgumentsForConstructor(() =>
     {
-    new FooClass("foo", "bar"))
-            });
+        new FooClass("foo", "bar"))
+    });
 
     var foo2 = A.Fake<FooClass>(x => x.WithArgumentsForConstructor(
         new object[]
         {
-                    "foo",
-                    "bar"
+            "foo",
+            "bar"
         }));
 
     var foo3 = A.Fake<FooClass>(x => x.Implements<IFoo>());

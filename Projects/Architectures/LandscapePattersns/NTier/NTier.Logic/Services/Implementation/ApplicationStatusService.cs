@@ -22,12 +22,12 @@ public class ApplicationStatusService : IApplicationStatusService
                 ApplicationStatusName = name
             };
 
-            ApplicationStatus = await _crud.Create<ApplicationStatus>(ApplicationStatus);
+            ApplicationStatus = await _crud.Create(ApplicationStatus);
 
             var statusAdded = new ApplicationStatusResultSet
             {
-                Name = ApplicationStatus.ApplicationStatusName,
-                StatusId = ApplicationStatus.ApplicationStatusId
+                Name        = ApplicationStatus.ApplicationStatusName,
+                StatusId    = ApplicationStatus.ApplicationStatusId
             };
 
             result.UserMessage = string.Format("Status {0} was added successfully", name);
@@ -53,6 +53,7 @@ public class ApplicationStatusService : IApplicationStatusService
     public async Task<GenericResultSet<List<ApplicationStatusResultSet>>> GetAllApplicationStatuses()
     {
         var result = new GenericResultSet<List<ApplicationStatusResultSet>>();
+
         try
         {
             List<ApplicationStatus> ApplicationStatuses = await _crud.ReadAll<ApplicationStatus>();
@@ -63,8 +64,8 @@ public class ApplicationStatusService : IApplicationStatusService
             {
                 result.ResultSet.Add(new ApplicationStatusResultSet
                 {
-                    StatusId = z.ApplicationStatusId,
-                    Name = z.ApplicationStatusName
+                    StatusId    = z.ApplicationStatusId,
+                    Name        = z.ApplicationStatusName
                 });
             });
 
@@ -89,21 +90,22 @@ public class ApplicationStatusService : IApplicationStatusService
     public async Task<GenericResultSet<ApplicationStatusResultSet>> UpdateApplicationStatus(long status_id, string name)
     {
         var result = new GenericResultSet<ApplicationStatusResultSet>();
+
         try
         {
             var ApplicationStatus = new ApplicationStatus
             {
-                ApplicationStatusId = status_id,
-                ApplicationStatusName = name,
-                ApplicationStatusModifiedDate = DateTime.UtcNow
+                ApplicationStatusId             = status_id,
+                ApplicationStatusName           = name,
+                ApplicationStatusModifiedDate   = DateTime.UtcNow
             };
 
-            ApplicationStatus = await _crud.Update<ApplicationStatus>(ApplicationStatus, status_id);
+            ApplicationStatus = await _crud.Update(ApplicationStatus, status_id);
 
             var statusUpdated = new ApplicationStatusResultSet
             {
-                Name = ApplicationStatus.ApplicationStatusName,
-                StatusId = ApplicationStatus.ApplicationStatusId
+                Name        = ApplicationStatus.ApplicationStatusName,
+                StatusId    = ApplicationStatus.ApplicationStatusId
             };
 
             result.UserMessage = string.Format("Status {0} was updated successfully", name);
@@ -118,9 +120,8 @@ public class ApplicationStatusService : IApplicationStatusService
         {
             result.Exception = ex;
             
-            result.UserMessage = string.Format("Failed to update status");
-            
-            result.InternalMessage = string.Format("ERROR: LOGIC.Services.Implementation.ApplicationStatus_Service: UpdateApplicationStatus(): {0}", ex.Message);
+            result.UserMessage      = string.Format("Failed to update status");            
+            result.InternalMessage  = string.Format("ERROR: LOGIC.Services.Implementation.ApplicationStatus_Service: UpdateApplicationStatus(): {0}", ex.Message);
         }
 
         return result;

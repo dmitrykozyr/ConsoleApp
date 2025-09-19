@@ -2,9 +2,9 @@
 
 public class OrderCreatedEvent
 {
-    public Guid OrderId { get; set; }
+    public Guid OrderId { get; init; }
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDate { get; init; }
 
-    public decimal TotalAmount { get; set; }
+    public decimal TotalAmount { get; init; }
 }

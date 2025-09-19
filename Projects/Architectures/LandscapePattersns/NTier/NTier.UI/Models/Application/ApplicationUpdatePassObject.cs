@@ -2,7 +2,7 @@
 
 public class ApplicationUpdatePassObject : ApplicationPassObject
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public int StatusId { get; set; }
+    public int StatusId { get; init; }
 }

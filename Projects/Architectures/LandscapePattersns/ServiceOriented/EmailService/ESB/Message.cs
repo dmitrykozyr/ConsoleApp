@@ -2,9 +2,9 @@
 
 public class Message<T>
 {
-    public Guid MessageId { get; set; }
+    public Guid MessageId { get; init; }
 
-    public T Data { get; set; }
+    public T Data { get; init; }
 
     public Message(T data)
     {

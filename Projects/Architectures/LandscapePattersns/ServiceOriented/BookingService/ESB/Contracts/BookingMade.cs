@@ -2,11 +2,11 @@
 
 public class BookingMade
 {
-    public int TourId { get; set; }
+    public int TourId { get; init; }
 
-    public string? Email { get; set; }
+    public string? Email { get; init; }
 
-    public string? Name { get; set; }
+    public string? Name { get; init; }
 
-    public bool Transport { get; set; }
+    public bool Transport { get; init; }
 }

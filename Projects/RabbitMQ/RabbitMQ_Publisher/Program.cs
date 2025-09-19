@@ -23,20 +23,20 @@ using (var channel = connection.CreateModel())
         Thread.Sleep(1000);
 
         // Создаем очередь, куда будем отправлять сообщения
-        channel.QueueDeclare(queue: queueName,
-                             durable: true,
-                             exclusive: false,
-                             autoDelete: false,
-                             arguments: null);
+        channel.QueueDeclare(queue:         queueName,
+                             durable:       true,
+                             exclusive:     false,
+                             autoDelete:    false,
+                             arguments:     null);
         
         string message = "Some message " + messageNumber;
 
         var messageBytes = Encoding.UTF8.GetBytes(message);
 
-        channel.BasicPublish(exchange: "",
-                             routingKey: queueName,
-                             basicProperties: null,
-                             body: messageBytes);
+        channel.BasicPublish(exchange:          "",
+                             routingKey:        queueName,
+                             basicProperties:   null,
+                             body:              messageBytes);
 
         Console.WriteLine("Message {0} was sent", messageNumber++);
     }

@@ -2,5 +2,5 @@
 
 public class VaultSecrets
 {
-    public Dictionary<string, string>? data { get; set; }
+    public Dictionary<string, string>? data { get; init; }
 }

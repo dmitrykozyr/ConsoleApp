@@ -2,15 +2,15 @@
 
 public class UserModel
 {
-    public string? UserName { get; set; }
+    public string? UserName { get; init; }
 
-    public string? Password { get; set; }
+    public string? Password { get; init; }
 
-    public string? EmailAddress { get; set; }
+    public string? EmailAddress { get; init; }
 
-    public string? Role { get; set; }
+    public string? Role { get; init; }
 
-    public string? Surname { get; set; }
+    public string? Surname { get; init; }
 
-    public string? GivenName { get; set; }
+    public string? GivenName { get; init; }
 }

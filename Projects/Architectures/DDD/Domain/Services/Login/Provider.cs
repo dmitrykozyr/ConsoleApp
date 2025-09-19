@@ -26,7 +26,7 @@ public class Provider : IProvider
             while (reader.Read())
             {
                 var appRoleInfo = new AppRoleInfo(
-                    name: reader.GetString(0),
+                    name:   reader.GetString(0),
                     armUrl: reader.GetString(1),
                     parent: person,
                     isRestricted: reader.GetBoolean(3));

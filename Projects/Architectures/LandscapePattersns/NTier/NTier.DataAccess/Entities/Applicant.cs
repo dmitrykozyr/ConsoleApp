@@ -2,21 +2,21 @@
 
 public class Applicant
 {
-    public long ApplicantId { get; set; }
+    public long ApplicantId { get; init; }
 
-    public string? ApplicantName { get; set; }
+    public string? ApplicantName { get; init; }
 
-    public string? ApplicantSurname { get; set; }
+    public string? ApplicantSurname { get; init; }
 
-    public DateTime ApplicantBirthDate { get; set; }
+    public DateTime ApplicantBirthDate { get; init; }
 
-    public string? ContactEmail { get; set; }
+    public string? ContactEmail { get; init; }
 
-    public string? ContactNumber { get; set; }
+    public string? ContactNumber { get; init; }
 
-    public DateTime ApplicantCreationDate { get; set; }
+    public DateTime ApplicantCreationDate { get; init; }
 
-    public DateTime ApplicantModifiedDate { get; set; }
+    public DateTime ApplicantModifiedDate { get; init; }
 
-    public ICollection<Application>? Applications { get; set; }
+    public ICollection<Application>? Applications { get; init; }
 }

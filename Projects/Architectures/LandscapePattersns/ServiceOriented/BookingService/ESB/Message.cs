@@ -16,7 +16,7 @@ public class Message<T>
         Data = data;
     }
 
-    public Guid MessageId { get; set; }
+    public Guid MessageId { get; init; }
 
-    public T Data { get; set; }
+    public T Data { get; init; }
 }

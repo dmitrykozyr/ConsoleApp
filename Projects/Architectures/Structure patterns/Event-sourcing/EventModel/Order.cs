@@ -10,7 +10,7 @@ public class Order
     {
         var orderCreatedEvent = new OrderCreatedEvent
         {
-            OrderId = Guid.NewGuid(),
+            OrderId     = Guid.NewGuid(),
             CreatedDate = DateTime.UtcNow,
             TotalAmount = totalAmount
         };
@@ -37,10 +37,10 @@ public class Order
         switch (_event)
         {
             case OrderCreatedEvent orderCreated:
-                Id = orderCreated.OrderId;
+                Id          = orderCreated.OrderId;
                 CreatedDate = orderCreated.CreatedDate;
                 TotalAmount = orderCreated.TotalAmount;
-                _status = OrderStatus.New;
+                _status     = OrderStatus.New;
                 break;
             case OrderCancelledEvent orderCancelled:
                 _status = OrderStatus.Cancelled;

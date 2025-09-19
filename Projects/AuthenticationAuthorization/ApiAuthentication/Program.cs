@@ -20,12 +20,12 @@ builder.Services.AddSwaggerGen(options =>
     // чтобы можно было добавить JWT Token
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Description = "Bearer authentication with JWT Token",
-        Type = SecuritySchemeType.Http
+        Scheme          = "Bearer",
+        BearerFormat    = "JWT",
+        In              = ParameterLocation.Header,
+        Name            = "Authorization",
+        Description     = "Bearer authentication with JWT Token",
+        Type            = SecuritySchemeType.Http
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -48,13 +48,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     options.TokenValidationParameters = new TokenValidationParameters()
     {
-        ValidateActor = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        ValidateActor               = true,
+        ValidateAudience            = true,
+        ValidateLifetime            = true,
+        ValidateIssuerSigningKey    = true,
+        ValidIssuer                 = builder.Configuration["Jwt:Issuer"],
+        ValidAudience               = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey            = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
 
@@ -113,20 +113,20 @@ IResult Login(UserLogin user, IUserService service)
 
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, loggedInUser.UserName),
-            new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
-            new Claim(ClaimTypes.GivenName, loggedInUser.GivenName),
-            new Claim(ClaimTypes.Surname, loggedInUser.Surname),
-            new Claim(ClaimTypes.Role, loggedInUser.Role)
+            new Claim(ClaimTypes.NameIdentifier,    loggedInUser.UserName),
+            new Claim(ClaimTypes.Email,             loggedInUser.EmailAddress),
+            new Claim(ClaimTypes.GivenName,         loggedInUser.GivenName),
+            new Claim(ClaimTypes.Surname,           loggedInUser.Surname),
+            new Claim(ClaimTypes.Role,              loggedInUser.Role)
         };
 
         var token = new JwtSecurityToken
         (
-            issuer: builder.Configuration["Jwt:Issuer"],
-            audience: builder.Configuration["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddDays(60),
-            notBefore: DateTime.UtcNow,
+            issuer:             builder.Configuration["Jwt:Issuer"],
+            audience:           builder.Configuration["Jwt:Audience"],
+            claims:             claims,
+            expires:            DateTime.UtcNow.AddDays(60),
+            notBefore:          DateTime.UtcNow,
             signingCredentials: new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
                 SecurityAlgorithms.HmacSha256)

@@ -2,13 +2,13 @@
 
 public class VaultOptions
 {
-    public string? Address { get; set; }
+    public string? Address { get; init; }
 
-    public string? Role { get; set; }
+    public string? Role { get; init; }
 
-    public string? Secret { get; set; }
+    public string? Secret { get; init; }
 
-    public string? MountPath { get; set; }
+    public string? MountPath { get; init; }
 
-    public string? SecretType { get; set; }
+    public string? SecretType { get; init; }
 }

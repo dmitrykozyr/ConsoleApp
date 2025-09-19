@@ -2,7 +2,7 @@
 
 public class OrderCancelledEvent
 {
-    public Guid OrderId { get; set; }
+    public Guid OrderId { get; init; }
 
-    public DateTime CancelledDate { get; set; }
+    public DateTime CancelledDate { get; init; }
 }

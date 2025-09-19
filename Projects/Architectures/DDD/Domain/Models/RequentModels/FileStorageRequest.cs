@@ -2,5 +2,5 @@
 
 public class FileStorageRequest
 {
-    public Guid FileGuid { get; set; }
+    public Guid FileGuid { get; init; }
 }

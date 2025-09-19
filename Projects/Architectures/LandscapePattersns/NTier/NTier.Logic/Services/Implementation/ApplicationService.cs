@@ -25,6 +25,7 @@ public class ApplicationService : IApplicationService
     {
         var result = new GenericResultSet<ApplicationApplicantResultSet>();
         result.ResultSet = new ApplicationApplicantResultSet();
+
         try
         {
             Application ApplicationAdded = await _application_Operations.AddFullApplication(
@@ -39,23 +40,23 @@ public class ApplicationService : IApplicationService
 
             result.ResultSet.ApplicantResultSet = new Models.Applicant.ApplicantResultSet
             {
-                Id = ApplicationAdded.ApplicantId,
-                Name = ApplicationAdded.Applicant.ApplicantName,
-                Surname = ApplicationAdded.Applicant.ApplicantSurname,
-                Birthday = ApplicationAdded.Applicant.ApplicantBirthDate,
-                Email = ApplicationAdded.Applicant.ContactEmail,
-                PhoneNumber = ApplicationAdded.Applicant.ContactNumber,
-                SubmissionDate = ApplicationAdded.Applicant.ApplicantCreationDate
+                Id              = ApplicationAdded.ApplicantId,
+                Name            = ApplicationAdded.Applicant.ApplicantName,
+                Surname         = ApplicationAdded.Applicant.ApplicantSurname,
+                Birthday        = ApplicationAdded.Applicant.ApplicantBirthDate,
+                Email           = ApplicationAdded.Applicant.ContactEmail,
+                PhoneNumber     = ApplicationAdded.Applicant.ContactNumber,
+                SubmissionDate  = ApplicationAdded.Applicant.ApplicantCreationDate
             };
 
             result.ResultSet.ApplicationResultSet = new ApplicationResultSet
             {
-                Id = ApplicationAdded.ApplicationId,
-                ApplicantId = ApplicationAdded.ApplicantId,
-                GradeId = ApplicationAdded.GradeId,
-                StatusId = ApplicationAdded.ApplicationStatusId,
-                SchoolYear = ApplicationAdded.SchoolYear,
-                SubmissionDate = ApplicationAdded.ApplicationCreationDate
+                Id              = ApplicationAdded.ApplicationId,
+                ApplicantId     = ApplicationAdded.ApplicantId,
+                GradeId         = ApplicationAdded.GradeId,
+                StatusId        = ApplicationAdded.ApplicationStatusId,
+                SchoolYear      = ApplicationAdded.SchoolYear,
+                SubmissionDate  = ApplicationAdded.ApplicationCreationDate
             };
 
             result.UserMessage = "Application and applicant was added successfully";
@@ -87,12 +88,12 @@ public class ApplicationService : IApplicationService
 
             var appplicationReturned = new ApplicationResultSet
             {
-                Id = Application.ApplicationId,
-                ApplicantId = Application.ApplicantId,
-                GradeId = Application.GradeId,
-                StatusId = Application.ApplicationStatusId,
-                SchoolYear = Application.SchoolYear,
-                SubmissionDate = Application.ApplicationCreationDate
+                Id              = Application.ApplicationId,
+                ApplicantId     = Application.ApplicantId,
+                GradeId         = Application.GradeId,
+                StatusId        = Application.ApplicationStatusId,
+                SchoolYear      = Application.SchoolYear,
+                SubmissionDate  = Application.ApplicationCreationDate
             };
 
             result.UserMessage = "Your application was located successfully";
@@ -125,26 +126,26 @@ public class ApplicationService : IApplicationService
 
         try
         {
-            Application Application = new Application
+            var Application = new Application
             {
-                ApplicationId = applicationId,
-                ApplicantId = applicantId,
-                GradeId = gradeId,
-                ApplicationStatusId = applicationStatusId,
-                SchoolYear = schoolYear,
+                ApplicationId           = applicationId,
+                ApplicantId             = applicantId,
+                GradeId                 = gradeId,
+                ApplicationStatusId     = applicationStatusId,
+                SchoolYear              = schoolYear,
                 ApplicationModifiedDate = DateTime.UtcNow
             };
 
-            Application = await _crud.Update<Application>(Application, applicationId);
+            Application = await _crud.Update(Application, applicationId);
 
-            ApplicationResultSet applicationUpdated = new ApplicationResultSet
+            var applicationUpdated = new ApplicationResultSet
             {
-                Id = Application.ApplicationId,
-                ApplicantId = Application.ApplicantId,
-                GradeId = Application.GradeId,
-                StatusId = Application.ApplicationStatusId,
-                SchoolYear = Application.SchoolYear,
-                SubmissionDate = Application.ApplicationCreationDate
+                Id              = Application.ApplicationId,
+                ApplicantId     = Application.ApplicantId,
+                GradeId         = Application.GradeId,
+                StatusId        = Application.ApplicationStatusId,
+                SchoolYear      = Application.SchoolYear,
+                SubmissionDate  = Application.ApplicationCreationDate
             };
 
             result.UserMessage = "Application was updated successfully";
@@ -163,6 +164,7 @@ public class ApplicationService : IApplicationService
             
             result.InternalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Application_Service: UpdateApplication(): {0}", exception.Message); ;
         }
+
         return result;
     }
 
@@ -179,12 +181,12 @@ public class ApplicationService : IApplicationService
             Applications.ForEach(app => {
                 result.ResultSet.Add(new ApplicationResultSet
                 {
-                    ApplicantId = app.ApplicantId,
-                    GradeId = app.GradeId,
-                    Id = app.ApplicationId,
-                    SchoolYear = app.SchoolYear,
-                    StatusId = app.ApplicationStatusId,
-                    SubmissionDate = app.ApplicationCreationDate
+                    ApplicantId     = app.ApplicantId,
+                    GradeId         = app.GradeId,
+                    Id              = app.ApplicationId,
+                    SchoolYear      = app.SchoolYear,
+                    StatusId        = app.ApplicationStatusId,
+                    SubmissionDate  = app.ApplicationCreationDate
                 });
             });
 
@@ -204,6 +206,7 @@ public class ApplicationService : IApplicationService
             
             result.InternalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Application_Service: GetApplicationsByApplicantId(): {0}", exception.Message);
         }
+
         return result;
     }
 }

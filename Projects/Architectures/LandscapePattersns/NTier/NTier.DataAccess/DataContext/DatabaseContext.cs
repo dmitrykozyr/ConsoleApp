@@ -10,7 +10,6 @@ public class DatabaseContext : DbContext
         public OptionsBuild()
         {
             Settings = new AppConfiguration();
-
             OptionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
 
             OptionsBuilder.UseSqlServer(Settings.SqlConnectionString);
@@ -18,11 +17,11 @@ public class DatabaseContext : DbContext
             DatabaseOptions = OptionsBuilder.Options;
         }
 
-        public DbContextOptions<DatabaseContext> DatabaseOptions { get; set; }
+        public DbContextOptions<DatabaseContext> DatabaseOptions { get; init; }
 
-        public DbContextOptionsBuilder<DatabaseContext> OptionsBuilder { get; set; }
+        public DbContextOptionsBuilder<DatabaseContext> OptionsBuilder { get; init; }
 
-        private AppConfiguration Settings { get; set; }
+        private AppConfiguration Settings { get; init; }
     }
 
     public static OptionsBuild Options = new OptionsBuild();
@@ -30,17 +29,17 @@ public class DatabaseContext : DbContext
     public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options) { }
 
-    public DbSet<Applicant> Applicants { get; set; }
+    public DbSet<Applicant> Applicants { get; init; }
 
-    public DbSet<Application> Applications { get; set; }
+    public DbSet<Application> Applications { get; init; }
 
-    public DbSet<ApplicationStatus> ApplicationStatuses { get; set; }
+    public DbSet<ApplicationStatus> ApplicationStatuses { get; init; }
 
-    public DbSet<Grade> Grades { get; set; }
+    public DbSet<Grade> Grades { get; init; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        DateTime modifiedDate = new DateTime(1990, 1, 1);
+        var modifiedDate = new DateTime(1990, 1, 1);
 
         #region Applicant
 

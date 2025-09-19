@@ -2,7 +2,7 @@
 
 public class GeneralOptions
 {
-    public string? LogFile { get; set; }
+    public string? LogFile { get; init; }
 
-    public int CommandTimeout { get; set; }
+    public int CommandTimeout { get; init; }
 }

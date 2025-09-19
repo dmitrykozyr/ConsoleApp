@@ -2,7 +2,7 @@
 
 public class DatabaseOptions
 {
-    public string? DepositaryConnStr { get; set; }
+    public string? DepositaryConnStr { get; init; }
 
-    public string? SqlCommandTimeout { get; set; }
+    public string? SqlCommandTimeout { get; init; }
 }

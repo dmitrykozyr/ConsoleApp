@@ -24,7 +24,7 @@ public class Logging : ILogging
         _dbConStrService = dbConStrService;
     }
 
-    public void LogToFile(string messageToLog)
+    public void LogToFile(string message)
     {
         Guard.IsNotNull(GeneralOptions);
 
@@ -46,7 +46,7 @@ public class Logging : ILogging
         using (var lf = new StreamWriter(logFile, true, Encoding.Default))
         {
             lf.WriteLine("----------------------------------------------------------------");
-            lf.WriteLine(DateFormatters.DateTimeNow() + ", " + messageToLog);
+            lf.WriteLine(DateFormatters.DateTimeNow() + ", " + message);
             lf.Flush();
             lf.Close();
         }

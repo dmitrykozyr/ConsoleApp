@@ -38,9 +38,9 @@ public class MovieService : IMovieService
             return null;
         }
 
-        oldMovie.Title = updatedMovie.Title;
-        oldMovie.Description = updatedMovie.Description;
-        oldMovie.Rating = updatedMovie.Rating;
+        oldMovie.Title          = updatedMovie.Title;
+        oldMovie.Description    = updatedMovie.Description;
+        oldMovie.Rating         = updatedMovie.Rating;
 
         return updatedMovie;
     }

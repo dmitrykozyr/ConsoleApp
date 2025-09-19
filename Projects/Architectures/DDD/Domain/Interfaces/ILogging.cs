@@ -6,7 +6,7 @@ public interface ILogging
 {
     void LogToFile(string message);
 
-    void LogToDB(RestMethods restMethod, string message, Guid fileGuid);
+    void LogToDB(RestMethods operationType, string bucketPath, Guid guid);
 
     void LogToConsole(string message);
 }

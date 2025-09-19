@@ -2,5 +2,5 @@
 
 public class ApplicantUpdatePassObject : ApplicantPassObject
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 }

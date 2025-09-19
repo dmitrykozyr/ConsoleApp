@@ -6,7 +6,7 @@ public class AppConfiguration
 {
     public AppConfiguration()
     {
-        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+        var configurationBuilder = new ConfigurationBuilder();
 
         string pathToAppsettings = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
 
@@ -19,5 +19,5 @@ public class AppConfiguration
         SqlConnectionString = appSettings.Value;
     }
 
-    public string SqlConnectionString { get; set; }
+    public string SqlConnectionString { get; init; }
 }

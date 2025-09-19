@@ -2,5 +2,5 @@
 
 public class TourRequest
 {
-    public int TourId { get; set; }
+    public int TourId { get; init; }
 }

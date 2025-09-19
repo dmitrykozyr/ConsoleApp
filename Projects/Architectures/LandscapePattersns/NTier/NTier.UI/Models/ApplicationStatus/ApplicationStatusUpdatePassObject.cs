@@ -2,5 +2,5 @@
 
 public class ApplicationStatusUpdatePassObject : ApplicationStatusPassObject
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 }

@@ -31,16 +31,17 @@ public class ApplicantService : IApplicantService
                 ContactNumber = phoneNumber
             };
 
-            Applicant = await _crud.Create<Applicant>(Applicant);
+            Applicant = await _crud.Create(Applicant);
+
             var applicantAdded = new ApplicantResultSet
             {
-                Id = Applicant.ApplicantId,
-                Name = Applicant.ApplicantName,
-                Surname = Applicant.ApplicantSurname,
-                Birthday = Applicant.ApplicantBirthDate,
-                Email = Applicant.ContactEmail,
-                PhoneNumber = Applicant.ContactNumber,
-                SubmissionDate = Applicant.ApplicantCreationDate
+                Id              = Applicant.ApplicantId,
+                Name            = Applicant.ApplicantName,
+                Surname         = Applicant.ApplicantSurname,
+                Birthday        = Applicant.ApplicantBirthDate,
+                Email           = Applicant.ContactEmail,
+                PhoneNumber     = Applicant.ContactNumber,
+                SubmissionDate  = Applicant.ApplicantCreationDate
             };
 
             result.UserMessage = string.Format("Your child {0} was registered successfully", name);
@@ -55,9 +56,8 @@ public class ApplicantService : IApplicantService
         {
             result.Exception = ex;
             
-            result.UserMessage = string.Format("Failed to register information about your child");
-            
-            result.InternalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Applicant_Service: AddSingleApplicant(): {0}", ex.Message);
+            result.UserMessage      = string.Format("Failed to register information about your child");            
+            result.InternalMessage  = string.Format("ERROR: LOGIC.Services.Implementation.Applicant_Service: AddSingleApplicant(): {0}", ex.Message);
         }
 
         return result;
@@ -73,30 +73,26 @@ public class ApplicantService : IApplicantService
 
             var applicantReturned = new ApplicantResultSet
             {
-                Id = Applicant.ApplicantId,
-                Name = Applicant.ApplicantName,
-                Surname = Applicant.ApplicantSurname,
-                Birthday = Applicant.ApplicantBirthDate,
-                Email = Applicant.ContactEmail,
-                PhoneNumber = Applicant.ContactNumber,
-                SubmissionDate = Applicant.ApplicantCreationDate
+                Id              = Applicant.ApplicantId,
+                Name            = Applicant.ApplicantName,
+                Surname         = Applicant.ApplicantSurname,
+                Birthday        = Applicant.ApplicantBirthDate,
+                Email           = Applicant.ContactEmail,
+                PhoneNumber     = Applicant.ContactNumber,
+                SubmissionDate  = Applicant.ApplicantCreationDate
             };
 
-            result.UserMessage = string.Format("Applicant {0} was found successfully", applicantReturned.Name);
-            
-            result.InternalMessage = "LOGIC.Services.Implementation.Applicant_Service: GetApplicantById() method executed successfully";
-            
-            result.ResultSet = applicantReturned;
-            
-            result.Success = true;
+            result.UserMessage      = string.Format("Applicant {0} was found successfully", applicantReturned.Name);            
+            result.InternalMessage  = "LOGIC.Services.Implementation.Applicant_Service: GetApplicantById() method executed successfully";
+            result.ResultSet        = applicantReturned;
+            result.Success          = true;
         }
         catch (Exception ex)
         {
-            result.Exception = ex;
-            
-            result.UserMessage = string.Format("Failed to get applicant");
-            
-            result.InternalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Applicant_Service: GetApplicantById(): {0}", ex.Message);
+            result.Exception = ex;            
+
+            result.UserMessage      = string.Format("Failed to get applicant");            
+            result.InternalMessage  = string.Format("ERROR: LOGIC.Services.Implementation.Applicant_Service: GetApplicantById(): {0}", ex.Message);
         }
 
         return result;
@@ -116,43 +112,38 @@ public class ApplicantService : IApplicantService
         {
             var ApplicantToUpdate = new Applicant()
             {
-                ApplicantId = applicantId,
-                ApplicantName = name,
-                ApplicantSurname = surname,
-                ApplicantBirthDate = birthday,
-                ContactEmail = email,
-                ContactNumber = phone_number,
-                ApplicantModifiedDate = DateTime.UtcNow
+                ApplicantId             = applicantId,
+                ApplicantName           = name,
+                ApplicantSurname        = surname,
+                ApplicantBirthDate      = birthday,
+                ContactEmail            = email,
+                ContactNumber           = phone_number,
+                ApplicantModifiedDate   = DateTime.UtcNow
             };
 
             ApplicantToUpdate = await _crud.Update<Applicant>(ApplicantToUpdate, applicantId);
 
             var applicantAdded = new ApplicantResultSet
             {
-                Id = ApplicantToUpdate.ApplicantId,
-                Name = ApplicantToUpdate.ApplicantName,
-                Surname = ApplicantToUpdate.ApplicantSurname,
-                Birthday = ApplicantToUpdate.ApplicantBirthDate,
-                Email = ApplicantToUpdate.ContactEmail,
-                PhoneNumber = ApplicantToUpdate.ContactNumber,
-                SubmissionDate = ApplicantToUpdate.ApplicantCreationDate
+                Id              = ApplicantToUpdate.ApplicantId,
+                Name            = ApplicantToUpdate.ApplicantName,
+                Surname         = ApplicantToUpdate.ApplicantSurname,
+                Birthday        = ApplicantToUpdate.ApplicantBirthDate,
+                Email           = ApplicantToUpdate.ContactEmail,
+                PhoneNumber     = ApplicantToUpdate.ContactNumber,
+                SubmissionDate  = ApplicantToUpdate.ApplicantCreationDate
             };
 
             result.UserMessage = string.Format("Applicant {0} was updated successfully", name);
-            
             result.InternalMessage = "LOGIC.Services.Implementation.Applicant_Service: UpdateApplicant() method executed successfully";
-            
             result.ResultSet = applicantAdded;
-            
             result.Success = true;
         }
         catch (Exception ex)
         {
-            result.Exception = ex;
-            
-            result.UserMessage = string.Format("Failed to update applicant");
-            
-            result.InternalMessage = string.Format("ERROR: LOGIC.Services.Implementation.Applicant_Service: UpdateApplicant(): {0}", ex.Message);
+            result.Exception = ex;            
+            result.UserMessage      = string.Format("Failed to update applicant");            
+            result.InternalMessage  = string.Format("ERROR: LOGIC.Services.Implementation.Applicant_Service: UpdateApplicant(): {0}", ex.Message);
         }
 
         return result;

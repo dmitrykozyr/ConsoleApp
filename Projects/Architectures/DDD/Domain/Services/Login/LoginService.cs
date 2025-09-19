@@ -11,8 +11,6 @@ namespace Domain.Services.Login;
 
 public class LoginService : ILoginService
 {
-    private List<string>? logins;
-
     private readonly ISqlService _sqlService;
     private readonly IProvider _provider;
 
@@ -35,7 +33,8 @@ public class LoginService : ILoginService
 
         Guard.IsNotNull(claimsIdentity);
 
-        if (claimsIdentity.IsAuthenticated && !string.IsNullOrEmpty(claimsIdentity.Name))
+        if (claimsIdentity.IsAuthenticated &&
+            !string.IsNullOrEmpty(claimsIdentity.Name))
         {
             PersonInfo? result = GetLogins(claimsIdentity.Name);
 
@@ -58,7 +57,7 @@ public class LoginService : ILoginService
 
     private PersonInfo? GetLogins(string notesName)
     {
-        logins = GetPersonLogins(notesName);
+        List<string>? logins = GetPersonLogins(notesName);
 
         string? systemLogin = logins?.FirstOrDefault(z => z == "_system");
 
@@ -74,7 +73,7 @@ public class LoginService : ILoginService
 
     private List<string>? GetPersonLogins(string notesName)
     {
-        logins = new List<string>();
+        var logins = new List<string>();
 
         using (SqlConnection connection = _sqlService.CreateConnection())
         {
@@ -124,11 +123,11 @@ public class LoginService : ILoginService
                     if (reader.Read())
                     {
                         personInfo = new PersonInfo(
-                            login: reader["Login"].ToString() ?? "",
-                            firstName: reader["FName"].ToString() ?? "",
+                            login:      reader["Login"].ToString() ?? "",
+                            firstName:  reader["FName"].ToString() ?? "",
                             middleName: reader["MName"].ToString() ?? "",
-                            lastName: reader["LName"].ToString() ?? "",
-                            isLogOn: (bool)reader["IsLogOn"],
+                            lastName:   reader["LName"].ToString() ?? "",
+                            isLogOn:    (bool)reader["IsLogOn"],
                             isEmployeeHeadBranch: (bool)reader["IsEmployeeHeadBranch"],
                             _provider);
                     }

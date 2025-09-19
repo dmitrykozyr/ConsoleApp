@@ -37,19 +37,24 @@ public class LoginController
         return Results.NotFound("User not found");
     }
 
-    private string GenerateToken(UserModel user)
+    private string? GenerateToken(UserModel user)
     {
+        if (user is null)
+        {
+            return null;
+        }
+
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
 
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var claims = new []
         {
-            new Claim(ClaimTypes.NameIdentifier, user.UserName),
-            new Claim(ClaimTypes.Email, user.EmailAddress),
-            new Claim(ClaimTypes.GivenName, user.GivenName),
-            new Claim(ClaimTypes.Surname, user.Surname),
-            new Claim(ClaimTypes.Role, user.Role)
+            new Claim(ClaimTypes.NameIdentifier,    user.UserName ?? ""),
+            new Claim(ClaimTypes.Email,             user.EmailAddress ?? ""),
+            new Claim(ClaimTypes.GivenName,         user.GivenName ?? ""),
+            new Claim(ClaimTypes.Surname,           user.Surname ?? ""),
+            new Claim(ClaimTypes.Role,              user.Role ?? "")
         };
 
         var token = new JwtSecurityToken(

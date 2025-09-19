@@ -2,15 +2,15 @@
 
 public class ApplicationResultSet
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
 
-    public long ApplicantId { get; set; }
+    public long ApplicantId { get; init; }
 
-    public long GradeId { get; set; }
+    public long GradeId { get; init; }
 
-    public long StatusId { get; set; }
+    public long StatusId { get; init; }
 
-    public DateTime SubmissionDate { get; set; }
+    public DateTime SubmissionDate { get; init; }
 
-    public long SchoolYear { get; set; }
+    public long SchoolYear { get; init; }
 }

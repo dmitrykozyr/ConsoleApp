@@ -494,7 +494,7 @@ namespace Composite
     {
         public string Name { get; }
 
-        public int Price { get; set; }
+        public int Price { get; init; }
 
         protected Gift(string name, int price)
         {
@@ -588,7 +588,7 @@ namespace Decorator
 
     abstract class Pizza
     {
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         public Pizza(string name)
         {
@@ -725,7 +725,7 @@ namespace Flyweight
 
     class Bullet : IBullet
     {
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         public Bullet(string name)
         {
@@ -1240,7 +1240,7 @@ namespace Memento
 
     class DataToRemember
     {
-        public string? PhoneNumber { get; private set; }
+        public string? PhoneNumber { get; private init; }
 
         public DataToRemember(string? phoneNumber)
         {
@@ -1540,7 +1540,7 @@ namespace Visitor
 
     class Student : IElement
     {
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         public Student(string name)
         {
@@ -1560,7 +1560,7 @@ namespace Visitor
 
     class Doctor : IVisitor
     {
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         public Doctor(string name)
         {
@@ -1577,7 +1577,7 @@ namespace Visitor
 
     class Salesman : IVisitor
     {
-        public string Name { get; set; }
+        public string Name { get; init; }
 
         public Salesman(string name)
         {
@@ -1653,7 +1653,7 @@ namespace UnitOfWork
 
     public class User
     {
-        public string? Name { get; set; }
+        public string? Name { get; init; }
     }
 
     public interface IUnitOfWork : IDisposable

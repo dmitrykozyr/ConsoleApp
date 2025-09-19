@@ -19,7 +19,6 @@ builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IApplicationStatusService, ApplicationStatusService>();
 
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

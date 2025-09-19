@@ -2,5 +2,5 @@
 
 public class GradeUpdatePassObject : GradePassObject
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 }

@@ -17,21 +17,21 @@ public class GradeService : IGradeService
         
         try
         {
-            Grade Grade = new Grade
+            var Grade = new Grade
             {
-                GradeName = name,
-                GradeNumber = gradeNumber,
-                GradeCapacity = capacity
+                GradeName       = name,
+                GradeNumber     = gradeNumber,
+                GradeCapacity   = capacity
             };
 
-            Grade = await _crud.Create<Grade>(Grade);
+            Grade = await _crud.Create(Grade);
 
-            GradeResultSet gradeAdded = new GradeResultSet
+            var gradeAdded = new GradeResultSet
             {
-                Id = Grade.GradeId,
-                Name = Grade.GradeName,
+                Id          = Grade.GradeId,
+                Name        = Grade.GradeName,
                 GradeNumber = Grade.GradeNumber,
-                Capacity = Grade.GradeCapacity
+                Capacity    = Grade.GradeCapacity
             };
 
             result.UserMessage = string.Format("Grade {0} was added successfully", name);
@@ -68,10 +68,10 @@ public class GradeService : IGradeService
             {
                 result.ResultSet.Add(new GradeResultSet
                 {
-                    Id = z.GradeId,
-                    Name = z.GradeName,
+                    Id          = z.GradeId,
+                    Name        = z.GradeName,
                     GradeNumber = z.GradeNumber,
-                    Capacity = z.GradeCapacity
+                    Capacity    = z.GradeCapacity
                 });
             });
             
@@ -101,21 +101,21 @@ public class GradeService : IGradeService
         {
             var Grade = new Grade
             {
-                GradeId = id,
-                GradeName = name,
-                GradeNumber = grade_number,
-                GradeCapacity = capacity,
-                GradeModifiedDate = DateTime.UtcNow
+                GradeId             = id,
+                GradeName           = name,
+                GradeNumber         = grade_number,
+                GradeCapacity       = capacity,
+                GradeModifiedDate   = DateTime.UtcNow
             };
 
-            Grade = await _crud.Update<Grade>(Grade, id);
+            Grade = await _crud.Update(Grade, id);
 
             var gradeUpdated = new GradeResultSet
             {
-                Id = Grade.GradeId,
-                Name = Grade.GradeName,
+                Id          = Grade.GradeId,
+                Name        = Grade.GradeName,
                 GradeNumber = Grade.GradeNumber,
-                Capacity = Grade.GradeCapacity
+                Capacity    = Grade.GradeCapacity
             };
 
             result.UserMessage = string.Format("The supplied grade {0} was updated successfully", name);

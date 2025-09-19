@@ -2,23 +2,23 @@
 
 public class Application
 {
-    public long ApplicationId { get; set; }
+    public long ApplicationId { get; init; }
 
-    public long ApplicantId { get; set; }
+    public long ApplicantId { get; init; }
 
-    public long GradeId { get; set; }
+    public long GradeId { get; init; }
 
-    public long ApplicationStatusId { get; set; }
+    public long ApplicationStatusId { get; init; }
 
-    public DateTime ApplicationCreationDate { get; set; }
+    public DateTime ApplicationCreationDate { get; init; }
 
-    public DateTime ApplicationModifiedDate { get; set; }
+    public DateTime ApplicationModifiedDate { get; init; }
 
-    public int SchoolYear { get; set; }
+    public int SchoolYear { get; init; }
 
     public Applicant? Applicant { get; set; }
 
-    public Grade? Grade { get; set; }
+    public Grade? Grade { get; init; }
 
-    public ApplicationStatus? ApplicationStatus { get; set; }
+    public ApplicationStatus? ApplicationStatus { get; init; }
 }
