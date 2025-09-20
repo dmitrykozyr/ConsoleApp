@@ -49,7 +49,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllersWithViews();
-builder.Services.AddApiVersioning();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient(); //! Настроить для использования IHttpClientFactory
@@ -71,23 +70,27 @@ IConfiguration configuration = cb.Build();
 
 #endregion
 
-// IOptions
-/*
-    IOptions
-    Обновляет информацию о конфигурации один раз при старте приложения
+#region Redis
 
-    IOptionsSnapshot
-    Обновляет информацию о конфигурации при каждом запросе и не изменяет ее во время запроса
+var redisOptions = builder.Configuration.GetSection(nameof(RedisOptions)).Get<RedisOptions>();
 
-    IOptionsMonitor
-    Обновляет информацию о конфигурации при каждом обращении к конфигурации
-    Если получаем конфигурацию в двух местах и за время запроса она изменилась,
-    то в двух местах будут разные значения
-*/
+Guard.IsNotNull(redisOptions);
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = redisOptions.ConnectionString;
+});
+
+#endregion
+
+// IOptions             Обновляет информацию о конфигурации один раз при старте приложения
+// IOptionsSnapshot     Обновляет информацию о конфигурации при каждом запросе и не изменяет ее во время запроса
+// IOptionsMonitor      Обновляет информацию о конфигурации при каждом обращении к конфигурации
 builder.Services.ConfigureOptions<ApplicationOptionsSetup<DatabaseOptions>>();
 builder.Services.ConfigureOptions<ApplicationOptionsSetup<GeneralOptions>>();
 builder.Services.ConfigureOptions<ApplicationOptionsSetup<LoginOptions>>();
 builder.Services.ConfigureOptions<ApplicationOptionsSetup<VaultOptions>>();
+builder.Services.ConfigureOptions<ApplicationOptionsSetup<RedisOptions>>();
 
 // Services
 builder.Services.AddScoped<IFileService, FileService>();
@@ -98,6 +101,7 @@ builder.Services.AddScoped<ILogging, Logging>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ISqlService, SqlService>();
 builder.Services.AddScoped<IProvider, Provider>();
+builder.Services.AddScoped<IRedisService, RedisService>();
 builder.Services.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
 
 // Repositories
@@ -108,22 +112,22 @@ builder.Services.AddScoped<IFileRepository, FileRepository>();
 
 var app = builder.Build();
 
-    #region HashiConf Vault
+#region HashiConf Vault
 
-    using (var scope = app.Services.CreateScope())
-    {
-        var logging = scope.ServiceProvider.GetService<ILogging>();
-        var httpClientData = scope.ServiceProvider.GetService<IHttpClientData<VaultSecrets>>();
-        var vaultOptions = scope.ServiceProvider.GetService<IOptions<VaultOptions>>();
+using (var scope = app.Services.CreateScope())
+{
+    var logging = scope.ServiceProvider.GetService<ILogging>();
+    var httpClientData = scope.ServiceProvider.GetService<IHttpClientData<VaultSecrets>>();
+    var vaultOptions = scope.ServiceProvider.GetService<IOptions<VaultOptions>>();
 
-        Guard.IsNotNull(logging);
-        Guard.IsNotNull(httpClientData);
-        Guard.IsNotNull(vaultOptions);
+    Guard.IsNotNull(logging);
+    Guard.IsNotNull(httpClientData);
+    Guard.IsNotNull(vaultOptions);
 
-        builder.Configuration.AddVault(vaultOptions, logging, configuration, httpClientData);
-    }
+    builder.Configuration.AddVault(vaultOptions, logging, configuration, httpClientData);
+}
 
-    #endregion
+#endregion
 
 if (!app.Environment.IsDevelopment())
 {

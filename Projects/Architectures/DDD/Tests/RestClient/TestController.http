@@ -1,0 +1,7 @@
+@HostAddress = https://localhost:7051
+
+# Получение файла
+GET {{HostAddress}}/Test
+Accept: application/json
+
+###
