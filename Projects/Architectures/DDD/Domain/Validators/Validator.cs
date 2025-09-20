@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System.Text;
 
 namespace Domain.Validators;
 
@@ -13,11 +14,11 @@ public static class Validator<TModel, TValidator>
 
         if (!validationResult.IsValid)
         {
-            string validationErrors = "";
+            var validationErrors = new StringBuilder();
 
             foreach (var error in validationResult.Errors)
             {
-                validationErrors += error.ErrorMessage + " ";
+                validationErrors.Append(error.ErrorMessage + " ");
             }
 
             return "Ошибки валидации: " + validationErrors;

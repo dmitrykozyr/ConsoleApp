@@ -1,5 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 
+namespace KeycloakWebAPI.Extensions;
+
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSwaggerGenWithAuth(this IServiceCollection services, IConfiguration configuration)
@@ -27,20 +29,20 @@ public static class ServiceCollectionExtensions
 
             var securityRequirement = new OpenApiSecurityRequirement
             {
+            {
+                new OpenApiSecurityScheme
                 {
-                    new OpenApiSecurityScheme
+                    Reference = new OpenApiReference
                     {
-                        Reference = new OpenApiReference
-                        {
-                            Id = "Keycloak",
-                            Type = ReferenceType.SecurityScheme
-                        },
-                        In = ParameterLocation.Header,
-                        Name = "Bearer",
-                        Scheme = "Bearer"
+                        Id = "Keycloak",
+                        Type = ReferenceType.SecurityScheme
                     },
-                    []
-                }
+                    In = ParameterLocation.Header,
+                    Name = "Bearer",
+                    Scheme = "Bearer"
+                },
+                []
+            }
             };
 
             o.AddSecurityRequirement(securityRequirement);

@@ -12,7 +12,7 @@ namespace JWTToken.Controllers;
 [Route("api/[controller]")]
 public class LoginController
 {
-    private IConfiguration _config;
+    private readonly IConfiguration _config;
 
     public LoginController(IConfiguration config)
     {

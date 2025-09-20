@@ -1,4 +1,4 @@
-﻿namespace SharpEdu;
+﻿namespace Education;
 
 public class AsyncAwait
 {
@@ -67,7 +67,7 @@ public class AsyncAwait
 
     class A
     {
-        string[] data = { "Tom", "Sam", "Kate", "Alice", "Bob" };
+        readonly string[] data = { "Tom", "Sam", "Kate", "Alice", "Bob" };
 
         public async IAsyncEnumerable<string> F1()
         {

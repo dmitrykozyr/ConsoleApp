@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 
 // ПОРОЖДАЮЩИЕ
 
-namespace FactoryMethod
+namespace Education
 {
     // Есть фабрика постройки деревянных домов
     // Создаем фабрику постройки панельных домов
@@ -52,7 +52,7 @@ namespace FactoryMethod
         }
     }
 
-    class Program
+    class Program_
     {
         static void _Main()
         {

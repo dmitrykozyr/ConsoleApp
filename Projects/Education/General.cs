@@ -3,7 +3,7 @@ using System.Collections;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace SharpEdu;
+namespace Education;
 
 class Program
 {

@@ -53,21 +53,21 @@ public class UserContextCommand : IDisposable
         {
             Guard.IsNotNull(connection);
 
-            using (SqlCommand command = connection.CreateCommand())
+            using (SqlCommand sqlCommand = connection.CreateCommand())
             {
-                command.CommandText =
+                sqlCommand.CommandText =
                     string.Format(
                         @"DECLARE @cookie VARBINARY(100); EXECUTE AS LOGIN = '{0}' WITH COOKIE INTO @cookie; SELECT @cookie;",
                         login);
 
-                command.CommandType = CommandType.Text;
+                sqlCommand.CommandType = CommandType.Text;
 
                 if (transaction is not null)
                 {
-                    command.Transaction = transaction;
+                    sqlCommand.Transaction = transaction;
                 }
 
-                cookie = (byte[])command.ExecuteScalar();
+                cookie = (byte[])sqlCommand.ExecuteScalar();
             }
         }
     }
@@ -80,21 +80,21 @@ public class UserContextCommand : IDisposable
         if (cookie is not null)
         {
 
-            using (SqlCommand command = connection.CreateCommand())
+            using (SqlCommand sqlCommand = connection.CreateCommand())
             {
-                command.CommandText =
+                sqlCommand.CommandText =
                     string.Format(
                         "DECLARE @cookie VARBINARY(100); SET @cookie = 0x{0}; REVERT WITH COOKIE = @cookie;",
                         BitConverter.ToString(cookie).Replace("-", ""));
 
-                command.CommandType = CommandType.Text;
+                sqlCommand.CommandType = CommandType.Text;
 
                 if (transaction is not null)
                 {
-                    command.Transaction = transaction;
+                    sqlCommand.Transaction = transaction;
                 }
 
-                command.ExecuteNonQuery();
+                sqlCommand.ExecuteNonQuery();
             }
 
             cookie = null;

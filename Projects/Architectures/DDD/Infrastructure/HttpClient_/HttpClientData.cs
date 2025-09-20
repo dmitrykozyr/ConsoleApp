@@ -7,10 +7,10 @@ using System.Text.Json;
 
 namespace Infrastructure.HttpClient_;
 
-public class HttpClientData<T> : IHttpClientData<T?>
+public class HttpClientData<T> : IHttpClientData<T>
     where T : class, new()
 {
-    private static VaultOptions? VaultOptions;
+    private readonly VaultOptions? VaultOptions;
 
     private readonly ILogging _logging;
     private readonly IHttpClientFactory _httpClientFactory;
@@ -89,7 +89,12 @@ public class HttpClientData<T> : IHttpClientData<T?>
                 {
                     string result = await response.Content.ReadAsStringAsync();
 
-                    return true;
+                    if (result is not null)
+                    {
+                        return true;
+                    }
+
+                    return false;
                 }
                 else
                 {

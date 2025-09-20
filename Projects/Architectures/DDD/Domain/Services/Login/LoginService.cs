@@ -75,7 +75,7 @@ public class LoginService : ILoginService
     {
         var logins = new List<string>();
 
-        using (SqlConnection connection = _sqlService.CreateConnection())
+        using (SqlConnection? connection = _sqlService.CreateConnection())
         {
             if (connection is null)
             {
@@ -101,11 +101,9 @@ public class LoginService : ILoginService
         }
     }
 
-    public PersonInfo GetPersonInfo(string login)
+    public PersonInfo? GetPersonInfo(string login)
     {
-        PersonInfo personInfo;
-
-        using (SqlConnection connection = _sqlService.CreateConnection())
+        using (SqlConnection? connection = _sqlService.CreateConnection())
         {
             Guard.IsNotNull(connection);
 
@@ -122,7 +120,7 @@ public class LoginService : ILoginService
                 {
                     if (reader.Read())
                     {
-                        personInfo = new PersonInfo(
+                        var result = new PersonInfo(
                             login:      reader["Login"].ToString() ?? "",
                             firstName:  reader["FName"].ToString() ?? "",
                             middleName: reader["MName"].ToString() ?? "",
@@ -130,15 +128,15 @@ public class LoginService : ILoginService
                             isLogOn:    (bool)reader["IsLogOn"],
                             isEmployeeHeadBranch: (bool)reader["IsEmployeeHeadBranch"],
                             _provider);
+
+                        return result;
                     }
                     else
                     {
-                        throw new Exception("Данные не найдены");
+                        return null;
                     }
                 }
             }
         }
-
-        return personInfo;
     }
 }

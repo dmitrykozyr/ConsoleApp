@@ -2,7 +2,7 @@
 
 public class UserConstants
 {
-    public static List<UserModel> Users = new List<UserModel>()
+    public static List<UserModel> Users = new()
     {
         new UserModel() {
             UserName        = "User1",

@@ -1,4 +1,4 @@
-﻿namespace SharpEdus;
+﻿namespace Education;
 
 public class Threads
 {
@@ -61,7 +61,7 @@ public class Threads
         }
     }
 
-    static volatile bool stop;
+    static readonly bool stop;
 
     static void Main_()
     {
@@ -104,7 +104,7 @@ public class Threads
             - Aborted           остановлен, но еще окончательно не завершен
         */
 
-        object lockCompleted = new object();
+        var lockCompleted = new object();
 
         void F1()
         {
@@ -130,7 +130,7 @@ public class Threads
 
     static void Interrupt_()
     {
-        void F1()
+        static void F1()
         {
             for (; ; )
             {
@@ -138,7 +138,7 @@ public class Threads
             }
         }
 
-        Console.WriteLine("Start" + Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine("Start" + Environment.CurrentManagedThreadId);
 
         var thread = new Thread(F1);
 
@@ -149,7 +149,7 @@ public class Threads
         thread.Interrupt(); // Через 2 секунды метод прервется
                             // Abort устарел
 
-        Console.WriteLine("End" + Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine("End" + Environment.CurrentManagedThreadId);
     }
 
     static void Priorities_()
@@ -165,14 +165,14 @@ public class Threads
 
         static void F1()
         {
-            Console.WriteLine("Start " + Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Priority);
+            Console.WriteLine("Start " + Environment.CurrentManagedThreadId + " " + Thread.CurrentThread.Priority);
 
             for (int i = 0; i < 3; i++)
             {
-                Console.WriteLine("-- Loop " + Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Priority);
+                Console.WriteLine("-- Loop " + Environment.CurrentManagedThreadId + " " + Thread.CurrentThread.Priority);
             }
 
-            Console.WriteLine("End " + Thread.CurrentThread.ManagedThreadId + " " + Thread.CurrentThread.Priority);
+            Console.WriteLine("End " + Environment.CurrentManagedThreadId + " " + Thread.CurrentThread.Priority);
         }
 
         var thread = new Thread[5];
@@ -198,14 +198,10 @@ public class Threads
     {
         void F1()
         {
-            int availableThreads;
-            int availableIOThreads;
+            ThreadPool.GetAvailableThreads(out int availableThreads, out int availableIOThreads);
 
-            ThreadPool.GetAvailableThreads(out availableThreads, out availableIOThreads);
-
-            Console.WriteLine("Потоков в пуле " + availableThreads);
-
-            Console.WriteLine("Свободных потоков в пуле " + availableIOThreads);
+            Console.WriteLine("Потоков в пуле "             + availableThreads);
+            Console.WriteLine("Свободных потоков в пуле "   + availableIOThreads);
         }
 
         void F2(object state)
@@ -251,7 +247,7 @@ public class Threads
         // - Foreground - будет работать после завершения первичного потока (по умолчанию)
         // - Background - завершает работу вместе с первичным потоком
 
-        object lockCompleted = new object();
+        var lockCompleted = new object();
 
         void F1()
         {
@@ -273,15 +269,15 @@ public class Threads
         // Заставляет первичный поток ждать завершения вторичного
         // С Join будет: 1 2 3
         // Без Join:     1 3 2
-        
-        void F1()
+
+        static void F1()
         {
             Thread.Sleep(500);
 
-            Console.WriteLine("F1: " + Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("F1: " + Environment.CurrentManagedThreadId);
         }
 
-        Console.WriteLine("Start: " + Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine("Start: " + Environment.CurrentManagedThreadId);
 
         var thread = new Thread(F1);
 
@@ -289,7 +285,7 @@ public class Threads
 
         thread.Join();
 
-        Console.WriteLine("End: " + Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine("End: " + Environment.CurrentManagedThreadId);
     }
 
     // Каждый поток работает со своей статической переменной, а не общей для всех
@@ -304,7 +300,7 @@ public class Threads
             {
                 counter++;
 
-                Console.WriteLine("Начало " + Thread.CurrentThread.ManagedThreadId + ", счетчик " + counter);
+                Console.WriteLine("Начало " + Environment.CurrentManagedThreadId + ", счетчик " + counter);
 
                 var thread = new Thread(F1); // Плохо - каждый раз создаем новый поток
 
@@ -314,7 +310,7 @@ public class Threads
             }
         }
 
-        Console.WriteLine("Начало " + Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine("Начало " + Environment.CurrentManagedThreadId);
 
         var thread = new Thread(F1);
 
@@ -322,7 +318,7 @@ public class Threads
 
         thread.Join();
 
-        Console.WriteLine("Конец " + Thread.CurrentThread.ManagedThreadId);
+        Console.WriteLine("Конец " + Environment.CurrentManagedThreadId);
     }
 
     static void Interlocked_()
@@ -353,7 +349,7 @@ public class Threads
     }
 
     private static int count = 0;
-    private static readonly object lockObject = new object();
+    private static readonly object lockObject = new();
     static void Monitor_()
     {
         /*
@@ -428,7 +424,7 @@ public class Threads
         // Внутри lock нельзя вызывать await, т.к. возможна ситуация, что объект синхронизации берется одним потоком, а отпускается другим
         // Может привести к deadlock
 
-        object locker = new object();
+        var locker = new object();
 
         string value = string.Empty;
 
@@ -465,8 +461,8 @@ public class Threads
         // - затем в другом потоке Method3()
         // - оба метода используют блокировку lock1, а Method2() использует блокировку lock2, что может привести к блокировке обоих потоков
 
-        object lock1 = new object();
-        object lock2 = new object();
+        var lock1 = new object();
+        var lock2 = new object();
 
         void Method1()
         {
@@ -493,8 +489,8 @@ public class Threads
         }
     }
 
-    private static Semaphore semaphore = new Semaphore(2, 2);
-    private static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(2, 2);
+    private static readonly Semaphore semaphore = new(2, 2);
+    private static readonly SemaphoreSlim semaphoreSlim = new(2, 2);
     static void Semaphore_()
     {
         /*            
@@ -539,7 +535,7 @@ public class Threads
         {
             for (int i = 0; i < 5; i++)
             {
-                Thread thread = new Thread(SemaphoreExample);
+                Thread thread = new(SemaphoreExample);
                 thread.Start(i);
             }
         }
