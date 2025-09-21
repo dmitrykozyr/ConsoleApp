@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces;
-using Domain.Models.RequentModels;
+﻿using Domain.Interfaces.Cache;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.API;
@@ -18,9 +17,11 @@ public class TestController
     {
         try
         {
-            var resul = await _redisService.GetCache("my message 1");
+            var result1 = _redisService.GetCache("key 1");
+            var result2 = _redisService.PutCache("key 1", "val 1");
+            var result3 = _redisService.GetCache("key 1");
 
-            return Results.Ok(resul);
+            return Results.Ok(result3);
 
         }
         catch (Exception ex)

@@ -1,5 +1,6 @@
 using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
+using Domain.Interfaces.Cache;
 using Domain.Interfaces.Login;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
@@ -7,6 +8,7 @@ using Domain.Models.JsonDeserialize;
 using Domain.Models.Options;
 using Domain.Services;
 using Domain.Services.API;
+using Domain.Services.Cache;
 using Domain.Services.Login;
 using Infrastructure.HttpClient_;
 using Infrastructure.LoggingData;
@@ -71,15 +73,14 @@ builder.Services.ConfigureOptions<ApplicationOptionsSetup<VaultOptions>>();
 builder.Services.ConfigureOptions<ApplicationOptionsSetup<RedisOptions>>();
 
 // Services
-builder.Services.AddScoped<IFileService, FileService>();
-builder.Services.AddScoped<IDbConStrService, DbConStrService>();
-
-// Common services
 builder.Services.AddScoped<ILogging, Logging>();
-builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddScoped<ISqlService, SqlService>();
 builder.Services.AddScoped<IProvider, Provider>();
+builder.Services.AddScoped<ISqlService, SqlService>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IRedisService, RedisService>();
+builder.Services.AddScoped<IDbConStrService, DbConStrService>();
+builder.Services.AddScoped<IMemoryCacheService, MemoryCacheService>();
 builder.Services.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
 
 // Repositories

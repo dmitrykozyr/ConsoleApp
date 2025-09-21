@@ -1,8 +1,8 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Interfaces.Cache;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace Domain.Services;
+namespace Domain.Services.Cache;
 
 public class RedisService : IRedisService
 {
@@ -33,13 +33,13 @@ public class RedisService : IRedisService
             else
             {
                 // Если в кеше пусто - идем в БД
-                //result = await _decorated.GetById(key, cancellationToken);
+                //!result = await _decorated.GetById(key, cancellationToken);
 
-                //// Если нашли значение в БД - обновляем кеш
-                //if (!string.IsNullOrEmpty(result))
-                //{
-                //    await PutCache(key, result, cancellationToken);
-                //}
+                // Если нашли значение в БД - обновляем кеш
+                if (!string.IsNullOrEmpty(result))
+                {
+                    await PutCache(key, result, cancellationToken);
+                }
             }
 
             return result;
