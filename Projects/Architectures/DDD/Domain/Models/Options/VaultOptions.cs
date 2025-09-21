@@ -11,4 +11,8 @@ public class VaultOptions
     public string? MountPath { get; init; }
 
     public string? SecretType { get; init; }
+
+    public string? SecretsEngineName { get; init; }
+
+    public string? SecretsStorageName { get; init; }
 }

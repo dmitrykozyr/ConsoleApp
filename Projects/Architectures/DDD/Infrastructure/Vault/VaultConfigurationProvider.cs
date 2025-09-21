@@ -43,20 +43,19 @@ public class VaultConfigurationProvider : ConfigurationProvider
     public async Task LoadAsync()
     {
         // Получение секретов из Vault, запущенного в режиме Dev (сервер запущен командой "vault server -dev")
-        //await GetSecretsFromVaultInDevMode();
+        await GetSecretsFromVaultInDevMode();
 
         // Получение секретов из Vault, запущенного в режиме Prod
-        await GetSecretsFromVaultInProdMode();
+        //await GetSecretsFromVaultInProdMode();
     }
 
     public async Task GetSecretsFromVaultInDevMode()
     {
-        string secretsEngineName    = _configuration.GetSection("Vault:SecretsEngineName").Value ?? "";
-        string secretPath           = _configuration.GetSection("Vault:SecretsStorageName").Value ?? "";
+        Guard.IsNotNull(VaultOptions);
 
         try
         {
-            var kvSecret = await _client.V1.Secrets.KeyValue.V2.ReadSecretAsync(secretPath, null, secretsEngineName);
+            var kvSecret = await _client.V1.Secrets.KeyValue.V2.ReadSecretAsync(VaultOptions.SecretsStorageName, null, VaultOptions.SecretsEngineName);
 
             if (kvSecret is not null && kvSecret.Data.Data.Any())
             {

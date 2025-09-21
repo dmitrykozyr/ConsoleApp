@@ -12,8 +12,10 @@ using Infrastructure.HttpClient_;
 using Infrastructure.LoggingData;
 using Infrastructure.Repositories;
 using Infrastructure.Vault;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Presentation;
+using Presentation.Extensions;
 
 // Три способа настройки приложений
 /*
@@ -52,36 +54,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient(); //! Настроить для использования IHttpClientFactory
-
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
-#region ConfigurationBuilder
-
-string environment = $"appsettings.{builder.Environment.EnvironmentName}.json";
-builder.Configuration.AddJsonFile(environment, optional: false, reloadOnChange: true);
-builder.Configuration.AddEnvironmentVariables(prefix: "VAULT_");
-
-var cb = new ConfigurationBuilder();
-cb.SetBasePath(Directory.GetCurrentDirectory());
-cb.AddJsonFile(environment, optional: true, reloadOnChange: true);
-cb.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
-IConfiguration configuration = cb.Build();
-
-#endregion
-
-#region Redis
-
-var redisOptions = builder.Configuration.GetSection(nameof(RedisOptions)).Get<RedisOptions>();
-
-Guard.IsNotNull(redisOptions);
-
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration = redisOptions.ConnectionString;
-});
-
-#endregion
+// Extensions
+IConfiguration configuration = builder.Services.AddConfigurationExtension(builder);
+builder.Services.AddRedisExtension(builder);
 
 // IOptions             Обновляет информацию о конфигурации один раз при старте приложения
 // IOptionsSnapshot     Обновляет информацию о конфигурации при каждом запросе и не изменяет ее во время запроса
