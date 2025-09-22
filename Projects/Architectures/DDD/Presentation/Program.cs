@@ -1,22 +1,9 @@
 using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
-using Domain.Interfaces.Cache;
-using Domain.Interfaces.Login;
-using Domain.Interfaces.Repositories;
-using Domain.Interfaces.Services;
 using Domain.Models.JsonDeserialize;
 using Domain.Models.Options;
-using Domain.Services;
-using Domain.Services.API;
-using Domain.Services.Cache;
-using Domain.Services.Login;
-using Infrastructure.HttpClient_;
-using Infrastructure.LoggingData;
-using Infrastructure.Repositories;
 using Infrastructure.Vault;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using Presentation;
 using Presentation.Extensions;
 
 // Три способа настройки приложений
@@ -59,38 +46,22 @@ builder.Services.AddHttpClient(); //! Настроить для использования IHttpClientFac
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
-// Extensions
 IConfiguration configuration = builder.Services.AddConfigurationExtension(builder);
-builder.Services.AddRedisExtension(builder);
 
-// IOptions             Обновляет информацию о конфигурации один раз при старте приложения
-// IOptionsSnapshot     Обновляет информацию о конфигурации при каждом запросе и не изменяет ее во время запроса
-// IOptionsMonitor      Обновляет информацию о конфигурации при каждом обращении к конфигурации
-builder.Services.ConfigureOptions<ApplicationOptionsSetup<DatabaseOptions>>();
-builder.Services.ConfigureOptions<ApplicationOptionsSetup<GeneralOptions>>();
-builder.Services.ConfigureOptions<ApplicationOptionsSetup<LoginOptions>>();
-builder.Services.ConfigureOptions<ApplicationOptionsSetup<VaultOptions>>();
-builder.Services.ConfigureOptions<ApplicationOptionsSetup<RedisOptions>>();
+builder.Services.AddRedisExtensions(builder);
 
-// Services
-builder.Services.AddScoped<ILogging, Logging>();
-builder.Services.AddScoped<IProvider, Provider>();
-builder.Services.AddScoped<ISqlService, SqlService>();
-builder.Services.AddScoped<IFileService, FileService>();
-builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddScoped<IRedisService, RedisService>();
-builder.Services.AddScoped<IDbConStrService, DbConStrService>();
-builder.Services.AddScoped<IMemoryCacheService, MemoryCacheService>();
-builder.Services.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
+builder.Services.AddOptionsExtensions(builder);
 
-// Repositories
-builder.Services.AddScoped<IFileRepository, FileRepository>();
+builder.Services.AddServicesExtensions(builder);
+
+builder.Services.AddRepositoriesExtensions(builder);
 
 
 #region Middleware
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
+//! Вынести в метод расширения
 #region HashiConf Vault
 
 using (var scope = app.Services.CreateScope())

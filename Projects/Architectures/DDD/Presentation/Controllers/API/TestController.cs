@@ -17,9 +17,9 @@ public class TestController
     {
         try
         {
-            var result1 = _redisService.GetCache("key 1");
-            var result2 = _redisService.PutCache("key 1", "val 1");
-            var result3 = _redisService.GetCache("key 1");
+            //var result1 = _redisService.GetCache("key 1");
+           // await _redisService.PutCache("key 1", "val 1");
+            var result3 = await _redisService.GetCache("key 1");
 
             return Results.Ok(result3);
 

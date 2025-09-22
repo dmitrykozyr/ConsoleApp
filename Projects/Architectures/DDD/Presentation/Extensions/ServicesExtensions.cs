@@ -1,0 +1,28 @@
+﻿using Domain.Interfaces;
+using Domain.Interfaces.Cache;
+using Domain.Interfaces.Login;
+using Domain.Interfaces.Services;
+using Domain.Services;
+using Domain.Services.API;
+using Domain.Services.Cache;
+using Domain.Services.Login;
+using Infrastructure.HttpClient_;
+using Infrastructure.LoggingData;
+
+namespace Presentation.Extensions;
+
+public static class ServicesExtensions
+{
+    public static void AddServicesExtensions(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<ILogging, Logging>();
+        builder.Services.AddScoped<IProvider, Provider>();
+        builder.Services.AddScoped<ISqlService, SqlService>();
+        builder.Services.AddScoped<IFileService, FileService>();
+        builder.Services.AddScoped<ILoginService, LoginService>();
+        //!builder.Services.AddScoped(typeof(IRedisService), typeof(RedisService<>));
+        builder.Services.AddScoped<IDbConStrService, DbConStrService>();
+        builder.Services.AddScoped<IMemoryCacheService, MemoryCacheService>(); //! Протестить
+        builder.Services.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
+    }
+}

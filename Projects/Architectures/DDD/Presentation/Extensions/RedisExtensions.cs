@@ -5,7 +5,7 @@ namespace Presentation.Extensions;
 
 public static class RedisExtensions
 {
-    public static void AddRedisExtension(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
+    public static void AddRedisExtensions(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
     {
         var redisOptions = builder.Configuration.GetSection(nameof(RedisOptions)).Get<RedisOptions>();
 
