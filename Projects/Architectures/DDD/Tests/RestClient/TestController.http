@@ -1,7 +1,11 @@
-@HostAddress = https://localhost:7051
+@HostAddress = https://localhost:7034
 
-# Получение файла
-GET {{HostAddress}}/Test
+GET {{HostAddress}}/Files
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/GetFile
 Accept: application/json
 
 ###

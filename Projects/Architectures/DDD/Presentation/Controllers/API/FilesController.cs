@@ -2,10 +2,13 @@
 using Domain.Interfaces;
 using Domain.Interfaces.Login;
 using Domain.Interfaces.Services;
+using Domain.Models.Options;
 using Domain.Models.RequentModels;
 using Domain.Models.ResponseModels;
 using Domain.Validators;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement;
+using System.Threading.Tasks;
 
 namespace Presentation.Controllers.API;
 
@@ -13,24 +16,32 @@ namespace Presentation.Controllers.API;
 [Route("api/[controller]")]
 public class FilesController
 {
-    private readonly IFileService _fileService;
     private readonly ILogging _logging;
+    private readonly IFileService _fileService;
     private readonly ILoginService _loginService;
+    private readonly IFeatureManager _featureManager;
 
-    public FilesController(IFileService fileService, ILogging logging, ILoginService loginService)
+    public FilesController(ILogging logging, IFileService fileService, ILoginService loginService, IFeatureManager featureManager)
     {
-        _fileService = fileService;
         _logging = logging;
+        _fileService = fileService;
         _loginService = loginService;
+        _featureManager = featureManager;
     }
 
     [HttpPost("GetFile")]
     [ProducesResponseType(typeof(FileStorageResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public IResult GetFile([FromBody] FileStorageRequest model)
+    public async Task<IResult> GetFile([FromBody] FileStorageRequest model)
     {
         try
         {
+            bool isFeatureEnabled = await _featureManager.IsEnabledAsync(FeatureFlags.FeatureFlag1);
+            if (!isFeatureEnabled)
+            {
+                return Results.BadRequest($"Фича {nameof(FilesController)} недоступна");
+            }
+
             var isAuthenticated = _loginService.AuthenticateDomainUser();
             if (!isAuthenticated)
             {

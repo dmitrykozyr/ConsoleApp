@@ -4,6 +4,7 @@ using Domain.Models.JsonDeserialize;
 using Domain.Models.Options;
 using Infrastructure.Vault;
 using Microsoft.Extensions.Options;
+using Microsoft.FeatureManagement;
 using Presentation.Extensions;
 
 // Три способа настройки приложений
@@ -45,16 +46,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient(); //! Настроить для использования IHttpClientFactory
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
-
-IConfiguration configuration = builder.Services.AddConfigurationExtension(builder);
+builder.Services.AddFeatureManagement(builder.Configuration.GetSection("FeatureFlags"));
 
 builder.Services.AddRedisExtensions(builder);
-
 builder.Services.AddOptionsExtensions(builder);
-
 builder.Services.AddServicesExtensions(builder);
-
 builder.Services.AddRepositoriesExtensions(builder);
+IConfiguration configuration = builder.Services.AddConfigurationExtension(builder);
 
 
 #region Middleware
