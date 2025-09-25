@@ -5,11 +5,11 @@ using Domain.Models.ResponseModels;
 
 namespace Domain.Services.API;
 
-public class FileService : IFileService
+public class FilesService : IFilesService
 {
     private readonly IFileRepository _fileRepository;
 
-    public FileService(IFileRepository fileRepository)
+    public FilesService(IFileRepository fileRepository)
     {
         _fileRepository = fileRepository;
     }

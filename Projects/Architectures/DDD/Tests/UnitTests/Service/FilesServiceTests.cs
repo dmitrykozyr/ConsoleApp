@@ -14,13 +14,13 @@ public class FilesServiceTests
     private readonly IFileRepository fakeFileRepository;
 
     // Реальные объекты
-    private readonly FileService fileService;
+    private readonly FilesService fileService;
 
     public FilesServiceTests()
     {
         fakeFileRepository = A.Fake<IFileRepository>();
 
-        fileService = new FileService(fakeFileRepository);
+        fileService = new FilesService(fakeFileRepository);
     }
 
     [Fact]

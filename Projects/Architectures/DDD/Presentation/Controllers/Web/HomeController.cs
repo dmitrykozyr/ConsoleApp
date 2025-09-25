@@ -1,5 +1,7 @@
 using Domain.Interfaces.Login;
+using Domain.Interfaces.Services;
 using Domain.Models.RequentModels;
+using Domain.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.Web;
@@ -7,10 +9,12 @@ namespace Presentation.Controllers.Web;
 public class HomeController : Controller
 {
     private readonly ILoginService _loginService;
+    private readonly IFilesService _filesService;
 
-    public HomeController(ILoginService loginService)
+    public HomeController(ILoginService loginService, IFilesService filesService)
     {
         _loginService = loginService;
+        _filesService = filesService;
     }
 
     public IActionResult Index()
@@ -51,11 +55,40 @@ public class HomeController : Controller
 
         if (!ModelState.IsValid)
         {
-            var result = new ViewResult(); //!
+            DbDataResponseModel buckets = _bucketService.GetBuckets();
+            if (!string.IsNullOrEmpty(buckets.ErrorMessage))
+            {
+                var errorViewModel = new ErrorViewModel
+                {
+                    ErrorMessage = buckets.ErrorMessage
+                };
+
+                return View("Error", errorViewModel);
+            }
+
+            var result = new FileDownloadRequest
+            {
+                Guid = default,
+                BucketPath = buckets.DbData
+            };
 
             return View(result);
         }
 
-        return View("Thanks");
+        FileStreamResponse fileStreamResponse = _filesService.GetFileStream(model);
+
+        if (fileStreamResponse is not null && fileStreamResponse.Stream is not null)
+        {
+            return File(fileStreamResponse.Stream, "application/octet-stream", fileStreamResponse.FileNameExtension);
+        }
+        else
+        {
+            var errorViewModel = new ErrorViewModel
+            {
+                ErrorMessage = "Файл не найден"
+            };
+
+            return View("Error", errorViewModel);
+        }
     }
 }

@@ -3,7 +3,7 @@ using Domain.Models.ResponseModels;
 
 namespace Domain.Interfaces.Services;
 
-public interface IFileService
+public interface IFilesService
 {
     FileStorageResponse GetFile(FileStorageRequest model);
 }

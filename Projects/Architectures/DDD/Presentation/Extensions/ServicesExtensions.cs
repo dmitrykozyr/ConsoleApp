@@ -18,7 +18,7 @@ public static class ServicesExtensions
         builder.Services.AddScoped<ILogging, Logging>();
         builder.Services.AddScoped<IProvider, Provider>();
         builder.Services.AddScoped<ISqlService, SqlService>();
-        builder.Services.AddScoped<IFileService, FileService>();
+        builder.Services.AddScoped<IFilesService, FilesService>();
         builder.Services.AddScoped<ILoginService, LoginService>();
         //!builder.Services.AddScoped(typeof(IRedisService), typeof(RedisService<>));
         builder.Services.AddScoped<IDbConStrService, DbConStrService>();
