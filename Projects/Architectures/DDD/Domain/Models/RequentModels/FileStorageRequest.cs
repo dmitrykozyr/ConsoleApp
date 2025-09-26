@@ -2,5 +2,7 @@
 
 public class FileStorageRequest
 {
-    public Guid FileGuid { get; init; }
+    public Guid Guid { get; set; }
+
+    public string? BucketPath { get; set; }
 }

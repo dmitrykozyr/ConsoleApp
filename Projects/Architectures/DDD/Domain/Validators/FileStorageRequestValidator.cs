@@ -7,8 +7,8 @@ public class FileStorageRequestValidator : AbstractValidator<FileStorageRequest>
 {
     public FileStorageRequestValidator()
     {
-        RuleFor(r => r.FileGuid)
+        RuleFor(r => r.Guid)
             .NotEmpty()
-            .WithMessage($"Поле {nameof(FileStorageRequest.FileGuid)} должно быть заполнено");
+            .WithMessage($"Поле {nameof(FileStorageRequest.Guid)} должно быть заполнено");
     }
 }

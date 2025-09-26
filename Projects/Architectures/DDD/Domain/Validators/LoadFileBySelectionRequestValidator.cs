@@ -7,8 +7,8 @@ public class LoadFileBySelectionRequestValidator : AbstractValidator<LoadFileByS
 {
     public LoadFileBySelectionRequestValidator()
     {
-        RuleFor(r => r.)
+        RuleFor(r => r.BucketPath)
             .NotEmpty()
-            .WithMessage($"Поле {nameof()} должно быть заполнено");
+            .WithMessage($"Поле {nameof(LoadFileBySelectionRequest.BucketPath)} должно быть заполнено");
     }
 }

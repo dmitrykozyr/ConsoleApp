@@ -7,8 +7,8 @@ public class LoadFileByPathRequestValidator : AbstractValidator<LoadFileByPathRe
 {
     public LoadFileByPathRequestValidator()
     {
-        RuleFor(r => r.)
+        RuleFor(r => r.BucketPath)
             .NotEmpty()
-            .WithMessage($"Поле {nameof()} должно быть заполнено");
+            .WithMessage($"Поле {nameof(LoadFileByPathRequest.BucketPath)} должно быть заполнено");
     }
 }
