@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models.ResponseModels;
 
-public class FileStorageResponse
+public class UploadFileResponse
 {
 
 }

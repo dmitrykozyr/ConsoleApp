@@ -8,6 +8,6 @@ public class FileRepository : IFileRepository
 {
     public FileStorageResponse GetFile(FileStorageRequest model)
     {
-        return null;
+        
     }
 }

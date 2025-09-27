@@ -2,6 +2,7 @@ using Domain.Interfaces.Login;
 using Domain.Interfaces.Services;
 using Domain.Models.RequentModels;
 using Domain.Models.ResponseModels;
+using Domain.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.Web;
@@ -10,11 +11,13 @@ public class HomeController : Controller
 {
     private readonly ILoginService _loginService;
     private readonly IFilesService _filesService;
+    private readonly IBucketService _bucketService;
 
-    public HomeController(ILoginService loginService, IFilesService filesService)
+    public HomeController(ILoginService loginService, IFilesService filesService, IBucketService bucketService)
     {
         _loginService = loginService;
         _filesService = filesService;
+        _bucketService = bucketService;
     }
 
     public IActionResult Index()
@@ -68,8 +71,8 @@ public class HomeController : Controller
 
             var result = new FileDownloadRequest
             {
-                Guid = default,
-                BucketPath = buckets.DbData
+                Guid        = default,
+                BucketPath  = buckets.DbData
             };
 
             return View(result);

@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Diagnostics;
+using Domain.Enums;
 using Domain.Interfaces;
 using Domain.Interfaces.Services;
+using Domain.Models.Dto;
 using Domain.Models.Options;
 using Domain.Models.RequentModels;
 using Domain.Models.ResponseModels;
@@ -45,11 +47,11 @@ public class FilesService : IFilesService
             FileStorageOptions.TechUserPassword,
             FileStorageOptions.ClientId);
 
-        var fileStorageDTO = new FileStorageDTO
+        var fileStorageDTO = new FileStorageDto
         {
-            Guid = model.Guid,
-            BucketPath = model.BucketPath,
-            Token = token
+            Guid        = model.Guid,
+            BucketPath  = model.BucketPath,
+            Token       = token
         };
 
         string sURL = $"{GeneralOptions.PostUrl}/{model.BucketPath}/{model.Guid}";
@@ -84,11 +86,11 @@ public class FilesService : IFilesService
             FileStorageOptions.TechUserPassword,
             FileStorageOptions.ClientId);
 
-        var fileStorageDTO = new FileStorageDTO
+        var fileStorageDTO = new FileStorageDto
         {
-            Guid = model.Guid,
-            BucketPath = model.BucketPath,
-            Token = token
+            Guid        = model.Guid,
+            BucketPath  = model.BucketPath,
+            Token       = token
         };
 
         string sURL = $"{GeneralOptions.PostUrl}/{model.BucketPath}/{model.Guid}";
@@ -168,12 +170,12 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var loadFileDTO = new LoadFileDTO
+        var loadFileDTO = new LoadFileDto
         {
-            BucketPath = model.BucketPath,
-            DeathTime = model.DeathTime,
-            LifeTimeHours = model.LifeTimeHours,
-            File = Convert.FromBase64String(model.File ?? "")
+            BucketPath      = model.BucketPath,
+            DeathTime       = model.DeathTime,
+            LifeTimeHours   = model.LifeTimeHours,
+            File            = Convert.FromBase64String(model.File ?? "")
         };
 
         var token = _tokenService.GetToken(
@@ -246,7 +248,7 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var loadFileDTO = new LoadFileDTO
+        var loadFileDTO = new LoadFileDto
         {
             BucketPath = model.BucketPath,
             DeathTime = model.DeathTime,
@@ -319,7 +321,7 @@ public class FilesService : IFilesService
 
                 DbDataResponseModel buckets = _bucketService.GetBuckets();
                 var bucketId = buckets?.DbData?.FirstOrDefault(b => b.Value == model.BucketPath).Key;
-                _logging.LogToDB(RestMethodsEnum.POST, bucketId ?? 0, result.Id);
+                _logging.LogToDB(RestMethods.POST, bucketId ?? 0, result.Id);
 
                 return result.Id;
             }
@@ -348,7 +350,7 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var loadFileDTO = new LoadFileDTO
+        var loadFileDTO = new LoadFileDto
         {
             BucketPath = model.BucketPath,
             DeathTime = model.DeathTime,
@@ -397,7 +399,7 @@ public class FilesService : IFilesService
 
                 DbDataResponseModel buckets = _bucketService.GetBuckets();
                 var bucketId = buckets?.DbData?.FirstOrDefault(b => b.Value == model.BucketPath).Key;
-                _logging.LogToDB(RestMethodsEnum.POST, bucketId ?? 0, result.Id);
+                _logging.LogToDB(RestMethods.POST, bucketId ?? 0, result.Id);
 
                 return result.Id;
             }
@@ -431,7 +433,7 @@ public class FilesService : IFilesService
             FileStorageOptions.TechUserPassword,
             FileStorageOptions.ClientId);
 
-        var fileStorageDTO = new FileStorageDTO
+        var fileStorageDTO = new FileStorageDto
         {
             Guid = model.Guid,
             BucketPath = model.BucketPath,
@@ -455,7 +457,7 @@ public class FilesService : IFilesService
                 {
                     DbDataResponseModel buckets = _bucketService.GetBuckets();
                     var bucketId = buckets?.DbData?.FirstOrDefault(b => b.Value == model.BucketPath).Key;
-                    _logging.LogToDB(RestMethodsEnum.DELETE, bucketId ?? 0, model.Guid);
+                    _logging.LogToDB(RestMethods.DELETE, bucketId ?? 0, model.Guid);
 
                     return true;
                 }
