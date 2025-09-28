@@ -1,5 +1,6 @@
 ﻿using Domain.Models.RequentModels;
 using Domain.Models.ResponseModels;
+using Microsoft.AspNetCore.Http;
 
 namespace Domain.Interfaces.Services;
 
@@ -13,7 +14,7 @@ public interface IFilesService
 
     Guid LoadFileFromFileSystemByPath(LoadFileByPathRequest model);
 
-    Task<Guid> LoadFileFromFileSystemBySelection(LoadFileBySelectionRequest model, IFormFile file); //! using Microsoft.AspNetCore.Http;
+    Task<Guid> LoadFileFromFileSystemBySelection(LoadFileBySelectionRequest model, IFormFile file);
 
     bool DeleteFile(FileStorageRequest model);
 }

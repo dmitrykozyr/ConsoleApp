@@ -2,11 +2,11 @@
 
 public class LoadFileDto
 {
-    public string? BucketPath { get; set; }
+    public string? BucketPath { get; init; }
 
-    public string? DeathTime { get; set; }
+    public string? DeathTime { get; init; }
 
-    public int? LifeTimeHours { get; set; }
+    public int? LifeTimeHours { get; init; }
 
-    public byte[]? File { get; set; }
+    public byte[]? File { get; init; }
 }

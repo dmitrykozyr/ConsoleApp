@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Diagnostics;
-using Domain.Enums;
 using Domain.Interfaces;
 using Domain.Interfaces.Services;
 using Domain.Models.Dto;
 using Domain.Models.Options;
 using Domain.Models.RequentModels;
 using Domain.Models.ResponseModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net;
@@ -19,39 +19,28 @@ public class FilesService : IFilesService
     private readonly FileStorageOptions? FileStorageOptions;
 
     private readonly ILogging _logging;
-    private readonly ITokenService _tokenService;
-    private readonly IBucketService _bucketService;
 
     public FilesService(
         IOptions<GeneralOptions> generalOptions,
         IOptions<FileStorageOptions> fileStorageOptions,
-        ILogging logging,
-        ITokenService tokenService,
-        IBucketService bucketService)
+        ILogging logging)
     {
         GeneralOptions = generalOptions.Value;
         FileStorageOptions = fileStorageOptions.Value;
 
         _logging = logging;
-        _tokenService = tokenService;
-        _bucketService = bucketService;
     }
 
     public FileStreamResponse GetFileStream(FileStorageRequest model)
     {
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
-
-        var token = _tokenService.GetToken(
-            FileStorageOptions.TechUserName,
-            FileStorageOptions.TechUserPassword,
-            FileStorageOptions.ClientId);
-
+                
         var fileStorageDTO = new FileStorageDto
         {
             Guid        = model.Guid,
             BucketPath  = model.BucketPath,
-            Token       = token
+            //Token       = token
         };
 
         string sURL = $"{GeneralOptions.PostUrl}/{model.BucketPath}/{model.Guid}";
@@ -59,7 +48,9 @@ public class FilesService : IFilesService
         var request = (HttpWebRequest)WebRequest.Create(sURL);
         request.Method = "GET";
         request.KeepAlive = true;
-        request.Headers.Add("Authorization", "Bearer " + fileStorageDTO.Token.access_token);
+
+        // Добавление токена в Headers
+        //request.Headers.Add("Authorization", "Bearer " + fileStorageDTO.Token.access_token);
 
         var response = request.GetResponse();
         var responseStream = response.GetResponseStream();
@@ -81,16 +72,11 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var token = _tokenService.GetToken(
-            FileStorageOptions.TechUserName,
-            FileStorageOptions.TechUserPassword,
-            FileStorageOptions.ClientId);
-
         var fileStorageDTO = new FileStorageDto
         {
             Guid        = model.Guid,
             BucketPath  = model.BucketPath,
-            Token       = token
+            //Token       = token
         };
 
         string sURL = $"{GeneralOptions.PostUrl}/{model.BucketPath}/{model.Guid}";
@@ -100,7 +86,9 @@ public class FilesService : IFilesService
         var request = (HttpWebRequest)WebRequest.Create(sURL);
         request.Method = "GET";
         request.KeepAlive = true;
-        request.Headers.Add("Authorization", "Bearer " + fileStorageDTO.Token.access_token);
+
+        // Добавление токена в Headers
+        //request.Headers.Add("Authorization", "Bearer " + fileStorageDTO.Token.access_token);
 
         var result = new LoadFileResponse();
 
@@ -125,10 +113,6 @@ public class FilesService : IFilesService
                             {
                                 responseStream.CopyTo(fileStream);
                             }
-
-                            DbDataResponseModel buckets = _bucketService.GetBuckets();
-                            var bucketId = buckets?.DbData?.FirstOrDefault(b => b.Value == model.BucketPath).Key;
-                            _logging.LogToDB(RestMethodsEnum.GET, bucketId ?? 0, model.Guid);
 
                             return new LoadFileResponse
                             {
@@ -165,6 +149,7 @@ public class FilesService : IFilesService
         return result;
     }
 
+
     public async Task<Guid> LoadFileByBytesArray(LoadFileByBytesRequest model)
     {
         Guard.IsNotNull(GeneralOptions);
@@ -178,11 +163,6 @@ public class FilesService : IFilesService
             File            = Convert.FromBase64String(model.File ?? "")
         };
 
-        var token = _tokenService.GetToken(
-            FileStorageOptions.TechUserName,
-            FileStorageOptions.TechUserPassword,
-            FileStorageOptions.ClientId);
-
         string sURL = $"{GeneralOptions.PostUrl}/{loadFileDTO.BucketPath}";
 
         Guard.IsNotNullOrEmpty(sURL);
@@ -192,7 +172,9 @@ public class FilesService : IFilesService
         request.Method = "POST";
         request.ContentType = "multipart/form-data; boundary=" + boundary;
         request.Accept = "application/json;charset=UTF-8";
-        request.Headers.Add("Authorization", "Bearer " + token.access_token);
+
+        // Добавление токена в Headers
+        //request.Headers.Add("Authorization", "Bearer " + token.access_token);
 
         using (var stream = request.GetRequestStream())
         {
@@ -217,10 +199,6 @@ public class FilesService : IFilesService
                 string readerResult = reader.ReadToEnd();
 
                 var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
-
-                DbDataResponseModel buckets = _bucketService.GetBuckets();
-                var bucketId = buckets?.DbData?.FirstOrDefault(b => b.Value == model.BucketPath).Key;
-                _logging.LogToDB(RestMethodsEnum.POST, bucketId ?? 0, result.Id);
 
                 return result.Id;
             }
@@ -255,20 +233,17 @@ public class FilesService : IFilesService
             LifeTimeHours = model.LifeTimeHours,
         };
 
-        var token = _tokenService.GetToken(
-            FileStorageOptions.TechUserName,
-            FileStorageOptions.TechUserPassword,
-            FileStorageOptions.ClientId);
-
         string sURL = $"{GeneralOptions.PostUrl}/{loadFileDTO.BucketPath}";
 
         Guard.IsNotNullOrEmpty(sURL);
 
         var request = (HttpWebRequest)WebRequest.Create(sURL);
-        request.Method = "POST";
+        request.Method      = "POST";
         request.ContentType = "multipart/form-data; boundary=---------------------------" + DateTime.Now.Ticks.ToString("x");
-        request.Accept = "application/json;charset=UTF-8";
-        request.Headers.Add("Authorization", "Bearer " + token.access_token);
+        request.Accept      = "application/json;charset=UTF-8";
+
+        // Добавление токена в Headers
+        //request.Headers.Add("Authorization", "Bearer " + token.access_token);
 
         // Открытие потока для записи данных в запрос
         using (var stream = request.GetRequestStream())
@@ -319,10 +294,6 @@ public class FilesService : IFilesService
 
                 var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
 
-                DbDataResponseModel buckets = _bucketService.GetBuckets();
-                var bucketId = buckets?.DbData?.FirstOrDefault(b => b.Value == model.BucketPath).Key;
-                _logging.LogToDB(RestMethods.POST, bucketId ?? 0, result.Id);
-
                 return result.Id;
             }
         }
@@ -357,11 +328,6 @@ public class FilesService : IFilesService
             LifeTimeHours = model.LifeTimeHours,
         };
 
-        var token = _tokenService.GetToken(
-            FileStorageOptions.TechUserName,
-            FileStorageOptions.TechUserPassword,
-            FileStorageOptions.ClientId);
-
         string sURL = $"{GeneralOptions.PostUrl}/{loadFileDTO.BucketPath}";
 
         Guard.IsNotNullOrEmpty(sURL);
@@ -371,7 +337,9 @@ public class FilesService : IFilesService
         request.Method = "POST";
         request.ContentType = "multipart/form-data; boundary=" + boundary;
         request.Accept = "application/json;charset=UTF-8";
-        request.Headers.Add("Authorization", "Bearer " + token.access_token);
+
+        // Добавление токена в Headers
+        //request.Headers.Add("Authorization", "Bearer " + token.access_token);
 
         using (var stream = request.GetRequestStream())
         {
@@ -396,10 +364,6 @@ public class FilesService : IFilesService
                 string readerResult = reader.ReadToEnd();
 
                 var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
-
-                DbDataResponseModel buckets = _bucketService.GetBuckets();
-                var bucketId = buckets?.DbData?.FirstOrDefault(b => b.Value == model.BucketPath).Key;
-                _logging.LogToDB(RestMethods.POST, bucketId ?? 0, result.Id);
 
                 return result.Id;
             }
@@ -428,16 +392,11 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var token = _tokenService.GetToken(
-            FileStorageOptions.TechUserName,
-            FileStorageOptions.TechUserPassword,
-            FileStorageOptions.ClientId);
-
         var fileStorageDTO = new FileStorageDto
         {
             Guid = model.Guid,
             BucketPath = model.BucketPath,
-            Token = token
+            //Token = token
         };
 
         string sURL = $"{GeneralOptions.PostUrl}/{model.BucketPath}/{model.Guid}";
@@ -447,7 +406,9 @@ public class FilesService : IFilesService
         var request = (HttpWebRequest)WebRequest.Create(sURL);
         request.Method = "DELETE";
         request.KeepAlive = true;
-        request.Headers.Add("Authorization: Bearer " + fileStorageDTO.Token.access_token);
+
+        // Добавление токена в Headers
+        //request.Headers.Add("Authorization: Bearer " + fileStorageDTO.Token.access_token);
 
         try
         {
@@ -455,10 +416,6 @@ public class FilesService : IFilesService
             {
                 if (response is not null)
                 {
-                    DbDataResponseModel buckets = _bucketService.GetBuckets();
-                    var bucketId = buckets?.DbData?.FirstOrDefault(b => b.Value == model.BucketPath).Key;
-                    _logging.LogToDB(RestMethods.DELETE, bucketId ?? 0, model.Guid);
-
                     return true;
                 }
             }

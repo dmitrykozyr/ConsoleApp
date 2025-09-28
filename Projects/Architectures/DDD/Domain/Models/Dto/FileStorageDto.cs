@@ -2,9 +2,9 @@
 
 public class FileStorageDto
 {
-    public Guid Guid { get; set; }
+    public Guid Guid { get; init; }
 
-    public string? BucketPath { get; set; }
+    public string? BucketPath { get; init; }
 
-    public Token? Token { get; set; }
+    public Token? Token { get; init; }
 }

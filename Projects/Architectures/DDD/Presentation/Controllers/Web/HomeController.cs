@@ -11,13 +11,11 @@ public class HomeController : Controller
 {
     private readonly ILoginService _loginService;
     private readonly IFilesService _filesService;
-    private readonly IBucketService _bucketService;
 
-    public HomeController(ILoginService loginService, IFilesService filesService, IBucketService bucketService)
+    public HomeController(ILoginService loginService, IFilesService filesService)
     {
         _loginService = loginService;
         _filesService = filesService;
-        _bucketService = bucketService;
     }
 
     public IActionResult Index()
@@ -58,21 +56,9 @@ public class HomeController : Controller
 
         if (!ModelState.IsValid)
         {
-            DbDataResponseModel buckets = _bucketService.GetBuckets();
-            if (!string.IsNullOrEmpty(buckets.ErrorMessage))
-            {
-                var errorViewModel = new ErrorViewModel
-                {
-                    ErrorMessage = buckets.ErrorMessage
-                };
-
-                return View("Error", errorViewModel);
-            }
-
             var result = new FileDownloadRequest
             {
-                Guid        = default,
-                BucketPath  = buckets.DbData
+                Guid = default
             };
 
             return View(result);
@@ -82,7 +68,8 @@ public class HomeController : Controller
 
         if (fileStreamResponse is not null && fileStreamResponse.Stream is not null)
         {
-            return File(fileStreamResponse.Stream, "application/octet-stream", fileStreamResponse.FileNameExtension);
+            //return File(fileStreamResponse.Stream, "application/octet-stream", fileStreamResponse.FileNameExtension);
+            return default;
         }
         else
         {

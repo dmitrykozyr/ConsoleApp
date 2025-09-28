@@ -7,4 +7,6 @@ public class FileStorageOptions
     public string? TechUserPassword { get; set; }
 
     public string? ClientId { get; set; }
+
+    public string? FileDownloadPath { get; set; }
 }
