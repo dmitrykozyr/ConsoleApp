@@ -2,7 +2,7 @@
 
 public class FileDownloadRequest
 {
-    public Guid Guid { get; set; }
+    public Guid Guid { get; init; }
 
-    public Dictionary<long, string>? BucketPath { get; set; }
+    public Dictionary<long, string>? BucketPath { get; init; }
 }

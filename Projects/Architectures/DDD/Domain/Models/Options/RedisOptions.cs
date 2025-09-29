@@ -2,7 +2,7 @@
 
 public class RedisOptions
 {
-    public string? ConnectionString { get; set; }
+    public string? ConnectionString { get; init; }
 
-    public string? Channel { get; set; }
+    public string? Channel { get; init; }
 }

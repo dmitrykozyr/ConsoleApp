@@ -6,5 +6,5 @@ public class GeneralOptions
 
     public int CommandTimeout { get; init; }
 
-    public string? PostUrl { get; set; }
+    public string? PostUrl { get; init; }
 }

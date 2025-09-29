@@ -2,14 +2,14 @@
 
 public class LoadFileByBytesRequest
 {
-    public string? BucketPath { get; set; }
+    public string? BucketPath { get; init; }
 
-    public string? DeathTime { get; set; }
+    public string? DeathTime { get; init; }
 
-    public int? LifeTimeHours { get; set; }
+    public int? LifeTimeHours { get; init; }
 
     // Массив байт в строке, представляющий файл
-    public string? File { get; set; }
+    public string? File { get; init; }
 
-    public string? FileName { get; set; }
+    public string? FileName { get; init; }
 }

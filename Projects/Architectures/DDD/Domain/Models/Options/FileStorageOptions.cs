@@ -2,11 +2,11 @@
 
 public class FileStorageOptions
 {
-    public string? TechUserName { get; set; }
+    public string? TechUserName { get; init; }
 
-    public string? TechUserPassword { get; set; }
+    public string? TechUserPassword { get; init; }
 
-    public string? ClientId { get; set; }
+    public string? ClientId { get; init; }
 
-    public string? FileDownloadPath { get; set; }
+    public string? FileDownloadPath { get; init; }
 }
