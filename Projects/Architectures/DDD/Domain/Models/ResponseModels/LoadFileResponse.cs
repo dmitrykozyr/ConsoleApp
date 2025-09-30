@@ -2,9 +2,9 @@
 
 public class LoadFileResponse
 {
-    public string? FileName { get; set; }
+    public string? FileName { get; init; }
 
-    public string? FilePath { get; set; }
+    public string? FilePath { get; init; }
 
     public string? ErrorMessage { get; set; }
 }

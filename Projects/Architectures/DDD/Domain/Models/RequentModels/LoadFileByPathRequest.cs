@@ -2,11 +2,11 @@
 
 public class LoadFileByPathRequest
 {
-    public string? BucketPath { get; set; }
+    public string? BucketPath { get; init; }
 
-    public string? DeathTime { get; set; }
+    public string? DeathTime { get; init; }
 
-    public int? LifeTimeHours { get; set; }
+    public int? LifeTimeHours { get; init; }
 
-    public string? FilePathInFileSystem { get; set; }
+    public string? FilePathInFileSystem { get; init; }
 }

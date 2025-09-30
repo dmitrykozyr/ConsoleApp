@@ -2,7 +2,7 @@
 
 public class FileStreamResponse
 {
-    public Stream? Stream { get; set; }
+    public Stream? Stream { get; init; }
 
-    public string? FileNameExtension { get; set; }
+    public string? FileNameExtension { get; init; }
 }
