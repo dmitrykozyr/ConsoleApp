@@ -43,7 +43,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpClient(); //! Настроить для использования IHttpClientFactory
+builder.Services.AddHttpClient();
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 builder.Services.AddFeatureManagement(builder.Configuration.GetSection("FeatureFlags"));

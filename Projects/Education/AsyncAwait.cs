@@ -216,9 +216,9 @@ public class AsyncAwait
                 - используется, если не будем взаимодействовать с UI или контекстом синхронизации после завершения асинхронной операции
         */
 
-        static async Task F1()
+        static async Task F1(IHttpClientFactory httpClientFactory)
         {
-            using (var client = new HttpClient())
+            using (HttpClient client = httpClientFactory.CreateClient())
             {
                 string result = await client.GetStringAsync("https://api.github.com")
                                             .ConfigureAwait(false);
@@ -227,15 +227,15 @@ public class AsyncAwait
             }
         }
 
-        static async Task Main_()
+        static async Task Main_(IHttpClientFactory httpClientFactory)
         {
             Console.WriteLine("Start");
 
-            await F1().ConfigureAwait(true);
+            await F1(httpClientFactory).ConfigureAwait(true);
 
             // Выполнение после завершения асинхронной операции может продолжиться в любом доступном потоке,
             // что полезно для библиотек или фоновых задач, где контекст выполнения не важен
-            await F1().ConfigureAwait(false);
+            await F1(httpClientFactory).ConfigureAwait(false);
 
             Console.WriteLine("End");
         }

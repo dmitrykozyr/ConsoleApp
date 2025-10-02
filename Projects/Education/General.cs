@@ -1891,9 +1891,9 @@ class Program
     class HttpClient_
     {
         // Получение данных с веб-сайта через HttpClient
-        static async Task Main_()
+        static async Task Main_(IHttpClientFactory httpClientFactory)
         {
-            var httpClient = new HttpClient();
+            HttpClient httpClient = httpClientFactory.CreateClient();
 
             var message = new HttpRequestMessage()
             {

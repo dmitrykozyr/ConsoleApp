@@ -68,7 +68,7 @@ public class HomeController : Controller
 
         if (fileStreamResponse is not null && fileStreamResponse.Stream is not null)
         {
-            //return File(fileStreamResponse.Stream, "application/octet-stream", fileStreamResponse.FileNameExtension);
+            //!return File(fileStreamResponse.Stream, "application/octet-stream", fileStreamResponse.FileNameExtension);
             return default;
         }
         else

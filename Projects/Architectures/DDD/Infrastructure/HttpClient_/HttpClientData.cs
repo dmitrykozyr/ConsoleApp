@@ -26,9 +26,7 @@ public class HttpClientData<T> : IHttpClientData<T>
     //! Протестить
     public async Task<T?> GetRequest(string baseAddress, string additionalUrl = "", Dictionary<string, string>? headers = null)
     {
-        // Вместо HttpClient лучше использовать IHttpClientFactory
-        //using (var client = new HttpClient())
-        using (var client = _httpClientFactory.CreateClient())
+        using (HttpClient client = _httpClientFactory.CreateClient())
         {
             try
             {
@@ -73,7 +71,7 @@ public class HttpClientData<T> : IHttpClientData<T>
     // Не тестировалось, может потребоваться доработка
     public async Task<bool> PostRequest(string baseAddress, T model)
     {
-        using (var client = new HttpClient())
+        using (HttpClient client = _httpClientFactory.CreateClient())
         {
             client.BaseAddress = new Uri(baseAddress);
 
