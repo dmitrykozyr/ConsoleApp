@@ -23,7 +23,6 @@ public class HttpClientData<T> : IHttpClientData<T>
         _httpClientFactory = httpClientFactory;
     }
 
-    //! Протестить
     public async Task<T?> GetRequest(string baseAddress, string additionalUrl = "", Dictionary<string, string>? headers = null)
     {
         using (HttpClient client = _httpClientFactory.CreateClient())
@@ -68,7 +67,6 @@ public class HttpClientData<T> : IHttpClientData<T>
         }
     }
 
-    // Не тестировалось, может потребоваться доработка
     public async Task<bool> PostRequest(string baseAddress, T model)
     {
         using (HttpClient client = _httpClientFactory.CreateClient())

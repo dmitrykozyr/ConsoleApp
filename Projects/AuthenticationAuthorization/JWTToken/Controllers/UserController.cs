@@ -7,9 +7,9 @@ namespace JWTToken.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : ControllerBase //!
+public class UserController : ControllerBase
 {
-    //! Метод, не требующий аутентификации и авторизации
+    // Метод, не требующий аутентификации и авторизации
     // https://localhost:7269/api/user/public
     [HttpGet("Public")]
     public IActionResult Public()
@@ -48,11 +48,11 @@ public class UserController : ControllerBase //!
 
             return new UserModel
             {
-                UserName = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.NameIdentifier)?.Value,
-                EmailAddress = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.Email)?.Value,
-                GivenName = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.GivenName)?.Value,
-                Surname = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.Surname)?.Value,
-                Role = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.Role)?.Value
+                UserName        = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.NameIdentifier)?.Value,
+                EmailAddress    = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.Email)?.Value,
+                GivenName       = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.GivenName)?.Value,
+                Surname         = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.Surname)?.Value,
+                Role            = userClaims.FirstOrDefault(z => z.Type == ClaimTypes.Role)?.Value
             };
         }
 

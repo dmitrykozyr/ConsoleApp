@@ -19,7 +19,7 @@ public class LoginController
         _config = config;
     }
 
-    //! Генерация JWT-токена
+    // Генерация JWT-токена
     // https://localhost:7269/api/login
     [AllowAnonymous]
     [HttpPost]

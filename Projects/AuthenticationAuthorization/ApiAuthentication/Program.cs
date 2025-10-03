@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-//! Запуск проекта
+// Запуск проекта
 // https://localhost:7202/swagger/index.html
 
 var builder = WebApplication.CreateBuilder(args);

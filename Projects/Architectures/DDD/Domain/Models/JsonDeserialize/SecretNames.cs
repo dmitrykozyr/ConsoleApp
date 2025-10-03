@@ -4,7 +4,7 @@
 // Имена должны в точности совпадать
 public class SecretNames
 {
-    public int TOKEN_PASSWORD_1 { get; init; } //!
+    public int TOKEN_PASSWORD_1 { get; init; }
 
     public int TOKEN_PASSWORD_2 { get; init; }
 
