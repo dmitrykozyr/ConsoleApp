@@ -1,11 +1,16 @@
 @HostAddress = https://localhost:7034
 
-GET {{HostAddress}}/Files
+POST {{HostAddress}}/api/Files/GetFile
 Accept: application/json
+content-type: application/json
+
+    {
+        "fileGuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
 
 ###
 
-GET {{HostAddress}}/GetFile
+GET {{HostAddress}}/Files
 Accept: application/json
 
 ###

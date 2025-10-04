@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Presentation.Controllers.API;
 
 [ApiController]
-[Route("api/v{version:apiVersion}/[controller]")]
+//![Route("api/v{version:apiVersion}/[controller]")]
 public class FilesController
 {
     private readonly ILogging _logging;

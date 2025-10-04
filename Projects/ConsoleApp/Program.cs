@@ -2,6 +2,9 @@
 {
     //!
     /*
+        Настроить в docker prod-версию vault
+        GitLab build, tests, GitLab Runner
+        AutoMapper
         Kubernetes
         Prometheus
         Grafana,
@@ -19,7 +22,6 @@
         JSONb, blob
         Балансировщик
         Api Gateway
-        GitLab Runner
         Docker Hub
         Logger Elastic
         Архитектура мессенджера, выбор БД

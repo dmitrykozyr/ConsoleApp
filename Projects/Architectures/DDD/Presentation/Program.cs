@@ -1,9 +1,3 @@
-using CommunityToolkit.Diagnostics;
-using Domain.Interfaces;
-using Domain.Models.JsonDeserialize;
-using Domain.Models.Options;
-using Infrastructure.Vault;
-using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using Presentation.Extensions;
 
@@ -39,15 +33,16 @@ using Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllersWithViews();
-builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
-builder.Services.AddAuthentication();
+builder.Services.AddControllers();
 builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllersWithViews();
 builder.Services.AddFeatureManagement(builder.Configuration.GetSection("FeatureFlags"));
 
+// Методы расширения
 builder.Services.AddRedisExtensions(builder);
 builder.Services.AddOptionsExtensions(builder);
 builder.Services.AddServicesExtensions(builder);
@@ -55,27 +50,10 @@ builder.Services.AddRepositoriesExtensions(builder);
 IConfiguration configuration = builder.Services.AddConfigurationExtension(builder);
 
 
-#region Middleware
-
 WebApplication app = builder.Build();
 
-//! Вынести в метод расширения
-#region HashiConf Vault
-
-using (var scope = app.Services.CreateScope())
-{
-    var logging = scope.ServiceProvider.GetService<ILogging>();
-    var httpClientData = scope.ServiceProvider.GetService<IHttpClientData<VaultSecrets>>();
-    var vaultOptions = scope.ServiceProvider.GetService<IOptions<VaultOptions>>();
-
-    Guard.IsNotNull(logging);
-    Guard.IsNotNull(httpClientData);
-    Guard.IsNotNull(vaultOptions);
-
-    builder.Configuration.AddVault(vaultOptions, logging, configuration, httpClientData);
-}
-
-#endregion
+// Сервисы, которым нужен WebApplication
+builder.Services.AddVaultExtensions(app, builder, configuration);
 
 if (!app.Environment.IsDevelopment())
 {
@@ -106,5 +84,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=FileDownload}/{id?}");
 
 app.Run();
-
-#endregion

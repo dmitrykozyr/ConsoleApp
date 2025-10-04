@@ -20,9 +20,9 @@ public static class ServicesExtensions
         builder.Services.AddScoped<ISqlService, SqlService>();
         builder.Services.AddScoped<IFilesService, FilesService>();
         builder.Services.AddScoped<ILoginService, LoginService>();
-        //!builder.Services.AddScoped(typeof(IRedisService), typeof(RedisService<>));
         builder.Services.AddScoped<IDbConStrService, DbConStrService>();
         builder.Services.AddScoped<IMemoryCacheService, MemoryCacheService>(); //! Протестить
+        builder.Services.AddScoped<IRedisService, RedisService>();
         builder.Services.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
     }
 }
