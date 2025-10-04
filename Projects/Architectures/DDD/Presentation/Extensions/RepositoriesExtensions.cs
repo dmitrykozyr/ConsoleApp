@@ -7,6 +7,6 @@ public static class RepositoriesExtensions
 {
     public static void AddRepositoriesExtensions(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<IFileRepository, FileRepository>();
+        builder.Services.AddScoped<ISqlProceduresRepository, SqlProceduresRepository>();
     }
 }

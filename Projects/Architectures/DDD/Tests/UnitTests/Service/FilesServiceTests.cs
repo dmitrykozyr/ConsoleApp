@@ -17,7 +17,7 @@ public class FilesServiceTests
     private readonly IOptions<GeneralOptions> fakeGeneralOptions;
     private readonly IOptions<FileStorageOptions> fakeFileStorageOptions;
     private readonly ILogging fakeLogging;
-    private readonly IFileRepository fakeFileRepository;
+    private readonly ISqlProceduresRepository fakeFileRepository;
 
     // Реальные объекты
     private readonly FilesService fileService;
@@ -27,7 +27,7 @@ public class FilesServiceTests
         fakeGeneralOptions = A.Fake<IOptions<GeneralOptions>>();
         fakeFileStorageOptions = A.Fake<IOptions<FileStorageOptions>>();
         fakeLogging = A.Fake<ILogging>();
-        fakeFileRepository = A.Fake<IFileRepository>();
+        fakeFileRepository = A.Fake<ISqlProceduresRepository>();
 
         fileService = new FilesService(fakeGeneralOptions, fakeFileStorageOptions, fakeLogging);
     }
@@ -36,16 +36,19 @@ public class FilesServiceTests
     public void GetFile_ShoultReturnFile()
     {
         // Arrange
+        var fakeString = new Fixture().Create<string>();
+        var fakeStrings = new Fixture().Create<List<string>>();
+
         var fakeRequestModel = new Fixture().Create<FileStorageRequest>();
         var fakeResult = new Fixture().Create<FileStorageResponse>();
 
-        A.CallTo(() => fakeFileRepository.GetFile(fakeRequestModel)).Returns(fakeResult);
+        A.CallTo(() => fakeFileRepository.GetDbDataListString(fakeString)).Returns(fakeStrings);
 
         // Act
         var result = fileService.GetFileStream(fakeRequestModel);
 
         // Assert
         Assert.NotNull(result);
-        A.CallTo(() => fakeFileRepository.GetFile(fakeRequestModel)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => fakeFileRepository.GetDbDataListString(fakeString)).MustHaveHappenedOnceExactly();
     }
 }

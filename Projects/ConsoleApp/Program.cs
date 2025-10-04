@@ -2,52 +2,44 @@
 {
     //!
     /*
-        Настроить в docker prod-версию vault
-        GitLab build, tests, GitLab Runner
+        Docker:
+        - yастроить prod-версию vault
+        - загрузка проекта в Docker Hub
+
+        GitLab:
+        - build
+        - tests
+        - GitLab Runner
+
         AutoMapper
-        Kubernetes
-        Prometheus
-        Grafana,
-        PostgreSQL
-        ClickHouse
-        Oracle
-        Kafka
-        RabbitMQ
-        NATS
+
+        Системы мониторинга:
+        - Prometheus
+        - Grafana
+        - ClickHouse
+        
         gRPC
         SOAP
         MediatR
+
+        Kafka
+        Elastic
+        RabbitMQ
+        Kubernetes
         Шедулеры Quartz
-        Виртуальная БД
-        JSONb, blob
-        Балансировщик
+
         Api Gateway
-        Docker Hub
-        Logger Elastic
-        Архитектура мессенджера, выбор БД
+        Балансировщик
 
-
-        // Так можно не делать метод асинхронным, чтобы получить асинхронный результат
-        {
-            // GetAwaiter().GetResult() - блокирует выполнение до завершения задачи
-
-            _merchantsService.GetMerchantsListAsync("", context.Token)
-                .IfFailThrow()
-                .ConfigureAwait(true)
-                .GetAwaiter()
-                .GetResult();
-        }
-
-
-        // Когда есть IServiceScopeFactory, зависимости запрашиваем через него
-        using (IServiceScope scope = _serviceScopeFactory.CreateScope())
-        {
-            var fileRepository = scope.ServiceProvider.GetRequiredService<IDbFileRepository>();
-        }
-    
-
-        В контексте Entity Framework (EF Core),
-        DbContext часто выступает как реализация паттернов "Репозиторий" и "Единица работы" (Unit of Work)
+        БД:
+        - JSONb, blob
+        - Архитектура мессенджера, выбор БД
+        - Виртуальная БД
+        - PostgreSQL
+ 
+        В контексте EF Core, DbContext часто выступает как реализация паттернов:
+        - Репозиторий
+        - Unit of Work
     */
 
     static void Main()
