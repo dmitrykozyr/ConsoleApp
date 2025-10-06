@@ -43,6 +43,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddFeatureManagement(builder.Configuration.GetSection("FeatureFlags"));
 
 // Методы расширения
+builder.Services.AddQuartzExtension(builder);
 builder.Services.AddRedisExtensions(builder);
 builder.Services.AddOptionsExtensions(builder);
 builder.Services.AddServicesExtensions(builder);

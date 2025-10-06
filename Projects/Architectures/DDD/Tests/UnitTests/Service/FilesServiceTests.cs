@@ -2,7 +2,7 @@
 using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Options;
-using Domain.Models.RequentModels;
+using Domain.Models.RequestModels;
 using Domain.Models.ResponseModels;
 using Domain.Services.API;
 using FakeItEasy;
@@ -40,7 +40,6 @@ public class FilesServiceTests
         var fakeStrings = new Fixture().Create<List<string>>();
 
         var fakeRequestModel = new Fixture().Create<FileStorageRequest>();
-        var fakeResult = new Fixture().Create<FileStorageResponse>();
 
         A.CallTo(() => fakeFileRepository.GetDbDataListString(fakeString)).Returns(fakeStrings);
 

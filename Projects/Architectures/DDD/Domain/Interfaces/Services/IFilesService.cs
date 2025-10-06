@@ -1,4 +1,4 @@
-﻿using Domain.Models.RequentModels;
+﻿using Domain.Models.RequestModels;
 using Domain.Models.ResponseModels;
 using Microsoft.AspNetCore.Http;
 

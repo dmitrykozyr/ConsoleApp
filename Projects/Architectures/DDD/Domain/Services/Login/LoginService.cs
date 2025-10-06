@@ -27,6 +27,11 @@ public class LoginService : ILoginService
 
     public bool AuthenticateDomainUser()
     {
+        //! try catch
+
+        return true; //!
+
+
         Thread.CurrentPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
 
         IIdentity? claimsIdentity = Thread.CurrentPrincipal?.Identity;

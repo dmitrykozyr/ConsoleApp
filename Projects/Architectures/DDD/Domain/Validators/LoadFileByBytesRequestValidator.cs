@@ -1,4 +1,4 @@
-﻿using Domain.Models.RequentModels;
+﻿using Domain.Models.RequestModels;
 using FluentValidation;
 
 namespace Domain.Validators;

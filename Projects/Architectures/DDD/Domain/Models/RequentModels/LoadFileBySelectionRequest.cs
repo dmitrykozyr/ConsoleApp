@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.RequentModels;
+﻿namespace Domain.Models.RequestModels;
 
 public class LoadFileBySelectionRequest
 {

@@ -1,0 +1,30 @@
+﻿@model Domain.Models.RequestModels.FileDownloadRequest
+
+@{
+    ViewData["Title"] = "Скачать файл";
+}
+
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label for="Guid">Guid файла:</label>
+            @Html.TextBoxFor(model => model.Guid, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Guid, "", new { @class = "text-danger" })
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <label for="Bucket">Bucket:</label>
+            @Html.DropDownListFor(model => model.BucketPath, new SelectList(Model.BucketPath?.Values), "", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BucketPath, "", new { @class = "text-danger" })
+        </div>
+
+        <br />
+
+        <input type="submit" value="Скачать файл" class="btn btn-primary" />
+    }
+</div>

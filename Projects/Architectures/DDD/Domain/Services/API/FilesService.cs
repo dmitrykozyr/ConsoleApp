@@ -3,7 +3,7 @@ using Domain.Interfaces;
 using Domain.Interfaces.Services;
 using Domain.Models.Dto;
 using Domain.Models.Options;
-using Domain.Models.RequentModels;
+using Domain.Models.RequestModels;
 using Domain.Models.ResponseModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -31,38 +31,48 @@ public class FilesService : IFilesService
         _logging = logging;
     }
 
+    //! Везде по аналогии добавить try catch
     public FileStreamResponse GetFileStream(FileStorageRequest model)
     {
-        Guard.IsNotNull(GeneralOptions);
-        Guard.IsNotNull(FileStorageOptions);
-                
-        var fileStorageDTO = new FileStorageDto
+        var result = new FileStreamResponse();
+
+        try
         {
-            Guid        = model.Guid,
-            BucketPath  = model.BucketPath,
-            //Token       = token
-        };
+            Guard.IsNotNull(GeneralOptions);
+            Guard.IsNotNull(FileStorageOptions);
 
-        string sURL = $"{GeneralOptions.PostUrl}/{model.BucketPath}/{model.Guid}";
+            var fileStorageDTO = new FileStorageDto
+            {
+                Guid = model.Guid,
+                BucketPath = model.BucketPath,
+                //Token       = token
+            };
 
-        var request = (HttpWebRequest)WebRequest.Create(sURL);
-        request.Method = "GET";
-        request.KeepAlive = true;
+            string sURL = $"{GeneralOptions.PostUrl}/{model.BucketPath}/{model.Guid}";
 
-        // Добавление токена в Headers
-        //request.Headers.Add("Authorization", "Bearer " + fileStorageDTO.Token.access_token);
+            var request = (HttpWebRequest)WebRequest.Create(sURL);
+            request.Method = "GET";
+            request.KeepAlive = true;
 
-        var response = request.GetResponse();
-        var responseStream = response.GetResponseStream();
+            // Добавление токена в Headers
+            //request.Headers.Add("Authorization", "Bearer " + fileStorageDTO.Token.access_token);
 
-        string fileName = $"{model.Guid}";
-        string fileExtension = GetFileExtension(response);
+            var response = request.GetResponse();
+            var responseStream = response.GetResponseStream();
 
-        var result = new FileStreamResponse
+            string fileName = $"{model.Guid}";
+            string fileExtension = GetFileExtension(response);
+
+            result = new FileStreamResponse
+            {
+                Stream = responseStream,
+                FileNameExtension = $"{fileName}{fileExtension}"
+            };
+        }
+        catch (Exception ex)
         {
-            Stream = responseStream,
-            FileNameExtension = $"{fileName}{fileExtension}"
-        };
+            _logging.LogToFile($"Ошибка в методе {nameof(GetFileStream)}: {ex.Message}");
+        }
 
         return result;
     }

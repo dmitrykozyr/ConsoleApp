@@ -1,6 +1,6 @@
 using Domain.Interfaces.Login;
 using Domain.Interfaces.Services;
-using Domain.Models.RequentModels;
+using Domain.Models.RequestModels;
 using Domain.Models.ResponseModels;
 using Domain.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +39,31 @@ public class HomeController : Controller
             return View("NotAuthorized");
         }
 
-        var result = new ViewResult(); //!
+        //DbDataResponseModel buckets = _bucketService.GetBuckets();
+        var buckets = new DbDataResponseModel
+        {
+            DbData = new Dictionary<long, string>
+            {
+               { 1, "111" },
+               { 2, "222" },
+            }
+        };
+
+        if (!string.IsNullOrEmpty(buckets.ErrorMessage))
+        {
+            var errorViewModel = new ErrorViewModel
+            {
+                ErrorMessage = buckets.ErrorMessage
+            };
+
+            return View("Error", errorViewModel);
+        }
+
+        var result = new FileDownloadRequest
+        {
+            Guid = default,
+            BucketPath = buckets.DbData
+        };
 
         return View(result);
     }
