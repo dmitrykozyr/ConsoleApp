@@ -14,6 +14,7 @@ public class LoggingBackgroundJob : IJob
         _logger = logger;
     }
 
+    // Этот метод будет вызываться по расписанию
     public Task Execute(IJobExecutionContext context)
     {
         _logger.LogInformation("{UtcNow}", DateTime.UtcNow);

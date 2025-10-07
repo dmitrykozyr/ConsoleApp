@@ -10,18 +10,6 @@ public static class QuartzExtensions
         builder.Services.AddQuartz(options =>
         {
             options.UseMicrosoftDependencyInjectionJobFactory();
-
-            var jobKey = JobKey.Create(nameof(LoggingBackgroundJob));
-
-            options.AddJob<LoggingBackgroundJob>(jobKey)
-            .AddTrigger(trigger =>
-                trigger
-                    .ForJob(jobKey)                     // Триггер, после которого запустится Jon
-                    //.WithCronSchedule("*/1 * * * *")) // Cron-выражение, которое будет вызывать этот Job каждую минуту
-                    .WithSimpleSchedule(schedule =>
-                        schedule
-                            .WithIntervalInSeconds(5)
-                            .RepeatForever()));
         });
 
         builder.Services.AddQuartzHostedService(options =>
@@ -30,5 +18,7 @@ public static class QuartzExtensions
             // В данном случае джоба простая - логирование выполняется быстро
             options.WaitForJobsToComplete = true;
         });
+
+        builder.Services.ConfigureOptions<LoggingBackgroundJobSetup>();
     }
 }
