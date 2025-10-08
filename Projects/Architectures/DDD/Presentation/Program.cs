@@ -48,6 +48,7 @@ builder.Services.AddRedisExtensions(builder);
 builder.Services.AddOptionsExtensions(builder);
 builder.Services.AddServicesExtensions(builder);
 builder.Services.AddRepositoriesExtensions(builder);
+builder.Services.AddOpenTelemetryExtension(builder);
 IConfiguration configuration = builder.Services.AddConfigurationExtension(builder);
 
 
