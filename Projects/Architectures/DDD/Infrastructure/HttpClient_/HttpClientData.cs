@@ -79,7 +79,7 @@ public class HttpClientData<T> : IHttpClientData<T>
 
             try
             {
-                HttpResponseMessage response = await client.PostAsync("endpoint", content);
+                HttpResponseMessage response = await client.PostAsync("", content);
 
                 if (response.IsSuccessStatusCode)
                 {

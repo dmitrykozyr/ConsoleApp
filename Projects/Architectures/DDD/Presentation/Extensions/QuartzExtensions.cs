@@ -1,4 +1,4 @@
-﻿using Infrastructure.Quartz;
+﻿using Domain.Services.Quartz_;
 using Quartz;
 
 namespace Presentation.Extensions;
@@ -7,10 +7,7 @@ public static class QuartzExtensions
 {
     public static void AddQuartzExtension(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
     {
-        builder.Services.AddQuartz(options =>
-        {
-            options.UseMicrosoftDependencyInjectionJobFactory();
-        });
+        builder.Services.AddQuartz();
 
         builder.Services.AddQuartzHostedService(options =>
         {
@@ -19,6 +16,6 @@ public static class QuartzExtensions
             options.WaitForJobsToComplete = true;
         });
 
-        builder.Services.ConfigureOptions<LoggingBackgroundJobSetup>();
+        //builder.Services.ConfigureOptions<LoggingBackgroundJobSetup>();
     }
 }

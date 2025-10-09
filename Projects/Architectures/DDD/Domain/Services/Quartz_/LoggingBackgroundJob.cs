@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace Infrastructure.Quartz;
+namespace Domain.Services.Quartz_;
 
 // Аттрибут говорит Quartz создавать только 1 экземпляр данной джобы
 [DisallowConcurrentExecution]

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
+using Domain.Formatters;
 using Domain.Interfaces;
 using Domain.Interfaces.Services;
 using Domain.Models.Dto;
@@ -170,7 +171,7 @@ public class FilesService : IFilesService
             BucketPath      = model.BucketPath,
             DeathTime       = model.DeathTime,
             LifeTimeHours   = model.LifeTimeHours,
-            File            = Convert.FromBase64String(model.File ?? "")
+            File            = StringFormatters.ConvertBase64ToBytes(model.File ?? "")
         };
 
         string sURL = $"{GeneralOptions.PostUrl}/{loadFileDTO.BucketPath}";
