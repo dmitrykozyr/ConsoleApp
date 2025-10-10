@@ -16,6 +16,6 @@ public static class QuartzExtensions
             options.WaitForJobsToComplete = true;
         });
 
-        //builder.Services.ConfigureOptions<LoggingBackgroundJobSetup>();
+        builder.Services.ConfigureOptions<LoggingBackgroundJobSetup>();
     }
 }

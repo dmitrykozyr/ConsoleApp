@@ -1,8 +1,12 @@
-﻿namespace Domain.Interfaces;
+﻿using Domain.Models.RequentModels;
+
+namespace Domain.Interfaces;
 
 public interface IHttpClientData<T>
 {
     Task<T?> GetRequest(string baseAddress, string additionalUrl = "", Dictionary<string, string>? headers = null);
 
-    Task<bool> PostRequest(string baseAddress, T model);
+    Task<string?> PostRequestReturnString(string baseAddress, T model);
+
+    Task<PostRequestResponse?> PostRequestReturnStream(string baseAddress, T model);
 }
