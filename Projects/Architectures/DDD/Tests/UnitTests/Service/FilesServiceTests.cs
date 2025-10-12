@@ -3,7 +3,6 @@ using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Options;
 using Domain.Models.RequestModels;
-using Domain.Models.ResponseModels;
 using Domain.Services.API;
 using FakeItEasy;
 using Microsoft.Extensions.Options;
