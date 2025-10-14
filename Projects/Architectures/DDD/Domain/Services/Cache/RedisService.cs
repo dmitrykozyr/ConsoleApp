@@ -4,6 +4,30 @@ using Newtonsoft.Json;
 
 namespace Domain.Services.Cache;
 
+/*
+    Подключение к Redis CLI через Docker
+    (your_redis_container_name - имя или ID контейнера):
+  
+       docker exec -it your_redis_container_name redis-cli
+ 
+    Если контейнер называется redis, команда будет выглядеть так:
+
+       docker exec -it redis redis-cli
+
+    Для подключения к Redis на определенном порту или с использованием определенного хоста,
+    можно указать их в команде
+
+       docker exec -it redis redis-cli -h <host> -p <port>
+
+    Проверка работы Redis, в ответ должно прийти PONG:
+
+	    ping
+
+    Выйти из докера в консоли
+	
+	    quit
+*/
+
 //! Redis не работает
 public class RedisService : IRedisService
 {
