@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
+using Domain.Interfaces.Db;
 using Domain.Models.Options;
 using Domain.Services.Login;
 using Microsoft.Extensions.Options;

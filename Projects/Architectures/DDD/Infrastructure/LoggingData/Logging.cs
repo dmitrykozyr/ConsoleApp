@@ -2,6 +2,7 @@
 using Domain.Enums;
 using Domain.Formatters;
 using Domain.Interfaces;
+using Domain.Interfaces.Db;
 using Domain.Models.Options;
 using Microsoft.Extensions.Options;
 using System.Data.SqlClient;

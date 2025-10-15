@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Interfaces.Db;
 using Domain.Models.JsonDeserialize;
 using Domain.Models.Options;
 using Microsoft.Extensions.Configuration;

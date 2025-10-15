@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
+using Domain.Interfaces.Db;
 using Domain.Interfaces.Repositories;
 using Domain.Models.ResponseModels;
 using System.Data;
