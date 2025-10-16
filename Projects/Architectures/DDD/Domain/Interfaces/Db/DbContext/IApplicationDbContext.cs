@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Domain.Interfaces.Db.DbContext;
 
+//! Не используется
 public interface IApplicationDbContext
 {
     DbSet<Customer> Customers { get; set; }
