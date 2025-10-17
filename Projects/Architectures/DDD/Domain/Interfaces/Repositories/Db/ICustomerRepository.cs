@@ -1,8 +1,10 @@
-﻿using Domain.Models.RequentModels.Db;
+﻿using Domain.Models.Db;
 
 namespace Domain.Interfaces.Repositories.Db;
 
 public interface ICustomerRepository
 {
-    public Task<int> Add(CreateCustomerRequest request);
+    Customer? GetById(long id);
+
+    public int Add(Customer request);
 }

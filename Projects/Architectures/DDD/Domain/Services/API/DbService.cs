@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces.Db;
-using Domain.Interfaces.Db.DbContext;
 using Domain.Interfaces.Repositories.Db;
+using Domain.Models.Db;
 using Domain.Models.RequentModels.Db;
 
 namespace Domain.Services.API;
@@ -20,7 +20,13 @@ public class DbService : IDbService
 
     public async Task<int> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)
     {
-        int result = await _customerRepository.Add(request);
+        var customer = new Customer
+        {
+            Name = request.Name,
+            Address = request.Address
+        };
+
+        int result = _customerRepository.Add(customer);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
