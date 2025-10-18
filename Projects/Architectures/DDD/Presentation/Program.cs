@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 using Presentation.Extensions;
 
@@ -49,6 +50,7 @@ builder.Services.AddServicesExtensions(builder);
 builder.Services.AddRepositoriesExtensions(builder);
 builder.Services.AddOpenTelemetryExtension(builder);
 IConfiguration configuration = builder.Services.AddConfigurationExtension(builder);
+builder.Services.AddDbExtensions(configuration);
 
 
 WebApplication app = builder.Build();

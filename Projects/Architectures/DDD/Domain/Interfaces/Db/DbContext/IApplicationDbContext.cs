@@ -9,8 +9,6 @@ public interface IApplicationDbContext
 {
     DbSet<Customer> Customers { get; set; }
 
-    DbSet<Order> Orders { get; set; }
-
     //! Что это?
     DatabaseFacade Database {  get; }
 }
