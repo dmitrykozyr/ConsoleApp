@@ -1,6 +1,6 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 using Presentation.Extensions;
+using Serilog;
 
 // WebHost.CreateDefaultBuilder()
 /*
@@ -33,6 +33,10 @@ using Presentation.Extensions;
 */
 
 var builder = WebApplication.CreateBuilder(args);
+
+//! Подключил, установил пакет и настроил в appsettings, а как использовать?
+builder.Host.UseSerilog((context, config) =>
+    config.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();

@@ -17,6 +17,7 @@
         - Prometheus
         - Grafana
         - ClickHouse
+        - Serilog loggin
         
         gRPC
         SOAP
