@@ -165,4 +165,14 @@
         git merge develop
 
     #endregion
+
+    #region Включение / отключение индексации файла
+
+        // Отключить индексацию изменений для файла
+        git update-index --assume-unchanged BCS.WebApp.IE11/Web.config
+
+        // Включить индексацию изменений для файла
+        git update-index --no-assume-unchanged BCS.WebApp.IE11/Web.config
+
+    #endregion
 }
