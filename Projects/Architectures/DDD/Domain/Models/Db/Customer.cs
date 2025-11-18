@@ -2,9 +2,9 @@
 
 public class Customer
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
 
-    public string? Name { get; set; }
+    public string? Name { get; init; }
 
-    public string? Address { get; set; }
+    public string? Address { get; init; }
 }

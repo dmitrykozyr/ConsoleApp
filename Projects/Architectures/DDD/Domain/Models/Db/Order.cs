@@ -2,9 +2,9 @@
 
 public class Order
 {
-    public long Id { get; set; }
+    public long Id { get; init; }
 
-    public string? Name { get; set; }
+    public string? Name { get; init; }
 
-    public DateTime OrderTime { get; set; }
+    public DateTime OrderTime { get; init; }
 }
