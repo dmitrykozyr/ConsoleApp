@@ -24,6 +24,7 @@ public class SqlService : ISqlService
         _logging = logging;
     }
 
+    //! Пакет System.Data.SqlClient устарел, следует заменить на Microsoft.Data.SqlClient
     public SqlConnection? CreateConnection()
     {
         Guard.IsNotNull(DatabaseOptions);

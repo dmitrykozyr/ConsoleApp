@@ -1758,7 +1758,7 @@ namespace HttpClientFactory
 
         Как использовать HttpClientFactory:
         - установка пакета Microsoft.Extensions.Http
-        - настройка Startup.cs
+        - настройка Sминимального хостинга в Startup.cs
         - использование IHttpClientFactory для получения экземпляров HttpClient в классах
 
         Пример:

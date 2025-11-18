@@ -14,3 +14,8 @@ GET {{HostAddress}}/Files
 Accept: application/json
 
 ###
+
+GET {{HostAddress}}/Test
+Accept: application/json
+
+###
