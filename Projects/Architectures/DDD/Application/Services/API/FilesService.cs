@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 
-namespace Domain.Services.API;
+namespace Application.Services.API;
 
 public class FilesService : IFilesService
 {
@@ -85,8 +85,8 @@ public class FilesService : IFilesService
 
         var fileStorageDTO = new FileStorageDto
         {
-            Guid        = model.Guid,
-            BucketPath  = model.BucketPath,
+            Guid = model.Guid,
+            BucketPath = model.BucketPath,
             //Token       = token
         };
 
@@ -168,10 +168,10 @@ public class FilesService : IFilesService
 
         var loadFileDTO = new LoadFileDto
         {
-            BucketPath      = model.BucketPath,
-            DeathTime       = model.DeathTime,
-            LifeTimeHours   = model.LifeTimeHours,
-            File            = StringFormatters.ConvertBase64ToBytes(model.File ?? "")
+            BucketPath = model.BucketPath,
+            DeathTime = model.DeathTime,
+            LifeTimeHours = model.LifeTimeHours,
+            File = StringFormatters.ConvertBase64ToBytes(model.File ?? "")
         };
 
         string sURL = $"{GeneralOptions.PostUrl}/{loadFileDTO.BucketPath}";
@@ -249,9 +249,9 @@ public class FilesService : IFilesService
         Guard.IsNotNullOrEmpty(sURL);
 
         var request = (HttpWebRequest)WebRequest.Create(sURL);
-        request.Method      = "POST";
+        request.Method = "POST";
         request.ContentType = "multipart/form-data; boundary=---------------------------" + DateTime.Now.Ticks.ToString("x");
-        request.Accept      = "application/json;charset=UTF-8";
+        request.Accept = "application/json;charset=UTF-8";
 
         // Добавление токена в Headers
         //request.Headers.Add("Authorization", "Bearer " + token.access_token);

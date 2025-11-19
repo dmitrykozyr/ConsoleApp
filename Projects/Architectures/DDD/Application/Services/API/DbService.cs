@@ -3,7 +3,7 @@ using Domain.Interfaces.Repositories.Db;
 using Domain.Models.Db;
 using Domain.Models.RequentModels.Db;
 
-namespace Domain.Services.API;
+namespace Application.Services.API;
 
 public class DbService : IDbService
 {

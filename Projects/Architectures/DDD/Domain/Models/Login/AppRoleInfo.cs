@@ -1,4 +1,4 @@
-﻿namespace Domain.Services.Login;
+﻿namespace Domain.Models.Login;
 
 public sealed class AppRoleInfo
 {
@@ -10,7 +10,7 @@ public sealed class AppRoleInfo
 
     public readonly bool IsRestricted;
 
-    internal AppRoleInfo(string name, string armUrl, PersonInfo parent, bool isRestricted)
+    public AppRoleInfo(string name, string armUrl, PersonInfo parent, bool isRestricted)
     {
         _Name = name;
         ARMUrl = armUrl;

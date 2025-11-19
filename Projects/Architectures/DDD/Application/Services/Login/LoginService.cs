@@ -1,13 +1,14 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
 using Domain.Interfaces.Login;
+using Domain.Models.Login;
 using Domain.Models.Options;
 using Microsoft.Extensions.Options;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Principal;
 
-namespace Domain.Services.Login;
+namespace Application.Services.Login;
 
 public class LoginService : ILoginService
 {
@@ -126,11 +127,11 @@ public class LoginService : ILoginService
                     if (reader.Read())
                     {
                         var result = new PersonInfo(
-                            login:      reader["Login"].ToString() ?? "",
-                            firstName:  reader["FName"].ToString() ?? "",
+                            login: reader["Login"].ToString() ?? "",
+                            firstName: reader["FName"].ToString() ?? "",
                             middleName: reader["MName"].ToString() ?? "",
-                            lastName:   reader["LName"].ToString() ?? "",
-                            isLogOn:    (bool)reader["IsLogOn"],
+                            lastName: reader["LName"].ToString() ?? "",
+                            isLogOn: (bool)reader["IsLogOn"],
                             isEmployeeHeadBranch: (bool)reader["IsEmployeeHeadBranch"],
                             _provider);
 

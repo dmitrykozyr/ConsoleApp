@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace Domain.Services.Cache;
+namespace Application.Services.Cache;
 
 /*
     Подключение к Redis CLI через Docker

@@ -2,7 +2,8 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Domain.Services.Cache;
+namespace Application.Services.Cache;
+
 public class MemoryCacheService : IMemoryCacheService
 {
     private readonly IMemoryCache _memoryCache;

@@ -1,9 +1,9 @@
-﻿using AutoFixture;
+﻿using Application.Services.API;
+using AutoFixture;
 using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Options;
 using Domain.Models.RequestModels;
-using Domain.Services.API;
 using FakeItEasy;
 using Microsoft.Extensions.Options;
 using Xunit;
@@ -23,10 +23,10 @@ public class FilesServiceTests
 
     public FilesServiceTests()
     {
-        fakeGeneralOptions = A.Fake<IOptions<GeneralOptions>>();
-        fakeFileStorageOptions = A.Fake<IOptions<FileStorageOptions>>();
-        fakeLogging = A.Fake<ILogging>();
-        fakeFileRepository = A.Fake<ISqlProceduresRepository>();
+        fakeGeneralOptions      = A.Fake<IOptions<GeneralOptions>>();
+        fakeFileStorageOptions  = A.Fake<IOptions<FileStorageOptions>>();
+        fakeLogging             = A.Fake<ILogging>();
+        fakeFileRepository      = A.Fake<ISqlProceduresRepository>();
 
         fileService = new FilesService(fakeGeneralOptions, fakeFileStorageOptions, fakeLogging);
     }
@@ -35,7 +35,7 @@ public class FilesServiceTests
     public void GetFile_ShoultReturnFile()
     {
         // Arrange
-        var fakeString = new Fixture().Create<string>();
+        var fakeString  = new Fixture().Create<string>();
         var fakeStrings = new Fixture().Create<List<string>>();
 
         var fakeRequestModel = new Fixture().Create<FileStorageRequest>();

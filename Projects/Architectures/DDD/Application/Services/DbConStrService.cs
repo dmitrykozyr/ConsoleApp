@@ -4,7 +4,7 @@ using Domain.Models.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Domain.Services;
+namespace Application.Services;
 
 public class DbConStrService : IDbConStrService
 {

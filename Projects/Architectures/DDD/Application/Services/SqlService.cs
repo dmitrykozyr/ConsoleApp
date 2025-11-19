@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Domain.Services;
+namespace Application.Services;
 
 public class SqlService : ISqlService
 {

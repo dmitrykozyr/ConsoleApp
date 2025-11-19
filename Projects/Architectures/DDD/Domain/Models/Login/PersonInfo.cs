@@ -1,7 +1,7 @@
 ﻿using Domain.Interfaces.Login;
 using System.Collections;
 
-namespace Domain.Services.Login;
+namespace Domain.Models.Login;
 
 public class PersonInfo
 {
@@ -27,7 +27,7 @@ public class PersonInfo
 
     public AppRoleInfo[]? Roles { get; set; }
 
-    internal PersonInfo(string login, string firstName, string middleName, string lastName, bool isLogOn, bool isEmployeeHeadBranch, IProvider provider)
+    public PersonInfo(string login, string firstName, string middleName, string lastName, bool isLogOn, bool isEmployeeHeadBranch, IProvider provider)
     {
         _login = login;
         _firstName = firstName;

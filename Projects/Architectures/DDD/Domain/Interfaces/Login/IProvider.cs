@@ -1,4 +1,4 @@
-﻿using Domain.Services.Login;
+﻿using Domain.Models.Login;
 
 namespace Domain.Interfaces.Login;
 

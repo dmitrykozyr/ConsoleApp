@@ -1,10 +1,12 @@
 ﻿using Domain.Interfaces;
 using Domain.Interfaces.Login;
+using Domain.Models.Login;
+using Domain.Services.Login;
 using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Domain.Services.Login;
+namespace Application.Services.Login;
 
 public class Provider : IProvider
 {
@@ -19,17 +21,17 @@ public class Provider : IProvider
     {
         var array = new ArrayList();
 
-        using (SqlConnection connection = _sqlService.CreateConnection())
-        using (UserContextCommand command = _sqlService.CreateCommand("spGetCurrentPersonAppRoles", CommandType.StoredProcedure))
-        using (SqlDataReader reader = command.ExecuteReader(person._login))
+        using (SqlConnection connection     = _sqlService.CreateConnection())
+        using (UserContextCommand command   = _sqlService.CreateCommand("spGetCurrentPersonAppRoles", CommandType.StoredProcedure))
+        using (SqlDataReader reader         = command.ExecuteReader(person._login))
         {
             while (reader.Read())
             {
                 var appRoleInfo = new AppRoleInfo(
-                    name:   reader.GetString(0),
-                    armUrl: reader.GetString(1),
-                    parent: person,
-                    isRestricted: reader.GetBoolean(3));
+                    name:           reader.GetString(0),
+                    armUrl:         reader.GetString(1),
+                    parent:         person,
+                    isRestricted:   reader.GetBoolean(3));
 
                 array.Add(appRoleInfo);
             }

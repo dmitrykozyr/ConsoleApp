@@ -14,7 +14,7 @@ public class UserContextCommand : IDisposable
     private readonly SqlTransaction? transaction;
     private readonly ISqlService _sqlService;
 
-    internal UserContextCommand(string commandText, CommandType commandType, int timeout, ISqlService sqlService)
+    public UserContextCommand(string commandText, CommandType commandType, int timeout, ISqlService sqlService)
     {
         internalConnection = true;
         _sqlService = sqlService;
