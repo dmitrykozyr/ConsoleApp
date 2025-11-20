@@ -11,8 +11,9 @@ public static class ConfigExtensions
 
         var cb = new ConfigurationBuilder();
         cb.SetBasePath(Directory.GetCurrentDirectory());
-        cb.AddJsonFile(environment, optional: true, reloadOnChange: true);
-        cb.AddJsonFile("secrets.json", optional: true, reloadOnChange: true);
+
+        cb.AddJsonFile(environment,     optional: true, reloadOnChange: true);
+        cb.AddJsonFile("secrets.json",  optional: true, reloadOnChange: true);
 
         IConfiguration configuration = cb.Build();
 

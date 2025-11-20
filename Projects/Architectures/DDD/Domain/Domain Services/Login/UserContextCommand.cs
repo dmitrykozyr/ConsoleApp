@@ -3,7 +3,7 @@ using Domain.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Domain.Services.Login;
+namespace Domain.Domain_Services.Login;
 
 public class UserContextCommand : IDisposable
 {
