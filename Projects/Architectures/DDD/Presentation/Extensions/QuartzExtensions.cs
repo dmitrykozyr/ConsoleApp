@@ -5,17 +5,17 @@ namespace Presentation.Extensions;
 
 public static class QuartzExtensions
 {
-    public static void AddQuartzExtension(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
+    public static void AddQuartzExtension(this IServiceCollection serviceCollection)
     {
-        builder.Services.AddQuartz();
+        serviceCollection.AddQuartz();
 
-        builder.Services.AddQuartzHostedService(options =>
+        serviceCollection.AddQuartzHostedService(options =>
         {
             // Перед завершеним работы программа должна дождаться завершения джобов
             // В данном случае джоба простая - логирование выполняется быстро
             options.WaitForJobsToComplete = true;
         });
 
-        builder.Services.ConfigureOptions<LoggingBackgroundJobSetup>();
+        serviceCollection.ConfigureOptions<LoggingBackgroundJobSetup>();
     }
 }

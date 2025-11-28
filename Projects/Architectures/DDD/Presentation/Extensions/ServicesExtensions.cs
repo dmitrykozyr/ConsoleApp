@@ -14,16 +14,16 @@ namespace Presentation.Extensions;
 
 public static class ServicesExtensions
 {
-    public static void AddServicesExtensions(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
+    public static void AddServicesExtensions(this IServiceCollection serviceCollection)
     {
-        builder.Services.AddScoped<ILogging,            Logging>();
-        builder.Services.AddScoped<IProvider,           Provider>();
-        builder.Services.AddScoped<ISqlService,         SqlService>();
-        builder.Services.AddScoped<IFilesService,       FilesService>();
-        builder.Services.AddScoped<ILoginService,       LoginService>();
-        builder.Services.AddScoped<IDbConStrService,    DbConStrService>();
-        builder.Services.AddScoped<IMemoryCacheService, MemoryCacheService>(); //! Протестить
-        builder.Services.AddScoped<IRedisService,       RedisService>();
-        builder.Services.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
+        serviceCollection.AddScoped<ILogging, Logging>();
+        serviceCollection.AddScoped<IProvider, Provider>();
+        serviceCollection.AddScoped<ISqlService, SqlService>();
+        serviceCollection.AddScoped<IFilesService, FilesService>();
+        serviceCollection.AddScoped<ILoginService, LoginService>();
+        serviceCollection.AddScoped<IDbConStrService, DbConStrService>();
+        serviceCollection.AddScoped<IMemoryCacheService, MemoryCacheService>(); //! Протестить
+        serviceCollection.AddScoped<IRedisService, RedisService>();
+        serviceCollection.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
     }
 }

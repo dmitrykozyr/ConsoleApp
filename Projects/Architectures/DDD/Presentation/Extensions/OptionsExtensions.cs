@@ -4,15 +4,15 @@ namespace Presentation.Extensions;
 
 public static class OptionsExtensions
 {
-    public static void AddOptionsExtensions(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
+    public static void AddOptionsExtensions(this IServiceCollection serviceCollection)
     {
         // IOptions             Обновляет информацию о конфигурации один раз при старте приложения
         // IOptionsSnapshot     Обновляет информацию о конфигурации при каждом запросе и не изменяет ее во время запроса
         // IOptionsMonitor      Обновляет информацию о конфигурации при каждом обращении к конфигурации
-        builder.Services.ConfigureOptions<ApplicationOptionsSetup<DatabaseOptions>>();
-        builder.Services.ConfigureOptions<ApplicationOptionsSetup<GeneralOptions>>();
-        builder.Services.ConfigureOptions<ApplicationOptionsSetup<LoginOptions>>();
-        builder.Services.ConfigureOptions<ApplicationOptionsSetup<VaultOptions>>();
-        builder.Services.ConfigureOptions<ApplicationOptionsSetup<RedisOptions>>();
+        serviceCollection.ConfigureOptions<ApplicationOptionsSetup<DatabaseOptions>>();
+        serviceCollection.ConfigureOptions<ApplicationOptionsSetup<GeneralOptions>>();
+        serviceCollection.ConfigureOptions<ApplicationOptionsSetup<LoginOptions>>();
+        serviceCollection.ConfigureOptions<ApplicationOptionsSetup<VaultOptions>>();
+        serviceCollection.ConfigureOptions<ApplicationOptionsSetup<RedisOptions>>();
     }
 }

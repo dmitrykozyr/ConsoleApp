@@ -4,7 +4,7 @@ public static class RedisExtensions
 {
     public static void AddRedisExtensions(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
     {
-        builder.Services.AddStackExchangeRedisCache(options =>
+        serviceCollection.AddStackExchangeRedisCache(options =>
         {
             string? connection = builder.Configuration.GetConnectionString("Redis");
 

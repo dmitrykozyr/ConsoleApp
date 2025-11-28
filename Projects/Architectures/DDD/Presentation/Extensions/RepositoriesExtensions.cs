@@ -7,9 +7,9 @@ namespace Presentation.Extensions;
 
 public static class RepositoriesExtensions
 {
-    public static void AddRepositoriesExtensions(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
+    public static void AddRepositoriesExtensions(this IServiceCollection serviceCollection)
     {
-        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-        builder.Services.AddScoped<ISqlProceduresRepository, SqlProceduresRepository>();
+        serviceCollection.AddScoped<ICustomerRepository, CustomerRepository>();
+        serviceCollection.AddScoped<ISqlProceduresRepository, SqlProceduresRepository>();
     }
 }

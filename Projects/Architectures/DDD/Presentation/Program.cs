@@ -34,32 +34,34 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+IServiceCollection serviceCollection = builder.Services;
+
 //! Подключил, установил пакет и настроил в appsettings, а как использовать?
 builder.Host.UseSerilog((context, config) =>
     config.ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddSwaggerGen();
-builder.Services.AddHttpClient();
-builder.Services.AddControllers();
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllersWithViews();
-builder.Services.AddFeatureManagement(builder.Configuration.GetSection("FeatureFlags"));
+serviceCollection.AddSwaggerGen();
+serviceCollection.AddHttpClient();
+serviceCollection.AddControllers();
+serviceCollection.AddAuthorization();
+serviceCollection.AddAuthentication();
+serviceCollection.AddEndpointsApiExplorer();
+serviceCollection.AddControllersWithViews();
+serviceCollection.AddFeatureManagement(builder.Configuration.GetSection("FeatureFlags"));
 
-builder.Services.AddQuartzExtension(builder);
-builder.Services.AddRedisExtensions(builder);
-builder.Services.AddOptionsExtensions(builder);
-builder.Services.AddServicesExtensions(builder);
-builder.Services.AddRepositoriesExtensions(builder);
-builder.Services.AddOpenTelemetryExtension(builder);
-IConfiguration configuration = builder.Services.AddConfigurationExtension(builder);
-builder.Services.AddDbExtensions(configuration);
+serviceCollection.AddQuartzExtension();
+serviceCollection.AddRedisExtensions(builder);
+serviceCollection.AddOptionsExtensions();
+serviceCollection.AddServicesExtensions();
+serviceCollection.AddRepositoriesExtensions();
+serviceCollection.AddOpenTelemetryExtension(builder);
+IConfiguration configuration = serviceCollection.AddConfigurationExtension(builder);
+serviceCollection.AddDbExtensions(configuration);
 
 
 WebApplication app = builder.Build();
 
-builder.Services.AddVaultExtensions(app, builder, configuration);
+serviceCollection.AddVaultExtensions(app, builder, configuration);
 
 if (!app.Environment.IsDevelopment())
 {

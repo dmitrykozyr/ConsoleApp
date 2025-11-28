@@ -11,7 +11,7 @@ public static class OpenTelemetryExtensions
 {
     public static void AddOpenTelemetryExtension(this IServiceCollection serviceCollection, WebApplicationBuilder builder)
     {
-        builder.Services.AddOpenTelemetry()
+        serviceCollection.AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddService(nameof(Presentation)))
             .WithMetrics(metrics =>
             {
