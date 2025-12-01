@@ -2,10 +2,12 @@
 using Application.Services.API;
 using Application.Services.Cache;
 using Application.Services.Login;
+using Application.Services.Serializer;
 using Domain.Interfaces;
 using Domain.Interfaces.Cache;
 using Domain.Interfaces.Db;
 using Domain.Interfaces.Login;
+using Domain.Interfaces.Serializer;
 using Domain.Interfaces.Services;
 using Infrastructure.HttpClient_;
 using Infrastructure.LoggingData;
@@ -25,5 +27,7 @@ public static class ServicesExtensions
         serviceCollection.AddScoped<IMemoryCacheService, MemoryCacheService>(); //! Протестить
         serviceCollection.AddScoped<IRedisService, RedisService>();
         serviceCollection.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
+
+        serviceCollection.AddScoped<IXmlMessageSerializer, XmlMessageSerializer>();
     }
 }

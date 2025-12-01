@@ -1448,7 +1448,7 @@ class Program
                 return 2;
             }
 
-            static void Main()
+            static void Main_()
             {
                 Del1 del1;
 
