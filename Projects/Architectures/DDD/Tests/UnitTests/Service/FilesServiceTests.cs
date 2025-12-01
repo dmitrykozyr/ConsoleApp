@@ -1,10 +1,10 @@
-﻿using Application.Services.API;
-using AutoFixture;
+﻿using AutoFixture;
 using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
 using Domain.Models.Options;
 using Domain.Models.RequestModels;
 using FakeItEasy;
+using Infrastructure.Services.API;
 using Microsoft.Extensions.Options;
 using Xunit;
 

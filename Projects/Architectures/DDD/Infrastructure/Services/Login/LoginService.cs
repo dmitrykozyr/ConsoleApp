@@ -8,7 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Security.Principal;
 
-namespace Application.Services.Login;
+namespace Infrastructure.Services.Login;
 
 public class LoginService : ILoginService
 {

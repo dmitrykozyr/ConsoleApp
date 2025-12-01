@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Application.Services.Cache;
+namespace Infrastructure.Services.Cache;
 
 public class MemoryCacheService : IMemoryCacheService
 {

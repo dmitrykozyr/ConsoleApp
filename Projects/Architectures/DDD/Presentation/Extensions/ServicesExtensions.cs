@@ -1,8 +1,4 @@
-﻿using Application.Services;
-using Application.Services.API;
-using Application.Services.Cache;
-using Application.Services.Login;
-using Application.Services.Serializer;
+﻿using Application.Services.Serializer;
 using Domain.Interfaces;
 using Domain.Interfaces.Cache;
 using Domain.Interfaces.Db;
@@ -11,6 +7,10 @@ using Domain.Interfaces.Serializer;
 using Domain.Interfaces.Services;
 using Infrastructure.HttpClient_;
 using Infrastructure.LoggingData;
+using Infrastructure.Services;
+using Infrastructure.Services.API;
+using Infrastructure.Services.Cache;
+using Infrastructure.Services.Login;
 
 namespace Presentation.Extensions;
 

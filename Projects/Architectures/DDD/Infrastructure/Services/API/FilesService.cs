@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 
-namespace Application.Services.API;
+namespace Infrastructure.Services.API;
 
 public class FilesService : IFilesService
 {

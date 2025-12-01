@@ -20,11 +20,7 @@ public class DbService : IDbService
 
     public async Task<int> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)
     {
-        var customer = new Customer
-        {
-            Name = request.Name,
-            Address = request.Address
-        };
+        var customer = Customer.Create(request.Name, request.Address);
 
         int result = _customerRepository.Add(customer);
 
