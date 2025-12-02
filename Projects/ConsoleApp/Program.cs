@@ -3,7 +3,7 @@
     //!
     /*
         Docker:
-        - yастроить prod-версию vault
+        - настроить prod-версию vault
         - загрузка проекта в Docker Hub
 
         GitLab:
