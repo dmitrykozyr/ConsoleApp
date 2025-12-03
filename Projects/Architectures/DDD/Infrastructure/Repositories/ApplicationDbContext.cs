@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
+//! На видео "Об проекте 2.42, 3.03"
 //! Зарегистрировать
 public class ApplicationDbContext : DbContext, IApplicationDbContext, IUnitOfWork
 {
