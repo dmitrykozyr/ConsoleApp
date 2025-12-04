@@ -2,10 +2,10 @@
 using Domain.Formatters;
 using Domain.Interfaces;
 using Domain.Interfaces.Services;
-using Domain.Models.Dto;
 using Domain.Models.Options;
 using Domain.Models.RequestModels;
 using Domain.Models.ResponseModels;
+using Infrastructure.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -42,7 +42,7 @@ public class FilesService : IFilesService
             Guard.IsNotNull(GeneralOptions);
             Guard.IsNotNull(FileStorageOptions);
 
-            var fileStorageDTO = new FileStorageDto
+            var fileStorageDTO = new FileStorageDTO
             {
                 Guid = model.Guid,
                 BucketPath = model.BucketPath,
@@ -83,7 +83,7 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var fileStorageDTO = new FileStorageDto
+        var fileStorageDTO = new FileStorageDTO
         {
             Guid = model.Guid,
             BucketPath = model.BucketPath,
@@ -166,7 +166,7 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var loadFileDTO = new LoadFileDto
+        var loadFileDTO = new LoadFileDTO
         {
             BucketPath = model.BucketPath,
             DeathTime = model.DeathTime,
@@ -237,7 +237,7 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var loadFileDTO = new LoadFileDto
+        var loadFileDTO = new LoadFileDTO
         {
             BucketPath = model.BucketPath,
             DeathTime = model.DeathTime,
@@ -332,7 +332,7 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var loadFileDTO = new LoadFileDto
+        var loadFileDTO = new LoadFileDTO
         {
             BucketPath = model.BucketPath,
             DeathTime = model.DeathTime,
@@ -403,7 +403,7 @@ public class FilesService : IFilesService
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
 
-        var fileStorageDTO = new FileStorageDto
+        var fileStorageDTO = new FileStorageDTO
         {
             Guid = model.Guid,
             BucketPath = model.BucketPath,

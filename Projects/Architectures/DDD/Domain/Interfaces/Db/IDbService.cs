@@ -1,4 +1,4 @@
-﻿using Domain.Models.RequentModels.Db;
+﻿using Domain.Models.RequestModels.Db;
 
 namespace Domain.Interfaces.Db;
 

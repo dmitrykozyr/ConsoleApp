@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.RequentModels.Db;
+﻿namespace Domain.Models.RequestModels.Db;
 
 public class CreateCustomerRequest
 {

@@ -2,8 +2,8 @@ using Domain.Interfaces.Login;
 using Domain.Interfaces.Services;
 using Domain.Models.RequestModels;
 using Domain.Models.ResponseModels;
-using Domain.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Models.ViewModels;
 
 namespace Presentation.Controllers.Web;
 

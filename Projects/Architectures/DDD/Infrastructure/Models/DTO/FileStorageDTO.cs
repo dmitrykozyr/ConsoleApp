@@ -1,6 +1,8 @@
-﻿namespace Domain.Models.Dto;
+﻿using Domain.Models;
 
-public class FileStorageDto
+namespace Infrastructure.Models.DTO;
+
+public class FileStorageDTO
 {
     public Guid Guid { get; init; }
 

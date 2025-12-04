@@ -1,6 +1,6 @@
-﻿namespace Domain.Models.Dto;
+﻿namespace Infrastructure.Models.DTO;
 
-public class LoadFileDto
+public class LoadFileDTO
 {
     public string? BucketPath { get; init; }
 
