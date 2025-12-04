@@ -1,6 +1,7 @@
-﻿using Domain.Interfaces.Db;
-using Domain.Interfaces.Repositories.Db;
-using Domain.Models.Db;
+﻿using Application.Interfaces.DB;
+using Domain.Interfaces.DB;
+using Domain.Interfaces.Repositories.DB;
+using Domain.Models.DB;
 using Domain.Models.RequestModels.Db;
 
 namespace Application.Services.API;
@@ -22,7 +23,7 @@ public class DbService : IDbService
     {
         var customer = Customer.Create(request.Name, request.Address);
 
-        int result = _customerRepository.Add(customer);
+        int result = await _customerRepository.Add(customer);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

@@ -1,4 +1,4 @@
-﻿namespace Domain.Interfaces.Db;
+﻿namespace Domain.Interfaces.DB;
 
 public interface IDbConStrService
 {

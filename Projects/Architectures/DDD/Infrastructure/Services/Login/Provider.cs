@@ -1,5 +1,4 @@
-﻿using Domain.DomainServices.Login;
-using Domain.Interfaces;
+﻿using Domain.Interfaces;
 using Domain.Interfaces.Login;
 using Domain.Models.Login;
 using System.Collections;
@@ -23,8 +22,8 @@ public class Provider : IProvider
         var array = new ArrayList();
 
         using (SqlConnection connection = _sqlService.CreateConnection())
-        using (UserContextCommand command = _sqlService.CreateCommand("spGetCurrentPersonAppRoles", CommandType.StoredProcedure))
-        using (SqlDataReader reader = command.ExecuteReader(person._login))
+        using (IUserContextCommand command = _sqlService.CreateCommand("spGetCurrentPersonAppRoles", CommandType.StoredProcedure))
+        using (IDataReader reader = command.ExecuteReader(person._login))
         {
             while (reader.Read())
             {

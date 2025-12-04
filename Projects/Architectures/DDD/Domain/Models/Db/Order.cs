@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Db;
+﻿namespace Domain.Models.DB;
 
 public class Order
 {
@@ -23,7 +23,7 @@ public class Order
 
         if (orderTime == DateTime.MinValue)
         {
-            throw new Exception("Address cannot be empty");
+            throw new Exception("OrderTime cannot be empty");
         }
 
         return new Order
@@ -35,7 +35,7 @@ public class Order
     }
 
     // Бизнес-логика
-    public void ChangeAddress(DateTime newOrderTime)
+    public void ChangeOrderTime(DateTime newOrderTime)
     {
         if (newOrderTime == DateTime.MinValue)
         {

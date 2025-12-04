@@ -1,7 +1,7 @@
 ﻿using Domain.Interfaces.Repositories;
-using Domain.Interfaces.Repositories.Db;
+using Domain.Interfaces.Repositories.DB;
 using Infrastructure.Repositories;
-using Infrastructure.Repositories.Db;
+using Infrastructure.Repositories.DB;
 
 namespace Presentation.Extensions;
 

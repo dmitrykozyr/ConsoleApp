@@ -1,7 +1,7 @@
 ﻿using Application.Services.Serializer;
 using Domain.Interfaces;
 using Domain.Interfaces.Cache;
-using Domain.Interfaces.Db;
+using Domain.Interfaces.DB;
 using Domain.Interfaces.Login;
 using Domain.Interfaces.Serializer;
 using Domain.Interfaces.Services;

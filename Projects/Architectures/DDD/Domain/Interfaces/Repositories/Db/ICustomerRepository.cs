@@ -1,10 +1,10 @@
-﻿using Domain.Models.Db;
+﻿using Domain.Models.DB;
 
-namespace Domain.Interfaces.Repositories.Db;
+namespace Domain.Interfaces.Repositories.DB;
 
 public interface ICustomerRepository
 {
-    Customer? GetById(long id);
+    Task<Customer?> GetById(long id);
 
-    public int Add(Customer request);
+    Task<int> Add(Customer request);
 }

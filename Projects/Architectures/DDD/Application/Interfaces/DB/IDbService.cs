@@ -1,6 +1,6 @@
 ﻿using Domain.Models.RequestModels.Db;
 
-namespace Domain.Interfaces.Db;
+namespace Application.Interfaces.DB;
 
 public interface IDbService
 {

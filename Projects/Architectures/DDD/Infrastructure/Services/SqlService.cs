@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Diagnostics;
-using Domain.DomainServices.Login;
 using Domain.Interfaces;
-using Domain.Interfaces.Db;
+using Domain.Interfaces.DB;
 using Domain.Models.Options;
+using Infrastructure.Services.Login;
 using Microsoft.Extensions.Options;
 using System.Data;
 using System.Data.SqlClient;
@@ -51,7 +51,7 @@ public class SqlService : ISqlService
         }
     }
 
-    public UserContextCommand CreateCommand(string commandText, CommandType commandType)
+    public IUserContextCommand CreateCommand(string commandText, CommandType commandType)
     {
         int commandTimeout = int.Parse(DatabaseOptions?.SqlCommandTimeout ?? "");
 

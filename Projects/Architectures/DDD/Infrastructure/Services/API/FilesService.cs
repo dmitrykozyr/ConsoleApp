@@ -6,7 +6,6 @@ using Domain.Models.Options;
 using Domain.Models.RequestModels;
 using Domain.Models.ResponseModels;
 using Infrastructure.Models.DTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net;
@@ -327,7 +326,7 @@ public class FilesService : IFilesService
         return default;
     }
 
-    public async Task<Guid> LoadFileFromFileSystemBySelection(LoadFileBySelectionRequest model, IFormFile file)
+    public async Task<Guid> LoadFileFromFileSystemBySelection(LoadFileBySelectionRequest model, IFileUpload file)
     {
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
@@ -361,7 +360,7 @@ public class FilesService : IFilesService
             stream.Write(Encoding.UTF8.GetBytes($"Content-Disposition: form-data; name=\"file\"; filename=\"{Path.GetFileName(file.FileName)}\"\r\n"));
             stream.Write(Encoding.UTF8.GetBytes("Content-Type: application/octet-stream\r\n\r\n"));
 
-            await file.CopyToAsync(stream);
+            await file.OpenReadStream().CopyToAsync(stream);
 
             await stream.WriteAsync(Encoding.UTF8.GetBytes($"\r\n--{boundary}--\r\n"));
         }

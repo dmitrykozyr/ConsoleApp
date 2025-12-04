@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Db;
+﻿namespace Domain.Models.DB;
 
 // Сущности Domain должны соответствовать принципам DDD,
 // а не быть простыми POCO классами без бизнес-логики

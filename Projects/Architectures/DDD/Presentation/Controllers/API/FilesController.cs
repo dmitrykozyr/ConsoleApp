@@ -4,6 +4,7 @@ using Domain.Interfaces.Services;
 using Domain.Models.RequestModels;
 using Domain.Models.ResponseModels;
 using Domain.Validators;
+using Infrastructure.Adapters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.API;
@@ -168,7 +169,9 @@ public class FilesController
                 return Results.BadRequest(validationResult);
             }
 
-            var result = await _filesService.LoadFileFromFileSystemBySelection(model, file);
+            var fileAdapter = new FormFileAdapter(file);
+            var result      = await _filesService.LoadFileFromFileSystemBySelection(model, fileAdapter);
+
             if (result != default)
             {
                 return Results.Ok(result);

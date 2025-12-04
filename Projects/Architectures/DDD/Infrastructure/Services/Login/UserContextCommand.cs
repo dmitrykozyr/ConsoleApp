@@ -3,9 +3,9 @@ using Domain.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Domain.DomainServices.Login;
+namespace Infrastructure.Services.Login;
 
-public class UserContextCommand : IDisposable
+public class UserContextCommand : IUserContextCommand
 {
     private byte[]? cookie;
     private readonly bool internalConnection = false;
@@ -30,7 +30,7 @@ public class UserContextCommand : IDisposable
         command.CommandTimeout = timeout;
     }
 
-    public SqlDataReader ExecuteReader(string login)
+    public IDataReader ExecuteReader(string login)
     {
         SqlDataReader reader;
 

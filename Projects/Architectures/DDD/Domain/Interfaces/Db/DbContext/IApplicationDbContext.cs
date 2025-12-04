@@ -1,8 +1,8 @@
-﻿using Domain.Models.Db;
+﻿using Domain.Models.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Domain.Interfaces.Db.DbContext;
+namespace Domain.Interfaces.DB.DbContext;
 
 public interface IApplicationDbContext
 {

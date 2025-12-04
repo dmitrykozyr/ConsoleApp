@@ -22,9 +22,9 @@ public class XmlMessageSerializer : IXmlMessageSerializer
 
     public async Task<object> Deserialize(Memory<byte> messageBody, Type returnType)
     {
-        var serializer = new XmlSerializer(returnType);
-        string xml = Encoding.UTF8.GetString(messageBody.Span);
-        var newXml = xml;
+        var serializer  = new XmlSerializer(returnType);
+        string xml      = Encoding.UTF8.GetString(messageBody.Span);
+        var newXml      = xml;
 
         using (var reader = new StringReader(newXml))
         {
@@ -35,9 +35,9 @@ public class XmlMessageSerializer : IXmlMessageSerializer
     public async Task<Memory<byte>> Serialize<TMessage>(TMessage message)
         where TMessage : class
     {
-        var serializer = new XmlSerializer(typeof(TMessage));
-        var stream = new MemoryStream();
-        var xmlWriterSettings = new XmlWriterSettings()
+        var serializer          = new XmlSerializer(typeof(TMessage));
+        var stream              = new MemoryStream();
+        var xmlWriterSettings   = new XmlWriterSettings()
         {
             Indent = true,
             Encoding = Encoding.UTF8,

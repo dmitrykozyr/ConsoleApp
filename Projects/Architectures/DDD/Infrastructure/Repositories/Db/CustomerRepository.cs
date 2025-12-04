@@ -1,8 +1,9 @@
-﻿using Domain.Interfaces.Db.DbContext;
-using Domain.Interfaces.Repositories.Db;
-using Domain.Models.Db;
+﻿using Domain.Interfaces.DB.DbContext;
+using Domain.Interfaces.Repositories.DB;
+using Domain.Models.DB;
+using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories.Db;
+namespace Infrastructure.Repositories.DB;
 
 public class CustomerRepository : ICustomerRepository
 {
@@ -13,16 +14,16 @@ public class CustomerRepository : ICustomerRepository
         _dbContext = dbContext;
     }
 
-    public Customer? GetById(long id)
+    public async Task<Customer?> GetById(long id)
     {
-        var result = _dbContext.Customers.FirstOrDefault(o => o.Id == id);
+        var result = await _dbContext.Customers.FirstOrDefaultAsync(o => o.Id == id);
 
         return result;
     }
 
-    public int Add(Customer request)
+    public async Task<int> Add(Customer request)
     {
-        var result = _dbContext.Customers.Add(request);
+        var result = await _dbContext.Customers.AddAsync(request);
 
         return result is null ? 0 : 1;
 
