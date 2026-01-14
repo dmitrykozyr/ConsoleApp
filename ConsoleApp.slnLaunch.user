@@ -3,11 +3,11 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "Projects\\RabbitMQ\\RabbitMQ.Producer\\RabbitMQ.Producer.csproj",
+        "Path": "Projects\\Architectures\\gRPC\\gRPC.Service\\gRPC.Service.csproj",
         "Action": "Start"
       },
       {
-        "Path": "Projects\\RabbitMQ\\RabbitMQ.Consumer\\RabbitMQ.Consumer.csproj",
+        "Path": "Projects\\Architectures\\gRPC\\gRPC.Client\\gRPC.Client.csproj",
         "Action": "Start"
       }
     ]

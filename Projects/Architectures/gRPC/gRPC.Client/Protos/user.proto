@@ -1,0 +1,31 @@
+// Этот файл - точная копия файла из gRPC.Service\Protos\
+// В его свойствах (Properties) должно быть:
+// - Build Action: Protobuf compiler
+// - Class Access: Public
+// - Compile Protobuf: Yes
+// - gRPC Stub Classes: 'Client only' - если не дает изменить, можно прописать в настройках проекта
+//                      в проекте sRPC.Service это значение должно быть 'Server only'
+
+syntax = "proto3";
+
+option csharp_namespace = "gRPC.Service";
+
+service UserService {
+  rpc GetUser (GetUserRequest) returns (User);
+  rpc CreateUser (CreateUserRequest) returns (User);
+}
+
+message GetUserRequest {
+  int32 id = 1;
+}
+
+message CreateUserRequest {
+  string name = 1;
+  string email = 2;
+}
+
+message User {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
