@@ -7,6 +7,7 @@ builder.Services.AddGrpc();
 
 var app = builder.Build();
 
+app.MapGrpcService<CustomersService>();
 app.MapGrpcService<UserServiceImpl>();
 
 Console.WriteLine("gRPC сервер запускается...");
