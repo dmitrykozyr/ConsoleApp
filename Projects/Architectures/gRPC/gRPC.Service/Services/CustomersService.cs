@@ -32,4 +32,36 @@ public class CustomersService : Customer.CustomerBase
 
         return Task.FromResult(customerModel);
     }
+
+    public override async Task GetNewCustomers(
+        NewCustomerRequest request,
+        IServerStreamWriter<CustomerModel> responseStream,
+        ServerCallContext context)
+    {
+        var customers = new List<CustomerModel>
+        {
+            new CustomerModel
+            {
+                FirstName = "FN 1",
+                LastName = "LN 1",
+                EmailAddress = "Email 1",
+                Age = 1,
+                IsAlive = true,
+            },
+            new CustomerModel
+            {
+                FirstName = "FN 2",
+                LastName = "LN 2",
+                EmailAddress = "Email 2",
+                Age = 2,
+                IsAlive = true,
+            }
+        };
+
+        // Цикл нужен, чтобы вернуть значения через stream
+        foreach (var customer in customers)
+        {
+            await responseStream.WriteAsync(customer);
+        }
+    }
 }

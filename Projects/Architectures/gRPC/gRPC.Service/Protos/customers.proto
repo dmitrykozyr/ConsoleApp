@@ -4,10 +4,22 @@ option csharp_namespace = "gRPC.Service.Protos";
 
 service Customer {
 	rpc GetCustomerInfo (CustomerLookupModel) returns (CustomerModel);
+
+	// stream позволяет вернуть несколько элементов
+	// stream можно использовать для входящих и возвращаемых функцие параметров
+	rpc GetNewCustomers (NewCustomerRequest) returns (stream CustomerModel);
+}
+
+// Здесь нет свойств, только пустая оболочка
+message NewCustomerRequest {
+
 }
 
 message CustomerLookupModel{
 	int32 userId = 1;
+
+	// repeats позволяет создать массив объектов
+	//CustomerModel repeats = 2;
 }
 
 message CustomerModel{
