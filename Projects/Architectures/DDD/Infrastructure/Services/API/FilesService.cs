@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
-using Domain.Interfaces.Services;
-using Domain.Models.Options;
-using Domain.Models.RequestModels;
-using Domain.Models.ResponseModels;
 using Infrastructure.Formatters;
 using Infrastructure.Models.DTO;
+using Infrastructure.Models.RequestModels;
+using Infrastructure.Models.ResponseModels;
+using Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net;

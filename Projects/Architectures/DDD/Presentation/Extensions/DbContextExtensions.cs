@@ -1,5 +1,5 @@
-﻿using Domain.Interfaces.DB;
-using Domain.Interfaces.DB.DbContext;
+﻿using Domain.Interfaces;
+using Infrastructure.Db;
 using Infrastructure.Repositories;
 
 namespace Presentation.Extensions;

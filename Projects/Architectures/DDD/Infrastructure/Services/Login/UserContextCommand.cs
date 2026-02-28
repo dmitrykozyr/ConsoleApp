@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
+using Infrastructure.Interfaces;
 using System.Data;
 using System.Data.SqlClient;
 

@@ -1,4 +1,4 @@
-﻿using Application.Services.Quartz_;
+﻿using Infrastructure.Services.Quartz_;
 using Quartz;
 
 namespace Presentation.Extensions;

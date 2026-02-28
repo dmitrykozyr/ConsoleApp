@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces;
-using Domain.Interfaces.Login;
-using Domain.Models.Login;
+using Infrastructure.Interfaces;
+using Infrastructure.Models.Login;
 using System.Collections;
 using System.Data;
 using System.Data.SqlClient;

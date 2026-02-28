@@ -2,6 +2,8 @@
 using Domain.Interfaces;
 using Domain.Models.JsonDeserialize;
 using Domain.Models.Options;
+using Infrastructure.HttpClient_;
+using Infrastructure.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using VaultSharp;

@@ -1,6 +1,6 @@
-﻿using Domain.Interfaces.DB;
-using Domain.Interfaces.DB.DbContext;
+﻿using Domain.Interfaces;
 using Domain.Models.DB;
+using Infrastructure.Db;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

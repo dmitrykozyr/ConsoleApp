@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Enums;
 using Domain.Interfaces;
-using Domain.Interfaces.DB;
-using Domain.Models.Options;
 using Infrastructure.Formatters;
+using Infrastructure.Interfaces.Db;
+using Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using System.Data.SqlClient;
 using System.Text;

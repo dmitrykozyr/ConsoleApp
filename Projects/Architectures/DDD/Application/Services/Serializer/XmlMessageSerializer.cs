@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces.Serializer;
+﻿using Domain.Interfaces;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;

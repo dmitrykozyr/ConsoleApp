@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces.Cache;
+﻿using Infrastructure.Interfaces.Cache;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.API;

@@ -1,8 +1,6 @@
-﻿using Application.Interfaces.DB;
-using Domain.Interfaces.DB;
-using Domain.Interfaces.Repositories.DB;
+﻿using Application.Models.RequestModels;
+using Domain.Interfaces;
 using Domain.Models.DB;
-using Domain.Models.RequestModels.Db;
 
 namespace Application.Services.API;
 

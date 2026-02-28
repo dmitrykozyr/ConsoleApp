@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
-using Domain.Interfaces.DB;
 using Domain.Models.Options;
+using Infrastructure.Interfaces;
+using Infrastructure.Interfaces.Db;
 using Infrastructure.Services.Login;
 using Microsoft.Extensions.Options;
 using System.Data;

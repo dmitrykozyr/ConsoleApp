@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
-using Domain.Models.Options;
-using Domain.Models.RequestModels;
+using Infrastructure.Models.RequestModels;
+using Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Text;

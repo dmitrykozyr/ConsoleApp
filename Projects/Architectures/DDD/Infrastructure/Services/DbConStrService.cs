@@ -1,6 +1,6 @@
-﻿using Domain.Interfaces.DB;
-using Domain.Models.JsonDeserialize;
+﻿using Domain.Models.JsonDeserialize;
 using Domain.Models.Options;
+using Infrastructure.Interfaces.Db;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 

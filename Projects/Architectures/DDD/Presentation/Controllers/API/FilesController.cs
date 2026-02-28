@@ -1,11 +1,12 @@
 ﻿using Domain.Interfaces;
-using Domain.Interfaces.Login;
-using Domain.Interfaces.Services;
-using Domain.Models.RequestModels;
-using Domain.Models.ResponseModels;
 using Domain.Validators;
 using Infrastructure.Adapters;
+using Infrastructure.Interfaces.Login;
+using Infrastructure.Models.RequestModels;
+using Infrastructure.Models.ResponseModels;
+using Infrastructure.Services.API;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Validators;
 
 namespace Presentation.Controllers.API;
 

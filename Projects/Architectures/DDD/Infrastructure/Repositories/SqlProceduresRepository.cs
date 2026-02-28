@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
-using Domain.Interfaces.DB;
-using Domain.Interfaces.Repositories;
-using Domain.Models.ResponseModels;
+using Infrastructure.Interfaces.Db;
+using Infrastructure.Models.ResponseModels;
 using System.Data;
 using System.Data.SqlClient;
 
