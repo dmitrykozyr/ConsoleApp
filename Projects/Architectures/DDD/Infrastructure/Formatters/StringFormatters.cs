@@ -1,4 +1,4 @@
-﻿namespace Domain.Formatters;
+﻿namespace Infrastructure.Formatters;
 
 public static class StringFormatters
 {

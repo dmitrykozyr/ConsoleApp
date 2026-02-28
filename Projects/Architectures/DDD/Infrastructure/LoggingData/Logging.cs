@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Enums;
-using Domain.Formatters;
 using Domain.Interfaces;
 using Domain.Interfaces.DB;
 using Domain.Models.Options;
+using Infrastructure.Formatters;
 using Microsoft.Extensions.Options;
 using System.Data.SqlClient;
 using System.Text;
@@ -16,7 +16,7 @@ public class Logging : ILogging
 
     private readonly IDbConStrService _dbConStrService;
 
-    private const string DOSERVICE_BCSFS_LOG_ADD = "";
+    private const string DOSERVICE_FS_LOG_ADD = "";
 
     public Logging(IOptions<GeneralOptions> generalOptions, IDbConStrService dbConStrService)
     {
@@ -70,7 +70,7 @@ public class Logging : ILogging
                      SqlCommands.CreateParameter("@bucketPath",     bucketPath + "\\" + guid)
                 };
 
-                using (SqlCommand cmd = SqlCommands.CreateCommand(connection, DOSERVICE_BCSFS_LOG_ADD, sqlParameters))
+                using (SqlCommand cmd = SqlCommands.CreateCommand(connection, DOSERVICE_FS_LOG_ADD, sqlParameters))
                 {
                     cmd.CommandTimeout = GeneralOptions.CommandTimeout;
                     SqlCommands.ExecuteNonQuery(cmd);
@@ -78,7 +78,7 @@ public class Logging : ILogging
             }
             catch (Exception ex)
             {
-                throw new Exception($"Ошибка при выполнении процедуры {DOSERVICE_BCSFS_LOG_ADD}: {ex}");
+                throw new Exception($"Ошибка при выполнении процедуры {DOSERVICE_FS_LOG_ADD}: {ex}");
             }
         }
     }

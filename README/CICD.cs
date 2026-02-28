@@ -110,21 +110,21 @@
         Get-WebAppPoolState -Name ".NET v8.0"
 
         // Создание нового веб-приложения
-        New-WebApplication -Name DOService.BCSFS_Test6 -Site 'Default Web Site' -PhysicalPath 'C:\inetpub\wwwroot\DOService_BCSFS_Test6' -ApplicationPool ".NET v8.0" -Force
+        New-WebApplication -Name DOService.FS_Test6 -Site 'Default Web Site' -PhysicalPath 'C:\inetpub\wwwroot\DOService_FS_Test6' -ApplicationPool ".NET v8.0" -Force
 
         // Удаление веб-приложения
-        Remove-WebApplication -Site 'Default Web Site' -Name 'DOService.BCSFS'
+        Remove-WebApplication -Site 'Default Web Site' -Name 'FS'
 
-        // В папке C:\inetpub\wwwroot нужно создать папку DOService_BCSFS_Test6
+        // В папке C:\inetpub\wwwroot нужно создать папку FS_Test6
         В Visual Studio делаем Publish нашего приложения и созданные файлы кладем в новую папку
 
         // Запуск веб-приложения
         // НЕ РАБОТАЕТ
-        Start-WebApp -Name "DOService_BCSFS_Test6" -Site "Default Web Site"
+        Start-WebApp -Name "FS_Test6" -Site "Default Web Site"
 
         // Проверка статуса веб-приложения
         // НЕ РАБОТАЕТ
-        Get-WebApp -Name "DOService_BCSFS_Test6" -Site "Default Web Site"
+        Get-WebApp -Name "SFS_Test6" -Site "Default Web Site"
 
     #endregion
 }
