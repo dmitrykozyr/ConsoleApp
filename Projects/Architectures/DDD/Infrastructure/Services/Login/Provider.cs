@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces;
 using Infrastructure.Interfaces;
+using Infrastructure.Interfaces.Login;
 using Infrastructure.Models.Login;
 using System.Collections;
 using System.Data;

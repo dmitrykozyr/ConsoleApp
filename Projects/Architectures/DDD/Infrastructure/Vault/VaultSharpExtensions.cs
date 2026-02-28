@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces;
 using Domain.Models.JsonDeserialize;
-using Infrastructure.HttpClient_;
+using Infrastructure.Interfaces;
 using Infrastructure.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;

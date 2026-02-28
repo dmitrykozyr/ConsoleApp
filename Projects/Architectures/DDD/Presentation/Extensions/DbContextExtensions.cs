@@ -1,5 +1,5 @@
 ﻿using Domain.Interfaces;
-using Infrastructure.Db;
+using Infrastructure.Interfaces.Db;
 using Infrastructure.Repositories;
 
 namespace Presentation.Extensions;

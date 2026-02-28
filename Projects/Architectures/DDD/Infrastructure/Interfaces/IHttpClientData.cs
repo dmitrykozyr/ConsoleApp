@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Models.RequestModels;
 
-namespace Infrastructure.HttpClient_;
+namespace Infrastructure.Interfaces;
 
 public interface IHttpClientData<T>
 {

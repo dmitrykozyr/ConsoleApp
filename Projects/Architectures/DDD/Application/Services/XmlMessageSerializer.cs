@@ -3,7 +3,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Application.Services.Serializer;
+namespace Application.Services;
 
 public class XmlMessageSerializer : IXmlMessageSerializer
 {

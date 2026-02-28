@@ -1,8 +1,9 @@
-﻿using Application.Models.RequestModels;
+﻿using Application.Interfaces;
+using Application.Models.RequestModels;
 using Domain.Interfaces;
 using Domain.Models.DB;
 
-namespace Application.Services.API;
+namespace Application.Services;
 
 public class DbService : IDbService
 {

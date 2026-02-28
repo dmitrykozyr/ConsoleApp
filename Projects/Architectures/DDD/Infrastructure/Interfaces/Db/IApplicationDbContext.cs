@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Infrastructure.Db;
+namespace Infrastructure.Interfaces.Db;
 
 public interface IApplicationDbContext
 {

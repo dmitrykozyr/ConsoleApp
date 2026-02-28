@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace Infrastructure.LoggingData;
+namespace Infrastructure;
 
 public class Logging : ILogging
 {

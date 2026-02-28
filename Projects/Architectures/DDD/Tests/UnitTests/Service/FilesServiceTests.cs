@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
 using Domain.Interfaces;
 using FakeItEasy;
+using Infrastructure.Interfaces.Db;
 using Infrastructure.Models.RequestModels;
 using Infrastructure.Options;
-using Infrastructure.Repositories;
 using Infrastructure.Services.API;
 using Microsoft.Extensions.Options;
 using Xunit;

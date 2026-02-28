@@ -1,6 +1,6 @@
 ﻿using Application.Models.RequestModels;
 
-namespace Application.Services.API;
+namespace Application.Interfaces;
 
 public interface IDbService
 {

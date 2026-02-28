@@ -1,7 +1,7 @@
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 
-namespace Infrastructure.Adapters;
+namespace Infrastructure;
 
 public class FormFileAdapter : IFileUpload
 {

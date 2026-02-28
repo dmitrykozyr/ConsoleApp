@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Infrastructure.Interfaces.Login;
+using System.Collections;
 
 namespace Infrastructure.Models.Login;
 

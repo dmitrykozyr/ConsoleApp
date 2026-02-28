@@ -1,6 +1,6 @@
 ﻿using Domain.Interfaces;
 using Domain.Validators;
-using Infrastructure.Adapters;
+using Infrastructure;
 using Infrastructure.Interfaces.Login;
 using Infrastructure.Models.RequestModels;
 using Infrastructure.Models.ResponseModels;

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
+using Infrastructure.Interfaces;
 using Infrastructure.Models.RequestModels;
 using Infrastructure.Options;
 using Microsoft.Extensions.Options;
@@ -7,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 
-namespace Infrastructure.HttpClient_;
+namespace Infrastructure;
 
 public class HttpClientData<T> : IHttpClientData<T>
     where T : class, new()

@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Models.ResponseModels;
 
-namespace Infrastructure.Repositories;
+namespace Infrastructure.Interfaces.Db;
 
 public interface ISqlProceduresRepository
 {

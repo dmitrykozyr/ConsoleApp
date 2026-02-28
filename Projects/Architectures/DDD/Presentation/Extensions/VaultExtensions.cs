@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Diagnostics;
 using Domain.Interfaces;
 using Domain.Models.JsonDeserialize;
-using Infrastructure.HttpClient_;
+using Infrastructure.Interfaces;
 using Infrastructure.Options;
 using Infrastructure.Vault;
 using Microsoft.Extensions.Options;

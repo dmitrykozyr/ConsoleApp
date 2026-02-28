@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Models.Login;
+﻿using Infrastructure.Models.Login;
+
+namespace Infrastructure.Interfaces.Login;
 
 public interface IProvider
 {

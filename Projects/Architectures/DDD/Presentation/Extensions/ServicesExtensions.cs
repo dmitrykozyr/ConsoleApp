@@ -1,12 +1,10 @@
-﻿using Application.Services.Serializer;
+﻿using Application.Services;
 using Domain.Interfaces;
-using Infrastructure.HttpClient_;
+using Infrastructure;
 using Infrastructure.Interfaces;
 using Infrastructure.Interfaces.Cache;
 using Infrastructure.Interfaces.Db;
 using Infrastructure.Interfaces.Login;
-using Infrastructure.LoggingData;
-using Infrastructure.Models.Login;
 using Infrastructure.Services;
 using Infrastructure.Services.API;
 using Infrastructure.Services.Cache;
