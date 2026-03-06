@@ -12,5 +12,5 @@ public class TimelineInfo
     List<DateTime>? TimelineEvents { get; set; }
 
     //! Вынести в объект
-    List<Dictionary<DateTime, string>>? Periods { get; set; }
+    List<Dictionary<string, Dictionary<DateTime, DateTime>>>? TimelinePeriods { get; set; }
 }
