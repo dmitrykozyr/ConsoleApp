@@ -2,7 +2,7 @@
 
 public class TimelineInfo
 {
-    public long TimelineId { get; set; }
+    public long Id { get; set; }
 
     public DateTime BirthDate { get; set; }
 
@@ -12,5 +12,5 @@ public class TimelineInfo
     List<DateTime>? TimelineEvents { get; set; }
 
     //! Вынести в объект
-    List<Dictionary<string, Dictionary<DateTime, DateTime>>>? TimelinePeriods { get; set; }
+    List<TimelinePeriod_>? TimelinePeriods { get; set; }
 }

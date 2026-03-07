@@ -22,4 +22,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Timer.Application\Timer.Application.csproj" />
+    <ProjectReference Include="..\Timer.Domain\Timer.Domain.csproj" />
+    <ProjectReference Include="..\Timer.Infrastructure\Timer.Infrastructure.csproj" />
+    <ProjectReference Include="..\Timer.Presentation\Timer.Presentation.csproj" />
+  </ItemGroup>
+
 </Project>
