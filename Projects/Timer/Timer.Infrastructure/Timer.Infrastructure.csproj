@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Timer.Domain\Timer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Options\" />
+  </ItemGroup>
+
 </Project>
