@@ -1,22 +1,25 @@
-﻿using Npgsql;
+﻿using CommunityToolkit.Diagnostics;
+using Microsoft.Extensions.Options;
+using Npgsql;
 using Timer.Infrastructure.Interfaces;
+using Timer.Infrastructure.Options;
 
 namespace Timer.Infrastructure.Repositories;
 
 public class TimelineInfoRepository : ITimelineInfoRepository
 {
-    //! IOption
-    private readonly string _connectionString;
+    public static DatabaseOptions? DatabaseOptions { get; set; }
 
-    public TimelineInfoRepository()
+    public TimelineInfoRepository(IOptions<DatabaseOptions> databaseOptions)
     {
-        // Берем строку подключения из конфигурации
-        //_connectionString = configuration.GetConnectionString("PostgresDb");
+        DatabaseOptions = databaseOptions.Value;
     }
 
     public async Task<string> GetDatabaseVersionAsync()
     {
-        using var connection = new NpgsqlConnection("Host=localhost;Database=timer;Username=postgres;Password=admin");
+        Guard.IsNotNull(DatabaseOptions);
+
+        using var connection = new NpgsqlConnection(DatabaseOptions.ConnectionString);
 
         await connection.OpenAsync();
 
@@ -27,19 +30,28 @@ public class TimelineInfoRepository : ITimelineInfoRepository
         return version?.ToString() ?? "No data";
     }
 
-    public async Task AddTimerEntry(string taskName, int duration)
+    public async Task AddTimerEntry()
     {
-        using var connection = new NpgsqlConnection(_connectionString);
+        try
+        {
+            Guard.IsNotNull(DatabaseOptions, $"{nameof(DatabaseOptions)} is null");
 
-        await connection.OpenAsync();
+            using var connection = new NpgsqlConnection(DatabaseOptions.ConnectionString);
 
-        const string sql = "INSERT INTO tasks (name, duration) VALUES (@name, @duration)";
+            await connection.OpenAsync();
 
-        using var command = new NpgsqlCommand(sql, connection);
+            string sql = $"INSERT INTO timeline_info (birth_date, timeline_end_date) VALUES ('2024-03-09', '2025-03-09')";
 
-        command.Parameters.AddWithValue("name", taskName);
-        command.Parameters.AddWithValue("duration", duration);
+            using var command = new NpgsqlCommand(sql, connection);
 
-        await command.ExecuteNonQueryAsync();
+            //command.Parameters.AddWithValue("name", taskName);
+            //command.Parameters.AddWithValue("duration", duration);
+
+            await command.ExecuteNonQueryAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 }

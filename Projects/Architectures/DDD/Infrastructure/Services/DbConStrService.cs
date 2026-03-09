@@ -25,7 +25,7 @@ public class DbConStrService : IDbConStrService
 
     public string GetDbConnectionString()
     {
-        string dbConnStr = $"{DatabaseOptions?.DepositaryConnStr};Password={DB_PASSWORD}";
+        string dbConnStr = $"{DatabaseOptions?.ConnectionString};Password={DB_PASSWORD}";
 
         return dbConnStr;
     }

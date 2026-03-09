@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Options;
+﻿namespace Timer.Infrastructure.Options;
 
 public class DatabaseOptions
 {

@@ -2,4 +2,7 @@
 
 public interface ITimelineInfoRepository
 {
+    Task<string> GetDatabaseVersionAsync();
+
+    Task AddTimerEntry();
 }

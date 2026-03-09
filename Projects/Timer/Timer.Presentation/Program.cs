@@ -6,9 +6,15 @@ IServiceCollection serviceCollection = builder.Services;
 
 serviceCollection.AddRazorPages();
 
+serviceCollection.AddHttpClient();
+serviceCollection.AddControllers();
+serviceCollection.AddAuthorization();
+serviceCollection.AddAuthentication();
+serviceCollection.AddEndpointsApiExplorer();
+serviceCollection.AddControllersWithViews();
+
+serviceCollection.AddOptionsExtensions();
 serviceCollection.AddRepositoriesExtensions();
-
-
 
 
 
@@ -27,6 +33,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapRazorPages();
 
 app.Run();

@@ -18,7 +18,6 @@ public class FilesController
     private readonly IFilesService _filesService;
     private readonly ILoginService _loginService;
 
-
     public FilesController(ILogging logging, IFilesService filesService, ILoginService loginService)
     {
         _logging = logging;
