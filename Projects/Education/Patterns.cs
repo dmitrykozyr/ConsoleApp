@@ -203,85 +203,9 @@ namespace AbstractFactory
     }
 }
 
-namespace Builder
-{
-    // Динамически создаем объект из нескольких частей
+// Builder
+// Динамически создает объект из нескольких частей
 
-    class Product
-    {
-        public List<object> parts = new List<object>();
-
-        public void Add(string part)
-        {
-            parts.Add(part);
-        }
-    }
-
-    interface IBuilder
-    {
-        abstract void BuildPartA();
-
-        abstract void BuildPartB();
-
-        abstract void GetResult();
-    }
-
-    // Может быть несколько рализаций строителя
-    class ConcreteBuilder : IBuilder
-    {
-        Product product = new Product();
-
-        public void BuildPartA() 
-        { 
-            product.Add("Part A"); 
-        }
-
-        public void BuildPartB() 
-        { 
-            product.Add("Part B"); 
-        }
-
-        public void GetResult()
-        {
-            foreach (var part in product.parts)
-            {
-                Console.WriteLine(part);
-            }
-        }
-    }
-
-    // Директор отвечает за построение в определенной последовательности, его можно определить на стороне клиента
-    class Director
-    {
-        IBuilder _builder;
-
-        public Director(IBuilder builder) 
-        { 
-            _builder = builder; 
-        }
-
-        public void Construnt()
-        {
-            _builder.BuildPartA();
-
-            _builder.BuildPartB();
-        }
-    }
-
-    class Program
-    {
-        static void Main_()
-        {
-            IBuilder builder = new ConcreteBuilder();
-
-            var director = new Director(builder);
-
-            director.Construnt();
-
-            builder.GetResult();
-        }
-    }
-}
 //+
 namespace Prototype
 {
