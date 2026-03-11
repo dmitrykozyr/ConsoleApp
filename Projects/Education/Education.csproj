@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Patterns\Behavioral\" />
     <Folder Include="Patterns\Structural\" />
   </ItemGroup>
 

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
 
-// ПОРОЖДАЮЩИЕ
+// --- ПОРОЖДАЮЩИЕ ---
 
 namespace Education
 {
@@ -67,208 +67,6 @@ namespace Education
     }
 }
 
-namespace AbstractFactory
-{
-    // Задаем интерфейс создания продуктов
-    // Каждая реализация фабрики порождает продукты одной из вариаций
-    // Клиент вызывает методы фабрики для получения продуктов, вместо создания через new
-
-    // WEAPON
-    interface IWeapon
-    { 
-        public void Hit();
-    }
-
-    class Arbalet : IWeapon
-    { 
-        public void Hit()
-        {
-            Console.WriteLine("Shoot from arbalet");
-        } 
-    }
-
-    class Sword : IWeapon
-    { 
-        public void Hit()
-        {
-            Console.WriteLine("Hit by sword");
-        } 
-    }
-
-
-    // MOVEMENT
-    interface IMovement
-    { 
-        public void Move();
-    }
-
-    class Fly : IMovement
-    { 
-        public void Move()
-        {
-            Console.WriteLine("Fly");
-        } 
-    }
-
-    class Run : IMovement
-    { 
-        public void Move()
-        {
-            Console.WriteLine("Run");
-        }
-    }
-
-
-    // FACTORY
-    interface IHeroesFactory
-    {
-        IWeapon CreateWeapon();
-
-        IMovement CreateMovement();
-    }
-
-    class ElfFactory : IHeroesFactory
-    {
-        public ElfFactory()
-        {
-            Console.WriteLine("Elf was created");
-        }
-
-        public IMovement CreateMovement()
-        { 
-            return new Fly(); 
-        }
-
-        public IWeapon CreateWeapon()
-        { 
-            return new Arbalet();
-        }
-    }
-
-    class WarriorFactory : IHeroesFactory
-    {
-        public WarriorFactory()
-        {
-            Console.WriteLine("Warrior was created");
-        }
-
-        public IMovement CreateMovement()
-        { 
-            return new Run(); 
-        }
-
-        public IWeapon CreateWeapon()
-        { 
-            return new Sword();
-        }
-    }
-
-    class Hero
-    {
-        private IWeapon _weapon;
-
-        private IMovement _movement;
-
-        public Hero(IHeroesFactory factory)
-        {
-            _weapon = factory.CreateWeapon();
-            _movement = factory.CreateMovement();
-        }
-
-        public void Run()
-        { 
-            _movement.Move();
-        }
-
-        public void Hit()
-        { 
-            _weapon.Hit();
-        }
-    }
-
-    class Program
-    {
-        static void Main_()
-        {
-            var elf = new Hero(new ElfFactory());
-            elf.Hit();
-            elf.Run();
-
-            Console.WriteLine();
-
-            var warrior = new Hero(new WarriorFactory());
-            warrior.Hit();
-            warrior.Run();
-        }
-    }
-}
-
-// Builder
-// Динамически создает объект из нескольких частей
-
-//+
-namespace Prototype
-{
-    // Создаем прототип и на его онове клоны
-    interface IClone 
-    {
-        IClone Clone();
-    }
-
-    class Box : IClone
-    {
-        int _width;
-
-        int _height;
-
-        public Box(int width, int height)
-        {
-            _width = width;
-            _height = height;
-        }
-
-        public IClone Clone()
-        {
-            Console.WriteLine("Box was cloned");
-
-            return new Box(_width, _height);
-        }
-    }
-
-    class Sphere : IClone
-    {
-        int _radius;
-
-        public Sphere(int radius)
-        {
-            _radius = radius;
-        }
-
-        public IClone Clone()
-        {
-            Console.WriteLine("Sphere was cloned");
-
-            return new Sphere(_radius);
-        }
-    }
-
-    class Program
-    {
-        static void Main_()
-        {
-            IClone boxPrototype = new Box(20, 40);
-            IClone boxClone1 = boxPrototype.Clone();
-            IClone boxClone2 = boxPrototype.Clone();
-
-            Console.WriteLine();
-
-            IClone spherePrototype = new Sphere(30);
-            IClone sphereCloned1 = spherePrototype.Clone();
-            IClone sphereCloned2 = spherePrototype.Clone();
-        }
-    }
-}
-//+
 namespace Singleton
 {
     class Singleton
@@ -284,8 +82,8 @@ namespace Singleton
     }
 }
 
-// СТРУКТУРНЫЕ
-//+
+// --- СТРУКТУРНЫЕ ---
+
 namespace Adapter
 {
     class EuropeanRozetka
@@ -504,7 +302,7 @@ namespace Composite
         }
     }
 }
-//+
+
 namespace Decorator
 {
     // Пиццерия готовит разные пиццы с разными добавками
@@ -581,7 +379,7 @@ namespace Decorator
         }
     }
 }
-//+
+
 namespace Facade
 {
     // Если-бы для управления авто нужно было подать питание с аккумулятора на инжектор
@@ -709,7 +507,7 @@ namespace Flyweight
         }
     }
 }
-//+
+
 namespace Proxy
 {
     // Сначала отрабатывает прокси, потом основной объект и опять прокси
@@ -784,124 +582,7 @@ namespace Proxy
     }
 }
 
-// ПОВЕДЕНЧЕСКИЕ
-
-namespace ChainOfResponsibility
-{
-    // Требуется получить справку из банка, но не ясно, кто должен ее дать
-    // В банке направляют в другое отделение, там в региональное и там получаем справку
-    // Запрос может быть обработан в первом отделении, втором или нескольких
-
-    interface IHandler
-    {
-        IHandler SetNext(IHandler handler);
-
-        object Handle(object request);
-    }
-
-    abstract class AbstractHandler : IHandler
-    {
-        private IHandler _nextHandler;
-
-        public IHandler SetNext(IHandler handler)
-        {
-            _nextHandler = handler;
-
-            // Возврат обработчика позволит связать обработчики так: monkey.SetNext(squirrel)
-            return handler;
-        }
-
-        public virtual object Handle(object request)
-        {
-            if (_nextHandler is not null)
-            { 
-                return _nextHandler.Handle(request);
-            }
-            
-            return null;
-        }
-    }
-
-    class MonkeyHandler : AbstractHandler
-    {
-        public override object Handle(object request)
-        {
-            if ((request as string) == "Banana")
-            {
-                return $"Monkey: I love {request}";
-            }
-
-            return base.Handle(request);
-        }
-    }
-
-    class SquirrelHandler : AbstractHandler
-    {
-        public override object Handle(object request)
-        {
-            if ((request as string) == "Nut")
-            {
-                return $"Sqiurrel: I love {request}";
-            }
-
-            return base.Handle(request);
-        }
-    }
-
-    class DogHandler : AbstractHandler
-    {
-        public override object Handle(object request)
-        {
-            if ((request as string) == "Meat")
-            {
-                return $"Dog: I love {request}";
-            }
-
-            return base.Handle(request);
-        }
-    }
-
-    class Client
-    {
-        public static void ClientCode(AbstractHandler handler)
-        {
-            var myList = new List<string> { "Nut", "Banana", "Meat" };
-
-            foreach (var food in myList)
-            {
-                Console.Write($"Who wants {food}?");
-
-                var result = handler.Handle(food);
-
-                if (result is not null)
-                {
-                    Console.WriteLine($" {result}");
-                }
-                else
-                {
-                    Console.WriteLine($" {food} left untouched");
-                }
-            }
-        }
-    }
-
-    class Program
-    {
-        static void Main_()
-        {
-            var monkey = new MonkeyHandler();
-            var squirrel = new SquirrelHandler();
-            var dog = new DogHandler();
-
-            monkey.SetNext(squirrel).SetNext(dog);  // Создаем цепочку
-
-            // Можем отправить запрос любому обработчику, а не только первому в цепочке
-            //Client.ClientCode(monkey);      // Обходим цепочку, начиная с обезьяны
-            //Client.ClientCode(squirrel);    // Обходим цепочку, начиная с белки
-            Client.ClientCode(dog);           // Обходим цепочку, начиная с белки
-        }
-    }
-}
+// --- ПОВЕДЕНЧЕСКИЕ ---
 
 namespace Command
 {
@@ -1034,7 +715,7 @@ namespace Iterator
         }
     }
 }
-//+
+
 namespace Mediator
 {
     // Самолеты не общаются напрямую, их координирует диспетчер (медиатор)
@@ -1139,7 +820,7 @@ namespace Mediator
         }
     }
 }
-//+
+
 namespace Memento
 {
     // Просим друга запомнить номер, что диктуют по телефону
@@ -1356,61 +1037,6 @@ namespace State
     }
 }
 
-namespace Strategy
-{
-    // Говорим "Хочу права, денег мало" - получим права через месяц
-    // Говорим "Хочу права, денег много" - получим права завтра
-    // Что делал человек - мы не знаем, но задаем начальные условия, а он решает, как себя вести
-
-    interface IStrategy 
-    { 
-        public abstract void AlgorithmInterface(); 
-    }
-    
-    class SlowLicense : IStrategy 
-    { 
-        public void AlgorithmInterface() 
-        { 
-            Console.WriteLine("Make driver's license slow"); 
-        } 
-    }
-    
-    class FastLicence : IStrategy 
-    { 
-        public void AlgorithmInterface() 
-        { 
-            Console.WriteLine("Make driver's license fast"); 
-        } 
-    }
-
-    class Context
-    {
-        IStrategy _strategy;
-
-        public Context(IStrategy strategy) 
-        { 
-            _strategy = strategy; 
-        }
-
-        public void ContextInterface() 
-        { 
-            _strategy.AlgorithmInterface(); 
-        }
-    }
-
-    class Program
-    {
-        static void Main_()
-        {
-            var context = new Context(new SlowLicense());
-            context.ContextInterface();
-
-            context = new Context(new FastLicence());
-            context.ContextInterface();
-        }
-    }
-}
-//+
 namespace TemplateMethod
 {
     // Определяем основу алгоритма и позволяем подклассам переопределить шаги, не меняя структуру
