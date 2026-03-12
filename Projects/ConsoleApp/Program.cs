@@ -12,7 +12,7 @@
         - tests
         - GitLab Runner
 
-        AutoMapper
+        AutoMapper / Mapster
         FluentValidation
 
         Системы мониторинга:
