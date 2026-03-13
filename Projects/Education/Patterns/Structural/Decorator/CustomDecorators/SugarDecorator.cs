@@ -1,4 +1,5 @@
-﻿using Education.Patterns.Structural.Decorator.Interfaces;
+﻿using Education.Patterns.Structural.Decorator.Abstractions;
+using Education.Patterns.Structural.Decorator.Interfaces;
 
 namespace Education.Patterns.Structural.Decorator.CustomDecorators;
 

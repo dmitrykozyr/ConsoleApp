@@ -1,4 +1,5 @@
-﻿using Education.Patterns.Behavioral.Mediator.Interfaces;
+﻿using Education.Patterns.Behavioral.Mediator.Abstractions;
+using Education.Patterns.Behavioral.Mediator.Interfaces;
 
 namespace Education.Patterns.Behavioral.Mediator;
 

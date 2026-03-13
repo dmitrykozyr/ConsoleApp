@@ -1,4 +1,4 @@
-﻿namespace Education.Patterns.Behavioral.TemplateMethod;
+﻿namespace Education.Patterns.Behavioral.TemplateMethod.Abstractions;
 
 public abstract class CaffeineBeverage
 {

@@ -1,6 +1,6 @@
 ﻿using Education.Patterns.Structural.Decorator.Interfaces;
 
-namespace Education.Patterns.Structural.Decorator.CustomDecorators;
+namespace Education.Patterns.Structural.Decorator.Abstractions;
 
 public abstract class CoffeeDecorator : ICoffee
 {

@@ -1,6 +1,6 @@
 ﻿using Education.Patterns.Behavioral.Mediator.Interfaces;
 
-namespace Education.Patterns.Behavioral.Mediator;
+namespace Education.Patterns.Behavioral.Mediator.Abstractions;
 
 public abstract class Airplane
 {

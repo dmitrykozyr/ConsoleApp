@@ -65,7 +65,7 @@ public class AsyncAwait
         Полезно при работе с асинхронными источниками данных, такими как БД или веб-API
     */
 
-    class A
+    public class A
     {
         readonly string[] data = { "Tom", "Sam", "Kate", "Alice", "Bob" };
 

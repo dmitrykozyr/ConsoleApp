@@ -17,15 +17,4 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Patterns\Behavioral\Command\" />
-    <Folder Include="Patterns\Behavioral\Iterator\" />
-    <Folder Include="Patterns\Behavioral\State\" />
-    <Folder Include="Patterns\Behavioral\Observer\" />
-    <Folder Include="Patterns\Structural\Bridge\" />
-    <Folder Include="Patterns\Structural\Composite\" />
-    <Folder Include="Patterns\Structural\Flyweight\" />
-    <Folder Include="Patterns\Structural\Proxy\" />
-  </ItemGroup>
-
 </Project>

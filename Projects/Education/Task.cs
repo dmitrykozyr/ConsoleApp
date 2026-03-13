@@ -1,6 +1,6 @@
 ﻿namespace Education;
 
-class Tasks
+public class Tasks
 {
     #region Разница между Task.Delay и Thread.Sleep
 

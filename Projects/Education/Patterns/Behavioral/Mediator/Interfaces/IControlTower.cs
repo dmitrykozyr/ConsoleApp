@@ -1,4 +1,6 @@
-﻿namespace Education.Patterns.Behavioral.Mediator.Interfaces;
+﻿using Education.Patterns.Behavioral.Mediator.Abstractions;
+
+namespace Education.Patterns.Behavioral.Mediator.Interfaces;
 
 public interface IControlTower
 {

@@ -1,4 +1,6 @@
-﻿namespace Education.Patterns.Behavioral.TemplateMethod.Drinks;
+﻿using Education.Patterns.Behavioral.TemplateMethod.Abstractions;
+
+namespace Education.Patterns.Behavioral.TemplateMethod.Drinks;
 
 public class Coffee : CaffeineBeverage
 {

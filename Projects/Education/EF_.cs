@@ -458,7 +458,7 @@ public class EF_
             );
     */
 
-    class Program
+    public class Program
     {
         static void Main_()
         {
@@ -541,7 +541,7 @@ public class EF_
             : base(options) { }
     }
 
-    class A
+    public class A
     {
         static void Main_()
         {

@@ -1,6 +1,6 @@
 ﻿using Education.Patterns.Behavioral.ChainOfResponsibility.Interfaces;
 
-namespace Education.Patterns.Behavioral.ChainOfResponsibility;
+namespace Education.Patterns.Behavioral.ChainOfResponsibility.Abstractions;
 
 public abstract class AbstractHandler : IHandler
 {
