@@ -1,33 +1,23 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
-// Конфигурация Ocelot
-builder.Configuration.AddJsonFile(
-    "ocelot.json",
-    optional: false,
-    reloadOnChange: true);
+// В консольном приложении нет lauhchSettings
+// и так можно указать, на каком порту запускать приложение
+builder.WebHost.UseUrls("http://localhost:5007", "https://localhost:5008");
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
 
-// Конфигурация Ocelot
-builder.Services.AddOcelot(builder.Configuration);
+builder.Services.AddOcelot();
+
 
 WebApplication app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseHttpsRedirection();
 
-// Конфигурация Ocelot
 await app.UseOcelot();
-
 await app.RunAsync();

@@ -1,43 +1,20 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Threading.RateLimiting;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.WebHost.UseUrls("http://localhost:5009", "https://localhost:5010");
 
-// Конфигурация Yarp
-builder.Services.AddReverseProxy()
-                .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+builder.Services
+ .AddReverseProxy()
+ .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
-// Конфигурация балансировщика
-builder.Services.AddRateLimiter(options =>
-{
-    options.AddPolicy("FixedWindow", context =>
-        RateLimitPartition.GetFixedWindowLimiter(
-            partitionKey: context.Request.Path,
-            factory: _ => new FixedWindowRateLimiterOptions
-            {
-                AutoReplenishment = true,
-                PermitLimit = 10,
-                Window = TimeSpan.FromSeconds(10)
-            }));
-});
 
 WebApplication app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-// Конфигурация Yarp
+app.UseHttpsRedirection();
+app.UseRouting();
 app.MapReverseProxy();
-
-// Конфигурация балансировщика
-app.UseRateLimiter();
 
 await app.RunAsync();

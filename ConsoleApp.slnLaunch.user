@@ -3,11 +3,15 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "Projects\\Architectures\\gRPC\\gRPC.Service\\gRPC.Service.csproj",
+        "Path": "Projects\\API Gateway\\Ocelot.Gateway\\Ocelot.Gateway.csproj",
         "Action": "Start"
       },
       {
-        "Path": "Projects\\Architectures\\gRPC\\gRPC.Client\\gRPC.Client.csproj",
+        "Path": "Projects\\API Gateway\\Yarp.Gateway\\Yarp.Gateway.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Projects\\Secrets\\Vault_\\Vault_.csproj",
         "Action": "Start"
       }
     ]
