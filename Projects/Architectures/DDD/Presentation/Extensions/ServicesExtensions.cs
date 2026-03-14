@@ -21,11 +21,9 @@ public static class ServicesExtensions
         serviceCollection.AddScoped<ISqlService, SqlService>();
         serviceCollection.AddScoped<IFilesService, FilesService>();
         serviceCollection.AddScoped<ILoginService, LoginService>();
+        serviceCollection.AddScoped<IRedisService, RedisService>();
         serviceCollection.AddScoped<IDbConStrService, DbConStrService>();
         serviceCollection.AddScoped<IMemoryCacheService, MemoryCacheService>(); //! Протестить
-        serviceCollection.AddScoped<IRedisService, RedisService>();
-        serviceCollection.AddScoped(typeof(IHttpClientData<>), typeof(HttpClientData<>));
-
         serviceCollection.AddScoped<IXmlMessageSerializer, XmlMessageSerializer>();
     }
 }

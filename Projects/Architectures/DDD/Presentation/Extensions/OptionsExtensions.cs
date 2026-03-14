@@ -13,7 +13,6 @@ public static class OptionsExtensions
         serviceCollection.ConfigureOptions<ApplicationOptionsSetup<DatabaseOptions>>();
         serviceCollection.ConfigureOptions<ApplicationOptionsSetup<GeneralOptions>>();
         serviceCollection.ConfigureOptions<ApplicationOptionsSetup<LoginOptions>>();
-        serviceCollection.ConfigureOptions<ApplicationOptionsSetup<VaultOptions>>();
         serviceCollection.ConfigureOptions<ApplicationOptionsSetup<RedisOptions>>();
     }
 }

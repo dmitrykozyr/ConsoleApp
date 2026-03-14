@@ -54,14 +54,11 @@ serviceCollection.AddRedisExtensions(builder);
 serviceCollection.AddOptionsExtensions();
 serviceCollection.AddServicesExtensions();
 serviceCollection.AddRepositoriesExtensions();
-serviceCollection.AddOpenTelemetryExtension(builder);
 IConfiguration configuration = serviceCollection.AddConfigurationExtension(builder);
 serviceCollection.AddDbExtensions(configuration);
 
 
 WebApplication app = builder.Build();
-
-serviceCollection.AddVaultExtensions(app, builder, configuration);
 
 if (!app.Environment.IsDevelopment())
 {

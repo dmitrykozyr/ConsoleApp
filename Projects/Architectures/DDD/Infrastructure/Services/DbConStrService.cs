@@ -1,5 +1,4 @@
-﻿using Domain.Models.JsonDeserialize;
-using Domain.Models.Options;
+﻿using Domain.Models.Options;
 using Infrastructure.Interfaces.Db;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -20,7 +19,8 @@ public class DbConStrService : IDbConStrService
 
         DatabaseOptions = databaseOptions.Value;
 
-        DB_PASSWORD = _configuration.GetSection(nameof(SecretNames.DbPassword)).Value;
+        //!DB_PASSWORD = _configuration.GetSection(nameof(SecretNames.DbPassword)).Value;
+        DB_PASSWORD = "123"; // Брать пароль из Vault
     }
 
     public string GetDbConnectionString()
