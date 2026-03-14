@@ -106,6 +106,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BB
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API Gateway", "API Gateway", "{136F7167-68F8-4DA3-AFA1-7515FA36F392}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\API Gateway\README.txt = Projects\API Gateway\README.txt
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ocelot.Gateway", "Projects\API Gateway\Ocelot.Gateway\Ocelot.Gateway.csproj", "{BF0711F1-461F-4D94-8D08-E4C0BD4AA554}"
 EndProject
