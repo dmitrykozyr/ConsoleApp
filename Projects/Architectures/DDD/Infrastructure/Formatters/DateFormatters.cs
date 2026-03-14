@@ -109,13 +109,5 @@ public static class DateFormatters
 
         return result;
     }
-
-    //!
-    //public static string DateTimeToString(DateTime dateTime, DateFormats dateFormat = DateFormats.ISO8601)
-    //{
-    //    string result = dateTime.ToString(dateFormat.GetDesription(), SpecificCultureInfo);
-
-    //    return result;
-    //}
 }
 

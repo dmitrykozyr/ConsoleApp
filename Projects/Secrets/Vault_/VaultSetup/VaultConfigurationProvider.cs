@@ -37,7 +37,14 @@ public class VaultConfigurationProvider : ConfigurationProvider
 
     public override void Load()
     {
-        LoadAsync().Wait();
+        try
+        {
+            LoadAsync().Wait();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Ошибка запуска Vault: {ex.Message}");
+        }
     }
 
     public async Task LoadAsync()
@@ -55,7 +62,10 @@ public class VaultConfigurationProvider : ConfigurationProvider
 
         try
         {
-            var kvSecret = await _client.V1.Secrets.KeyValue.V2.ReadSecretAsync(VaultOptions.SecretsStorageName, null, VaultOptions.SecretsEngineName);
+            var kvSecret = await _client.V1.Secrets.KeyValue.V2.ReadSecretAsync(
+                path: VaultOptions.SecretsStorageName,
+                version: null,
+                mountPoint: VaultOptions.SecretsEngineName);
 
             if (kvSecret is not null && kvSecret.Data.Data.Any())
             {
@@ -68,7 +78,12 @@ public class VaultConfigurationProvider : ConfigurationProvider
         }
         catch (Exception ex)
         {
-            _logging.LogToFile($"Ошибка получения секретов из DEV-сервера Vault, {ex.Message}");
+            string exMessage = $"Ошибка получения секретов из DEV-сервера Vault, {ex.Message}";
+
+            //! Везде, где есть _logging.LogToFile, пробрасывать исключение или логировать в Elactic
+            _logging.LogToFile(exMessage);
+
+            throw new Exception(exMessage);
         }
     }
 
@@ -97,7 +112,9 @@ public class VaultConfigurationProvider : ConfigurationProvider
         }
         catch (Exception ex)
         {
-            _logging.LogToFile($"Ошибка получения секретов из PROD-сервера Vault, {ex.Message}");
+            string exMessage = $"Ошибка получения секретов из PROD-сервера Vault, {ex.Message}";
+
+            _logging.LogToFile(exMessage);
         }
     }
 }
