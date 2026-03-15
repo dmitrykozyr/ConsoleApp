@@ -4,72 +4,65 @@ public class Exceptions_
 {
     // Исключение не обязательно должно быть обработано в классе, где оно произошло
     // Можно создать класс для обработки определенных исключений
-
-    // throw    возвращает весь стек вызовов
-    // throw ex обрезает стек
-
-    class ExceptionHandler
+    // throw возвращает весь стек вызовов
+    public class ExceptionHandler
     {
-        public static void Handle(Exception e)
+        public static void F1()
         {
-            if (e.GetBaseException().GetType() == typeof(ArgumentException))
-            {
-                Console.WriteLine("You caught ArgumentException");
-            }
-            else
-            {
-                throw e;
-            }
-        }
-    }
-
-    static class ExceptionThrower
-    {
-        public static void TriggerException(bool isTrigger)
-        {
-            throw new ArgumentException();
-        }
-    }
-
-    static void Main_()
-    {
-        // Программа выведет 1 2 3 4 6
-        try
-        {
-            // Сначала выполнятся try catch finally данного уровня, даже если возникнет исключение
             try
             {
-                Console.WriteLine("1");
-                throw new NullReferenceException();
-            }
-            catch
-            {
-                Console.WriteLine("2");
+                var x = 0;
 
-                // Если убрать эту строку, программа выведет 1 2 3 6
-                // Здесь throw вверх то-же исключение, что было поймано выше - NullReferenceException
-                // throw без аргументов можно вызвать только из блока catch
+                // Ошибка
+                var y = 10 / x;
+            }
+            catch (Exception ex)
+            {
+                // Нет StackTrace - плохо
+                throw new Exception(ex.Message);
+
+                // Есть StackTrace - хорошо
                 throw;
+
+                // Есть StackTrace - хорошо
+                throw new Exception("Сообщение об ошибке ", ex);
+            }
+        }
+
+        public void Main_()
+        {
+            try
+            {
+                // Сначала выполнятся try catch finally данного уровня,
+                // даже если возникнет исключение
+                try
+                {
+                    throw new NullReferenceException();
+                }
+                catch
+                {
+                    // Здесь throw пробросит вверх исключение, пойманное выше
+                    // throw без аргументов можно вызвать только из блока catch
+                    throw;
+                }
+                // Вызовется в любом случае
+                finally
+                {
+                }
+            }
+            // Если в try произошло исключение - вызовется соответствующий блок catch
+            catch (NullReferenceException)
+            {
+            }
+            catch (Exception)
+            {
             }
             // Вызовется в любом случае
             finally
             {
-                Console.WriteLine("3");
+                // Необработанное исключение
+                throw new NullReferenceException();
             }
-        }
-        // Если в try произошло исключение, то вызовется соответствующий блок catch
-        catch (NullReferenceException ex)
-        {
-            Console.WriteLine("4");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("5");
-        }
-        finally // Вызовется в любом случае
-        {
-            Console.WriteLine("6");
-            throw new NullReferenceException(); // Необработанное исключение
         }
     }
 }

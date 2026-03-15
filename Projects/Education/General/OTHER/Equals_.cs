@@ -51,7 +51,7 @@ public class Equals_
 
     public class Program
     {
-        static void Main_()
+        public void Main_()
         {
             var person1 = new Person { Name = "Alice", Age = 30 };
             var person2 = new Person { Name = "Alice", Age = 30 };

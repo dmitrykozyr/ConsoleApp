@@ -34,7 +34,7 @@ public class MultipleInheritance_
         }
     }
 
-    static void Main_()
+    public void Main_()
     {
         var objC = new C();
 

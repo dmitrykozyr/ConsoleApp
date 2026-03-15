@@ -19,9 +19,9 @@ public static class ExtensionMethods_
         Console.WriteLine(value1 + value2);
     }
 
-    class ProgramExtensionMethods
+    public class ProgramExtensionMethods
     {
-        static void Main_()
+        public void Main_()
         {
             string text = "1";
 

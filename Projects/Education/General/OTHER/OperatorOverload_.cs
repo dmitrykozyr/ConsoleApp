@@ -31,7 +31,7 @@ public class OperatorOverload_
         return c1.Value < c2.Value;
     }
 
-    static void Main_()
+    public void Main_()
     {
         var c1 = new OperatorOverload_ { Value = 23 };
         var c2 = new OperatorOverload_ { Value = 45 };

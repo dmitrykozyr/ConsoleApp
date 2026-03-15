@@ -4,7 +4,7 @@ public class Switch_
 {
     public string? MyProperty { get; init; }
 
-    static void Main_()
+    public void Main_()
     {
         object a = "5"; // Тип object 
 

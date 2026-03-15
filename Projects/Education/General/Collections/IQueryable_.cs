@@ -6,7 +6,7 @@ public class IQueryable_
         Работает с коллекциями, которые хранятся в БД
         Строит запросы, которые будут выполнены на стороне БД и вернут только нужные данные
         Улучшает производительность при работе с большими коллекциями
-        Преобразуется в SQL с WHERE - сразу отфильтровывает на сервере:
+        Преобразуется в SQL с WHERE - сразу отфильтровывает данные на стороне БД
 
             IQueryable<Phone> phoneIQuer = db.Phones;
             var phones = phoneIQuer.Where(p => p.Id > id).ToList();
@@ -34,11 +34,14 @@ public class IQueryable_
     {
         using (var context = new MyDbContext())
         {
-            IQueryable<Product> products = context.Products.Where(p => p.Price > 10);
+            IQueryable<Product>? products = context?.Products?.Where(p => p.Price > 10);
 
-            foreach (Product product in products)
+            if (products is not null)
             {
-                Console.WriteLine(product.Name);
+                foreach (Product product in products)
+                {
+                    Console.WriteLine(product.Name);
+                }
             }
         }
     }

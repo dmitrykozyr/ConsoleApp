@@ -2,35 +2,47 @@
 
 public class Cortege_
 {
-    static (int, int) GetValues()
+    public void Main_()
+    {
+        var tuple_1 = (count: 5, sum: 10);
+        var tuple_2 = GetValues();
+        var tuple_3 = GetPersonInfo();
+        var tuple_4 = GetTupleFromDictionary();
+
+        // Можно сразу распаковывать кортеж в отдельные переменные
+        var (number, name_1, year) = GetPersonInfo();
+
+        // Берем только имя
+        var (_, name_2, _) = GetPersonInfo();
+
+        Console.WriteLine($"{tuple_1.count} {tuple_1.sum}");
+        Console.WriteLine($"{tuple_2.Item1} {tuple_2.Item2}");
+        Console.WriteLine($"{tuple_3.number} {tuple_3.name} {tuple_3.year}");
+        Console.WriteLine(tuple_4);
+    }
+
+    public (int, int) GetValues()
     {
         var result = (1, 3);
+
         return result;
     }
 
-    static (int number, string name, int year) F2()
+    public (int number, string name, int year) GetPersonInfo()
     {
-        return (1, "Dima", 1990);
+        return (1, "Joe", 2001);
     }
 
-    static void Main_()
+    public string GetTupleFromDictionary()
     {
-        var tuple = (count: 5, sum: 10);
-        Console.WriteLine(tuple.count + " " + tuple.sum);
+        var tuples = new Dictionary<(int, int), string>
+        {
+            { (1, 2), "string1" },
+            { (3, 4), "string2" }
+        };
 
-        tuple = GetValues();
-        Console.WriteLine(tuple.count + " " + tuple.sum);
+        string result = tuples[(1, 2)];
 
-        var tuple2 = F2();
-        Console.WriteLine(tuple2.number + tuple2.name + tuple2.year);
-
-        var tupleDictionary = new Dictionary<(int, int), string>
-            {
-                { (1, 2), "string1" },
-                { (3, 4), "string2" }
-            };
-
-        var result = tupleDictionary[(1, 2)];
-        Console.WriteLine(result);
+        return result;
     }
 }
