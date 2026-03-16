@@ -21,7 +21,7 @@ public class InterfaceLink_
         }
     }
 
-    static void Main_()
+    public void Main_()
     {
         var objA = new A();
 
