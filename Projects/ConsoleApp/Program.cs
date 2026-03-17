@@ -2,27 +2,13 @@
 {
     //!
     /*
-        Docker:
-        - настроить prod-версию vault
-        - загрузка проекта в Docker Hub
-        - Portainer
-
-        БД:
-        - JSONb, blob
-        - PostgreSQL
-        - EntityFramework
-
-        CI/CD:
-        - build
-        - test
-        - test
-        - deploy
-
+        Docker (настроить prod-версию vault)
+        Docker (загрузка проекта в Docker Hub)
+        Portainer
         CQRS
         gRPC
         SOAP
         MediatR
-
         AutoMapper / Mapster
         FluentValidation
         Балансировщик нагрузки
@@ -34,7 +20,6 @@
         RabbitMQ
         Kubernetes
         Quartz
-        Балансировщик
         Prometheus
         Grafana
         ClickHouse
@@ -43,6 +28,8 @@
         Репозиторий
         Unit of Work
         Идемпотентность
+        PostgreSQL(JSONb, blob, EntityFramework)
+        CI/CD (build, test, test, deploy)
         Паттерн SAGA для распределенных транзакций
         Оркестратор, библиотека MassTransit
     */

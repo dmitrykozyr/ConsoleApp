@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
 using System.Transactions;
 
-namespace Education;
+namespace Education.General.Db;
 
 public class EF_
 {

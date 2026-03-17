@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 
-namespace Education;
+namespace Education.General.Network;
 
 class Network
 {
