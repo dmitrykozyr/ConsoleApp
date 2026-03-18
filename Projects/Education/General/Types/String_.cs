@@ -3,22 +3,28 @@
 public class String_
 {
     // Строки - это ссылочный тип
-
     public void F1()
     {
-        // Интерполяция строк
-        string name = "Alice";
-        int age = 30;
-        string result1 = $"Hello, my name is {name} and I am {age} years old";
+        // Интерполяция
+        string name = "Алиса";
+        string result = $"Я {name}";
 
 
-        // Интернирование строк
-        // Позволяет экономить память и улучшать производительность
-        // Строки с одинаковыми значениями хранятся в одном и том же месте в памяти
-        // Если создаем несколько строк с одинаковым содержимым, они будут ссылаться на один и тот же объект в памяти
-        // При интернировании строки с одинаковыми значениями будут равны не только по содержимому, но и по ссылке
-        string str1 = "Hello";
-        string str2 = "Hello";
-        bool result2 = ReferenceEquals(str1, str2); // true
+
+        // Интернирование
+        // Строки с одинаковыми значениями хранятся в одном месте в памяти
+        // Если создаем несколько строк с одинаковым содержимым - они будут ссылаться на один объект в памяти
+        string str_1 = "111";
+        string str_2 = "111";
+        bool isEquals;
+
+        isEquals = ReferenceEquals(str_1, str_2);
+        Console.WriteLine($"{str_1} {str_2} {isEquals}");
+        // 111 111 True
+
+        str_2 = "222";
+        isEquals = ReferenceEquals(str_1, str_2);
+        Console.WriteLine($"{str_1} {str_2} {isEquals}");
+        // 111 222 False
     }
 }

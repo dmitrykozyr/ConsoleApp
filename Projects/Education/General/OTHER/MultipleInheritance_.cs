@@ -3,42 +3,40 @@
 public class MultipleInheritance_
 {
     // Множественное наследование запрещено, но его можно реализовать через интерфейсы
-    interface IInterface
+    class BaseClass
     {
-        void F2();
+        public void BaseClassMethod() => Console.WriteLine("BaseClassMethod");
     }
 
-    class A
+    interface IPrinter { void Print(); }
+
+    interface IScanner { void Scan(); }
+
+    class Printer : IPrinter
     {
-        public void F1()
-        {
-            Console.WriteLine("F1");
-        }
+        public void Print() => Console.WriteLine("Print");
     }
 
-    class B : IInterface
+    class Scanner : IScanner
     {
-        public void F2()
-        {
-            Console.WriteLine("F2");
-        }
+        public void Scan() => Console.WriteLine("Scan");
     }
 
-    class C : A, IInterface
+    class MultifunctionalDevice : BaseClass, IPrinter, IScanner
     {
-        B objB = new B();
+        private readonly IPrinter _printer = new Printer();
+        private readonly IScanner _scanner = new Scanner();
 
-        public void F2()
-        {
-            objB.F2();
-        }
+        public void Print() => _printer.Print();
+        public void Scan() => _scanner.Scan();
     }
 
-    public void Main_()
+    static void Main_()
     {
-        var objC = new C();
+        var multifunctionalDevice = new MultifunctionalDevice();
 
-        objC.F1();
-        objC.F2();
+        multifunctionalDevice.BaseClassMethod();
+        multifunctionalDevice.Print();
+        multifunctionalDevice.Scan();
     }
 }

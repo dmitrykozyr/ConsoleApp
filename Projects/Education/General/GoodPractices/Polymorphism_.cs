@@ -4,50 +4,28 @@ public class Polymorphism_
 {
     class BaseClass
     {
-        // virtual
-        public virtual void F1()
-        {
-            Console.WriteLine("Вызов базового класса");
-        }
+        public virtual void F1() => Console.WriteLine("Вызов базового класса");
     }
 
-    class DerivedClass_Override : BaseClass
+    class OverrideClass : BaseClass
     {
-        // override
-        public override void F1()
-        {
-            Console.WriteLine("Вызов дочернего класса");
-        }
+        public override void F1() => Console.WriteLine("Вызов override класса");
     }
 
-    class DerivedClass_New : BaseClass
+    class NewClass : BaseClass
     {
-        // new
-        public new void F1()
-        {
-            Console.WriteLine("Вызов дочернего класса");
-        }
+        public new void F1() => Console.WriteLine("Вызов new класса");
     }
 
-    static void Main_()
+    public void Main_()
     {
-        BaseClass obj1 = new BaseClass();
-        obj1.F1();  // Вызов базового класса
+        BaseClass overrideToBase = new OverrideClass();
+        BaseClass newToBase = new NewClass();
 
+        // Выведет: Вызов override класса
+        overrideToBase.F1();
 
-
-        DerivedClass_Override obj2 = new DerivedClass_Override();
-        obj2.F1();  // Вызов дочернего класса
-
-        BaseClass obj3 = new DerivedClass_Override();
-        obj3.F1();  // Вызов дочернего класса
-
-
-
-        DerivedClass_New obj4 = new DerivedClass_New();
-        obj4.F1();  // Вызов дочернего класса
-
-        BaseClass obj5 = new DerivedClass_New();
-        obj5.F1();  // Вызов базового класса
+        // Выведет: Вызов базового класса
+        newToBase.F1();
     }
 }

@@ -21,19 +21,19 @@ public class Cortege_
         Console.WriteLine(tuple_4);
     }
 
-    public (int, int) GetValues()
+    static (int, int) GetValues()
     {
         var result = (1, 3);
 
         return result;
     }
 
-    public (int number, string name, int year) GetPersonInfo()
+    static (int number, string name, int year) GetPersonInfo()
     {
         return (1, "Joe", 2001);
     }
 
-    public string GetTupleFromDictionary()
+    static string GetTupleFromDictionary()
     {
         var tuples = new Dictionary<(int, int), string>
         {
