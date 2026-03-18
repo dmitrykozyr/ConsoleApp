@@ -3,15 +3,11 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "Projects\\API Gateway\\Yarp.Gateway\\Yarp.Gateway.csproj",
+        "Path": "Projects\\MessageBrokers\\Kafka\\Kafka.Producer\\Kafka.Producer.csproj",
         "Action": "Start"
       },
       {
-        "Path": "Projects\\Secrets\\Vault_\\Vault_.csproj",
-        "Action": "Start"
-      },
-      {
-        "Path": "Projects\\API Gateway\\Ocelot.Gateway\\Ocelot.Gateway.csproj",
+        "Path": "Projects\\MessageBrokers\\Kafka\\Kafka_\\Kafka.Consumer\\Kafka.Consumer.csproj",
         "Action": "Start"
       }
     ]
