@@ -201,6 +201,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kafka.Producer", "Projects\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kafka.Consumer", "Projects\MessageBrokers\Kafka\Kafka_\Kafka.Consumer\Kafka.Consumer.csproj", "{B36678F8-C247-446C-9ED9-7AF3E22F85E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dashboards", "Dashboards", "{960A4096-3254-40E8-8571-C5C5CADB27D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PrometeusGrafana", "PrometeusGrafana", "{4165FDA8-4BB2-4838-B6B0-E4C56C45F50E}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Dashboards\PrometeusGrafana\README.txt = Projects\Dashboards\PrometeusGrafana\README.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrometeusGrafana_", "Projects\Dashboards\PrometeusGrafana\PrometeusGrafana_\PrometeusGrafana_.csproj", "{124DADC4-DBA1-49DB-95C5-8B202E7ABCFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -383,6 +392,10 @@ Global
 		{B36678F8-C247-446C-9ED9-7AF3E22F85E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B36678F8-C247-446C-9ED9-7AF3E22F85E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B36678F8-C247-446C-9ED9-7AF3E22F85E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{124DADC4-DBA1-49DB-95C5-8B202E7ABCFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{124DADC4-DBA1-49DB-95C5-8B202E7ABCFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{124DADC4-DBA1-49DB-95C5-8B202E7ABCFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{124DADC4-DBA1-49DB-95C5-8B202E7ABCFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -447,6 +460,8 @@ Global
 		{C98B77C4-682D-411F-95F4-BD97629F30A4} = {A2B0DD06-2A43-4E2E-B276-F301F102F818}
 		{ACC184BA-DD91-43CA-9BC8-45FC2D093DA1} = {812A568E-59FD-4CCC-87AF-926183C8ADF4}
 		{B36678F8-C247-446C-9ED9-7AF3E22F85E7} = {812A568E-59FD-4CCC-87AF-926183C8ADF4}
+		{4165FDA8-4BB2-4838-B6B0-E4C56C45F50E} = {960A4096-3254-40E8-8571-C5C5CADB27D7}
+		{124DADC4-DBA1-49DB-95C5-8B202E7ABCFB} = {4165FDA8-4BB2-4838-B6B0-E4C56C45F50E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C3FE8DB-917F-412C-81A3-E5F87D993B11}

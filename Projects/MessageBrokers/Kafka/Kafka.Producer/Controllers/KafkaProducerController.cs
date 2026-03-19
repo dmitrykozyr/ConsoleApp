@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Kafka.Producer;
+namespace Kafka.Producer.Controllers;
 
 [ApiController]
 [Route("[controller]")]

@@ -1,0 +1,6 @@
+# Загрузка файла
+POST https://localhost:7198/send?message=Hello
+Accept: application/json
+content-type: application/json
+
+###

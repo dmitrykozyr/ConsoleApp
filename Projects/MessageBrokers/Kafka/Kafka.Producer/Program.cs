@@ -5,8 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var producerConfig = new ProducerConfig { BootstrapServers = "localhost:9092" };
 
-var pproducer = new ProducerBuilder<Null, string>(producerConfig).Build();
-builder.Services.AddSingleton(pproducer);
+var producer = new ProducerBuilder<Null, string>(producerConfig).Build();
+
+builder.Services.AddSingleton(producer);
 
 
 var app = builder.Build();

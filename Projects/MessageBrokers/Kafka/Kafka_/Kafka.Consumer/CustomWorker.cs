@@ -10,12 +10,14 @@ public class CustomWorker : BackgroundService
     public CustomWorker(ILogger<CustomWorker> logger)
     {
         _logger = logger;
+
         var config = new ConsumerConfig
         {
-            BootstrapServers = "localhost:9092",
-            GroupId = "my-consumer-group",
-            AutoOffsetReset = AutoOffsetReset.Earliest
+            BootstrapServers    = "localhost:9092",
+            GroupId             = "my-consumer-group",
+            AutoOffsetReset     = AutoOffsetReset.Earliest
         };
+
         _consumer = new ConsumerBuilder<Ignore, string>(config).Build();
     }
 
@@ -33,6 +35,13 @@ public class CustomWorker : BackgroundService
                     var result = _consumer.Consume(stoppingToken);
                     _logger.LogInformation($"ПОЛУЧЕНО: {result.Message.Value}");
                 }
+            }
+            catch (ConsumeException e) when (e.Error.Code == ErrorCode.UnknownTopicOrPart)
+            {
+                _logger.LogWarning("Топик еще не создан. Ожидание...");
+
+                // Даем время продюсеру создать топик
+                Thread.Sleep(2000);
             }
             catch (OperationCanceledException)
             {
