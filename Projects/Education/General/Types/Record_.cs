@@ -5,16 +5,15 @@ public class Record_
     // Ссылочный тип, могут представлять неизменяемый immutable тип
     // Такие типы более безопасны, если данные объекта не должны изменяться
 
-    // Есть
+    // Есть:
     // - record классы, для них слово class можно не писать
     // - record структуры
 
     public record class MyRecordClass_
     {
-        // init делает св-во неизменяемым
-        // set тоже можно использовать, но тогда св-во будет изменяемым
+        // init делает свойство неизменяемым
+        // set тоже можно использовать
         public string Name { get; init; }
-
         public int Age { get; init; }
 
         public MyRecordClass_(string name, int age)
@@ -34,54 +33,54 @@ public class Record_
     {
         public string Name { get; init; }
 
-        public MyRecordStruct_(string name)
-        {
-            Name = name;
-        }
+        public MyRecordStruct_(string name) => Name = name;
     }
 
     public class UserClass
     {
         public string Name { get; init; }
 
-        public UserClass(string name)
-        {
-            Name = name;
-        }
+        public UserClass(string name) => Name = name;
     }
 
     public record UserRecord
     {
         public string Name { get; init; }
 
-        public UserRecord(string name)
-        {
-            Name = name;
-        }
+        public UserRecord(string name) => Name = name;
     }
 
-    // Как и обыччные классы, record-классы могут наследоваться
+    // record-классы могут наследоваться
+    // Под капотом создаются свойства { get; init; }, конструктор и деконструктор
     public record Person(string Name, int Age);
 
     public record Employee(string Name, int Age, string Company)
         : Person(Name, Age);
 
-    static void Main_()
+    public void Main_()
     {
-        // В record св-во с init нельзя изменять
-        var myRecordClass_ = new MyRecordClass_("Tom", 37);
-        //myRecordClass_.Name = "Bob"; // ошибка
+        var myRecordClass = new MyRecordClass_("Tom", 37);
 
-        // records поддерживают инициализацию с помощью оператора with
-        // Он позволяет создать одну record на основе другой
+        // Свойства с init нельзя изменять, тут будет ошибка
+        //myRecordClass_.Name = "Bob";
+
+        // records поддерживают инициализацию с помощью оператора with,
+        // что позволяет создать одну record на основе другой
         var tom = new MyRecordClass_("Tom", 37);
         var sam = tom with { Name = "Sam" };
 
-        // Если хотим скопировать все св-ва - оставляем пустые скобки
-        var joe = tom with { };
+        // Если хотим скопировать все свойства - оставляем пустые скобки
+        var joe = tom with
+        {
+        };
+
+        // class сравнивается по ссылке
+        // record сравнивается по значениям всех полей, поэтому тут будет true
+        var person_1 = new Person("Tom", 37);
+        var person_2 = new Person("Joe", 25);
+        Console.WriteLine(person_1 == person_2);
 
         // Использование премуществ кортжей и деконструктора, определенного выше
-        var person = new MyRecordClass_("Tom", 37);
-        var (personName, personAge) = person;
+        var (personName, personAge) = person_1;
     }
 }

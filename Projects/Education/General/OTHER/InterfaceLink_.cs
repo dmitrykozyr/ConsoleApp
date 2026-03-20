@@ -2,33 +2,40 @@
 
 public class InterfaceLink_
 {
-    // Интерфейсы могут хранить свойства и методы
-    interface IMyInterface
+    // Интерфейсы могут хранить:
+    // - свойства
+    // - методы с определением
+    // - static поля
+    // - static abstract методы
+    public interface IMyInterface
     {
         void F1();
+
+        void F3() => Console.WriteLine("Default F3");
     }
 
-    class A : IMyInterface
+    public class ClassA : IMyInterface
     {
-        public void F1()
-        {
-            Console.WriteLine("F1");
-        }
+        public void F1() => Console.WriteLine("F1");
 
-        public void F2()
-        {
-            Console.WriteLine("F2");
-        }
+        public void F2() => Console.WriteLine("F2");
     }
 
-    public void Main_()
+    public static void Main_()
     {
-        var objA = new A();
+        var classA = new ClassA();
 
-        IMyInterface inter = objA;
+        IMyInterface interfaceLink = classA;
 
-        inter.F1();
+        interfaceLink.F1();
+        //interfaceLink.F2(); // ошибка, в IMyInterface нет такого метода
+        interfaceLink.F3();
 
-        //inter.F2(); // Ошибка
+        // Для вызова F2, имея только ссылку interfaceLink,
+        // нужно проверить тип и привести его обратно
+        if (interfaceLink is ClassA concreteA)
+        {
+            concreteA.F2();
+        }
     }
 }

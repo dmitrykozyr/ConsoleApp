@@ -2,88 +2,67 @@
 
 public class Generics_
 {
-    class A<T>
+    // Т должен содержать метод CompareTo из интерфейса IComparable
+    public class GenericMath<T>
+        where T : IComparable<T>
     {
-        public T x;
-
-        public T param { get; init; }
-
-        public A()
+        public T GetMax(T first, T second)
         {
-        }
+            var result =
+                first.CompareTo(second) > 0
+                    ? first
+                    : second;
 
-        public A(T _x)
-        {
-            x = _x;
-        }
-    }
-
-    class B<T, Z>
-    {
-        public T x;
-
-        public Z y;
-
-        public T param1 { get; init; }
-
-        public Z param2 { get; init; }
-
-        public B(T _x, Z _y)
-        {
-            x = _x;
-            y = _y;
+            return result;
         }
     }
 
-    class C<T> : A<T>
+    // T должен быть классом с пустым конструктором
+    public class DataProcessor<T>
+        where T : class, new()
     {
-        T x;
-        public C(T _x) : base(_x)
+        public void Process(T item, Action<T> action)
         {
-            x = _x;
+            Console.WriteLine($"Обработка объекта типа: {typeof(T).Name}");
+
+            // Вызываем делегат
+            action(item);
+        }
+
+        public TResult ConvertTo<TResult>(T item, Func<T, TResult> converter)
+        {
+            return converter(item);
         }
     }
 
-    // where означает, что тип T может быть только типа C, либо быть любым его наследником
-    // where T : new() - у класса должен быть публичный конструктор без параметров
-    class D<T, Z> where T : A<int>
-                  where Z : new()
+    public class User
     {
-        public T x;
-
-        public Z y;
-
-        public T param1 { get; init; }
-
-        public Z param2 { get; init; }
-
-        public D(T _x, Z _y)
-        {
-            x = _x;
-            y = _y;
-        }
-
-        public T F1()
-        {
-            return x; // шаблонный тип можно возвращать
-        }
+        public string Name { get; set; } = "";
     }
 
-    delegate R Del<R, T>(T val);
-
-    static int Displ(int val)
+    public class Program
     {
-        Console.WriteLine(val);
+        public static void Main_()
+        {
+            var senericMath_int = new GenericMath<int>();
+            var genericMath_str = new GenericMath<string>();
 
-        return 0;
-    }
+            var maxInt = senericMath_int.GetMax(10, 25);
+            var maxStr = genericMath_str.GetMax("Apple", "Zebra");
 
-    static void Main_()
-    {
-        var del = new Del<int, int>(Displ);
-        del(1);
 
-        var a1 = new A<int>(5);
-        var a2 = new B<bool, string>(true, "false");
+            var processor = new DataProcessor<User>();
+            var user = new User { Name = "Alice" };
+
+            processor.Process(user, u =>
+            {
+                Console.WriteLine($"Hello, {u.Name}");
+            });
+
+            processor.ConvertTo(user, u =>
+            {
+                return u.Name.ToUpper();
+            });
+        }
     }
 }

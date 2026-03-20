@@ -2,19 +2,33 @@
 
 public class Struct_
 {
-    struct Structure_
+    public struct Structure_
     {
         // Могут наследоваться только от интерфейса
         // Их нельзя наследовать
         // Могут быть readonly, но все поля тоже должны быть readonly
 
-        public string name;
         public int age;
+        public string name;
 
-        // Ошибка - нельзя инициализировать поля при объявлении
-        //public string gender = "Male";
+        // Можно инициализировать поля при объявлении
+        public string gender = "Male";
 
-        // Если определяем конструктор - он должен инициализировать все поля
+        // Можно создать свой конструктор без параметров
+        public Structure_()
+        {
+            name = "Unknown";
+            age = 0;
+        }
+
+        // Конструктор больше не обязан инициализировать все поля вручную
+        // Неуказанные поля получат значения по умолчанию
+        public Structure_(string name)
+        {
+            this.name = name;
+            // age и gender инициализируются автоматически (0 и "Male")
+        }
+
         public Structure_(string name, int age)
         {
             this.name = name;
@@ -23,23 +37,25 @@ public class Struct_
 
         public void DisplayInfo()
         {
-            Console.WriteLine($"Name: {name} Age: {age}");
+            Console.WriteLine($"Name: {name} Age: {age} Gender: {gender}");
         }
     }
 
-    static void Main_()
+    public void Main_()
     {
-        Structure_ tom;     // Необязательно вызывать конструктор для создания объекта
-                            // Надо проинициализировать все поля перед получением их значений 
-        tom.name = "Tom";
+        Structure_ tom;
+
         tom.age = 34;
+        tom.name = "Tom";
+        tom.gender = "Male";
+
         tom.DisplayInfo();
 
         var john = new Structure_("John", 37);
         john.DisplayInfo();
 
-        var bob = new Structure_();  // Можем использовать конструктор без параметров, при вызове
-                                     // которого полям будет присвоено значение по умолчанию
+        // Теперь вызовется наш кастомный конструктор без параметров
+        var bob = new Structure_();
         bob.DisplayInfo();
     }
 }

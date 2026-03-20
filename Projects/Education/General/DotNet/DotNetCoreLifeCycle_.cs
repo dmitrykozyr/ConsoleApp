@@ -2,7 +2,7 @@
 
 public class DotNetCoreLifeCycle_
 {
-    /*        
+    /*
         Жизненный цикл .Net Core приложения
 
         - Создание нового проекта с помощью шаблонов .NET Core (например, через команду dotnet new)

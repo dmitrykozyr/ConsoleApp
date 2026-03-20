@@ -20,28 +20,33 @@ public class Events_
         3. Метод OnClick генерирует событие Clicked, если на него есть подписчики
         4. В методе Main создаем экземпляр Button, подписываемся на событие Clicked и указываем метод-обработчик Button_Clicked
         5. Метод Button_Clicked вызывается, когда происходит событие Clicked
+
+        Если подписался на событие (+=),
+        то когда объект больше не нужен,
+        от него стоит отписаться (-=),
+        иначе сборщик мусора (GC) не сможет удалить объект из памяти
     */
 
     public class Button
     {
-        public delegate void ClickEventHandler(object sender, EventArgs e);
-
-        public event ClickEventHandler? Clicked;
+        // В место создания своего делегата можно создать EventHandler:
+        //public delegate void ClickEventHandler(object sender, EventArgs e);
+        //public event ClickEventHandler? Clicked;
+        public event EventHandler? Clicked;
 
         public void OnClick()
         {
-            // Проверяем, есть ли подписчики на событие
-            if (Clicked is not null)
-            {
-                // Генерируем событие
-                Clicked(this, EventArgs.Empty);
-            }
+            // Генерируем событие, если на него есть подписчики
+            // Проверка на null через ? безопаснее в многопоточной среде,
+            // т.к. защищает от ситуации,
+            // когда подписчик отписался ровно в момент между проверкой на null и вызовом
+            Clicked?.Invoke(this, EventArgs.Empty);
         }
     }
 
     public class Program
     {
-        static void Main_()
+        public static void Main_()
         {
             var button = new Button();
 
@@ -52,6 +57,10 @@ public class Events_
             button.OnClick();
         }
 
+        // sender позволяет одному обработчику обслуживать сразу 10 кнопок и понимать,
+        // какая именно была нажата
+        // EventArgs - позволяет передать данные,
+        // для этого создаю класс MouseEventArgs : EventArgs и кладу данные туда
         private static void Button_Clicked(object sender, EventArgs e)
         {
             Console.WriteLine("Кнопка была нажата!");

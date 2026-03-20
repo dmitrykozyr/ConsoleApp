@@ -2,25 +2,23 @@
 
 public class Equals_
 {
-    /*
-        Позволяет определить, равны-ли два объекта по содержимому, а не по адресу в памяти
-        По умолчанию сравнивает ссылки объектов
-        Но можно переопределить, чтобы сравнивать объекты по значению их полей
-    */
-
+    // Позволяет определить, равны-ли два объекта по содержимому, а не по адресу в памяти
+    // По умолчанию сравнивает ссылки объектов
+    // Но можно переопределить, чтобы сравнивать объекты по значению их полей
     public record RecordA(int Value, string Value2);
 
     public class Person
     {
-        // Оба числа 1 приводятся к типу object, и сравниваются как ссылки
+        // Происходит упаковка и оба числа приводятся к типу object, после чего сравниваются как ссылки
         // false
         bool a = (object)1 == (object)1;
 
-        // Метод Equals сравнивает значения, а не ссылки
+        // Метод Equals сравнивает значимые типы по значению
         // true
         bool b = 1.Equals(1);
 
         // Благодаря интернированию строк, это один и тот-же участок в памяти
+        // Но если строка будет собрана динамически, например, через StringBuilder, ссылки могут стать разными
         // true
         bool c = (object)"1" == (object)"1";
 
@@ -43,6 +41,8 @@ public class Equals_
             return false;
         }
 
+        // Если переопределить Equals, но не трогать GetHashCode,
+        // объекты будут некорректно работать в Dictionary или HashSet
         public override int GetHashCode()
         {
             return HashCode.Combine(Name, Age);
@@ -51,7 +51,7 @@ public class Equals_
 
     public class Program
     {
-        public void Main_()
+        static void Main_()
         {
             var person1 = new Person { Name = "Alice", Age = 30 };
             var person2 = new Person { Name = "Alice", Age = 30 };

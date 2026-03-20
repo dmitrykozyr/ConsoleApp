@@ -45,11 +45,11 @@ public class ApplicantService : IApplicantService
             };
 
             result.UserMessage = string.Format("Your child {0} was registered successfully", name);
-            
+
             result.InternalMessage = "LOGIC.Services.Implementation.Applicant_Service: AddSingleApplicant() method executed successfully";
-            
+
             result.ResultSet = applicantAdded;
-           
+
             result.Success = true;
         }
         catch (Exception ex)
@@ -89,9 +89,9 @@ public class ApplicantService : IApplicantService
         }
         catch (Exception ex)
         {
-            result.Exception = ex;            
+            result.Exception = ex;
 
-            result.UserMessage      = string.Format("Failed to get applicant");            
+            result.UserMessage      = string.Format("Failed to get applicant");
             result.InternalMessage  = string.Format("ERROR: LOGIC.Services.Implementation.Applicant_Service: GetApplicantById(): {0}", ex.Message);
         }
 
@@ -141,8 +141,8 @@ public class ApplicantService : IApplicantService
         }
         catch (Exception ex)
         {
-            result.Exception = ex;            
-            result.UserMessage      = string.Format("Failed to update applicant");            
+            result.Exception = ex;
+            result.UserMessage      = string.Format("Failed to update applicant");
             result.InternalMessage  = string.Format("ERROR: LOGIC.Services.Implementation.Applicant_Service: UpdateApplicant(): {0}", ex.Message);
         }
 

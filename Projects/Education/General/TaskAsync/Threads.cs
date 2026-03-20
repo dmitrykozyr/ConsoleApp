@@ -63,30 +63,7 @@ public class Threads
 
     static readonly bool stop;
 
-    static void Main_()
-    {
-        //General_();
-        //Join_();
-        //BreakThread_();
-        //ThreadPriorities_();
-        //ThreadPool_();
-        //SecondaryThreads_();
-        //Volatile_();
-        //AccessStaticVariables_();
-        //Lock_();
-        //Mutex_();
-        //Semaphore_();
-        //AutoResetEvent_();
-        //ManualResetEvent_();
-        //CountdownEvent_();
-        //RegisteredWaitHandle_();
-        //EventWaitHandle_();
-        //SendArgumentToThread_();
-        //SendSeveralArgumentsToThreadNotSequre_();
-        //SendSeveralArgumentsToThreadSequre_();
-    }
-
-    static void General_()
+    public static void General_()
     {
         /*
             Каждому потоку выделяется квант времени
@@ -128,7 +105,7 @@ public class Threads
         Console.WriteLine("ThreadState " + Thread.CurrentThread.ThreadState);
     }
 
-    static void Interrupt_()
+    public static void Interrupt_()
     {
         static void F1()
         {
@@ -152,7 +129,7 @@ public class Threads
         Console.WriteLine("End" + Environment.CurrentManagedThreadId);
     }
 
-    static void Priorities_()
+    public static void Priorities_()
     {
         /*
             Приоритеты потоков, располагаются в перечислении ThreadPriority:
@@ -194,7 +171,7 @@ public class Threads
         }
     }
 
-    static void Pool_()
+    public static void Pool_()
     {
         void F1()
         {
@@ -241,7 +218,7 @@ public class Threads
         Console.WriteLine("Конец");
     }
 
-    static void ForegroundBackground_()
+    public static void ForegroundBackground_()
     {
         // Есть два варианта работы вторичных потоков:
         // - Foreground - будет работать после завершения первичного потока (по умолчанию)
@@ -264,7 +241,7 @@ public class Threads
         thread.Start();
     }
 
-    static void Join_()
+    public static void Join_()
     {
         // Заставляет первичный поток ждать завершения вторичного
         // С Join будет: 1 2 3
@@ -292,7 +269,7 @@ public class Threads
     [ThreadStatic]
     static int counter = 0;
 
-    static void AccessStaticVariables_()
+    public static void AccessStaticVariables_()
     {
         static void F1()
         {
@@ -321,7 +298,7 @@ public class Threads
         Console.WriteLine("Конец " + Environment.CurrentManagedThreadId);
     }
 
-    static void Interlocked_()
+    public static void Interlocked_()
     {
         var count_1 = 0;
         var count_2 = 0;
@@ -350,7 +327,7 @@ public class Threads
 
     private static int count = 0;
     private static readonly object lockObject = new();
-    static void Monitor_()
+    public static void Monitor_()
     {
         /*
             Создадим класс Counter, который будет инкрементировать счетчик из нескольких потоков
@@ -417,10 +394,10 @@ public class Threads
 
     }
 
-    static void Lock_()
+    public static void Lock_()
     {
         // Внутри lock может одновременно работать один поток
-        // locker - это пустой объект-заглушка типа object        
+        // locker - это пустой объект-заглушка типа object
         // Внутри lock нельзя вызывать await, т.к. возможна ситуация, что объект синхронизации берется одним потоком, а отпускается другим
         // Может привести к deadlock
 
@@ -454,7 +431,7 @@ public class Threads
         Console.WriteLine("Отпускаем рабочий поток");
     }
 
-    static void Deadlock_()
+    public static void Deadlock_()
     {
         // Дедлок произойдет, если
         // - сначала вызовем Method1()
@@ -491,7 +468,7 @@ public class Threads
 
     private static readonly Semaphore semaphore = new(2, 2);
     private static readonly SemaphoreSlim semaphoreSlim = new(2, 2);
-    static void Semaphore_()
+    public static void Semaphore_()
     {
         /*            
             Позволяет ограничить количество потоков, имеющих доступ к ресурсу путем создания счетчика, который:
@@ -570,7 +547,7 @@ public class Threads
         }
     }
 
-    static void Mutex_()
+    public static void Mutex_()
     {
         // Позволяет блокировать доступ к ресурсу не только в пределах одного процесса, но и между процессами
         // Создает объект блокировки, который одновременно может быть захвачен только одним потоком
