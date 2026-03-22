@@ -2,36 +2,43 @@
 {
     //!
     /*
-        Docker (настроить prod-версию vault)
-        Docker (загрузка проекта в Docker Hub)
-        Portainer
         CQRS
         gRPC
         SOAP
         MediatR
-        AutoMapper / Mapster
+        Mapster
         FluentValidation
-        Балансировщик нагрузки
         Асинхронность
         Многопоточность
-        Redis (UI в DataGrip)
-        MSSQL (UI в DataGrip)
-        Kafka
-        RabbitMQ
-        Kubernetes
         Quartz
+        Unit of Work
+        Паттерн SAGA для распределенных транзакций
+
+        Логи:
         Prometheus
         Grafana
-        ClickHouse
-        Serilog logging
         Elastic log
+        Serilog logging
+
+        БД:
+        ClickHouse
         Репозиторий
-        Unit of Work
         Идемпотентность
+        MSSQL (UI в DataGrip)
         PostgreSQL(JSONb, blob, EntityFramework)
+
         CI/CD (build, test, test, deploy)
-        Паттерн SAGA для распределенных транзакций
+        Балансировщик нагрузки
+
+        Нужен Docker:
+        Kafka
+        RabbitMQ
+        Portainer
+        Kubernetes
+        Redis (UI в DataGrip)
         Оркестратор, библиотека MassTransit
+        Docker (настроить prod-версию vault)
+        Docker (загрузка проекта в Docker Hub)
 
         Заменить throw new Exception(ex.Message) на throw new Exception("Сообщение об ошибке ", ex)
         Передача токена отмены во все асинхронные методы БД

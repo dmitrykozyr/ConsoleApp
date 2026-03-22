@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SQL\MSSQL\" />
     <Folder Include="SQL\PostgreSQL\" />
   </ItemGroup>
 

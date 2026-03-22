@@ -1,4 +1,19 @@
-﻿CREATE
+﻿Типы
+
+	integer
+	integer[]
+	bigint
+	varchar(1200)
+	text
+	timestamp
+	date
+	boolean
+	uuid
+	jsonb		 
+
+
+
+CREATE
 
 	CREATE DATABASE EduDb
 
