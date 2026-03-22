@@ -1,0 +1,17 @@
+﻿Представления используют для отображения данных
+
+	CREATE OR REPLACE VIEW loyalty.report_view AS
+	SELECT
+		c."ID_CR", c."IssueDate",
+		parent.abs_code AS Abs_Parent,
+		friend."sLastName" AS Lastname_Friend
+	FROM
+		loyalty.card_orders AS c
+		INNER JOIN loyalty.client AS parent
+			ON c."GUID" = parent.giud
+		LEFT JOIN loyalty.client AS friend
+			ON c."ABS_Code" = friend.abs_code
+
+		WHERE c."ID" > 2
+	GO
+	SELECT * FROM ShowProducts

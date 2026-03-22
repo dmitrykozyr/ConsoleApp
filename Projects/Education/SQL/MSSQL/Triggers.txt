@@ -1,0 +1,121 @@
+﻿// Триггер на insert в таблицу OrderDetails
+begin
+	create trigger trMatchingCtocksOnInsert
+
+
+	on dbo.OrderDetails for insert
+	as
+		// rowcount показыает, сколько строк мы собираемся вставить
+		if @@ROWCOUNT = 0
+			return
+
+		// Отключаем сообщения о числе обработанных записей, увеличивая производительность
+		set nocount on
+
+		// inserted - служебная таблица с вставляемыми данными
+		update Stocks set Qty = s.Qty - i.Qty
+
+
+		from Stocks s join (select ProductID, sum(Qty) Qty from inserted group by ProductID) i
+		on s.ProductID = i.ProductID
+
+// Триггер на delete
+create trigger trMatchingStocksOnDelete
+
+
+on OrderDetails for delete
+as
+	if @@ROWCOUNT = 0
+		return
+	set nocount on
+
+	// Служебная таблица deleted хранит записи, которые будут удалены
+	update Stocks set Qty = s.Qty + d.Qty
+
+	from Stocks s join(select ProductID, sum(Qty) Qty from deleted group by ProductID) d
+	on s.ProductID = d.ProductID
+go
+
+// Триггер на update
+create trigger trMatchingStocksOnUpdate
+on OrderDetails for update
+as
+if @@ROWCOUNT = 0
+	return
+
+// Если не обновляем поле Qty, то выходим из триггера
+if not UPDATE(Qty)
+	return
+
+set nocount on
+
+update Stocks set Qty = s.Qty - (i.Qty - d.Qty)
+from Stocks s
+join(select ProductID, sum(Qty) Qty from deleted group by ProductID) d
+		on s.ProductID = d.ProductID
+join(select ProductID, sum(Qty) Qty from inserted group by ProductID) i
+		on s.ProductID = i.ProductID
+go
+
+// Триггер на insert, delete, update
+create trigger trMatchingStocks
+on OrderDetails
+for insert, delete, update
+as
+if @@ROWCOUNT = 0
+	return
+set nocount on
+
+// Если в таблицах exists и deleted есть данные, то происходит update
+// Указываем 1 для увеличения производительности, т.к. это просто проверка, есть-ли в этих таблицах строки
+if exists(select 1 from inserted) and exists(select 1 from deleted)
+
+
+	begin
+		if not UPDATE(Qty)
+			return
+		update..end
+// Если в inserted нет записей, а в deleted есть, то происходит удаление
+else if not exists(select 1 from inserted) and exists(select 1 from deleted)
+
+
+	begin
+		delete..
+	end
+// Если в inserted есть записи, а в deleted нет, то происходит insert
+else if exists (select 1 from inserted) and not exists(select 1 from deleted)
+
+
+	begin
+		insert..
+	end
+
+
+go
+
+// Если перед удалением записей из таблицы Products нужно проверить, можно-ли удалять, используем instead of delete
+create trigger trAllowDeleteProdut
+
+
+on Products
+
+
+instead of delete
+as
+
+
+begin
+	// Если в OrderDetails есть хоть одна запись, отменяем удаление
+	if exists (select 1 from OrderDetails od
+				join deleted d
+
+
+				on od.ProductID = d.ID)
+
+
+		raiserror('Товар не может быть удален', 10, 1)
+	// Если записей нет, выполняем удаление
+	else
+		delete Products where ID in (select ID from deleted)
+end
+go

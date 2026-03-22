@@ -1,0 +1,29 @@
+﻿USE[имя БД] // После создания БД можно установить ее в качестве текущей
+GO              // Разделяет отдельные наборы команд на пакеты
+
+
+BEGIN END       // Можно использовать в начале и конце хранимой процедуры
+
+
+// Вместо procedure можно писать proc
+// Если вместо create написать alter, можно изменить процедуру
+create or alter procedure spProcedure1
+as
+	select* from Edu.dbo.People
+go
+
+
+// Процедуры могут принимать параметры, но не возвращают значения
+// Параметру можно задать дефолтное значение, тогда его можно не передавать
+create or alter proc spProcedure2
+	@var1 int = 0
+as
+	select* from dbo.People
+	where Id > @var1
+go
+
+
+// Вызов процедур
+execute spProcedure1
+
+exec spProcedure2 @var1= 1

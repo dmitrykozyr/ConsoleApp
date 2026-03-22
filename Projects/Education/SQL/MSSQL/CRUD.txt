@@ -1,0 +1,99 @@
+﻿CREATE
+
+	CREATE DATABASE EduDb
+
+	CREATE TABLE IF NOT EXISTS schema_name.Table1
+	(
+		id			bigint generated always as identity
+					primary key,
+		name		varchar(50),
+		condition	integer         not null,
+		passport	varchar(10),
+		number		varchar(10),
+		birth		date,
+		unique      key(passport, number),	// поля passport и number в сочетании должны быть уникальными
+		unique key(birth),					// поле birth должно быть уникальным независимо от других полей
+		index		index1(number)          // добавление индекса для поля number для ускорения поиска по нему
+	);
+
+
+SELECT
+
+		SELECT TOP(3) [Name], Note
+		FROM Edu.dbo.People
+
+		// Если вложенный запрос возвращает более 1 результата, знак '=' заменить на 'IN'
+		SELECT*
+		FROM Products
+		WHERE Price = (SELECT MAX(Price) FROM Products)
+
+		// WHERE фильтрует строки на основе условий, указанных в WHERE
+		// HAVING фильтрует сгруппированыме по определенным столбцам строки на основе агрегатных функций COUNT, SUM, AVG
+		// Найдем клиентов с суммой заказов > 1000р
+		// Группируем и вычисляем сумму функцией SUM
+		// HAVING отфильтровывает группы строк, у которых сумма заказов > 1000р
+		SELECT customer_id, SUM(quantity * price) AS total_spent
+		FROM orders
+		GROUP BY customer_id
+		HAVING total_spent > 1000;
+
+		// SWITCH
+		SELECT
+			CASE
+				WHEN condition_1 THEN result_1
+				WHEN condition_2 THEN result_2
+				ELSE retult_3
+			END
+		FROM Products
+
+		// UNION
+		// Отображает данные из двух одинаковых таблиц
+		SELECT* FROM People
+		UNION
+		SELECT* FROM People2
+
+		SELECT Name, Note, 'Table 1' as Tbl FROM People // Чтобы UNION отобразил данные из таблиц с разным числом столбцов,
+		UNION                                           // нужно указать одинаковые столбцы
+		SELECT Name, Note, 'Table 2' FROM People2
+
+
+ИЗМЕНЕНИЕ
+
+	// ALTER добавляет/удаляет/измененяет столбцы и ограничения в таблице
+
+	// Добавить столбец
+		ALTER TABLE TestTable
+		ADD newColumn nvarchar(20)
+
+		// Удалить столбец
+		ALTER TABLE TestTable
+		DROP COLUMN newColumn
+
+		// Изменить тип данных столбца
+		ALTER TABLE TestTable
+		ALTER COLUMN newColumn VARCHAR
+
+		// Добавить столбец с ограничением
+		ALTER TABLE Products
+		ADD price decimal CONSTRAINT checkPrice check(price >= 0)
+
+		// Добавить данные
+		INSERT INTO Edu.dbo.People(Id, Name, Note) VALUES
+			(4, 'Dude4', 'Amazing4'),
+			(5, 'Dude5', 'Amazing5'),
+			(6, 'Dude6', 'Amazing6');
+
+		// Обновить данные
+		UPDATE Edu.dbo.People
+		SET Name = 'Dima3', Note = 'Note3'
+		WHERE id = 1;
+
+
+УДАЛЕНИЕ
+
+	DROP DATABASE[Имя БД]
+	DROP TABLE[Имя таблицы]
+	TRUNCATE TABLE[Имя таблицы] // Очистить таблицу
+	DELETE FROM[Имя таблицы]        // Если нет WHERE, то работает аналогично TRUNCATE, возвращает число удаленных строк
+	DELETE FROM Edu.dbo.People WHERE Id = 4;
+	DROP INDEX index1 ON dbo.Table1

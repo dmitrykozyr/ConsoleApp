@@ -1,0 +1,47 @@
+﻿JOIN (INNER JOIN)
+
+	Совпадения из обеих таблиц
+
+		SELECT Name, Title
+		FROM Authors a
+		JOIN Books b
+		ON a.Id = b.AuthorId
+
+
+LEFT JOIN (LEFT OUTER JOIN)
+
+	Все из левой и совпадения из правой
+
+		SELECT Name, Title
+		FROM Authors a
+		LEFT JOIN Books b
+		ON a.Id = b.AuthorId
+
+
+RIGHT JOIN (RIGHT OUTER JOIN)
+
+	Все из правой и совпадения из левой
+
+		SELECT Name, Title
+		FROM Authors a
+		RIGHT JOIN Books b
+		ON a.Id = b.AuthorId
+
+
+FULL JOIN (FULL OUTER JOIN)
+
+	Все записи из обеих таблиц
+
+		SELECT Name, Title
+		FROM Authors a
+		FULL JOIN Books b
+		ON a.Id = b.AuthorId
+
+
+CROSS JOIN
+
+	Для каждой записи из 1й таблицы подставим все записи из 2й
+
+		SELECT Name, Title
+		FROM Authors
+		CROSS JOIN Books

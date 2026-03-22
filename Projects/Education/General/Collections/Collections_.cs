@@ -4,7 +4,7 @@ namespace Education.General.Collections;
 
 public class Collections_
 {
-    public void Main_()
+    public static void Main()
     {
         // List
 

@@ -123,6 +123,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gRPC", "gRPC", "{E223DDEE-7
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Timer", "Timer", "{50BA77A4-4073-48DA-B035-964A73484E1E}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Timer\README.txt = Projects\Timer\README.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timer.Presentation", "Projects\Timer\Timer.Presentation\Timer.Presentation.csproj", "{930D9AA3-DFAE-40AA-8302-4EECA8176D6E}"
 EndProject
