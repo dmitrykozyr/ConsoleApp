@@ -16,7 +16,7 @@ Grafana выводит их в UI
 	  volumes:
 		- ./prometheus.yml:/etc/prometheus/prometheus.yml
 
-	   grafana:
+	  grafana:
 	  image: grafana/grafana
 	  ports:
 		- "3000:3000" # Grafana будет доступна тут
