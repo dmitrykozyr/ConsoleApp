@@ -38,5 +38,30 @@ public class AbstractStatic_
         public abstract void F3();
     }
 
-    //!class Abstract
+    class AbstractStatic : B
+    {
+        string name = "";
+
+        public override string Name
+        {
+            get { return "Mr/Ms. " + name; }
+
+            set { name = value; }
+        }
+
+        public void Main_()
+        {
+            A.F1();
+
+            B objB = new AbstractStatic();
+
+            objB.F2();
+            objB.F3();
+        }
+
+        public override void F3()
+        {
+            Console.WriteLine("Program");
+        }
+    }
 }
