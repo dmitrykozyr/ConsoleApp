@@ -1,9 +1,28 @@
-﻿namespace EventSourcing.Presentation.Extensions;
+﻿using EventSourcing.Application.Commands.DepositMoney;
+using EventSourcing.Application.Commands.WithdrawMoney;
+using EventSourcing.Application.Queries.GetBalance;
+using EventSourcing.Domain.Interfaces;
+using EventSourcing.Infrastructure.EventStore;
+using EventSourcing.Infrastructure.Repositories;
+using EventSourcing.Infrastructure.Serialization;
+
+namespace EventSourcing.Presentation.Extensions;
 
 public static class ServicesExtensions
 {
-    public static void AddServicesExtensions(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddServicesExtensions(this IServiceCollection services, IConfiguration configuration)
     {
-        //serviceCollection.AddScoped<>();
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is missing.");
+
+        services.AddSingleton<EventSerializer>();
+        services.AddSingleton<IEventStore>(_ => new PostgresEventStore(connectionString));
+        services.AddScoped<PostgresEventStore>(sp => (PostgresEventStore)sp.GetRequiredService<IEventStore>());
+        services.AddScoped<IAggregateRepository, EventSourcedRepository>();
+        services.AddScoped<DepositMoneyHandler>();
+        services.AddScoped<WithdrawMoneyHandler>();
+        services.AddScoped<GetBalanceHandler>();
+
+        return services;
     }
 }

@@ -230,6 +230,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CQRS", "CQRS", "{D3118E00-754F-4955-A10F-C1560A449CD7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventSourcing", "EventSourcing", "{8A90DB92-FFB0-483B-8A90-A867F2B7931C}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Architectures\EventSourcing\README.txt = Projects\Architectures\EventSourcing\README.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Layered", "Layered", "{4BCC10BE-48D0-4981-A0E0-A829C35B36F3}"
 EndProject
