@@ -31,11 +31,11 @@ public sealed class EventSerializer
     {
         if (!TypeByName.TryGetValue(typeName, out var type))
         {
-            throw new NotSupportedException($"Unknown event type: {typeName}");
+            throw new NotSupportedException($"Неизвестный тип события: {typeName}");
         }
 
         var result = JsonSerializer.Deserialize(json, type, JsonOptions)
-            ?? throw new InvalidOperationException("Failed to deserialize event");
+            ?? throw new InvalidOperationException("Ошибка десериализации события");
 
         return result;
     }

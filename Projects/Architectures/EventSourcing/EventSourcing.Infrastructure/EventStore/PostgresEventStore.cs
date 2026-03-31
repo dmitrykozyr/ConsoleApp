@@ -10,7 +10,8 @@ public sealed class PostgresEventStore : IEventStore
 
     public PostgresEventStore(string connectionString)
     {
-        _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+        _connectionString = connectionString ??
+            throw new ArgumentNullException(nameof(connectionString));
     }
 
     public async Task AppendAsync(Guid aggregateId, IReadOnlyList<PersistedEvent> events, CancellationToken cancellationToken = default)
@@ -60,7 +61,6 @@ public sealed class PostgresEventStore : IEventStore
         while (await reader.ReadAsync(cancellationToken))
         {
             var type = reader.GetString(0);
-
             var data = reader.GetString(1);
 
             result.Add(new PersistedEvent(type, data));

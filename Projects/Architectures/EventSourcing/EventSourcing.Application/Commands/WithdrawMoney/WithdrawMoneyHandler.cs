@@ -7,7 +7,7 @@ public sealed class WithdrawMoneyHandler(IAggregateRepository accounts)
     public async Task HandleAsync(WithdrawMoneyCommand command, CancellationToken cancellationToken = default)
     {
         var account = await accounts.GetAsync(command.accountId, cancellationToken)
-            ?? throw new InvalidOperationException("Account not found.");
+            ?? throw new InvalidOperationException("Аккаунт не найден");
 
         account.Withdraw(command.amount);
 

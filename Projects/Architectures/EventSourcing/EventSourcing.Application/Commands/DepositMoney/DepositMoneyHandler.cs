@@ -18,7 +18,6 @@ public sealed class DepositMoneyHandler(IAggregateRepository accounts)
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.ToString());
         }
     }

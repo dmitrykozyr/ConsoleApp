@@ -16,7 +16,7 @@ public class BankAccount
     {
         if (id == Guid.Empty)
         {
-            throw new ArgumentException("Account id required.", nameof(id));
+            throw new ArgumentException("Введите Id аккаунта", nameof(id));
         }
 
         return new BankAccount { Id = id };
@@ -34,14 +34,26 @@ public class BankAccount
     {
         switch (@event)
         {
-            case MoneyDeposited d:
-                if (Id == Guid.Empty) Id = d.accountId;
-                Balance += d.amount;
-                break;
-            case MoneyWithdrawn w:
-                if (Id == Guid.Empty) Id = w.accountId;
-                Balance -= w.amount;
-                break;
+            case MoneyDeposited deposited:
+                {
+                    if (Id == Guid.Empty)
+                    {
+                        Id = deposited.accountId;
+                    }
+
+                    Balance += deposited.amount;
+                    break;
+                }
+            case MoneyWithdrawn withdrawn:
+                {
+                    if (Id == Guid.Empty)
+                    {
+                        Id = withdrawn.accountId;
+                    }
+
+                    Balance -= withdrawn.amount;
+                    break;
+                }
         }
     }
 
@@ -53,7 +65,9 @@ public class BankAccount
         }
 
         var e = new MoneyDeposited(Id, amount);
+
         Apply(e);
+
         _uncommitted.Add(e);
     }
 
@@ -66,7 +80,7 @@ public class BankAccount
 
         if (amount > Balance)
         {
-            throw new InvalidOperationException("Insufficient funds.");
+            throw new InvalidOperationException("Недостаток средств");
         }
 
         var e = new MoneyWithdrawn(Id, amount);

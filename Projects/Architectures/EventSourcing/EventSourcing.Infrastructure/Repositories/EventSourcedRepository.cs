@@ -24,6 +24,7 @@ public sealed class EventSourcedRepository(PostgresEventStore store, EventSerial
 
         return account;
     }
+
     public async Task SaveAsync(BankAccount account, CancellationToken cancellationToken = default)
     {
         var pending = account.UncommittedEvents.ToList();
