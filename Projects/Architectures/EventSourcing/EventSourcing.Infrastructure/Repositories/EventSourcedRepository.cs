@@ -1,11 +1,10 @@
 ﻿using EventSourcing.Domain.Aggregates;
 using EventSourcing.Domain.Interfaces;
-using EventSourcing.Infrastructure.EventStore;
 using EventSourcing.Infrastructure.Serialization;
 
 namespace EventSourcing.Infrastructure.Repositories;
 
-public sealed class EventSourcedRepository(PostgresEventStore store, EventSerializer serializer) : IAggregateRepository
+public sealed class EventSourcedRepository(IEventStore store, EventSerializer serializer) : IAggregateRepository
 {
     public async Task<BankAccount?> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {

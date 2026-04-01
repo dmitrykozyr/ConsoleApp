@@ -16,9 +16,16 @@ public sealed class PostgresEventStore : IEventStore
 
     public async Task AppendAsync(Guid aggregateId, IReadOnlyList<PersistedEvent> events, CancellationToken cancellationToken = default)
     {
+        if (events.Count == 0)
+        {
+            return;
+        }
+
         await using var connection = new NpgsqlConnection(_connectionString);
 
         await connection.OpenAsync(cancellationToken);
+
+        await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
 
         const string sql = """
             INSERT INTO events (aggregate_id, event_type, event_data)
@@ -27,7 +34,7 @@ public sealed class PostgresEventStore : IEventStore
 
         foreach (var e in events)
         {
-            await using var cmd = new NpgsqlCommand(sql, connection);
+            await using var cmd = new NpgsqlCommand(sql, connection, transaction);
 
             cmd.Parameters.AddWithValue("aggregate_id", aggregateId);
             cmd.Parameters.AddWithValue("event_type", e.EventType);
@@ -35,6 +42,8 @@ public sealed class PostgresEventStore : IEventStore
 
             await cmd.ExecuteNonQueryAsync(cancellationToken);
         }
+
+        await transaction.CommitAsync(cancellationToken);
     }
 
     public async Task<IReadOnlyList<PersistedEvent>> ReadStreamAsync(Guid aggregateId, CancellationToken cancellationToken = default)

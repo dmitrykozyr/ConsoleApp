@@ -13,11 +13,10 @@ public static class ServicesExtensions
     public static IServiceCollection AddServicesExtensions(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection")
-            ?? throw new InvalidOperationException("Стркоа подключения 'DefaultConnection' не найдена");
+            ?? throw new InvalidOperationException("Строка подключения 'DefaultConnection' не найдена");
 
         services.AddSingleton<EventSerializer>();
         services.AddSingleton<IEventStore>(_ => new PostgresEventStore(connectionString));
-        services.AddScoped(sp => (PostgresEventStore)sp.GetRequiredService<IEventStore>());
         services.AddScoped<IAggregateRepository, EventSourcedRepository>();
         services.AddScoped<DepositMoneyHandler>();
         services.AddScoped<WithdrawMoneyHandler>();

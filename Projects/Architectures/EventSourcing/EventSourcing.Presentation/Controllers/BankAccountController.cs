@@ -23,53 +23,45 @@ public sealed class BankAccountController : ControllerBase
         _balance = balance;
     }
 
-    [HttpPost("{accountId:guid}/deposit")]
-    public async Task<IActionResult> Deposit(Guid accountId, decimal amount, CancellationToken cancellationToken)
-    {
-        try
-        {
-            await _deposit.HandleAsync(new DepositMoneyCommand(accountId, amount), cancellationToken);
+    public sealed record AmountBody(decimal amount);
 
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception($"Исключение: {ex}");
-        }
+    [HttpPost("{accountId:guid}/deposit")]
+    public async Task<IActionResult> Deposit(Guid accountId, [FromBody] AmountBody body, CancellationToken cancellationToken)
+    {
+        await _deposit.HandleAsync(new DepositMoneyCommand(accountId, body.amount), cancellationToken);
+        return NoContent();
     }
 
     [HttpPost("{accountId:guid}/withdraw")]
-    public async Task<IActionResult> Withdraw(Guid accountId, decimal amount, CancellationToken cancellationToken)
+    public async Task<IActionResult> Withdraw(Guid accountId, [FromBody] AmountBody body, CancellationToken cancellationToken)
     {
         try
         {
-            await _withdraw.HandleAsync(new WithdrawMoneyCommand(accountId, amount), cancellationToken);
+            await _withdraw.HandleAsync(new WithdrawMoneyCommand(accountId, body.amount), cancellationToken);
         }
-        catch (Exception ex)
+        catch (InvalidOperationException ex)
+            when (ex.Message.Contains("не найден", StringComparison.OrdinalIgnoreCase))
         {
-            throw new Exception($"Исключение: {ex}");
+            return NotFound();
         }
-
+        // Например «Недостаток средств»
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
         return NoContent();
     }
 
     [HttpGet("{accountId:guid}/balance")]
     public async Task<ActionResult<decimal>> Balance(Guid accountId, CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await _balance.HandleAsync(new GetBalanceQuery(accountId), cancellationToken);
+        var result = await _balance.HandleAsync(new GetBalanceQuery(accountId), cancellationToken);
 
-            if (result is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(result.Value);
-        }
-        catch (Exception ex)
+        if (result is null)
         {
-            throw new Exception($"Исключение: {ex}");
+            return NotFound();
         }
+
+        return Ok(result.Value);
     }
 }

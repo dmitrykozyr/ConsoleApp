@@ -7,18 +7,11 @@ public sealed class DepositMoneyHandler(IAggregateRepository accounts)
 {
     public async Task HandleAsync(DepositMoneyCommand command, CancellationToken cancellationToken = default)
     {
-        try
-        {
-            var account = await accounts.GetAsync(command.accountId, cancellationToken)
-                ?? BankAccount.Empty(command.accountId);
+        var account = await accounts.GetAsync(command.accountId, cancellationToken)
+            ?? BankAccount.Empty(command.accountId);
 
-            account.Deposit(command.amount);
+        account.Deposit(command.amount);
 
-            await accounts.SaveAsync(account, cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.ToString());
-        }
+        await accounts.SaveAsync(account, cancellationToken);
     }
 }

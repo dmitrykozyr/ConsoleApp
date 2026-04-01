@@ -1,6 +1,3 @@
-using EventSourcing.Domain.Interfaces;
-using EventSourcing.Infrastructure.EventStore;
-using EventSourcing.Infrastructure.Repositories;
 using EventSourcing.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

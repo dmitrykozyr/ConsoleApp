@@ -54,6 +54,12 @@ public class BankAccount
                     Balance -= withdrawn.amount;
                     break;
                 }
+            default:
+                {
+                    string? eventName = @event?.GetType().FullName;
+
+                    throw new InvalidOperationException($"Неизвестное событие: {eventName}");
+                }
         }
     }
 
