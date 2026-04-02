@@ -2,6 +2,7 @@
 
 namespace EventSourcing.Application.Commands.WithdrawMoney;
 
+// Обработка списания баланса
 public sealed class WithdrawMoneyHandler(IAggregateRepository accounts)
 {
     public async Task HandleAsync(WithdrawMoneyCommand command, CancellationToken cancellationToken = default)

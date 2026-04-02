@@ -4,14 +4,17 @@ using System.Text.Json;
 
 namespace EventSourcing.Infrastructure.Serialization;
 
+// JSON-сериализация доменных событий для store
 public sealed class EventSerializer
 {
+    // JsonOptions — camelCase, без отступов
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = false
     };
 
+    // TypeByName — карта имя типа (MoneyDeposited, MoneyWithdrawn)
     private static readonly Dictionary<string, Type> TypeByName = new()
     {
         [nameof(MoneyDeposited)] = typeof(MoneyDeposited),

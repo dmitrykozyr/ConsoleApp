@@ -16,8 +16,11 @@ public static class ServicesExtensions
             ?? throw new InvalidOperationException("Строка подключения 'DefaultConnection' не найдена");
 
         services.AddSingleton<EventSerializer>();
+
         services.AddSingleton<IEventStore>(_ => new PostgresEventStore(connectionString));
+
         services.AddScoped<IAggregateRepository, EventSourcedRepository>();
+
         services.AddScoped<DepositMoneyHandler>();
         services.AddScoped<WithdrawMoneyHandler>();
         services.AddScoped<GetBalanceHandler>();

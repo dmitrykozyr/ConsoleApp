@@ -6,6 +6,7 @@ namespace EventSourcing.Infrastructure.Repositories;
 
 public sealed class EventSourcedRepository(IEventStore store, EventSerializer serializer) : IAggregateRepository
 {
+    // Читает поток из IEventStore, десериализует каждое событие, создает BankAccount.Empty(id), LoadFromHistory, возвращает счет
     public async Task<BankAccount?> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var stream = await store.ReadStreamAsync(id, cancellationToken);
@@ -24,6 +25,7 @@ public sealed class EventSourcedRepository(IEventStore store, EventSerializer se
         return account;
     }
 
+    // Берет UncommittedEvents, сериализует в PersistedEvent, AppendAsync, затем MarkCommitte
     public async Task SaveAsync(BankAccount account, CancellationToken cancellationToken = default)
     {
         var pending = account.UncommittedEvents.ToList();

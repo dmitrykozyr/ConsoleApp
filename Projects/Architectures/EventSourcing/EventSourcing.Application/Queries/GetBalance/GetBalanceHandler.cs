@@ -2,6 +2,7 @@
 
 namespace EventSourcing.Application.Queries.GetBalance;
 
+// Обработка полученя баланса
 public sealed class GetBalanceHandler(IAggregateRepository accounts)
 {
     public async Task<decimal?> HandleAsync(GetBalanceQuery query, CancellationToken cancellationToken = default)

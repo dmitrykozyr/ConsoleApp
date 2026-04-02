@@ -5,7 +5,7 @@ public abstract class CaffeineBeverage
     public void PrepareRecipe()
     {
         // Задаем неизменяемый скелет алгоритма, который гарантирует,
-        // что мы не нальем воду в чашку раньше, чем вскипятим её
+        // что мы не нальем воду в чашку раньше, чем вскипятим ее
         BoilWater();
         Brew();
         PourInCup();
