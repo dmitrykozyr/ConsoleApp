@@ -250,6 +250,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.Application",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.Infrastructure", "Projects\Architectures\EventSourcing\EventSourcing.Infrastructure\EventSourcing.Infrastructure.csproj", "{41CF7A58-E255-436F-82C7-446857D5529B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schedulers", "Schedulers", "{A5A7F7F2-E5CB-4450-B200-4202A853AF3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Quartz", "Quartz", "{0C876F66-A047-41DE-A204-3C836D03698B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -532,6 +536,7 @@ Global
 		{E5497608-79A0-4A34-B6A0-CFB31C89AB70} = {8A90DB92-FFB0-483B-8A90-A867F2B7931C}
 		{F8EDA40A-5D38-4C3A-91CB-E11380F6A633} = {8A90DB92-FFB0-483B-8A90-A867F2B7931C}
 		{41CF7A58-E255-436F-82C7-446857D5529B} = {8A90DB92-FFB0-483B-8A90-A867F2B7931C}
+		{0C876F66-A047-41DE-A204-3C836D03698B} = {A5A7F7F2-E5CB-4450-B200-4202A853AF3C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C3FE8DB-917F-412C-81A3-E5F87D993B11}
