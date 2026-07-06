@@ -1,0 +1,49 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-demo-app
+  labels:
+    app: k8s-demo-app
+spec:
+  replicas: 3                    # 3 копии приложения
+  selector:
+    matchLabels:
+      app: k8s-demo-app
+  template:
+    metadata:
+      labels:
+        app: k8s-demo-app
+    spec:
+      containers:
+        - name: api
+          image: k8s-demo-app:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+          envFrom:
+            - configMapRef:
+               name: k8s-demo-config
+          # Проверка «жив ли контейнер»
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          # Проверка «готов ли принимать трафик»
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

@@ -1,0 +1,12 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-demo-app-service
+spec:
+  type: NodePort          # для локальной разработки
+  selector:
+    app: k8s-demo-app     # направляет трафик на Pod'ы с этим label
+  ports:
+    - port: 80            # порт Service внутри кластера
+      targetPort: 8080    # порт контейнера
+      nodePort: 30080     # порт на вашей машине (30000-32767)

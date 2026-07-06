@@ -1,0 +1,7 @@
+﻿apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-demo-config
+data:
+  APP_NAME: "K8s Demo Application"
+  LOG_LEVEL: "Information"
