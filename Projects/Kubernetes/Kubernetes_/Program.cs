@@ -11,8 +11,10 @@ app.MapHealthChecks("/health");
 app.MapGet("/", () => new
 {
     Message     = "Hello from Kubernetes!",
-    Hostname    = Environment.MachineName,
-    Time        = DateTime.UtcNow,
+    Hostname    = Environment.MachineName,  // »м€ пода - при нескольких репликах видно балансировку
+                                            //  огда запущено несколько копий программы, по этому полю видно, кака€ именно копи€ ответила
+                                            // “ак провер€ют, что запросы распредел€ютс€ между копи€ми
+    Time = DateTime.UtcNow,
     AppName     = Environment.GetEnvironmentVariable("APP_NAME"),
     LogLevel    = Environment.GetEnvironmentVariable("LOG_LEVEL")
 });
