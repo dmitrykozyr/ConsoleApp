@@ -1,7 +1,11 @@
-﻿apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: k8s-demo-config
-data:
-  APP_NAME: "K8s Demo Application"
-  LOG_LEVEL: "Information"
+﻿# ConfigMap хранит настройки отдельно от кода
+# Программа читает их как переменные окружения (APP_NAME, LOG_LEVEL)
+# При изменении конфига не нужно пересобирать программу
+
+apiVersion: v1						# Версия API Kubernetes для типа объекта ConfigMap
+kind: ConfigMap						# Создание объекта типа ConfigMap (хранилище настроек)
+metadata:							# Блок с описанием объекта
+  name: k8s-demo-config				# Имя этого набора настроек - по нему другие файлы будут ссылаться на ConfigMap
+data:								# Список пар Ключ → Значение
+  APP_NAME: "K8s Demo Application"	# Имя приложения
+  LOG_LEVEL: "Information"			# Уровень логирования

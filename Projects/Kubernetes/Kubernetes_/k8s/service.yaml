@@ -1,12 +1,13 @@
-﻿apiVersion: v1
-kind: Service
+﻿# Service — даёт один адрес и распределяет запросы между копиями
+apiVersion: v1                  # Версия API Kubernetes для типа объекта Service
+kind: Service                   # Тип объекта (ConfigMap, Deployment, Service)
 metadata:
-  name: k8s-demo-app-service
-spec:
-  type: NodePort          # для локальной разработки
-  selector:
-    app: k8s-demo-app     # направляет трафик на Pod'ы с этим label
+  name: k8s-demo-app-service    # Имя сервиса - по нему обращаются внутри кластера
+spec:                           # Настройки сервиса
+  type: NodePort                # Тип: открыть порт на машине (ноде) для доступа снаружи - для локальной разработки
+  selector:                     # На какие Pod'ы слать трафик
+    app: k8s-demo-app           # Направляет трафик на Pod'ы с этим label
   ports:
-    - port: 80            # порт Service внутри кластера
-      targetPort: 8080    # порт контейнера
-      nodePort: 30080     # порт на вашей машине (30000-32767)
+    - port: 80                  # Service принимает запросы на порт 80 (внутри кластера)
+      targetPort: 8080          # Перенаправляет их на порт 8080 в контейнере (где слушает программа)
+      nodePort: 30080           # Снаружи кластера доступ через порт 30080 на вашем компьютере

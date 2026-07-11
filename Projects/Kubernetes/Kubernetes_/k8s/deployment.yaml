@@ -1,49 +1,48 @@
-﻿apiVersion: apps/v1
-kind: Deployment
+﻿# Deployment — запускает 3 копии, подставляет настройки, следит за здоровьем
+apiVersion: apps/v1                         # Версия API Kubernetes для типа объекта Deployment
+kind: Deployment                            # Тип объекта Deployment (управление копиями приложения)
 metadata:
-  name: k8s-demo-app
-  labels:
-    app: k8s-demo-app
-spec:
-  replicas: 3                    # 3 копии приложения
-  selector:
-    matchLabels:
-      app: k8s-demo-app
-  template:
+  name: k8s-demo-app                        # Имя этого Deployment
+  labels:                                   # Метки для поиска и связи объектов
+    app: k8s-demo-app                       # Метка 'app' со значением 'k8s-demo-app' - по ней Service найдет нужные поды
+spec:                                       # Основные настройки Deployment
+  replicas: 3                               # 3 копии приложения
+  selector:                                 # Какие Pod'ы считаются моими?
+    matchLabels:                            # Искать по меткам
+      app: k8s-demo-app                     # Мои Pod'ы — те, у которых метка 'app: k8s-demo-app'. Аналогия: держи 3 курьера на линии, мои курьеры, которые с бейджем 'k8s-demo-app'
+  template:                                 # Шаблон для каждого нового Pod'а, как должен выглядеть один экземпляр
     metadata:
       labels:
-        app: k8s-demo-app
+        app: k8s-demo-app                   # Каждый созданный Pod получит метку 'app: k8s-demo-app'
     spec:
       containers:
-        - name: api
-          image: k8s-demo-app:1.0
-          imagePullPolicy: Never
+        - name: api                         # Имя контейнера внутри Pod'а
+          image: k8s-demo-app:1.0           # Какой Docker-образ запускать (наша упакованная программа)
+          imagePullPolicy: Never            # Запрещаем скачивать образ из интернета, можно использовать только локальный, потому что образ есть только локально
           ports:
-            - containerPort: 8080
-          env:
+            - containerPort: 8080           # Программа внутри контейнера слушает порт 8080
+          env:                              # Переменные окружения для программы, ключ/значение
             - name: ASPNETCORE_ENVIRONMENT
-              value: "Production"
-          envFrom:
-            - configMapRef:
-               name: k8s-demo-config
-          # Проверка «жив ли контейнер»
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 15
-          # Проверка «готов ли принимать трафик»
-          readinessProbe:
+              value: "Production"           # Режим Production для .NET
+          envFrom:                          # Взять настройки из другого источника
+            - configMapRef:                 # Источник — ConfigMap
+               name: k8s-demo-config        # Имя ConfigMap из configmap.yaml. Подставит APP_NAME и LOG_LEVEL
+          livenessProbe:                    # Проверка, жив-ли контейнер
+            httpGet:                        # Проверять HTTP-запросом
+              path: /health                 # Запрос на адрес /health
+              port: 8080                    # На порту 8080
+            initialDelaySeconds: 10         # Подождать 10 секунд после старта, потом начать проверки
+            periodSeconds: 15               # Подождать 10 секунд после старта, потом начать проверки. Если /health не отвечает — Kubernetes считает контейнер упавшим и перезапускает его
+          readinessProbe:                   # Отличие от liveness: если readiness не проходит — контейнер не перезапускают, но не отправляют на него трафик, пока не станет готов
             httpGet:
               path: /health
               port: 8080
             initialDelaySeconds: 5
             periodSeconds: 10
-          resources:
-            requests:
+          resources:                        # Ограничения по ресурсам (память, процессор)
+            requests:                       # Минимум, который Kubernetes резервирует для контейнера
               memory: "64Mi"
               cpu: "100m"
-            limits:
+            limits:                         # Максимум, который контейнер может использовать
               memory: "256Mi"
               cpu: "500m"
