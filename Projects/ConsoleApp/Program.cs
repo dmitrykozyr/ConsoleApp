@@ -29,8 +29,6 @@
         Балансировщик нагрузки
 
         Нужен Docker:
-        Kafka
-        RabbitMQ
         Portainer
         Kubernetes
         Redis (UI в DataGrip)

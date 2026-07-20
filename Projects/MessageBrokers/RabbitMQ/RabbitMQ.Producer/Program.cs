@@ -14,7 +14,7 @@ await channel.QueueDeclareAsync(
 
 for (int i = 0; i < 10; i++)
 {
-    var message = $"{DateTime.UtcNow} - {Guid.NewGuid}";
+    var message = $"{DateTime.UtcNow} - {Guid.NewGuid()}";
     var body    = Encoding.UTF8.GetBytes(message);
 
     await channel.BasicPublishAsync(
@@ -26,5 +26,5 @@ for (int i = 0; i < 10; i++)
 
     Console.WriteLine($"Sent: {message}");
 
-    await Task.Delay(2000);
+    //await Task.Delay(2000);
 }
