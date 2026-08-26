@@ -1,0 +1,45 @@
+image: artifactory.gitlab.bcs.ru/docker-microsoft/dotnet/sdk:8.0
+
+variables:
+  BUILD_CONFIGURATION: Release
+
+stages:
+  - build
+  - test
+  - publish
+
+build:
+  stage: build
+  script:
+    - dotnet nuget remove source nuget.org
+    - dotnet nuget add source "https://artifactory.gitlab.bcs.ru/artifactory/api/nuget/v3/nuget-org-v2-remote/index.json" --username "$NUGET_USER" --password "$NUGET_PASSWORD" --name CompanyNuGet --store-password-in-clear-text
+    - dotnet restore
+    - dotnet build --configuration $BUILD_CONFIGURATION --no-restore
+  artifacts:
+    paths:
+      - Presentation/bin/Release/net8.0/
+    expire_in: 1 week
+
+test:
+  stage: test
+  script:
+    - dotnet nuget remove source nuget.org
+    - dotnet nuget add source "https://artifactory.gitlab.bcs.ru/artifactory/api/nuget/v3/nuget-org-v2-remote/index.json" --username "$NUGET_USER" --password "$NUGET_PASSWORD" --name CompanyNuGet --store-password-in-clear-text
+    - dotnet --info
+    - dotnet --list-runtimes
+    - dotnet test Tests/Tests.csproj --configuration $BUILD_CONFIGURATION
+  dependencies:
+    - build
+
+publish:
+  stage: publish
+  script:
+    - dotnet nuget remove source nuget.org
+    - dotnet nuget add source "https://artifactory.gitlab.bcs.ru/artifactory/api/nuget/v3/nuget-org-v2-remote/index.json" --username "$NUGET_USER" --password "$NUGET_PASSWORD" --name CompanyNuGet --store-password-in-clear-text
+    - dotnet publish Presentation/Presentation.csproj -c $BUILD_CONFIGURATION -o publish
+  artifacts:
+    paths:
+      - publish/
+    expire_in: 1 week
+  dependencies:
+    - build

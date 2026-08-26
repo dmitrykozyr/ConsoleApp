@@ -26,7 +26,7 @@ public class RedisService : IRedisService
             // Пытаемся получить данные из кеша
             string? cachedMember = await _distributedCache.GetStringAsync(keyCache, cancellationToken);
 
-            //! Если в кеше есть данные и их срок жизни еще не истек (проверят по значению из конфига)
+            // Если в кеше есть данные и их срок жизни еще не истек (проверяем по значению из конфига)
             if (!string.IsNullOrEmpty(cachedMember))
             {
                 result = JsonConvert.DeserializeObject<string>(cachedMember);
@@ -55,7 +55,7 @@ public class RedisService : IRedisService
     {
         try
         {
-            //! Записывать в БД временную метку записи данных в кеш
+            // Записывать в кеш или БД временную метку записи данных в кеш
 
             string jsonMember = JsonConvert.SerializeObject(value);
 

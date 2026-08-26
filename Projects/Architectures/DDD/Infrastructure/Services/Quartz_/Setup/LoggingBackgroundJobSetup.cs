@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using DDD.Infrastructure.Services.Quartz_.Job;
+using Microsoft.Extensions.Options;
 using Quartz;
 
-namespace Infrastructure.Services.Quartz_;
+namespace DDD.Infrastructure.Services.Quartz_.Setup;
 
 public class LoggingBackgroundJobSetup : IConfigureOptions<QuartzOptions>
 {
@@ -12,7 +13,7 @@ public class LoggingBackgroundJobSetup : IConfigureOptions<QuartzOptions>
         options.AddJob<LoggingBackgroundJob>(jobBuilder => jobBuilder.WithIdentity(jobKey))
         .AddTrigger(trigger =>
             trigger
-                .ForJob(jobKey) // Триггер, после которого запустится Jon
+                .ForJob(jobKey) // Триггер, после которого запустится Job
                                 //.WithCronSchedule("*/1 * * * *")) // Cron-выражение, которое будет вызывать этот Job каждую минуту
                 .WithSimpleSchedule(schedule =>
                     schedule

@@ -1,4 +1,4 @@
-﻿using Infrastructure.Services.Quartz_;
+﻿using DDD.Infrastructure.Services.Quartz_.Setup;
 using Quartz;
 
 namespace Presentation.Extensions;

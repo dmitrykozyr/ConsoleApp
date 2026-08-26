@@ -19,8 +19,6 @@
         Serilog logging
 
         БД:
-        ClickHouse
-        Репозиторий
         Идемпотентность
         MSSQL (UI в DataGrip)
         PostgreSQL(JSONb, blob, EntityFramework)
