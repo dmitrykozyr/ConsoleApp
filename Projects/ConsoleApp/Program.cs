@@ -3,13 +3,14 @@
     //!
     /*
         CQRS
+        MediatR
+        Unit of Work
+
         gRPC
         SOAP
-        MediatR
         Mapster
         Асинхронность
         Многопоточность
-        Unit of Work
         Паттерн SAGA для распределенных транзакций
 
         Логи:

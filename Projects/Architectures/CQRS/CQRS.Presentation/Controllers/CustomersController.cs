@@ -13,29 +13,50 @@ public sealed class CustomersController(ISender sender) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<long>> Create([FromBody] CreateCustomerCommand command, CancellationToken cancellationToken)
     {
-        var id = await sender.Send(command, cancellationToken);
+        try
+        {
+            var id = await sender.Send(command, cancellationToken);
 
-        var result = CreatedAtAction(
-            nameof(GetById),
-            new { id },
-            id);
+            var result = CreatedAtAction(
+                nameof(GetById),
+                new { id },
+                id);
 
-        return result;
+            return result;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
     [HttpGet("{id:long}")]
     public async Task<ActionResult<CustomerDetailsDto>> GetById(long id, CancellationToken cancellationToken)
     {
-        var result = await sender.Send(new GetCustomerByIdQuery(id), cancellationToken);
+        try
+        {
+            var result = await sender.Send(new GetCustomerByIdQuery(id), cancellationToken);
 
-        return result is null ? NotFound() : Ok(result);
+            return result is null ? NotFound() : Ok(result);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<CustomerListItemDto>>> GetAll(CancellationToken cancellationToken)
     {
-        var result = await sender.Send(new GetCustomersQuery(), cancellationToken);
+        try
+        {
+            var result = await sender.Send(new GetCustomersQuery(), cancellationToken);
 
-        return Ok(result);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 }

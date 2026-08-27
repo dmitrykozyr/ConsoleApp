@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CQRS.Infrastructure.Repositories;
 
-public sealed class CustomerReadRepository(ApplicationDbContext dbContext) : ICustomerReadRepository
+public sealed class CustomerReadRepository(ApplicationDbContext dbContext)
+    : ICustomerReadRepository
 {
     public async Task<CustomerDetailsDto?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
@@ -18,6 +19,7 @@ public sealed class CustomerReadRepository(ApplicationDbContext dbContext) : ICu
 
         return result;
     }
+
     public async Task<IReadOnlyList<CustomerListItemDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var result = await dbContext.Customers

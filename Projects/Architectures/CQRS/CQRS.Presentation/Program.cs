@@ -1,15 +1,8 @@
-using CQRS.Application;
-using CQRS.Infrastructure;
+using CQRS.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddApplication()
-    .AddInfrastructure(builder.Configuration);
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddPresentationServices(builder.Configuration);
 
 
 var app = builder.Build();
