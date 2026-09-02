@@ -2,8 +2,6 @@
 {
     //!
     /*
-        CQRS
-        MediatR
         Unit of Work
 
         gRPC

@@ -3,9 +3,10 @@ using MediatR;
 
 namespace CQRS.Application.Queries.GetCustomers;
 
+// В CQRS обработчик запроса (Handler) жестко привязан к типу запроса (IReadOnlyList<CustomerListItemDto>)
 public sealed class GetCustomersQueryHandler(ICustomerReadRepository readRepository)
     : IRequestHandler<GetCustomersQuery, IReadOnlyList<CustomerListItemDto>>
 {
-    public Task<IReadOnlyList<CustomerListItemDto>> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
-        => readRepository.GetAllAsync(cancellationToken);
+    public Task<IReadOnlyList<CustomerListItemDto>> Handle(GetCustomersQuery request, CancellationToken cancellationToken) =>
+       readRepository.GetAllAsync(cancellationToken);
 }

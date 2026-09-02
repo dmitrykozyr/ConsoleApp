@@ -14,8 +14,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPresentationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services
-            .AddApplication()
+        services.AddApplication()
             .AddInfrastructure(configuration);
 
         services.AddControllers();

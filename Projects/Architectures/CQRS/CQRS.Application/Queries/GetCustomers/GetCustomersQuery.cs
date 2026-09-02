@@ -2,5 +2,5 @@
 
 namespace CQRS.Application.Queries.GetCustomers;
 
-public sealed record GetCustomersQuery()
-    : IRequest<IReadOnlyList<CustomerListItemDto>>;
+// В CQRS запрос — это класс, реализующий интерфейс IRequest<TResponse>
+public sealed record GetCustomersQuery() : IRequest<IReadOnlyList<CustomerListItemDto>>;

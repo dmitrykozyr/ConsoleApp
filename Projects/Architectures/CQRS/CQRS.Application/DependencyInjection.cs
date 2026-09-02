@@ -9,7 +9,11 @@ public static class DependencyInjection
     {
         var assembly = typeof(DependencyInjection).Assembly;
 
+        // При старте приложения вызываем метод регистрации MediatR
+        // В этот момент MediatR сканирует сборку и ищет классы,
+        // реализующие интерфейс IRequestHandler<TRequest, TResponse>
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+
         services.AddValidatorsFromAssembly(assembly);
 
         return services;

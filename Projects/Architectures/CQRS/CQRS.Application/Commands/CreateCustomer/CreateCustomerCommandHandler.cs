@@ -7,9 +7,9 @@ namespace CQRS.Application.Commands.CreateCustomer;
 public sealed class CreateCustomerCommandHandler(ICustomerWriteRepository writeRepository, IUnitOfWork unitOfWork)
     : IRequestHandler<CreateCustomerCommand, long>
 {
-    public async Task<long> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<long> Handle(CreateCustomerCommand command, CancellationToken cancellationToken)
     {
-        var customer = Customer.Create(request.Name, request.Address);
+        var customer = Customer.Create(command.Name, command.Address);
 
         await writeRepository.AddAsync(customer, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
