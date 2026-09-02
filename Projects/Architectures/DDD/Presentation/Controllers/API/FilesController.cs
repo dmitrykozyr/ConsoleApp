@@ -10,7 +10,6 @@ using Presentation.Validators;
 
 namespace Presentation.Controllers.API;
 
-//! Протестить загрузку файлов
 [ApiController]
 public class FilesController
 {

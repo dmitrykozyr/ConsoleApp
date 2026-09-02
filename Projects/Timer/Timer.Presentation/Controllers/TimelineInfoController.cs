@@ -7,7 +7,6 @@ namespace Timer.Presentation.Controllers;
 [Route("api/[controller]")]
 public class TimelineInfoController
 {
-    //! Вынести в сервис
     private readonly ITimelineInfoRepository _timelineInfoRepository;
 
     public TimelineInfoController(ITimelineInfoRepository timelineInfoRepository)

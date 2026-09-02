@@ -8,9 +8,7 @@ public class TimelineInfo
 
     public DateTime TimelineEndDate { get; set; }
 
-    //! Вынести в объект
     List<DateTime>? TimelineEvents { get; set; }
 
-    //! Вынести в объект
     List<TimelinePeriod_>? TimelinePeriods { get; set; }
 }

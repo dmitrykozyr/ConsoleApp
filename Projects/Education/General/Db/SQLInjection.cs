@@ -40,7 +40,6 @@ public class SQLInjection
                 INNER JOIN client_deal as cd on cd.ClientId = c.Id
                 WHERE cd.DealId = '{dealId}'";
 
-            //! Установить Dapper
             return await connection.QueryAsync(sql);
         }
 

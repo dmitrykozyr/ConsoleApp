@@ -33,7 +33,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//!app.ApiGatewaySecretKeyCheck();
+//app.ApiGatewaySecretKeyCheck();
 
 app.MapControllers();
 

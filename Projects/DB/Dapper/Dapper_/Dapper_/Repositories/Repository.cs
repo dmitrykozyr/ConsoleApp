@@ -25,7 +25,7 @@ public class Repository<TResult> : IRepository<TResult>
                 procedureName,
                 parameters,
                 commandType: CommandType.StoredProcedure,
-                commandTimeout: 120); //! В конфиг
+                commandTimeout: 120);
 
             return result;
         }

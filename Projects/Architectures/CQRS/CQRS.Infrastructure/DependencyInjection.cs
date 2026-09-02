@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
         services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
         services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
 

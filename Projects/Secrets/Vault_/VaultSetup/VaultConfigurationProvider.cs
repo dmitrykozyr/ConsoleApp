@@ -80,7 +80,6 @@ public class VaultConfigurationProvider : ConfigurationProvider
         {
             string exMessage = $"Ошибка получения секретов из DEV-сервера Vault, {ex.Message}";
 
-            //! Везде, где есть _logging.LogToFile, пробрасывать исключение или логировать в Elactic
             _logging.LogToFile(exMessage);
 
             throw new Exception(exMessage);

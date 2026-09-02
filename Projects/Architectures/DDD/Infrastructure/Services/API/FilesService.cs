@@ -30,7 +30,6 @@ public class FilesService : IFilesService
         _logging = logging;
     }
 
-    //! Везде по аналогии добавить try catch
     public FileStreamResponse GetFileStream(FileStorageRequest model)
     {
         var result = new FileStreamResponse();
