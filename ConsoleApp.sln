@@ -179,6 +179,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kubernetes_", "Projects\Kubernetes\Kubernetes_\Kubernetes_.csproj", "{31DEF84D-A477-4E80-B366-2884B6D13392}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{32E2771F-4C7D-4DE7-B890-F2258411C1EC}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\EF_.cs = Projects\DB\EF_.cs
+		Projects\DB\LazyLoading_.cs = Projects\DB\LazyLoading_.cs
+		Projects\DB\LINQ_.cs = Projects\DB\LINQ_.cs
+		Projects\DB\SQLInjection.cs = Projects\DB\SQLInjection.cs
+		Projects\DB\TablesRelations.cs = Projects\DB\TablesRelations.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dapper", "Dapper", "{0D72A2D2-DB1E-462F-8EA6-35FBCCFC4ADE}"
 EndProject
@@ -200,6 +207,92 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRS.Infrastructure", "Projects\Architectures\CQRS\CQRS.Infrastructure\CQRS.Infrastructure.csproj", "{C7C24A24-84C7-41E2-844E-4D12DC90FE96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQRS.Presentation", "Projects\Architectures\CQRS\CQRS.Presentation\CQRS.Presentation.csproj", "{4B0509C6-5F6B-4AD2-8C87-343D7C8B43CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transactions", "Transactions", "{E8CED1F5-C937-459F-9038-7C6957F3069F}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\Transaction_.cs = Projects\DB\Transactions\Transaction_.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compensate", "Compensate", "{C17D7BBC-871C-4213-94B2-712AD01AAF08}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\Compensate\Compensate_.cs = Projects\DB\Transactions\Compensate\Compensate_.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OutboxPattern", "OutboxPattern", "{792A11A6-A37E-435C-9E49-B72EDE01FE24}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\OutboxPattern\MyDbContext.cs = Projects\DB\Transactions\OutboxPattern\MyDbContext.cs
+		Projects\DB\Transactions\OutboxPattern\MyService.cs = Projects\DB\Transactions\OutboxPattern\MyService.cs
+		Projects\DB\Transactions\OutboxPattern\OutboxMessage.cs = Projects\DB\Transactions\OutboxPattern\OutboxMessage.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SagaPattern", "SagaPattern", "{08941CA7-A575-4BDD-B5CD-ED87325DA742}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interfaces", "Interfaces", "{650C456C-58A1-40EF-BF8C-A4B1B17858CE}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\Compensate\Interfaces\IDeliveryService.cs = Projects\DB\Transactions\Compensate\Interfaces\IDeliveryService.cs
+		Projects\DB\Transactions\Compensate\Interfaces\IPaymentService.cs = Projects\DB\Transactions\Compensate\Interfaces\IPaymentService.cs
+		Projects\DB\Transactions\Compensate\Interfaces\IStockService.cs = Projects\DB\Transactions\Compensate\Interfaces\IStockService.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{4BFC4F3B-38BF-4A3E-8181-031CB17A563E}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\Compensate\Models\Order.cs = Projects\DB\Transactions\Compensate\Models\Order.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Records", "Records", "{94F6D238-6846-4B42-AC47-AD0C7B1ADCB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StateMachines", "StateMachines", "{C0A4BEFD-E258-4790-AC4E-3765236756BB}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\SagaPattern\StateMachines\OrderStateMachine.cs = Projects\DB\Transactions\SagaPattern\StateMachines\OrderStateMachine.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "States", "States", "{6D643162-A08B-4509-91B9-28203D8738FE}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\SagaPattern\States\OrderSagaState.cs = Projects\DB\Transactions\SagaPattern\States\OrderSagaState.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commands", "Commands", "{D42AE6CE-3AA2-4352-A8F8-16C322B1E35E}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\SagaPattern\Records\Commands\ProcessPayment.cs = Projects\DB\Transactions\SagaPattern\Records\Commands\ProcessPayment.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Events", "Events", "{96178A76-75FB-42C3-A83D-AD36A09A4514}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\Transactions\SagaPattern\Records\Events\OrderSubmitted.cs = Projects\DB\Transactions\SagaPattern\Records\Events\OrderSubmitted.cs
+		Projects\DB\Transactions\SagaPattern\Records\Events\PaymentConfirmed.cs = Projects\DB\Transactions\SagaPattern\Records\Events\PaymentConfirmed.cs
+		Projects\DB\Transactions\SagaPattern\Records\Events\PaymentFailed.cs = Projects\DB\Transactions\SagaPattern\Records\Events\PaymentFailed.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{F151FD04-B624-40D6-8B58-ABB8F7B3AD32}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\SQL\ACID.txt = Projects\DB\SQL\ACID.txt
+		Projects\DB\SQL\NormalForms.txt = Projects\DB\SQL\NormalForms.txt
+		Projects\DB\SQL\QueryExecutionPlan.txt = Projects\DB\SQL\QueryExecutionPlan.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MSSQL", "MSSQL", "{3EA1F25D-AE7B-489D-8525-12D5AEC4E192}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\SQL\MSSQL\CRUD.txt = Projects\DB\SQL\MSSQL\CRUD.txt
+		Projects\DB\SQL\MSSQL\Indexes.txt = Projects\DB\SQL\MSSQL\Indexes.txt
+		Projects\DB\SQL\MSSQL\Join.txt = Projects\DB\SQL\MSSQL\Join.txt
+		Projects\DB\SQL\MSSQL\Procedures.txt = Projects\DB\SQL\MSSQL\Procedures.txt
+		Projects\DB\SQL\MSSQL\TASKS.txt = Projects\DB\SQL\MSSQL\TASKS.txt
+		Projects\DB\SQL\MSSQL\Transactions.txt = Projects\DB\SQL\MSSQL\Transactions.txt
+		Projects\DB\SQL\MSSQL\Triggers.txt = Projects\DB\SQL\MSSQL\Triggers.txt
+		Projects\DB\SQL\MSSQL\Views.txt = Projects\DB\SQL\MSSQL\Views.txt
+		Projects\DB\SQL\MSSQL\WindowFunctions.txt = Projects\DB\SQL\MSSQL\WindowFunctions.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostgreSQL", "PostgreSQL", "{E1034757-1890-4BBC-BA82-5CDDEC7C8472}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\DB\SQL\PostgreSQL\CRUD.txt = Projects\DB\SQL\PostgreSQL\CRUD.txt
+		Projects\DB\SQL\PostgreSQL\Indexes.txt = Projects\DB\SQL\PostgreSQL\Indexes.txt
+		Projects\DB\SQL\PostgreSQL\Join.txt = Projects\DB\SQL\PostgreSQL\Join.txt
+		Projects\DB\SQL\PostgreSQL\Procedures.txt = Projects\DB\SQL\PostgreSQL\Procedures.txt
+		Projects\DB\SQL\PostgreSQL\Transactions.txt = Projects\DB\SQL\PostgreSQL\Transactions.txt
+		Projects\DB\SQL\PostgreSQL\Triggers.txt = Projects\DB\SQL\PostgreSQL\Triggers.txt
+		Projects\DB\SQL\PostgreSQL\Views.txt = Projects\DB\SQL\PostgreSQL\Views.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -430,6 +523,20 @@ Global
 		{2D79EF0B-CBDE-459B-9D53-610D4D331912} = {D3118E00-754F-4955-A10F-C1560A449CD7}
 		{C7C24A24-84C7-41E2-844E-4D12DC90FE96} = {D3118E00-754F-4955-A10F-C1560A449CD7}
 		{4B0509C6-5F6B-4AD2-8C87-343D7C8B43CC} = {D3118E00-754F-4955-A10F-C1560A449CD7}
+		{E8CED1F5-C937-459F-9038-7C6957F3069F} = {32E2771F-4C7D-4DE7-B890-F2258411C1EC}
+		{C17D7BBC-871C-4213-94B2-712AD01AAF08} = {E8CED1F5-C937-459F-9038-7C6957F3069F}
+		{792A11A6-A37E-435C-9E49-B72EDE01FE24} = {E8CED1F5-C937-459F-9038-7C6957F3069F}
+		{08941CA7-A575-4BDD-B5CD-ED87325DA742} = {E8CED1F5-C937-459F-9038-7C6957F3069F}
+		{650C456C-58A1-40EF-BF8C-A4B1B17858CE} = {C17D7BBC-871C-4213-94B2-712AD01AAF08}
+		{4BFC4F3B-38BF-4A3E-8181-031CB17A563E} = {C17D7BBC-871C-4213-94B2-712AD01AAF08}
+		{94F6D238-6846-4B42-AC47-AD0C7B1ADCB8} = {08941CA7-A575-4BDD-B5CD-ED87325DA742}
+		{C0A4BEFD-E258-4790-AC4E-3765236756BB} = {08941CA7-A575-4BDD-B5CD-ED87325DA742}
+		{6D643162-A08B-4509-91B9-28203D8738FE} = {08941CA7-A575-4BDD-B5CD-ED87325DA742}
+		{D42AE6CE-3AA2-4352-A8F8-16C322B1E35E} = {94F6D238-6846-4B42-AC47-AD0C7B1ADCB8}
+		{96178A76-75FB-42C3-A83D-AD36A09A4514} = {94F6D238-6846-4B42-AC47-AD0C7B1ADCB8}
+		{F151FD04-B624-40D6-8B58-ABB8F7B3AD32} = {32E2771F-4C7D-4DE7-B890-F2258411C1EC}
+		{3EA1F25D-AE7B-489D-8525-12D5AEC4E192} = {F151FD04-B624-40D6-8B58-ABB8F7B3AD32}
+		{E1034757-1890-4BBC-BA82-5CDDEC7C8472} = {F151FD04-B624-40D6-8B58-ABB8F7B3AD32}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C3FE8DB-917F-412C-81A3-E5F87D993B11}

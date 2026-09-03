@@ -2,8 +2,6 @@
 {
     //!
     /*
-        Unit of Work
-
         gRPC
         SOAP
         Mapster
@@ -11,13 +9,12 @@
         Многопоточность
         Паттерн SAGA для распределенных транзакций
 
-        Логи:
-        Prometheus
         Grafana
+        Prometheus
         Elastic log
         Serilog logging
 
-        БД:
+        Unit of Work
         Идемпотентность
         MSSQL (UI в DataGrip)
         PostgreSQL(JSONb, blob, EntityFramework)
@@ -25,7 +22,6 @@
         CI/CD (build, test, test, deploy)
         Балансировщик нагрузки
 
-        Нужен Docker:
         Portainer
         Kubernetes
         Redis (UI в DataGrip)
@@ -34,15 +30,10 @@
         Docker (загрузка проекта в Docker Hub)
 
         Заменить throw new Exception(ex.Message) на throw new Exception("Сообщение об ошибке ", ex)
-        Изучить, как правильно логировать без потери стек трейса
-
+        Как правильно логировать без потери стек трейса?
         Передача токена отмены во все асинхронные методы БД
         Операции с БД всегда должны быть асинхронными
-        Как написать свой NuGet - пакет
-        Заново написать все существующие архитектуры
-
-        Просканируй проекты в папке EventSouring и объясни, как они работают,
-        что после чего вызывается и как это соответствует принциам данной архитектуры
+        Просканировать проект и доделать все, что не доделано
     */
 
     static void Main()
