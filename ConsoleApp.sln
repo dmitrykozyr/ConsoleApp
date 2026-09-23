@@ -12,11 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{D6A9D2
 		README\ApiTypes.cs = README\ApiTypes.cs
 		README\Architectures.cs = README\Architectures.cs
 		README\Auth.cs = README\Auth.cs
-		README\CICD.cs = README\CICD.cs
 		README\Docker.cs = README\Docker.cs
 		README\GraphQL тело запросов в Postman.cs = README\GraphQL тело запросов в Postman.cs
-		README\Kafka.cs = README\Kafka.cs
 		README\MongoDB.cs = README\MongoDB.cs
+		README\Observability.cs = README\Observability.cs
 		README\RESTClient.http = README\RESTClient.http
 		README\SQL.cs = README\SQL.cs
 		README\Тестирование.cs = README\Тестирование.cs
@@ -72,12 +71,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDD.Tests", "Projects\Archi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMQ", "RabbitMQ", "{71E2D3F4-0631-4445-8535-B6DFC699031A}"
 	ProjectSection(SolutionItems) = preProject
-		Projects\MessageBrokers\RabbitMQ\README.txt = Projects\MessageBrokers\RabbitMQ\README.txt
+		Projects\MessageBrokers\RabbitMQ\RABBITMQ.txt = Projects\MessageBrokers\RabbitMQ\RABBITMQ.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gRPC", "gRPC", "{E223DDEE-75E5-4F99-83E8-5D793D99AAE0}"
 	ProjectSection(SolutionItems) = preProject
-		Projects\Communication\gRPC\README.txt = Projects\Communication\gRPC\README.txt
+		Projects\Communication\gRPC\GRPC.txt = Projects\Communication\gRPC\GRPC.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Timer", "Timer", "{50BA77A4-4073-48DA-B035-964A73484E1E}"
@@ -102,11 +101,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault_", "Projects\Secrets\Vault_\Vault_.csproj", "{4B1991EB-F37F-4D78-886A-CEB25C7BCC7B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageBrokers", "MessageBrokers", "{E68971F2-074C-4374-BDED-8056550162CB}"
-	ProjectSection(SolutionItems) = preProject
-		Projects\MessageBrokers\README.txt = Projects\MessageBrokers\README.txt
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kafka", "Kafka", "{812A568E-59FD-4CCC-87AF-926183C8ADF4}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\MessageBrokers\Kafka\KAFKA.txt = Projects\MessageBrokers\Kafka\KAFKA.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HealthChecks", "HealthChecks", "{A2B0DD06-2A43-4E2E-B276-F301F102F818}"
 EndProject
@@ -126,6 +125,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Communication", "Communication", "{D69DDF54-6889-4664-BA2C-EE6718AA9095}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REST", "REST", "{6BC63024-6F77-464C-95B0-55450F544581}"
+	ProjectSection(SolutionItems) = preProject
+		Projects\Communication\REST\REST.txt = Projects\Communication\REST\REST.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherLanguages", "OtherLanguages", "{C3A559A3-78B3-4633-BA3C-A91AED7ECA56}"
 	ProjectSection(SolutionItems) = preProject
@@ -158,11 +160,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventSourcing", "EventSourc
 		Projects\Architectures\EventSourcing\README.txt = Projects\Architectures\EventSourcing\README.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceOriented", "ServiceOriented", "{0DCF15E8-256F-44E1-A520-AF05D99F4662}"
-	ProjectSection(SolutionItems) = preProject
-		Projects\Architectures\ServiceOriented\README.txt = Projects\Architectures\ServiceOriented\README.txt
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.Presentation", "Projects\Architectures\EventSourcing\EventSourcing.Presentation\EventSourcing.Presentation.csproj", "{D4906448-D109-41B6-9509-499A80CDF5B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.Domain", "Projects\Architectures\EventSourcing\EventSourcing.Domain\EventSourcing.Domain.csproj", "{E5497608-79A0-4A34-B6A0-CFB31C89AB70}"
@@ -183,6 +180,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{32E2771F-4C7D-
 		Projects\DB\EF_.cs = Projects\DB\EF_.cs
 		Projects\DB\LazyLoading_.cs = Projects\DB\LazyLoading_.cs
 		Projects\DB\LINQ_.cs = Projects\DB\LINQ_.cs
+		Rollback.cs = Rollback.cs
 		Projects\DB\SQLInjection.cs = Projects\DB\SQLInjection.cs
 		Projects\DB\TablesRelations.cs = Projects\DB\TablesRelations.cs
 	EndProjectSection
@@ -509,7 +507,6 @@ Global
 		{78B42D8E-659D-40EA-BA22-1CCF183F508C} = {D69DDF54-6889-4664-BA2C-EE6718AA9095}
 		{D3118E00-754F-4955-A10F-C1560A449CD7} = {CDAB7265-4FD9-45DF-BF0A-92B75925F4A3}
 		{8A90DB92-FFB0-483B-8A90-A867F2B7931C} = {CDAB7265-4FD9-45DF-BF0A-92B75925F4A3}
-		{0DCF15E8-256F-44E1-A520-AF05D99F4662} = {CDAB7265-4FD9-45DF-BF0A-92B75925F4A3}
 		{D4906448-D109-41B6-9509-499A80CDF5B9} = {8A90DB92-FFB0-483B-8A90-A867F2B7931C}
 		{E5497608-79A0-4A34-B6A0-CFB31C89AB70} = {8A90DB92-FFB0-483B-8A90-A867F2B7931C}
 		{F8EDA40A-5D38-4C3A-91CB-E11380F6A633} = {8A90DB92-FFB0-483B-8A90-A867F2B7931C}
