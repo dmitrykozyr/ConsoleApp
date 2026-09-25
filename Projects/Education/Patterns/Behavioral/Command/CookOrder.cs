@@ -13,8 +13,5 @@ public class CookOrder : ICommand
         _dish = dish;
     }
 
-    public void StartCooking()
-    {
-        _chief.CookDishes(_dish);
-    }
+    public void StartCooking() => _chief.CookDishes(_dish);
 }

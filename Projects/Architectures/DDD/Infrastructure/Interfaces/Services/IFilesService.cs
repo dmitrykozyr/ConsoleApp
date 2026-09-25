@@ -6,15 +6,15 @@ namespace Infrastructure.Services.API;
 
 public interface IFilesService
 {
-    LoadFileResponse? GetFileByPath(FileStorageRequest model);
+    Task<LoadFileResponse?> GetFileByPath(FileStorageRequest model);
 
-    FileStreamResponse GetFileStream(FileStorageRequest model);
+    Task<FileStreamResponse> GetFileStream(FileStorageRequest model);
 
     Task<Guid> LoadFileByBytesArray(LoadFileByBytesRequest model);
 
-    Guid LoadFileFromFileSystemByPath(LoadFileByPathRequest model);
+    Task<Guid> LoadFileFromFileSystemByPath(LoadFileByPathRequest model);
 
     Task<Guid> LoadFileFromFileSystemBySelection(LoadFileBySelectionRequest model, IFileUpload file);
 
-    bool DeleteFile(FileStorageRequest model);
+    Task<bool> DeleteFile(FileStorageRequest model);
 }

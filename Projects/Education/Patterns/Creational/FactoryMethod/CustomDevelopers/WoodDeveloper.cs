@@ -3,8 +3,5 @@ using Education.Patterns.Creational.FactoryMethod.Interfaces;
 
 public class WoodDeveloper : IDeveloper
 {
-    public IHouse FactoryMethod()
-    {
-        return new WoodHouse();
-    }
+    public IHouse FactoryMethod() => new WoodHouse();
 }

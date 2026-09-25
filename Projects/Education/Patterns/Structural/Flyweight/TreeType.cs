@@ -14,8 +14,6 @@ public class TreeType
     }
 
     // Внешнее состояние (X, Y) передается при отрисовке
-    public void Display(int x, int y)
-    {
+    public void Display(int x, int y) =>
         Console.WriteLine($"Отрисовка {_name} {_color} в точке ({x}, {y})");
-    }
 }

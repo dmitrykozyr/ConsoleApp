@@ -32,16 +32,15 @@ public class IQueryable_
 
     public void F2()
     {
-        using (var context = new MyDbContext())
-        {
-            IQueryable<Product>? products = context?.Products?.Where(p => p.Price > 10);
+        using var context = new MyDbContext();
 
-            if (products is not null)
+        IQueryable<Product>? products = context?.Products?.Where(p => p.Price > 10);
+
+        if (products is not null)
+        {
+            foreach (Product product in products)
             {
-                foreach (Product product in products)
-                {
-                    Console.WriteLine(product.Name);
-                }
+                Console.WriteLine(product.Name);
             }
         }
     }

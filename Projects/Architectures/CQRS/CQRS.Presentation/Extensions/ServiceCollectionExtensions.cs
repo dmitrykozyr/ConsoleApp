@@ -14,9 +14,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPresentationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddApplication()
-            .AddInfrastructure(configuration);
-
+        services.AddApplication().AddInfrastructure(configuration);
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();

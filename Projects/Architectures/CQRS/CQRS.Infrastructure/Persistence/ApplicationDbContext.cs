@@ -13,8 +13,6 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork
 
     public DbSet<Customer> Customers => Set<Customer>();
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) =>
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-    }
 }

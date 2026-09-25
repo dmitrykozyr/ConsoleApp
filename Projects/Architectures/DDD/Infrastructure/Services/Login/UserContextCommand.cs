@@ -21,7 +21,7 @@ public class UserContextCommand : IUserContextCommand
         _sqlService = sqlService;
 
         Guard.IsNotNull(_sqlService);
-        connection = _sqlService.CreateConnection();
+        connection = _sqlService.CreateConnection().GetAwaiter().GetResult();
 
         Guard.IsNotNull(connection);
         command = connection.CreateCommand();
@@ -54,22 +54,21 @@ public class UserContextCommand : IUserContextCommand
         {
             Guard.IsNotNull(connection);
 
-            using (SqlCommand sqlCommand = connection.CreateCommand())
+            using SqlCommand sqlCommand = connection.CreateCommand();
+
+            sqlCommand.CommandText =
+                string.Format(
+                    @"DECLARE @cookie VARBINARY(100); EXECUTE AS LOGIN = '{0}' WITH COOKIE INTO @cookie; SELECT @cookie;",
+                    login);
+
+            sqlCommand.CommandType = CommandType.Text;
+
+            if (transaction is not null)
             {
-                sqlCommand.CommandText =
-                    string.Format(
-                        @"DECLARE @cookie VARBINARY(100); EXECUTE AS LOGIN = '{0}' WITH COOKIE INTO @cookie; SELECT @cookie;",
-                        login);
-
-                sqlCommand.CommandType = CommandType.Text;
-
-                if (transaction is not null)
-                {
-                    sqlCommand.Transaction = transaction;
-                }
-
-                cookie = (byte[])sqlCommand.ExecuteScalar();
+                sqlCommand.Transaction = transaction;
             }
+
+            cookie = (byte[])sqlCommand.ExecuteScalar();
         }
     }
 
@@ -81,22 +80,21 @@ public class UserContextCommand : IUserContextCommand
         if (cookie is not null)
         {
 
-            using (SqlCommand sqlCommand = connection.CreateCommand())
+            using SqlCommand sqlCommand = connection.CreateCommand();
+
+            sqlCommand.CommandText =
+                string.Format(
+                    "DECLARE @cookie VARBINARY(100); SET @cookie = 0x{0}; REVERT WITH COOKIE = @cookie;",
+                    BitConverter.ToString(cookie).Replace("-", ""));
+
+            sqlCommand.CommandType = CommandType.Text;
+
+            if (transaction is not null)
             {
-                sqlCommand.CommandText =
-                    string.Format(
-                        "DECLARE @cookie VARBINARY(100); SET @cookie = 0x{0}; REVERT WITH COOKIE = @cookie;",
-                        BitConverter.ToString(cookie).Replace("-", ""));
-
-                sqlCommand.CommandType = CommandType.Text;
-
-                if (transaction is not null)
-                {
-                    sqlCommand.Transaction = transaction;
-                }
-
-                sqlCommand.ExecuteNonQuery();
+                sqlCommand.Transaction = transaction;
             }
+
+            sqlCommand.ExecuteNonQuery();
 
             cookie = null;
         }

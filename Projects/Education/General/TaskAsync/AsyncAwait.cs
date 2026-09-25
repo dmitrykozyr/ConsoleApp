@@ -218,13 +218,12 @@ public class AsyncAwait
 
         static async Task F1(IHttpClientFactory httpClientFactory)
         {
-            using (HttpClient client = httpClientFactory.CreateClient())
-            {
-                string result = await client.GetStringAsync("https://api.github.com")
-                                            .ConfigureAwait(false);
+            using HttpClient client = httpClientFactory.CreateClient();
 
-                Console.WriteLine($"Fetched {result.Length} characters.");
-            }
+            string result = await client.GetStringAsync("https://api.github.com")
+                                        .ConfigureAwait(false);
+
+            Console.WriteLine($"Fetched {result.Length} characters.");
         }
 
         static async Task Main_(IHttpClientFactory httpClientFactory)

@@ -2,8 +2,5 @@
 
 public class SubSystem_2
 {
-    public void StartSystem()
-    {
-        Console.WriteLine("Включить генератор");
-    }
+    public void StartSystem() => Console.WriteLine("Включить генератор");
 }

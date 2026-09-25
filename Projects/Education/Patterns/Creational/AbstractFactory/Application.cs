@@ -11,15 +11,9 @@ public class Application
         _sportEquipment = abstractFactory.GetEquipment();
     }
 
-    public void GetClothes()
-    {
-        _sportEquipment.Clothes();
-    }
+    public void GetClothes() => _sportEquipment.Clothes();
 
-    public void GetEquipment()
-    {
-        _sportEquipment.Equipment();
-    }
+    public void GetEquipment() => _sportEquipment.Equipment();
 
     public void GetAllEquipment()
     {

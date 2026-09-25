@@ -12,8 +12,5 @@ public class ApplicationOptionsSetup<T> : IConfigureOptions<T>
         _configuration = configuration;
     }
 
-    public void Configure(T options)
-    {
-        _configuration.GetSection(typeof(T).Name).Bind(options);
-    }
+    public void Configure(T options) => _configuration.GetSection(typeof(T).Name).Bind(options);
 }

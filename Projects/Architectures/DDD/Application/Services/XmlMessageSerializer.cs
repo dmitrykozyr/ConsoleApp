@@ -14,10 +14,9 @@ public class XmlMessageSerializer : IXmlMessageSerializer
         string xml = Encoding.UTF8.GetString(messageBody.Span);
         var newXml = xml;
 
-        using (var reader = new StringReader(newXml))
-        {
-            return await Task.Run(() => (TMessage)serializer.Deserialize(reader));
-        }
+        using var reader = new StringReader(newXml);
+
+        return await Task.Run(() => (TMessage)serializer.Deserialize(reader));
     }
 
     public async Task<object> Deserialize(Memory<byte> messageBody, Type returnType)
@@ -26,10 +25,9 @@ public class XmlMessageSerializer : IXmlMessageSerializer
         string xml      = Encoding.UTF8.GetString(messageBody.Span);
         var newXml      = xml;
 
-        using (var reader = new StringReader(newXml))
-        {
-            return await Task.Run(() => serializer.Deserialize(reader));
-        }
+        using var reader = new StringReader(newXml);
+
+        return await Task.Run(() => serializer.Deserialize(reader));
     }
 
     public async Task<Memory<byte>> Serialize<TMessage>(TMessage message)

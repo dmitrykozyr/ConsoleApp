@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
+using DDD.Domain.Enums;
 using Domain.Interfaces;
 using Domain.Models.Options;
 using Infrastructure.Interfaces;
@@ -15,9 +16,9 @@ public class SqlService : ISqlService
     private readonly DatabaseOptions? DatabaseOptions;
 
     private readonly IDbConStrService _dbConStrService;
-    private readonly ILogging _logging;
+    private readonly ILoggingService _logging;
 
-    public SqlService(IOptions<DatabaseOptions> databaseOptions, IDbConStrService dbConStrService, ILogging logging)
+    public SqlService(IOptions<DatabaseOptions> databaseOptions, IDbConStrService dbConStrService, ILoggingService logging)
     {
         DatabaseOptions = databaseOptions.Value;
 
@@ -25,8 +26,7 @@ public class SqlService : ISqlService
         _logging = logging;
     }
 
-    //! Пакет System.Data.SqlClient устарел, следует заменить на Microsoft.Data.SqlClient
-    public SqlConnection? CreateConnection()
+    public async Task<SqlConnection?> CreateConnection()
     {
         Guard.IsNotNull(DatabaseOptions);
 
@@ -38,15 +38,15 @@ public class SqlService : ISqlService
 
             conn = new SqlConnection(dbConnStr);
 
-            conn.Open();
+            await conn.OpenAsync();
 
             return conn;
         }
         catch (Exception ex)
         {
-            conn?.Close();
+            await conn?.CloseAsync();
 
-            _logging.LogToFile("Ошибка в SqlConnection: " + ex.Message);
+            await _logging.LogToFile(LoggingTypes.Error, "Ошибка в SqlConnection: " + ex.Message);
 
             return null;
         }
@@ -54,10 +54,8 @@ public class SqlService : ISqlService
 
     public IUserContextCommand CreateCommand(string commandText, CommandType commandType)
     {
-        int commandTimeout = int.Parse(DatabaseOptions?.SqlCommandTimeout ?? "");
+        int commandTimeout = DatabaseOptions?.SqlCommandTimeout ?? 0;
 
-        var result = new UserContextCommand(commandText, commandType, commandTimeout, this);
-
-        return result;
+        return new UserContextCommand(commandText, commandType, commandTimeout, this);
     }
 }

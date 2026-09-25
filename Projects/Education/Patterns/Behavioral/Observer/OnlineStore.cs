@@ -6,15 +6,9 @@ public class OnlineStore : IStore
 {
     private readonly List<ISubscriber> _customers = new();
 
-    public void Suscribe(ISubscriber customer)
-    {
-        _customers.Add(customer);
-    }
+    public void Suscribe(ISubscriber customer) => _customers.Add(customer);
 
-    public void Unsubscribe(ISubscriber customer)
-    {
-        _customers.Remove(customer);
-    }
+    public void Unsubscribe(ISubscriber customer) => _customers.Remove(customer);
 
     public void Notify(string productName)
     {
@@ -27,8 +21,5 @@ public class OnlineStore : IStore
         }
     }
 
-    public void Restock(string item)
-    {
-        Notify(item);
-    }
+    public void Restock(string item) => Notify(item);
 }

@@ -7,8 +7,5 @@ namespace Kafka.Producer.Controllers;
 public class KafkaProducerController
 {
     [HttpGet(Name = "Get")]
-    public IResult Get()
-    {
-        return Results.Ok();
-    }
+    public IResult Get() => Results.Ok();
 }

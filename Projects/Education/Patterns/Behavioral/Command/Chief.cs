@@ -2,8 +2,5 @@
 
 public class Chief
 {
-    public void CookDishes(string dish)
-    {
-        Console.WriteLine($"Повар готовит: {dish}");
-    }
+    public void CookDishes(string dish) => Console.WriteLine($"Повар готовит: {dish}");
 }

@@ -26,7 +26,7 @@ public class LoginService : ILoginService
         LoginOptions = loginOptions.Value;
     }
 
-    public bool AuthenticateDomainUser()
+    public async Task<bool> AuthenticateDomainUser()
     {
         Thread.CurrentPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
 
@@ -37,7 +37,7 @@ public class LoginService : ILoginService
         if (claimsIdentity.IsAuthenticated &&
             !string.IsNullOrEmpty(claimsIdentity.Name))
         {
-            PersonInfo? result = GetLogins(claimsIdentity.Name);
+            PersonInfo? result = await GetLogins(claimsIdentity.Name);
 
             if (result is not null && result.Roles is not null)
             {
@@ -56,15 +56,15 @@ public class LoginService : ILoginService
         return false;
     }
 
-    private PersonInfo? GetLogins(string notesName)
+    private async Task<PersonInfo?> GetLogins(string notesName)
     {
-        List<string>? logins = GetPersonLogins(notesName);
+        List<string>? logins = await GetPersonLogins(notesName);
 
         string? systemLogin = logins?.FirstOrDefault(z => z == "_system");
 
         if (systemLogin is not null)
         {
-            var personInfo = GetPersonInfo(systemLogin);
+            var personInfo = await GetPersonInfo(systemLogin);
 
             return personInfo;
         }
@@ -72,72 +72,66 @@ public class LoginService : ILoginService
         return null;
     }
 
-    private List<string>? GetPersonLogins(string notesName)
+    private async Task<List<string>?> GetPersonLogins(string notesName)
     {
         var logins = new List<string>();
 
-        using (SqlConnection? connection = _sqlService.CreateConnection())
+        using SqlConnection? connection = await _sqlService.CreateConnection();
+
+        if (connection is null)
         {
-            if (connection is null)
-            {
-                return null;
-            }
-
-            using (SqlCommand command = connection.CreateCommand())
-            {
-                command.CommandText = GET_LOGIN_BY_NOTES_NAME;
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@i_NotesName", notesName);
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        logins.Add(reader.GetString(0));
-                    }
-                }
-            }
-
-            return logins;
+            return null;
         }
+
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandText = GET_LOGIN_BY_NOTES_NAME;
+        command.CommandType = CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@i_NotesName", notesName);
+
+        using SqlDataReader reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            logins.Add(reader.GetString(0));
+        }
+
+        return logins;
     }
 
-    public PersonInfo? GetPersonInfo(string login)
+    public async Task<PersonInfo?> GetPersonInfo(string login)
     {
-        using (SqlConnection? connection = _sqlService.CreateConnection())
+        using SqlConnection? connection = await _sqlService.CreateConnection();
+
+        Guard.IsNotNull(connection);
+
+        using SqlCommand command = connection.CreateCommand();
+
+        command.CommandText =
+            string.Format(
+                @"DECLARE @cookie VARBINARY(100); EXECUTE AS LOGIN = '{0}' WITH COOKIE INTO @cookie; exec spGetCurrentPersonInfo; REVERT WITH COOKIE = @cookie;",
+                login);
+
+        command.CommandType = CommandType.Text;
+
+        using SqlDataReader reader = await command.ExecuteReaderAsync();
+
+        if (reader.Read())
         {
-            Guard.IsNotNull(connection);
+            var result = new PersonInfo(
+                login: reader["Login"].ToString() ?? "",
+                firstName: reader["FName"].ToString() ?? "",
+                middleName: reader["MName"].ToString() ?? "",
+                lastName: reader["LName"].ToString() ?? "",
+                isLogOn: (bool)reader["IsLogOn"],
+                isEmployeeHeadBranch: (bool)reader["IsEmployeeHeadBranch"],
+                _provider);
 
-            using (SqlCommand command = connection.CreateCommand())
-            {
-                command.CommandText =
-                    string.Format(
-                        @"DECLARE @cookie VARBINARY(100); EXECUTE AS LOGIN = '{0}' WITH COOKIE INTO @cookie; exec spGetCurrentPersonInfo; REVERT WITH COOKIE = @cookie;",
-                        login);
-
-                command.CommandType = CommandType.Text;
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        var result = new PersonInfo(
-                            login: reader["Login"].ToString() ?? "",
-                            firstName: reader["FName"].ToString() ?? "",
-                            middleName: reader["MName"].ToString() ?? "",
-                            lastName: reader["LName"].ToString() ?? "",
-                            isLogOn: (bool)reader["IsLogOn"],
-                            isEmployeeHeadBranch: (bool)reader["IsEmployeeHeadBranch"],
-                            _provider);
-
-                        return result;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-            }
+            return result;
+        }
+        else
+        {
+            return null;
         }
     }
 }

@@ -4,8 +4,5 @@ namespace Education.Patterns.Structural.Adapter.ObjectsToAdapt;
 
 public class EuropeanRozetka : IEuropeanRozetka
 {
-    public string GetElectricity()
-    {
-        return "Европейская розетка (220V)";
-    }
+    public string GetElectricity() => "Европейская розетка (220V)";
 }

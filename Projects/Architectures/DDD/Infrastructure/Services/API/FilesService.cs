@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
+using DDD.Domain.Enums;
 using Domain.Interfaces;
 using Infrastructure.Formatters;
 using Infrastructure.Models.DTO;
@@ -17,12 +18,12 @@ public class FilesService : IFilesService
     private readonly GeneralOptions? GeneralOptions;
     private readonly FileStorageOptions? FileStorageOptions;
 
-    private readonly ILogging _logging;
+    private readonly ILoggingService _logging;
 
     public FilesService(
         IOptions<GeneralOptions> generalOptions,
         IOptions<FileStorageOptions> fileStorageOptions,
-        ILogging logging)
+        ILoggingService logging)
     {
         GeneralOptions = generalOptions.Value;
         FileStorageOptions = fileStorageOptions.Value;
@@ -30,7 +31,7 @@ public class FilesService : IFilesService
         _logging = logging;
     }
 
-    public FileStreamResponse GetFileStream(FileStorageRequest model)
+    public async Task<FileStreamResponse> GetFileStream(FileStorageRequest model)
     {
         var result = new FileStreamResponse();
 
@@ -69,13 +70,13 @@ public class FilesService : IFilesService
         }
         catch (Exception ex)
         {
-            _logging.LogToFile($"Ошибка в методе {nameof(GetFileStream)}: {ex.Message}");
+            await _logging.LogToFile(LoggingTypes.Error, $"Ошибка в методе {nameof(GetFileStream)}: {ex.Message}");
         }
 
         return result;
     }
 
-    public LoadFileResponse? GetFileByPath(FileStorageRequest model)
+    public async Task<LoadFileResponse?> GetFileByPath(FileStorageRequest model)
     {
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
@@ -102,51 +103,46 @@ public class FilesService : IFilesService
 
         try
         {
-            using (WebResponse? response = request.GetResponse())
+            using WebResponse? response = request.GetResponse();
+
+            if (response is not null)
             {
-                if (response is not null)
+                using Stream responseStream = response.GetResponseStream();
+
+                if (responseStream != null)
                 {
-                    using (Stream responseStream = response.GetResponseStream())
+                    Guard.IsNotNull(FileStorageOptions);
+                    Guard.IsNotNull(FileStorageOptions.FileDownloadPath);
+
+                    string fileName = $"{model.Guid}";
+                    string fileExtension = GetFileExtension(response);
+                    string fileFullName = Path.Combine(FileStorageOptions.FileDownloadPath, $"{fileName}{fileExtension}");
+
+                    using var fileStream = new FileStream(fileFullName, FileMode.Create, FileAccess.Write);
+
+                    responseStream.CopyTo(fileStream);
+
+                    return new LoadFileResponse
                     {
-                        if (responseStream != null)
-                        {
-                            Guard.IsNotNull(FileStorageOptions);
-                            Guard.IsNotNull(FileStorageOptions.FileDownloadPath);
-
-                            string fileName = $"{model.Guid}";
-                            string fileExtension = GetFileExtension(response);
-                            string fileFullName = Path.Combine(FileStorageOptions.FileDownloadPath, $"{fileName}{fileExtension}");
-
-                            using (var fileStream = new FileStream(fileFullName, FileMode.Create, FileAccess.Write))
-                            {
-                                responseStream.CopyTo(fileStream);
-                            }
-
-                            return new LoadFileResponse
-                            {
-                                FileName = fileName,
-                                FilePath = FileStorageOptions.FileDownloadPath
-                            };
-                        }
-                    }
+                        FileName = fileName,
+                        FilePath = FileStorageOptions.FileDownloadPath
+                    };
                 }
             }
         }
         catch (WebException ex)
         {
-            using (var stream = ex?.Response?.GetResponseStream())
+            using var stream = ex?.Response?.GetResponseStream();
+
+            if (stream is not null)
             {
-                if (stream is not null)
-                {
-                    using (var reader = new StreamReader(stream))
-                    {
-                        var errorResponse = reader.ReadToEnd();
+                using var reader = new StreamReader(stream);
 
-                        result.ErrorMessage = $"Ошибка получения файла, {errorResponse}";
+                var errorResponse = reader.ReadToEnd();
 
-                        _logging.LogToFile(result.ErrorMessage);
-                    }
-                }
+                result.ErrorMessage = $"Ошибка получения файла, {errorResponse}";
+
+                await _logging.LogToFile(LoggingTypes.Error, result.ErrorMessage);
             }
         }
         catch (Exception ex)
@@ -184,52 +180,49 @@ public class FilesService : IFilesService
         // Добавление токена в Headers
         //request.Headers.Add("Authorization", "Bearer " + token.access_token);
 
-        using (var stream = request.GetRequestStream())
-        {
-            WriteFormData(stream, boundary, "deathTime", model.DeathTime?.ToString() ?? "");
-            WriteFormData(stream, boundary, "lifeTimeHours", model.LifeTimeHours.ToString() ?? "");
+        using var stream = request.GetRequestStream();
+        
+        WriteFormData(stream, boundary, "deathTime", model.DeathTime?.ToString() ?? "");
+        WriteFormData(stream, boundary, "lifeTimeHours", model.LifeTimeHours.ToString() ?? "");
 
-            stream.Write(Encoding.UTF8.GetBytes($"\r\n--{boundary}\r\n"));
-            stream.Write(Encoding.UTF8.GetBytes($"Content-Disposition: form-data; name=\"file\"; filename=\"{model.FileName}\"\r\n"));
-            stream.Write(Encoding.UTF8.GetBytes("Content-Type: application/octet-stream\r\n\r\n"));
+        stream.Write(Encoding.UTF8.GetBytes($"\r\n--{boundary}\r\n"));
+        stream.Write(Encoding.UTF8.GetBytes($"Content-Disposition: form-data; name=\"file\"; filename=\"{model.FileName}\"\r\n"));
+        stream.Write(Encoding.UTF8.GetBytes("Content-Type: application/octet-stream\r\n\r\n"));
 
-            await stream.WriteAsync(loadFileDTO.File, 0, loadFileDTO.File.Length);
+        await stream.WriteAsync(loadFileDTO.File, 0, loadFileDTO.File.Length);
 
-            await stream.WriteAsync(Encoding.UTF8.GetBytes($"\r\n--{boundary}--\r\n"));
-        }
+        await stream.WriteAsync(Encoding.UTF8.GetBytes($"\r\n--{boundary}--\r\n"));
 
         try
         {
             // После записи всех данных в поток, данные отправляются на сервер
-            using (var response = (HttpWebResponse)request.GetResponse())
-            using (var reader = new StreamReader(response.GetResponseStream()))
-            {
-                string readerResult = reader.ReadToEnd();
+            using var response = (HttpWebResponse)request.GetResponse();
+            using var reader = new StreamReader(response.GetResponseStream());
 
-                var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
+            string readerResult = reader.ReadToEnd();
 
-                return result.Id;
-            }
+            var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
+
+            return result.Id;
         }
         catch (WebException webEx)
         {
-            using (var stream = webEx.Response.GetResponseStream())
-            using (var reader = new StreamReader(stream))
-            {
-                var errorResponse = reader.ReadToEnd();
+            using var stream2 = webEx.Response.GetResponseStream();
+            using var reader = new StreamReader(stream2);
 
-                _logging.LogToFile($"Ошибка получения файла, {errorResponse}");
-            }
+            var errorResponse = reader.ReadToEnd();
+
+            await _logging.LogToFile(LoggingTypes.Error, $"Ошибка получения файла, {errorResponse}");
         }
         catch (Exception ex)
         {
-            _logging.LogToFile($"Ошибка получения файла, {ex.Message}");
+            await _logging.LogToFile(LoggingTypes.Error, $"Ошибка получения файла, {ex.Message}");
         }
 
         return default;
     }
 
-    public Guid LoadFileFromFileSystemByPath(LoadFileByPathRequest model)
+    public async Task<Guid> LoadFileFromFileSystemByPath(LoadFileByPathRequest model)
     {
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
@@ -254,71 +247,68 @@ public class FilesService : IFilesService
         //request.Headers.Add("Authorization", "Bearer " + token.access_token);
 
         // Открытие потока для записи данных в запрос
-        using (var stream = request.GetRequestStream())
-        {
-            var boundary = request.ContentType.Split('=')[1];
+        using var stream = request.GetRequestStream();
 
-            // Взято из Swagger
-            var metaJson =
-                "{" +
-                    "\"k_login\": \"k-63546\"," +
-                    "\"doc_type\": \"b\"," +
-                    "\"master_id\": \"34120bfa-189c-47a5-bdf3-a3d3e2b61a42\"," +
-                    "\"reportdate\": \"2021-08-06\"," +
-                    "\"agreementid\": \"343aecae-2238-4da4-9a5f-c6987e2372f8\"" +
-                "}";
+        var boundary = request.ContentType.Split('=')[1];
 
-            // Взято из Swagger
-            var aclJson =
-                "[{" +
-                    "\"realm\": \"Broker\"," +
-                    "\"subjectType\": \"MASTER_ID\"," +
-                    "\"subject\": \"107f17fb-f2ae-4b3d-8936-7f20d78404a2\"" +
-                "}]";
+        // Взято из Swagger
+        var metaJson =
+            "{" +
+                "\"k_login\": \"k-63546\"," +
+                "\"doc_type\": \"b\"," +
+                "\"master_id\": \"34120bfa-189c-47a5-bdf3-a3d3e2b61a42\"," +
+                "\"reportdate\": \"2021-08-06\"," +
+                "\"agreementid\": \"343aecae-2238-4da4-9a5f-c6987e2372f8\"" +
+            "}";
 
-            WriteFormData(stream, boundary, "deathTime", model.DeathTime ?? "");
-            WriteFormData(stream, boundary, "lifeTimeHours", model.LifeTimeHours.ToString() ?? "");
-            WriteFormData(stream, boundary, "meta", metaJson);
-            WriteFormData(stream, boundary, "acl", aclJson);
+        // Взято из Swagger
+        var aclJson =
+            "[{" +
+                "\"realm\": \"Broker\"," +
+                "\"subjectType\": \"MASTER_ID\"," +
+                "\"subject\": \"107f17fb-f2ae-4b3d-8936-7f20d78404a2\"" +
+            "}]";
 
-            stream.Write(Encoding.UTF8.GetBytes($"\r\n--{boundary}\r\n"));
+        WriteFormData(stream, boundary, "deathTime", model.DeathTime ?? "");
+        WriteFormData(stream, boundary, "lifeTimeHours", model.LifeTimeHours.ToString() ?? "");
+        WriteFormData(stream, boundary, "meta", metaJson);
+        WriteFormData(stream, boundary, "acl", aclJson);
 
-            stream.Write(Encoding.UTF8.GetBytes($"Content-Disposition: form-data; name=\"file\"; filename=\"{Path.GetFileName(model.FilePathInFileSystem)}\"\r\n"));
+        stream.Write(Encoding.UTF8.GetBytes($"\r\n--{boundary}\r\n"));
 
-            stream.Write(Encoding.UTF8.GetBytes("Content-Type: text/plain\r\n\r\n"));
+        stream.Write(Encoding.UTF8.GetBytes($"Content-Disposition: form-data; name=\"file\"; filename=\"{Path.GetFileName(model.FilePathInFileSystem)}\"\r\n"));
 
-            stream.Write(File.ReadAllBytes(model.FilePathInFileSystem ?? ""));
+        stream.Write(Encoding.UTF8.GetBytes("Content-Type: text/plain\r\n\r\n"));
 
-            stream.Write(Encoding.UTF8.GetBytes($"\r\n--{boundary}--\r\n"));
-        }
+        stream.Write(File.ReadAllBytes(model.FilePathInFileSystem ?? ""));
+
+        stream.Write(Encoding.UTF8.GetBytes($"\r\n--{boundary}--\r\n"));
 
         try
         {
             // После записи всех данных в поток, данные отправляются на сервер
-            using (var response = (HttpWebResponse)request.GetResponse())
-            using (var reader = new StreamReader(response.GetResponseStream()))
-            {
-                string readerResult = reader.ReadToEnd();
+            using var response = (HttpWebResponse)request.GetResponse();
+            using var reader = new StreamReader(response.GetResponseStream());
 
-                var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
+            string readerResult = reader.ReadToEnd();
 
-                return result.Id;
-            }
+            var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
+
+            return result.Id;
         }
         catch (WebException ex)
         {
             Guard.IsNotNull(ex.Response);
 
-            using (var reader = new StreamReader(ex.Response.GetResponseStream()))
-            {
-                string errorResponse = reader.ReadToEnd();
+            using var reader = new StreamReader(ex.Response.GetResponseStream());
 
-                _logging.LogToFile($"Ошибка загрузки файла: {errorResponse}");
-            }
+            string errorResponse = reader.ReadToEnd();
+
+            await _logging.LogToFile(LoggingTypes.Error, $"Ошибка загрузки файла: {errorResponse}");
         }
         catch (Exception ex)
         {
-            _logging.LogToFile($"Ошибка загрузки файла: {ex.Message}");
+            await _logging.LogToFile(LoggingTypes.Error, $"Ошибка загрузки файла: {ex.Message}");
         }
 
         return default;
@@ -349,53 +339,50 @@ public class FilesService : IFilesService
         // Добавление токена в Headers
         //request.Headers.Add("Authorization", "Bearer " + token.access_token);
 
-        using (var stream = request.GetRequestStream())
-        {
-            WriteFormData(stream, boundary, "deathTime", model.DeathTime?.ToString() ?? "");
-            WriteFormData(stream, boundary, "lifeTimeHours", model.LifeTimeHours.ToString() ?? "");
+        using var stream = request.GetRequestStream();
 
-            stream.Write(Encoding.UTF8.GetBytes($"\r\n--{boundary}\r\n"));
-            stream.Write(Encoding.UTF8.GetBytes($"Content-Disposition: form-data; name=\"file\"; filename=\"{Path.GetFileName(file.FileName)}\"\r\n"));
-            stream.Write(Encoding.UTF8.GetBytes("Content-Type: application/octet-stream\r\n\r\n"));
+        WriteFormData(stream, boundary, "deathTime", model.DeathTime?.ToString() ?? "");
+        WriteFormData(stream, boundary, "lifeTimeHours", model.LifeTimeHours.ToString() ?? "");
 
-            await file.OpenReadStream().CopyToAsync(stream);
+        stream.Write(Encoding.UTF8.GetBytes($"\r\n--{boundary}\r\n"));
+        stream.Write(Encoding.UTF8.GetBytes($"Content-Disposition: form-data; name=\"file\"; filename=\"{Path.GetFileName(file.FileName)}\"\r\n"));
+        stream.Write(Encoding.UTF8.GetBytes("Content-Type: application/octet-stream\r\n\r\n"));
 
-            await stream.WriteAsync(Encoding.UTF8.GetBytes($"\r\n--{boundary}--\r\n"));
-        }
+        await file.OpenReadStream().CopyToAsync(stream);
+
+        await stream.WriteAsync(Encoding.UTF8.GetBytes($"\r\n--{boundary}--\r\n"));
 
         try
         {
             // После записи всех данных в поток, данные отправляются на сервер
-            using (var response = (HttpWebResponse)request.GetResponse())
-            using (var reader = new StreamReader(response.GetResponseStream()))
-            {
-                string readerResult = reader.ReadToEnd();
+            using var response = (HttpWebResponse)request.GetResponse();
+            using var reader = new StreamReader(response.GetResponseStream());
 
-                var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
+            string readerResult = reader.ReadToEnd();
 
-                return result.Id;
-            }
+            var result = JsonConvert.DeserializeObject<UploadFileResponse>(readerResult);
+
+            return result.Id;
         }
         catch (WebException ex)
         {
             Guard.IsNotNull(ex.Response);
 
-            using (var reader = new StreamReader(ex.Response.GetResponseStream()))
-            {
-                string errorResponse = reader.ReadToEnd();
+            using var reader = new StreamReader(ex.Response.GetResponseStream());
 
-                _logging.LogToFile($"Ошибка загрузки файла: {errorResponse}");
-            }
+            string errorResponse = reader.ReadToEnd();
+
+            await _logging.LogToFile(LoggingTypes.Error, $"Ошибка загрузки файла: {errorResponse}");
         }
         catch (Exception ex)
         {
-            _logging.LogToFile($"Ошибка загрузки файла: {ex.Message}");
+            await _logging.LogToFile(LoggingTypes.Error, $"Ошибка загрузки файла: {ex.Message}");
         }
 
         return default;
     }
 
-    public bool DeleteFile(FileStorageRequest model)
+    public async Task<bool> DeleteFile(FileStorageRequest model)
     {
         Guard.IsNotNull(GeneralOptions);
         Guard.IsNotNull(FileStorageOptions);
@@ -420,28 +407,26 @@ public class FilesService : IFilesService
 
         try
         {
-            using (WebResponse? response = request.GetResponse())
+            using WebResponse? response = request.GetResponse();
+
+            if (response is not null)
             {
-                if (response is not null)
-                {
-                    return true;
-                }
+                return true;
             }
         }
         catch (WebException webEx)
         {
-            using (var stream = webEx.Response.GetResponseStream())
-            using (var reader = new StreamReader(stream))
+            using var stream = webEx.Response.GetResponseStream();
+            using var reader = new StreamReader(stream);
+
+            var errorResponse = reader.ReadToEnd();
+
+            var result = new LoadFileResponse
             {
-                var errorResponse = reader.ReadToEnd();
+                ErrorMessage = $"Ошибка получения файла, {errorResponse}"
+            };
 
-                var result = new LoadFileResponse
-                {
-                    ErrorMessage = $"Ошибка получения файла, {errorResponse}"
-                };
-
-                _logging.LogToFile(result.ErrorMessage);
-            }
+            await _logging.LogToFile(LoggingTypes.Error, result.ErrorMessage);
         }
         catch (Exception ex)
         {

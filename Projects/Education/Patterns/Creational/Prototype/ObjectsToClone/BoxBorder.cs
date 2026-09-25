@@ -6,13 +6,9 @@ public class BoxBorder : IClone
 {
     public string? Color { get; set; }
 
-    public IClone Clone()
-    {
-        var border = new BoxBorder
+    public IClone Clone() =>
+        new BoxBorder
         {
             Color = this.Color
         };
-
-        return border;
-    }
 }

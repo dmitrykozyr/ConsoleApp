@@ -7,8 +7,6 @@ namespace CQRS.Infrastructure.Repositories;
 public sealed class CustomerWriteRepository(ApplicationDbContext dbContext)
     : ICustomerWriteRepository
 {
-    public async Task AddAsync(Customer customer, CancellationToken cancellationToken = default)
-    {
+    public async Task AddAsync(Customer customer, CancellationToken cancellationToken = default) =>
         await dbContext.Customers.AddAsync(customer, cancellationToken);
-    }
 }

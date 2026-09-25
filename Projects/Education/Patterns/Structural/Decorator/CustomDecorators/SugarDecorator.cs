@@ -10,13 +10,7 @@ public class SugarDecorator : CoffeeDecorator
     {
     }
 
-    public override string GetDescription()
-    {
-        return _coffee.GetDescription() + ", сахар";
-    }
+    public override string GetDescription() => _coffee.GetDescription() + ", сахар";
 
-    public override double GetCost()
-    {
-        return _coffee.GetCost() + 10.0;
-    }
+    public override double GetCost() => _coffee.GetCost() + 10.0;
 }

@@ -18,10 +18,5 @@ public class FormFileAdapter : IFileUpload
         _formFile = formFile;
     }
 
-    public Stream OpenReadStream()
-    {
-        Stream result = _formFile.OpenReadStream();
-
-        return result;
-    }
+    public Stream OpenReadStream() => _formFile.OpenReadStream();
 }

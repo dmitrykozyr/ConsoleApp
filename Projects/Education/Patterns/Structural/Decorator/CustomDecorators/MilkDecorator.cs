@@ -10,13 +10,7 @@ public class MilkDecorator : CoffeeDecorator
     {
     }
 
-    public override string GetDescription()
-    {
-        return _coffee.GetDescription() + ", молоко";
-    }
+    public override string GetDescription() => _coffee.GetDescription() + ", молоко";
 
-    public override double GetCost()
-    {
-        return _coffee.GetCost() + 30.0;
-    }
+    public override double GetCost() => _coffee.GetCost() + 30.0;
 }

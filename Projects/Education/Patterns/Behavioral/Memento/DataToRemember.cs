@@ -4,8 +4,5 @@ public class DataToRemember
 {
     public string? PhoneNumber { get; private init; }
 
-    public DataToRemember(string? phoneNumber)
-    {
-        PhoneNumber = phoneNumber;
-    }
+    public DataToRemember(string? phoneNumber) => PhoneNumber = phoneNumber;
 }

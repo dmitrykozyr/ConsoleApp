@@ -47,12 +47,12 @@ public class PersonInfo
         _isEmployeeHeadBranch = isEmployeeHeadBranch;
         _provider = provider;
 
-        LoadChilds();
+        LoadChilds().GetAwaiter().GetResult();
     }
 
-    public void LoadChilds()
+    public async Task LoadChilds()
     {
-        Roles = _provider.GetPersonAppRoles(this);
+        Roles = await _provider.GetPersonAppRoles(this);
 
         _rolesHash.Clear();
 

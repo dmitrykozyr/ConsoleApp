@@ -11,8 +11,5 @@ public class Adapter : IEuropeanRozetka
         _japaneseRozetka = japaneseRozetka;
     }
 
-    public string GetElectricity()
-    {
-        return $"{_japaneseRozetka.GetJapanesePower()} через переходник";
-    }
+    public string GetElectricity() => $"{_japaneseRozetka.GetJapanesePower()} через переходник";
 }

@@ -5,13 +5,7 @@ namespace Education.Patterns.Behavioral.State.CustomStates;
 
 public class EnergeticState : IState
 {
-    public void GoToShop(Context context)
-    {
-        Console.WriteLine("Уже бегу за продуктами");
-    }
+    public void GoToShop(Context context) => Console.WriteLine("Уже бегу за продуктами");
 
-    public void SeeBeer(Context context)
-    {
-        Console.WriteLine("Уже бегу, и возьму побольше");
-    }
+    public void SeeBeer(Context context) => Console.WriteLine("Уже бегу, и возьму побольше");
 }

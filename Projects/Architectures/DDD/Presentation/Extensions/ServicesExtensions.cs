@@ -16,7 +16,7 @@ public static class ServicesExtensions
 {
     public static void AddServicesExtensions(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped<ILogging, Logging>();
+        serviceCollection.AddScoped<ILoggingService, LoggingService>();
         serviceCollection.AddScoped<IProvider, Provider>();
         serviceCollection.AddScoped<ISqlService, SqlService>();
         serviceCollection.AddScoped<IFilesService, FilesService>();

@@ -10,18 +10,9 @@ public class CommercialPlane : Airplane
     {
     }
 
-    public void RequestLanding()
-    {
-        _tower.RequestLanding(this);
-    }
+    public void RequestLanding() => _tower.RequestLanding(this);
 
-    public override void Land()
-    {
-        Console.WriteLine($"{FlightNumber}: Совершаю посадку");
-    }
+    public override void Land() => Console.WriteLine($"{FlightNumber}: Совершаю посадку");
 
-    public override void Wait()
-    {
-        Console.WriteLine($"{FlightNumber}: Понял, кружу над аэропортом");
-    }
+    public override void Wait() => Console.WriteLine($"{FlightNumber}: Понял, кружу над аэропортом");
 }

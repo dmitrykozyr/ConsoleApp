@@ -4,5 +4,11 @@ public class DatabaseOptions
 {
     public string? ConnectionString { get; init; }
 
-    public string? SqlCommandTimeout { get; init; }
+    public string? DbPassword { get; init; }
+
+    public string? ConnStrBuffer { get; init; }
+
+    public string? DbPasswordBuffer { get; init; }
+
+    public int SqlCommandTimeout { get; init; }
 }

@@ -46,7 +46,7 @@ Zookeeper - оркестратор нескольких брокеров,
             | Broker_1 | Topic A | Partition_0 |
             |          |         |             |
             |----------|-----------------------|
-    Zookeeper  | Broker_2 | Topic A | Partition_1 |
+ Zookeeper  | Broker_2 | Topic A | Partition_1 |
             |          |         | Partition_2 | В этом брокере 2 партиции, а в следующем 0 - несбалансированность
             |----------|-----------------------|
             | Broker_3 | Topic A | Partition_0 | Репликация партиции из первого брокера для надежности

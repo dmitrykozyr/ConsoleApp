@@ -4,10 +4,7 @@ namespace Education.Patterns.Behavioral.State.CustomStates;
 
 public class TiredState : IState
 {
-    public void GoToShop(Context context)
-    {
-        Console.WriteLine("Не пойду, я устал");
-    }
+    public void GoToShop(Context context) => Console.WriteLine("Не пойду, я устал");
 
     public void SeeBeer(Context context)
     {

@@ -14,11 +14,7 @@ public static class DateFormatters
     private const string dd_MM_yyyy = "dd.MM.yyyy";
     private const string ddMMyyyy = "dd.MM.yyyy";
 
-    public static DateTime DateTimeNow()
-    {
-        //return DateTime.UtcNow;
-        return DateTime.Now;
-    }
+    public static DateTime DateTimeNow() => DateTime.Now;
 
     public static DateTime GetDateTimeOrDefault(string dataString)
     {
@@ -91,23 +87,18 @@ public static class DateFormatters
         Guard.IsTrue(dateTime.Kind != DateTimeKind.Unspecified);
 
         long result = new DateTimeOffset(dateTime).ToUnixTimeSeconds();
-
         return result;
     }
 
     public static long DateTimeToLong(DateTime dateTime, DateTimeKind dateTimeKind)
     {
         DateTime dateTimeWithKind = DateTime.SpecifyKind(dateTime, dateTimeKind);
+
         long result = new DateTimeOffset(dateTimeWithKind).ToUnixTimeSeconds();
-
         return result;
     }
 
-    public static string DateTimeToString(DateTime dateTime, string format)
-    {
-        string result = dateTime.ToString(format, SpecificCultureInfo);
-
-        return result;
-    }
+    public static string DateTimeToString(DateTime dateTime, string format) =>
+        dateTime.ToString(format, SpecificCultureInfo);
 }
 

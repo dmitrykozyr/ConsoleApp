@@ -5,7 +5,7 @@ namespace Infrastructure.Interfaces;
 
 public interface ISqlService
 {
-    SqlConnection? CreateConnection();
+    Task<SqlConnection?> CreateConnection();
 
     IUserContextCommand CreateCommand(string commandText, CommandType commandType);
 }

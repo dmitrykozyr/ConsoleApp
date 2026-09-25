@@ -4,8 +4,5 @@ namespace Education.Patterns.Structural.Adapter.ObjectsToAdapt;
 
 public class JapaneseRozetka : IJapaneseRozetka
 {
-    public string GetJapanesePower()
-    {
-        return "Японская розетка (110V)";
-    }
+    public string GetJapanesePower() => "Японская розетка (110V)";
 }

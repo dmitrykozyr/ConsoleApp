@@ -2,5 +2,5 @@
 
 public interface ILoginService
 {
-    bool AuthenticateDomainUser();
+    Task<bool> AuthenticateDomainUser();
 }

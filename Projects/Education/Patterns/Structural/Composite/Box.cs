@@ -12,10 +12,7 @@ public class Box : Gift, IGiftOperations
     {
     }
 
-    public void AddToBox(Gift gift)
-    {
-        _gifts.Add(gift);
-    }
+    public void AddToBox(Gift gift) => _gifts.Add(gift);
 
     public override int TotalPrice()
     {

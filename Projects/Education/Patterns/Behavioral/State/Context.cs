@@ -12,13 +12,7 @@ public class Context
     }
 
     // Клиент вызывает эти методы, не зная о состояниях
-    public void RequestGoToShop()
-    {
-        State.GoToShop(this);
-    }
+    public void RequestGoToShop() => State.GoToShop(this);
 
-    public void RequestBeer()
-    {
-        State.SeeBeer(this);
-    }
+    public void RequestBeer() => State.SeeBeer(this);
 }

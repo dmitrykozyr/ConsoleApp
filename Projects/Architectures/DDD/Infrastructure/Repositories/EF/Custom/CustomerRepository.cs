@@ -3,7 +3,7 @@ using Domain.Models.DB;
 using Infrastructure.Interfaces.Db;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories.DB;
+namespace DDD.Infrastructure.Repositories.EF.DB;
 
 public class CustomerRepository : ICustomerRepository
 {
@@ -14,12 +14,8 @@ public class CustomerRepository : ICustomerRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Customer?> GetById(long id)
-    {
-        var result = await _dbContext.Customers.FirstOrDefaultAsync(o => o.Id == id);
-
-        return result;
-    }
+    public async Task<Customer?> GetById(long id) =>
+        await _dbContext.Customers.FirstOrDefaultAsync(o => o.Id == id);
 
     public async Task<int> Add(Customer request)
     {

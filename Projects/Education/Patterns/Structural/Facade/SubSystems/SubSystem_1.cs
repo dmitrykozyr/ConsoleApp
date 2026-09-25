@@ -2,8 +2,5 @@
 
 public class SubSystem_1
 {
-    public void StartSystem()
-    {
-        Console.WriteLine("Подать питание с аккумулятора на инжектор");
-    }
+    public void StartSystem() => Console.WriteLine("Подать питание с аккумулятора на инжектор");
 }

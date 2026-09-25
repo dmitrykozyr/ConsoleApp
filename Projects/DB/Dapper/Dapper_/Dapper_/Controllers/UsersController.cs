@@ -16,32 +16,17 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<User>> Get()
-    {
-        return await _repository.GetAllAsync();
-    }
+    public async Task<IEnumerable<User>> Get() => await _repository.GetAllAsync();
 
     [HttpGet("{id}")]
-    public async Task<User?> Get(int id)
-    {
-        return await _repository.GetByIdAsync(id);
-    }
+    public async Task<User?> Get(int id) => await _repository.GetByIdAsync(id);
 
     [HttpPost]
-    public async Task<int> Create(User user)
-    {
-        return await _repository.AddAsync(user);
-    }
+    public async Task<int> Create(User user) => await _repository.AddAsync(user);
 
     [HttpPut]
-    public async Task Update(User user)
-    {
-        await _repository.UpdateAsync(user);
-    }
+    public async Task Update(User user) => await _repository.UpdateAsync(user);
 
     [HttpDelete("{id}")]
-    public async Task Delete(int id)
-    {
-        await _repository.DeleteAsync(id);
-    }
+    public async Task Delete(int id) => await _repository.DeleteAsync(id);
 }

@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces;
+﻿using DDD.Domain.Enums;
+using Domain.Interfaces;
 using Domain.Validators;
 using Infrastructure;
 using Infrastructure.Interfaces.Login;
@@ -13,11 +14,11 @@ namespace Presentation.Controllers.API;
 [ApiController]
 public class FilesController
 {
-    private readonly ILogging _logging;
+    private readonly ILoggingService _logging;
     private readonly IFilesService _filesService;
     private readonly ILoginService _loginService;
 
-    public FilesController(ILogging logging, IFilesService filesService, ILoginService loginService)
+    public FilesController(ILoggingService logging, IFilesService filesService, ILoginService loginService)
     {
         _logging = logging;
         _filesService = filesService;
@@ -27,11 +28,11 @@ public class FilesController
     [HttpGet("GetFileByPath")]
     [ProducesResponseType(typeof(LoadFileResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public IResult GetFileByPath([FromQuery] string bucketPath, [FromQuery] Guid guid)
+    public async Task<IResult> GetFileByPath([FromQuery] string bucketPath, [FromQuery] Guid guid)
     {
         try
         {
-            var isAuthenticated = _loginService.AuthenticateDomainUser();
+            var isAuthenticated = await _loginService.AuthenticateDomainUser();
             if (!isAuthenticated)
             {
                 return Results.Unauthorized();
@@ -49,14 +50,14 @@ public class FilesController
                 return Results.BadRequest(validationResult);
             }
 
-            LoadFileResponse? result = _filesService.GetFileByPath(model);
+            LoadFileResponse? result = await _filesService.GetFileByPath(model);
             if (result is not null)
             {
                 return Results.Ok($"Файл скачан по пути: {result.FilePath}.{result.FileName}");
             }
 
             const string ERROR_MESSAGE = "Не удалось получить файл";
-            _logging.LogToFile(ERROR_MESSAGE);
+            await _logging.LogToFile(LoggingTypes.Error, ERROR_MESSAGE);
             return Results.BadRequest(ERROR_MESSAGE);
         }
         catch (Exception ex)
@@ -79,7 +80,7 @@ public class FilesController
 
         try
         {
-            var isAuthenticated = _loginService.AuthenticateDomainUser();
+            var isAuthenticated = await _loginService.AuthenticateDomainUser();
             if (!isAuthenticated)
             {
                 return Results.Unauthorized();
@@ -98,7 +99,7 @@ public class FilesController
             }
 
             const string ERROR_MESSAGE = "Не удалось загрузить файл";
-            _logging.LogToFile(ERROR_MESSAGE);
+            await _logging.LogToFile(LoggingTypes.Error, ERROR_MESSAGE);
             return Results.BadRequest(ERROR_MESSAGE);
         }
         catch (Exception ex)
@@ -110,11 +111,11 @@ public class FilesController
     [HttpPost("LoadFileFromFileSystemByPath")]
     [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public IResult LoadFileFromFileSystemByPath([FromBody] LoadFileByPathRequest model)
+    public async Task<IResult> LoadFileFromFileSystemByPath([FromBody] LoadFileByPathRequest model)
     {
         try
         {
-            var isAuthenticated = _loginService.AuthenticateDomainUser();
+            var isAuthenticated = await _loginService.AuthenticateDomainUser();
             if (!isAuthenticated)
             {
                 return Results.Unauthorized();
@@ -133,7 +134,7 @@ public class FilesController
             }
 
             const string ERROR_MESSAGE = "Не удалось загрузить файл";
-            _logging.LogToFile(ERROR_MESSAGE);
+            await _logging.LogToFile(LoggingTypes.Error, ERROR_MESSAGE);
             return Results.BadRequest(ERROR_MESSAGE);
         }
         catch (Exception ex)
@@ -149,7 +150,7 @@ public class FilesController
     {
         try
         {
-            var isAuthenticated = _loginService.AuthenticateDomainUser();
+            var isAuthenticated = await _loginService.AuthenticateDomainUser();
             if (!isAuthenticated)
             {
                 return Results.Unauthorized();
@@ -177,7 +178,7 @@ public class FilesController
             }
 
             const string ERROR_MESSAGE = "Не удалось загрузить файл";
-            _logging.LogToFile(ERROR_MESSAGE);
+            await _logging.LogToFile(LoggingTypes.Error, ERROR_MESSAGE);
             return Results.BadRequest(ERROR_MESSAGE);
         }
         catch (Exception ex)
@@ -190,11 +191,11 @@ public class FilesController
     [HttpDelete("DeleteFile")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public IResult DeleteFile([FromBody] FileStorageRequest model)
+    public async Task<IResult> DeleteFile([FromBody] FileStorageRequest model)
     {
         try
         {
-            var isAuthenticated = _loginService.AuthenticateDomainUser();
+            var isAuthenticated = await _loginService.AuthenticateDomainUser();
             if (!isAuthenticated)
             {
                 return Results.Unauthorized();
@@ -206,14 +207,14 @@ public class FilesController
                 return Results.BadRequest(validationResult);
             }
 
-            var result = _filesService.DeleteFile(model);
+            var result = await _filesService.DeleteFile(model);
             if (result)
             {
                 return Results.Ok();
             }
 
             const string ERROR_MESSAGE = "Не удалось удалить файл из СХФ";
-            _logging.LogToFile(ERROR_MESSAGE);
+            await _logging.LogToFile(LoggingTypes.Error, ERROR_MESSAGE);
             return Results.BadRequest(ERROR_MESSAGE);
         }
         catch (Exception ex)

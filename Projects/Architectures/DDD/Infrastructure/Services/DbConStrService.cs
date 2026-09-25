@@ -23,10 +23,6 @@ public class DbConStrService : IDbConStrService
         DB_PASSWORD = "123"; // Брать пароль из Vault
     }
 
-    public string GetDbConnectionString()
-    {
-        string dbConnStr = $"{DatabaseOptions?.ConnectionString};Password={DB_PASSWORD}";
-
-        return dbConnStr;
-    }
+    public string GetDbConnectionString() =>
+        $"{DatabaseOptions?.ConnectionString};Password={DB_PASSWORD}";
 }

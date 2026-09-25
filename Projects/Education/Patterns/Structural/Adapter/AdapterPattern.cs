@@ -16,8 +16,6 @@ public class AdapterPattern
         PrintPower(adapter);
     }
 
-    public void PrintPower(IEuropeanRozetka europeanRozetka)
-    {
+    public void PrintPower(IEuropeanRozetka europeanRozetka) =>
         Console.WriteLine($"Питание получено через: {europeanRozetka.GetElectricity()}");
-    }
 }

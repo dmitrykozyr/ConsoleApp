@@ -5,8 +5,5 @@ namespace Education.Patterns.Creational.FactoryMethod.CustomDevelopers;
 
 public class PanelDeveloper : IDeveloper
 {
-    public IHouse FactoryMethod()
-    {
-        return new PanelHouse();
-    }
+    public IHouse FactoryMethod() => new PanelHouse();
 }

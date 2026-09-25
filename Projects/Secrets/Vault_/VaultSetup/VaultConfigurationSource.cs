@@ -25,8 +25,6 @@ public class VaultConfigurationSource : IConfigurationSource
         VaultOptions = vaultOptions;
     }
 
-    public IConfigurationProvider Build(IConfigurationBuilder builder)
-    {
-        return new VaultConfigurationProvider(VaultOptions, _configuration, _logging, _httpClientData);
-    }
+    public IConfigurationProvider Build(IConfigurationBuilder builder) =>
+        new VaultConfigurationProvider(VaultOptions, _configuration, _logging, _httpClientData);
 }

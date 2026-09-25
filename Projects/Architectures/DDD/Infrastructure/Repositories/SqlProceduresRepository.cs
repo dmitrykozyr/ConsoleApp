@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Diagnostics;
+using DDD.Domain.Enums;
 using Domain.Interfaces;
 using Infrastructure.Interfaces.Db;
 using Infrastructure.Models.ResponseModels;
@@ -10,15 +11,15 @@ namespace Infrastructure.Repositories;
 public class SqlProceduresRepository : ISqlProceduresRepository
 {
     private readonly IDbConStrService _dbConStrService;
-    private readonly ILogging _logging;
+    private readonly ILoggingService _logging;
 
-    public SqlProceduresRepository(IDbConStrService dbConStrService, ILogging logging)
+    public SqlProceduresRepository(IDbConStrService dbConStrService, ILoggingService logging)
     {
         _dbConStrService = dbConStrService;
         _logging = logging;
     }
 
-    public DbDataResponseModel GetDbDataDictionaryLongString(string storeProcedureName)
+    public async Task<DbDataResponseModel> GetDbDataDictionaryLongString(string storeProcedureName)
     {
         var result = new DbDataResponseModel
         {
@@ -34,37 +35,36 @@ public class SqlProceduresRepository : ISqlProceduresRepository
                 Guard.IsNotNull(dbConnStr, "Не удалось получить строку подключения к БД. Возможно, строка не обогащена паролем");
             }
 
-            using (SqlConnection connection = SqlCommands.Connect(dbConnStr))
+            using SqlConnection connection = SqlCommands.Connect(dbConnStr);
+
+            Guard.IsNotNull(connection, "Не удалось создать экземпляр SqlConnection");
+
+            using SqlCommand command = connection.CreateCommand();
+
+            try
             {
-                Guard.IsNotNull(connection, "Не удалось создать экземпляр SqlConnection");
+                Guard.IsNotNull(command, "Не удалось создать экземпляр SqlCommand");
 
-                using SqlCommand command = connection.CreateCommand();
+                command.CommandText = storeProcedureName;
+                command.CommandType = CommandType.StoredProcedure;
 
-                try
+                using SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
                 {
-                    Guard.IsNotNull(command, "Не удалось создать экземпляр SqlCommand");
-
-                    command.CommandText = storeProcedureName;
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    using SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        result.DbData.Add(reader.GetInt64(0), reader.GetString(1));
-                    }
+                    result.DbData.Add(reader.GetInt64(0), reader.GetString(1));
                 }
-                catch (Exception ex)
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"Не удалось получить Dictionary<long, string> из БД, {ex.Message}";
+
+                if (string.IsNullOrEmpty(result.ErrorMessage))
                 {
-                    string errorMessage = $"Не удалось получить Dictionary<long, string> из БД, {ex.Message}";
-
-                    if (string.IsNullOrEmpty(result.ErrorMessage))
-                    {
-                        result.ErrorMessage = errorMessage;
-                    }
-
-                    _logging.LogToFile(errorMessage);
+                    result.ErrorMessage = errorMessage;
                 }
+
+                await _logging.LogToFile(LoggingTypes.Error, errorMessage);
             }
 
             return result;
@@ -78,13 +78,13 @@ public class SqlProceduresRepository : ISqlProceduresRepository
                 result.ErrorMessage = errorMessage;
             }
 
-            _logging.LogToFile(errorMessage);
+            await _logging.LogToFile(LoggingTypes.Error, errorMessage);
 
             return result;
         }
     }
 
-    public List<string> GetDbDataListString(string storeProcedureName)
+    public async Task<List<string>> GetDbDataListString(string storeProcedureName)
     {
         var result = new List<string>();
 
@@ -97,31 +97,30 @@ public class SqlProceduresRepository : ISqlProceduresRepository
                 Guard.IsNotNull(dbConnStr, "Не удалось получить строку подключения к БД. Возможно, строка не обогащена паролем");
             }
 
-            using (SqlConnection connection = SqlCommands.Connect(dbConnStr))
+            using SqlConnection connection = SqlCommands.Connect(dbConnStr);
+
+            Guard.IsNotNull(connection, "Не удалось создать экземпляр SqlConnection");
+
+            using SqlCommand command = connection.CreateCommand();
+
+            try
             {
-                Guard.IsNotNull(connection, "Не удалось создать экземпляр SqlConnection");
+                Guard.IsNotNull(command, "Не удалось создать экземпляр SqlCommand");
 
-                using SqlCommand command = connection.CreateCommand();
+                command.CommandText = storeProcedureName;
+                command.CommandType = CommandType.StoredProcedure;
 
-                try
+                using SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
                 {
-                    Guard.IsNotNull(command, "Не удалось создать экземпляр SqlCommand");
-
-                    command.CommandText = storeProcedureName;
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    using SqlDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        result.Add(reader.GetString(0));
-                    }
+                    result.Add(reader.GetString(0));
                 }
-                catch (Exception ex)
-                {
-                    string errorMessage = $"Не удалось получить List<string>, {ex.Message}";
-                    _logging.LogToFile(errorMessage);
-                }
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"Не удалось получить List<string>, {ex.Message}";
+                await _logging.LogToFile(LoggingTypes.Error, errorMessage);
             }
 
             return result;
@@ -129,7 +128,7 @@ public class SqlProceduresRepository : ISqlProceduresRepository
         catch (Exception ex)
         {
             string errorMessage = $"Не удалось получить List<string>, {ex.Message}";
-            _logging.LogToFile(errorMessage);
+            await _logging.LogToFile(LoggingTypes.Error, errorMessage);
 
             return result;
         }

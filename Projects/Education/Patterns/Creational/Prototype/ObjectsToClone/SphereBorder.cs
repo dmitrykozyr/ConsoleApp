@@ -6,13 +6,9 @@ public class SphereBorder : IClone
 {
     public string? Color { get; set; }
 
-    public IClone Clone()
-    {
-        var border = new SphereBorder
+    public IClone Clone() =>
+        new SphereBorder
         {
             Color = this.Color
         };
-
-        return border;
-    }
 }

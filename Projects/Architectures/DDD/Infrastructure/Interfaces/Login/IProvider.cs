@@ -4,5 +4,5 @@ namespace Infrastructure.Interfaces.Login;
 
 public interface IProvider
 {
-    AppRoleInfo[] GetPersonAppRoles(PersonInfo person);
+    Task<AppRoleInfo[]> GetPersonAppRoles(PersonInfo person);
 }

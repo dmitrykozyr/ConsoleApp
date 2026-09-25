@@ -19,9 +19,9 @@ public class HomeController : Controller
         _filesService = filesService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var isAuthenticated = _loginService.AuthenticateDomainUser();
+        var isAuthenticated = await _loginService.AuthenticateDomainUser();
         if (!isAuthenticated)
         {
             return View("NotAuthorized");
@@ -32,9 +32,9 @@ public class HomeController : Controller
 
     // Вызывается при запуске
     [HttpGet]
-    public ViewResult FileDownload()
+    public async Task<ViewResult> FileDownload()
     {
-        var isAuthenticated = _loginService.AuthenticateDomainUser();
+        var isAuthenticated = await _loginService.AuthenticateDomainUser();
         if (!isAuthenticated)
         {
             return View("NotAuthorized");
@@ -71,9 +71,9 @@ public class HomeController : Controller
 
     // Вызывается при отправке формы
     [HttpPost]
-    public ViewResult FileDownload(FileStorageRequest model)
+    public async Task<ViewResult> FileDownload(FileStorageRequest model)
     {
-        var isAuthenticated = _loginService.AuthenticateDomainUser();
+        var isAuthenticated = await _loginService.AuthenticateDomainUser();
         if (!isAuthenticated)
         {
             return View("NotAuthorized");
@@ -89,7 +89,7 @@ public class HomeController : Controller
             return View(result);
         }
 
-        FileStreamResponse fileStreamResponse = _filesService.GetFileStream(model);
+        FileStreamResponse fileStreamResponse = await _filesService.GetFileStream(model);
 
         if (fileStreamResponse is not null && fileStreamResponse.Stream is not null)
         {

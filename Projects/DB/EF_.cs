@@ -48,10 +48,9 @@ public class EF_
          Если загрузить объект через .AsNoTracking(), изменить его и вызвать SaveChanges(),
          изменения не сохранятся в базе, т.к. контекст не видит этих правок
 
-             using (var context = new DbContext())
-             {
-                var products = context.Products.AsNoTracking().ToList();
-             }
+             using var context = new DbContext();
+
+             var products = context.Products.AsNoTracking().ToList();
     */
 
     #endregion
@@ -208,30 +207,28 @@ public class EF_
 
         private static void SaveData(ServiceProvider serviceProvider)
         {
-            using (var context = serviceProvider.GetService<AppDbContext>())
-            {
-                if (context is not null)
-                {
-                    context.Products.Add(new Product { Name = "Product1", Price = 10.0m });
-                    context.Products.Add(new Product { Name = "Product2", Price = 20.0m });
+            using var context = serviceProvider.GetService<AppDbContext>();
 
-                    context.SaveChanges();
-                }
+            if (context is not null)
+            {
+                context.Products.Add(new Product { Name = "Product1", Price = 10.0m });
+                context.Products.Add(new Product { Name = "Product2", Price = 20.0m });
+
+                context.SaveChanges();
             }
         }
 
         private static void GetData(ServiceProvider serviceProvider)
         {
-            using (var context = serviceProvider.GetService<AppDbContext>())
-            {
-                if (context is not null)
-                {
-                    var products = context.Products.ToList();
+            using var context = serviceProvider.GetService<AppDbContext>();
 
-                    foreach (var product in products)
-                    {
-                        Console.WriteLine($"{product.Id}, {product.Name}, {product.Price}");
-                    }
+            if (context is not null)
+            {
+                var products = context.Products.ToList();
+
+                foreach (var product in products)
+                {
+                    Console.WriteLine($"{product.Id}, {product.Name}, {product.Price}");
                 }
             }
         }

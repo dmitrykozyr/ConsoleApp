@@ -12,13 +12,7 @@ public abstract class CoffeeDecorator : ICoffee
         _coffee = coffee;
     }
 
-    public virtual string GetDescription()
-    {
-        return _coffee.GetDescription();
-    }
+    public virtual string GetDescription() => _coffee.GetDescription();
 
-    public virtual double GetCost()
-    {
-        return _coffee.GetCost();
-    }
+    public virtual double GetCost() => _coffee.GetCost();
 }

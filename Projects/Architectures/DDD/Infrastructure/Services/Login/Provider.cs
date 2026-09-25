@@ -18,24 +18,23 @@ public class Provider : IProvider
         _sqlService = sqlService;
     }
 
-    public AppRoleInfo[] GetPersonAppRoles(PersonInfo person)
+    public async Task<AppRoleInfo[]> GetPersonAppRoles(PersonInfo person)
     {
         var array = new ArrayList();
 
-        using (SqlConnection connection = _sqlService.CreateConnection())
-        using (IUserContextCommand command = _sqlService.CreateCommand("spGetCurrentPersonAppRoles", CommandType.StoredProcedure))
-        using (IDataReader reader = command.ExecuteReader(person._login))
-        {
-            while (reader.Read())
-            {
-                var appRoleInfo = new AppRoleInfo(
-                    name: reader.GetString(0),
-                    armUrl: reader.GetString(1),
-                    parent: person,
-                    isRestricted: reader.GetBoolean(3));
+        using SqlConnection connection = await _sqlService.CreateConnection();
+        using IUserContextCommand command = _sqlService.CreateCommand("spGetCurrentPersonAppRoles", CommandType.StoredProcedure);
+        using IDataReader reader = command.ExecuteReader(person._login);
 
-                array.Add(appRoleInfo);
-            }
+        while (reader.Read())
+        {
+            var appRoleInfo = new AppRoleInfo(
+                name: reader.GetString(0),
+                armUrl: reader.GetString(1),
+                parent: person,
+                isRestricted: reader.GetBoolean(3));
+
+            array.Add(appRoleInfo);
         }
 
         var result = (AppRoleInfo[])array.ToArray(typeof(AppRoleInfo));

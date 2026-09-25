@@ -4,8 +4,5 @@ namespace Education.Patterns.Behavioral.Observer.CustomClients;
 
 public class SMSClient : ISubscriber
 {
-    public void Update(string item)
-    {
-        Console.WriteLine($"SMS: Отправлено сообщение об товаре {item}");
-    }
+    public void Update(string item) => Console.WriteLine($"SMS: Отправлено сообщение об товаре {item}");
 }

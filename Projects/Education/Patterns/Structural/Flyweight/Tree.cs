@@ -16,8 +16,5 @@ public class Tree
         _type = type;
     }
 
-    public void Render()
-    {
-        _type.Display(_x, _y);
-    }
+    public void Render() => _type.Display(_x, _y);
 }

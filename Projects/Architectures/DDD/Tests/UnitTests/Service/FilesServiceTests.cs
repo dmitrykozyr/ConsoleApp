@@ -15,7 +15,7 @@ public class FilesServiceTests
     // Фейки
     private readonly IOptions<GeneralOptions> fakeGeneralOptions;
     private readonly IOptions<FileStorageOptions> fakeFileStorageOptions;
-    private readonly ILogging fakeLogging;
+    private readonly ILoggingService fakeLogging;
     private readonly ISqlProceduresRepository fakeFileRepository;
 
     // Реальные объекты
@@ -25,7 +25,7 @@ public class FilesServiceTests
     {
         fakeGeneralOptions      = A.Fake<IOptions<GeneralOptions>>();
         fakeFileStorageOptions  = A.Fake<IOptions<FileStorageOptions>>();
-        fakeLogging             = A.Fake<ILogging>();
+        fakeLogging             = A.Fake<ILoggingService>();
         fakeFileRepository      = A.Fake<ISqlProceduresRepository>();
 
         fileService = new FilesService(fakeGeneralOptions, fakeFileStorageOptions, fakeLogging);

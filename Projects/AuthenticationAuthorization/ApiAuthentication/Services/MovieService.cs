@@ -6,19 +6,9 @@ namespace ApiAuthentication.Services;
 
 public class MovieService : IMovieService
 {
-    public Movie Get(int id)
-    {
-        var movie = MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
+    public Movie Get(int id) => MovieRepository.Movies.FirstOrDefault(x => x.Id == id);
 
-        return movie;
-    }
-
-    public List<Movie> GetAll()
-    {
-        var movie = MovieRepository.Movies;
-
-        return movie;
-    }
+    public List<Movie> GetAll() => MovieRepository.Movies;
 
     public Movie Create(Movie movie)
     {

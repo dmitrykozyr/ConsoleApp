@@ -21,9 +21,7 @@ public class UserRepository : IUsersRepository
 
         string sql = "SELECT Id, Name, Age FROM Users";
 
-        var result = await connection.QueryAsync<User>(sql);
-
-        return result;
+        return await connection.QueryAsync<User>(sql);
     }
 
     public async Task<User?> GetByIdAsync(int id)

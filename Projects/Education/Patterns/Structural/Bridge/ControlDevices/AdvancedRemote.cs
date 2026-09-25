@@ -10,8 +10,5 @@ public class AdvancedRemote : RemoteControl
     }
 
     // Дополительная функция, плюс к тем, что есть в базовом классе
-    public void Mute()
-    {
-        Console.WriteLine("Звук выключен");
-    }
+    public void Mute() => Console.WriteLine("Звук выключен");
 }

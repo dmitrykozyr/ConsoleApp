@@ -7,10 +7,7 @@ public class BrickHouseBuilder : IHouseBuilder
 {
     private House _house = new House();
 
-    public IHouseBuilder BuildFoundation()
-    {
-        return this;
-    }
+    public IHouseBuilder BuildFoundation() => this;
 
     public IHouseBuilder BuildWalls()
     {

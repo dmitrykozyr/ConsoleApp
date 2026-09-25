@@ -6,10 +6,7 @@ public class Waiter
 {
     private List<ICommand> _orders = new List<ICommand>();
 
-    public void AddOrderToList(ICommand order)
-    {
-        _orders.Add(order);
-    }
+    public void AddOrderToList(ICommand order) => _orders.Add(order);
 
     public void SendOrdersToKitchen()
     {
