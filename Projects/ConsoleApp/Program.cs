@@ -23,8 +23,9 @@
         CI/CD (build, test, test, deploy)
         Балансировщик нагрузки
 
+		Nginx (Nginx Proxy Manager)
         Portainer
-        Kubernetes
+        Kubernetes/Kubernetes OKD
         Redis (UI в DataGrip)
         Оркестратор, библиотека MassTransit
         Docker (настроить prod-версию vault)
