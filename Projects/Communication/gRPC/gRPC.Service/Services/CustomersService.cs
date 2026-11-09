@@ -15,7 +15,9 @@ public class CustomersService : Customer.CustomerBase
         _logger = logger;
     }
 
-    public override Task<CustomerModel> GetCustomerInfo(CustomerLookupModel request, ServerCallContext context)
+    public override Task<CustomerModel> GetCustomerInfo(
+        CustomerLookupModel request,
+        ServerCallContext context)
     {
         var customerModel = new CustomerModel();
 

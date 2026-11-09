@@ -1,4 +1,5 @@
-﻿//using Education.Patterns.Behavioral.Command;
+﻿//!
+//using Education.Patterns.Behavioral.Command;
 //using MassTransit.Futures.Contracts;
 //using Microsoft.AspNetCore.Http;
 //using System.Diagnostics.Metrics;
